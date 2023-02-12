@@ -18,7 +18,7 @@ export default function Topbar() {
                     <Nav>
                         <Nav.Link href="/" as={Link}>Home</Nav.Link>
                         <Nav.Link href="/about" as={Link}>About</Nav.Link>
-                        <Nav.Link href="/hello/test" as={Link}>Test</Nav.Link>
+                        <Nav.Link href="https://www.gem5.org/documentation/general_docs/gem5_resources/" as={Link}>Documentation</Nav.Link>
                     </Nav>
                 </Container>
             </Navbar>
