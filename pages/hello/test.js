@@ -10,7 +10,7 @@ export default function Test() {
     return (
         <div>
             <h1>{name}</h1>
-            <h1><Link href="/">Home</Link></h1>
+            <h1><Link href="/" className='primary'>Home</Link></h1>
         </div>
     )
 }

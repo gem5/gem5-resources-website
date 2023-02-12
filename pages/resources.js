@@ -1,12 +1,12 @@
 import Head from 'next/head'
 import { Container } from 'react-bootstrap'
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 export default function Resources() {
-    const [query, setQuery] = useState('')
-    useEffect(() => {
-        setQuery(window.location.search.substring(3).replace(/%20/g, ' '))
-    }, [])
+    const { query } = useRouter()
+
     return (
         <>
             <Head>
@@ -17,7 +17,9 @@ export default function Resources() {
             <Container className='home'>
                 <h1 className='primary mb-5'>Resources</h1>
                 <p className='primary'>
-                    {query}
+                    <Link href={'/resources/' + query.q}>
+                        {query.q}
+                    </Link>
                 </p>
             </Container>
         </>
