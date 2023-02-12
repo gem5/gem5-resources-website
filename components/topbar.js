@@ -1,5 +1,6 @@
 import { Container, Navbar, Nav } from "react-bootstrap";
 import Image from "next/image";
+import logo from "public/gem5ColorLong.gif";
 export default function Topbar() {
     return (
         <>
@@ -7,9 +8,8 @@ export default function Topbar() {
                 <Container>
                     <Navbar.Brand href="/">
                         <Image
-                            src="/gem5ColorLong.gif"
+                            src={logo}
                             alt="Gem5 Logo"
-                            width={137}
                             height={55}
                         />
                     </Navbar.Brand>
