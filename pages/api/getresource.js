@@ -1,4 +1,6 @@
 export async function getResource(id) {
+    // sleep for 1 second to simulate a slow API call
+    await new Promise(resolve => setTimeout(resolve, 1000))
     if (!id || id === 'test') {
         return { error: 'Resource not found' }
     }

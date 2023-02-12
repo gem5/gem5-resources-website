@@ -1,5 +1,5 @@
 import { Container, Form, Button, InputGroup, FormControl } from "react-bootstrap";
-import styles from './searchbox.module.css'
+import styles from '/styles/searchbox.module.css'
 import { useRouter } from 'next/router'
 
 export default function Seachbox() {
