@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import { Inter } from '@next/font/google'
-import Link from 'next/link'
-import { Button, Container } from 'react-bootstrap'
+import { Container } from 'react-bootstrap'
 import Seachbox from '@/components/searchbox'
 import Image from 'next/image'
 import logo from 'public/gem5ColorVert.png'
