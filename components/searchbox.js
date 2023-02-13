@@ -1,9 +1,16 @@
 import { Container, Form, Button, InputGroup, FormControl } from "react-bootstrap";
 import styles from '/styles/searchbox.module.css'
 import { useRouter } from 'next/router'
+import { useEffect, useState } from "react";
 
 export default function Seachbox() {
     const router = useRouter()
+
+    const [search, setSearch] = useState("");
+
+    useEffect(() => {
+        setSearch(new URLSearchParams(new URL(window.location.href).search).get('q'));
+    }, []);
 
     function handleSubmit(e) {
         e.preventDefault()
@@ -17,7 +24,7 @@ export default function Seachbox() {
         <>
             <Form className="w-100" onSubmit={handleSubmit}>
                 <InputGroup>
-                    <Form.Control type="text" placeholder="Search" />
+                    <Form.Control type="text" placeholder="Search" value={search} onChange={(e) => setSearch(e.target.value)} />
                     <InputGroup.Text>
                         <img
                             src="https://cdn-icons-png.flaticon.com/512/54/54481.png"
