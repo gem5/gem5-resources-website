@@ -15,7 +15,7 @@ export default function Home() {
         <meta name="description" content="Find the resource you need" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <Container className='home'>
+      <Container className='d-flex flex-column align-items-center justify-content-center home'>
         <Image
           src={logo}
           alt="Gem5 Logo"
