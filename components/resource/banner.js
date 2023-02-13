@@ -14,7 +14,7 @@ export default function Banner({ resource }) {
                 </h5>
                 <div className={styles.dot}></div>
                 <h5 className='primary'>
-                    {resource.author}
+                    {resource.author ?? "Unknown"}
                 </h5>
             </div>
             <div className='d-flex gap-4'>
