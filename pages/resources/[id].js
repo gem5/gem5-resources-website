@@ -1,3 +1,4 @@
+import Banner from '@/components/resource/banner'
 import Head from 'next/head'
 import { Container } from 'react-bootstrap'
 import { getResource } from '../api/getresource'
@@ -11,13 +12,7 @@ export default function Resource({ resource }) {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
             <Container className='home'>
-                <h1 className='primary mb-5'>Resource</h1>
-                <p className='primary'>
-                    {resource.id}
-                </p>
-                <p className='primary'>
-                    {resource.content}
-                </p>
+                <Banner resource={resource} />
             </Container>
         </>
     )
