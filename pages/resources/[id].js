@@ -1,3 +1,4 @@
+import Information from '@/components/information'
 import Banner from '@/components/resource/banner'
 import Head from 'next/head'
 import { Container } from 'react-bootstrap'
@@ -13,6 +14,7 @@ export default function Resource({ resource }) {
             </Head>
             <Container className='home'>
                 <Banner resource={resource} />
+                <Information />
             </Container>
         </>
     )
