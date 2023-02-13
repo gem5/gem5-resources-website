@@ -7,7 +7,7 @@ export default function Resource({ resource }) {
     return (
         <>
             <Head>
-                <title>Gem5 resources</title>
+                <title>gem5 resources</title>
                 <meta name="description" content="Find the resource you need" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
