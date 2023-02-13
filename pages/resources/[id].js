@@ -25,6 +25,7 @@ export default function Resource({ resource }) {
 
 export async function getServerSideProps(ctx) {
     const id = ctx.params.id
+    ctx.res.setHeader('Cache-Control', 's-maxage=10, stale-while-revalidate')
     let resource = await getResource(id)
     if (resource.error) {
         return {
