@@ -47,3 +47,25 @@ a:hover {
 #nprogress .bar {
   background: #0095AF !important;
 }
+
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
+  color: #0095AF;
+  border: none;
+  background-color: transparent;
+  border-bottom: 2px solid #0095AF;
+}
+
+.nav-tabs {
+  background-color: var(--bs-gray-100);
+  border-bottom: none;
+}
+
+.nav-tabs .nav-link {
+  color: black;
+  border: none;
+}
+
+.nav-tabs .nav-link:hover {
+  color: gray;
+}
