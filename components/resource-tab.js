@@ -5,7 +5,7 @@ import Nav from 'react-bootstrap/Nav'
 
 function SEandFSToggle() {
     return (
-      <Tab.Container id="left-tabs-example" defaultActiveKey="first">
+      <Tab.Container defaultActiveKey="first">
         <Col>
           <Row sm={3}>
             <Nav variant="pills" className="flex-row">
