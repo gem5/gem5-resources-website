@@ -88,11 +88,11 @@ function ReadmeTab({ url }) {
   return (
     <Tab.Container defaultActiveKey="first">
       <ReactMarkdown
-        children={readme}
         rehypePlugins={[[rehypeHighlight, { ignoreMissing: true }], rehypeSlug, rehypeRaw]}
         remarkPlugins={[remarkToc, remarkGfm]}
-      />
-      {/* {readme && <div dangerouslySetInnerHTML={{ __html: readme }} />} */}
+      >
+        {readme}
+      </ReactMarkdown>
     </Tab.Container>
   )
 }

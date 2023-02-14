@@ -4,7 +4,6 @@ import Layout from '@/components/layout'
 import Router from 'next/router'
 import { useEffect } from 'react'
 import NProgress from 'nprogress';
-import "github-markdown-css"
 
 NProgress.configure({ showSpinner: false });
 
