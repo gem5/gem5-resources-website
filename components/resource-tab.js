@@ -18,7 +18,7 @@ export default function ResourceTab({ resource }) {
         setSelectedTab(window.location.hash.substring(1));
       }
     }
-  }, []);
+  }, [tabs]);
 
   const handleSelect = (e) => {
     setSelectedTab(e);
@@ -83,7 +83,7 @@ function ReadmeTab({ url }) {
       setReadme(text);
     }
     fetchReadme();
-  }, []);
+  }, [url]);
 
   return (
     <Tab.Container defaultActiveKey="first">
