@@ -1,0 +1,20 @@
+.info {
+    width: 22rem;
+}
+
+@media (max-width: 768px) {
+    .info {
+        width: 100%;
+        margin: 0 !important;
+        margin-top: 5rem !important;
+    }
+}
+
+.info .col {
+    justify-content: center;
+    align-items: center;
+}
+
+.info h5 {
+    width: fit-content;
+}

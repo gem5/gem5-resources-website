@@ -1,19 +1,24 @@
-import { Row, Col } from 'react-bootstrap';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import Nav from 'react-bootstrap/Nav'
-import { remark } from 'remark';
-import html from 'remark-html';
 import { useEffect, useState } from 'react';
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
+import remarkToc from 'remark-toc'
+import rehypeHighlight from 'rehype-highlight'
+import rehypeSlug from 'rehype-slug'
+import rehypeRaw from 'rehype-raw'
 
 export default function ResourceTab({ resource }) {
   const [selectedTab, setSelectedTab] = useState('readme');
-
+  const tabs = ['readme', 'changelog', 'usage', 'parameters', 'example', 'versions'];
   useEffect(() => {
     if (window.location.hash.substring(1) !== '') {
-      setSelectedTab(window.location.hash.substring(1));
+      const tab = window.location.hash.substring(1);
+      if (tabs.includes(tab)) {
+        setSelectedTab(window.location.hash.substring(1));
+      }
     }
-  }, []);
+  }, [tabs]);
 
   const handleSelect = (e) => {
     setSelectedTab(e);
@@ -21,64 +26,50 @@ export default function ResourceTab({ resource }) {
   }
 
   return (
-    <Tabs
-      defaultActiveKey="readme"
-      id="uncontrolled-tab-example"
-      className="mb-3"
-      activeKey={selectedTab ? selectedTab : 'readme'}
-      onSelect={(e) => handleSelect(e)}
-    >
-      <Tab eventKey="readme" title="Readme">
-        <ReadmeTab url={resource.documentation_url} />
-      </Tab>
-      <Tab eventKey="changelog" title="Changelog">
+    <div className='tabs'>
+      <Tabs
+        defaultActiveKey="readme"
+        activeKey={selectedTab ? selectedTab : 'readme'}
+        onSelect={(e) => handleSelect(e)}
+      >
+        <Tab eventKey="readme" title="Readme">
+          <ReadmeTab url={resource.documentation_url} />
+        </Tab>
+        <Tab eventKey="changelog" title="Changelog">
 
-      </Tab>
-      <Tab eventKey="usage" title="Usage">
-        <SEandFSToggle />
-      </Tab>
-      <Tab eventKey="parameters" title="Parameters">
+        </Tab>
+        <Tab eventKey="usage" title="Usage">
+          <SEandFSToggle />
+        </Tab>
+        <Tab eventKey="parameters" title="Parameters">
 
-      </Tab>
-      <Tab eventKey="example" title="Example">
-        <SEandFSToggle />
-      </Tab>
-      <Tab eventKey="versions" title="Versions">
+        </Tab>
+        <Tab eventKey="example" title="Example">
+          <SEandFSToggle />
+        </Tab>
+        <Tab eventKey="versions" title="Versions">
 
-      </Tab>
-    </Tabs>
+        </Tab>
+      </Tabs>
+    </div>
   )
 }
 
 function SEandFSToggle() {
   return (
     <Tab.Container defaultActiveKey="first">
-      <Col>
-        <Row sm={3}>
-          <Nav variant="pills" className="flex-row">
-            <Nav.Item>
-              <Nav.Link eventKey="first">SE Mode</Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link eventKey="second">FS Mode</Nav.Link>
-            </Nav.Item>
-          </Nav>
-        </Row>
-        <Row sm={9}>
-          <Tab.Content>
-            <Tab.Pane eventKey="first">
-              <code>
-                ## INSERT CODE HERE
-              </code>
-            </Tab.Pane>
-            <Tab.Pane eventKey="second">
-              <code>
-                ## INSERT CODE HERE
-              </code>
-            </Tab.Pane>
-          </Tab.Content>
-        </Row>
-      </Col>
+      <Tabs variant="pills" defaultActiveKey="se" id="uncontrolled-tab-example">
+        <Tab eventKey="se" title="SE Mode">
+          <code>
+            ## INSERT CODE HERE
+          </code>
+        </Tab>
+        <Tab eventKey="fs" title="FS Mode">
+          <code>
+            ## INSERT CODE HERE
+          </code>
+        </Tab>
+      </Tabs>
     </Tab.Container>
   );
 }
@@ -87,17 +78,21 @@ function ReadmeTab({ url }) {
   const [readme, setReadme] = useState('');
   useEffect(() => {
     const fetchReadme = async () => {
-      const result = await fetch(url ?? 'https://raw.githubusercontent.com/Gem5Vision/gem5-resources-website/main/README.md');
+      const result = await fetch(url ?? 'https://raw.githubusercontent.com/remarkjs/react-markdown/main/readme.md');
       const text = await result.text();
-      const processedText = await remark().use(html).process(text);
-      setReadme(processedText.toString());
+      setReadme(text);
     }
     fetchReadme();
-  }, []);
+  }, [url]);
 
   return (
     <Tab.Container defaultActiveKey="first">
-      {readme && <div dangerouslySetInnerHTML={{ __html: readme }} />}
+      <ReactMarkdown
+        rehypePlugins={[[rehypeHighlight, { ignoreMissing: true }], rehypeSlug, rehypeRaw]}
+        remarkPlugins={[remarkToc, remarkGfm]}
+      >
+        {readme}
+      </ReactMarkdown>
     </Tab.Container>
   )
 }

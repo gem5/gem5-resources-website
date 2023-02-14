@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { Container, Row, Col } from "react-bootstrap";
-import styles from '/styles/information.module.css'
-export default function MetaData({ resource }) {
+import styles from '/styles/metadata.module.css'
+export default function MetaData({ resource, className }) {
     return (
         <>
-            <Container className={styles.info}>
+            <Container className={styles.info + ' ' + className}>
                 <Row className="border-bottom">
                     <Col className="border-end">
                         <div>

@@ -71,3 +71,27 @@ a:hover {
   color: gray;
   border-bottom: 2px solid gray;
 }
+
+.tabs {
+  width: calc(100% - 25rem);
+}
+
+@media (max-width: 768px) {
+  .tabs {
+    width: 100%;
+  }
+}
+
+.tabs img {
+  max-width: 100%;
+}
+
+code {
+  display: inline-table;
+  overflow-x: auto;
+  padding: 2px;
+  color: #333;
+  background: #f8f8f8;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
