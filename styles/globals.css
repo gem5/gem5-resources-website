@@ -73,7 +73,13 @@ a:hover {
 }
 
 .tabs {
-  max-width: 50vw;
+  width: calc(100% - 25rem);
+}
+
+@media (max-width: 768px) {
+  .tabs {
+    width: 100%;
+  }
 }
 
 .tabs img {

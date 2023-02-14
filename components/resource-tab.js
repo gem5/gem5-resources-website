@@ -26,7 +26,7 @@ export default function ResourceTab({ resource }) {
   }
 
   return (
-    <div className='tabs mb-3'>
+    <div className='tabs'>
       <Tabs
         defaultActiveKey="readme"
         activeKey={selectedTab ? selectedTab : 'readme'}

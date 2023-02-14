@@ -19,12 +19,8 @@ export default function Resource({ resource }) {
                     <Banner resource={resource} />
                 </Row>
                 <Row>
-                    <Col>
-                        <ResourceTab resource={resource} />
-                    </Col>
-                    <Col>
-                        <MetaData resource={resource} />
-                    </Col>
+                    <ResourceTab resource={resource} />
+                    <MetaData resource={resource} className='ms-5' />
                 </Row>
             </Container>
         </SSRProvider >
