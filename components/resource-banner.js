@@ -18,16 +18,14 @@ export default function Banner({ resource }) {
                 </h5>
             </div>
             <div className='d-flex gap-4'>
-                <div className="d-flex flex-row align-items-center gap-1">
+                <p className="d-flex flex-row align-items-center gap-1">
                     <Image
                         src={risc_v}
                         alt="Gem5 Logo"
                         height={15}
                     />
-                    <p>
-                        {resource.architecture}
-                    </p>
-                </div>
+                    {resource.architecture}
+                </p>
 
                 <div className='d-flex flex-row gap-1'>
                     <h6 style={{ lineHeight: 'inherit', margin: '0' }}>
