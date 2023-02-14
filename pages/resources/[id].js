@@ -19,7 +19,7 @@ export default function Resource({ resource }) {
                 </Row>
                 <Row>
                     <Col>
-                        <ResourceTab />
+                        <ResourceTab resource={resource} />
                     </Col>
                     <Col>
                         <MetaData resource={resource} />
