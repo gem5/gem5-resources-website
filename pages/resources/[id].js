@@ -14,7 +14,7 @@ export default function Resource({ resource }) {
             </Head>
             <Container className='home'>
                 <Banner resource={resource} />
-                <ResourceTab />
+                <ResourceTab resource={resource} />
             </Container>
         </>
     )
