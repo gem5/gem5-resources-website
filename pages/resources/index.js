@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { Container } from 'react-bootstrap'
+import { Container, SSRProvider } from 'react-bootstrap'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -7,10 +7,8 @@ import { getResources } from '../api/findresources'
 import Seachbox from '@/components/searchbox'
 
 export default function Resources({ resources }) {
-    const { query } = useRouter()
-
     return (
-        <>
+        <SSRProvider>
             <Head>
                 <title>gem5 resources</title>
                 <meta name="description" content="Find the resource you need" />
@@ -26,11 +24,14 @@ export default function Resources({ resources }) {
                     </p>
                 ))}
             </Container>
-        </>
+        </SSRProvider>
     )
 }
 
 export async function getServerSideProps({ query }) {
+    if (!query.q) {
+        query.q = ''
+    }
     const resources = await getResources(query.q)
     return { props: { resources } };
 };

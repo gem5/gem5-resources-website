@@ -14,10 +14,7 @@ export default function Seachbox() {
 
     function handleSubmit(e) {
         e.preventDefault()
-        console.log(e.target[0].value)
-        // check which button was clicked
-        console.log(e.nativeEvent.submitter.innerText)
-        // navigate to the /resources/q=... page
+        // console.log(e.nativeEvent.submitter.innerText)
         router.push(`/resources?q=${e.target[0].value}`)
     }
     return (

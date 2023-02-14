@@ -29,9 +29,6 @@ export default function App({ Component, pageProps }) {
 
   return (
     <>
-      <Head>
-        <link rel="stylesheet" type="text/css" href="https://unpkg.com/nprogress@0.2.0/nprogress.css" />
-      </Head>
       <Layout>
         <Component {...pageProps} />
       </Layout>
