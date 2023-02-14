@@ -1,5 +1,5 @@
-import Information from '@/components/information'
-import Banner from '@/components/resource/banner'
+import MetaData from '@/components/resource-metadata'
+import Banner from '@/components/resource-banner'
 import Head from 'next/head'
 import { Container, SSRProvider } from 'react-bootstrap'
 import { getResource } from '../api/getresource'
@@ -15,7 +15,7 @@ export default function Resource({ resource }) {
             </Head>
             <Container className='home'>
                 <Banner resource={resource} />
-                <Information resource={resource} />
+                <MetaData resource={resource} />
                 <ResourceTab />
             </Container>
         </SSRProvider>
