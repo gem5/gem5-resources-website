@@ -50,7 +50,7 @@ export default function MetaData({ resource }) {
                         <Link
                             href={resource.license_url ?? 'https://opensource.org/licenses/BSD-3-Clause'}
                         >
-                            LICENCE
+                            LICENSE
                         </Link>
                         {')'}
                     </p>
