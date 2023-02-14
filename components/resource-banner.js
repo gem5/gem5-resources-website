@@ -1,11 +1,13 @@
 import Image from 'next/image'
 import styles from '/styles/banner.module.css'
 import risc_v from '/public/risc_v.png'
+import CopyIcon from './copy-icon'
+
 export default function Banner({ resource }) {
     return (
         <div className={styles.banner}>
             <h1 className='text-muted'>
-                {resource.id}
+                {resource.id} <CopyIcon text={resource.id} />
             </h1>
             <div className='d-flex align-items-center'>
                 <h5 className='text-muted'>
