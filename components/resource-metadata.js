@@ -56,7 +56,7 @@ export default function MetaData({ resource }) {
                     </p>
                 </Row>
                 <Row className="border-bottom">
-                    <p className="text-muted">Dependancies</p>
+                    <p className="text-muted">Dependencies</p>
                     <p className="primary">
                         {resource.dependencies ?? 'None'}
                     </p>

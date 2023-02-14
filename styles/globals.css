@@ -58,14 +58,16 @@ a:hover {
 
 .nav-tabs {
   background-color: var(--bs-gray-100);
-  border-bottom: none;
+  border-bottom-color: transparent;
 }
 
 .nav-tabs .nav-link {
   color: black;
   border: none;
+  border-bottom: 2px solid transparent;
 }
 
 .nav-tabs .nav-link:hover {
   color: gray;
+  border-bottom: 2px solid gray;
 }
