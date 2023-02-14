@@ -3,10 +3,10 @@ import styles from '/styles/banner.module.css'
 import risc_v from '/public/risc_v.png'
 export default function Banner({ resource }) {
     return (
-        <div className={styles.banner}>
-            <h1 className='text-muted'>
+        <div>
+            <h2 className='text-muted'>
                 {resource.id}
-            </h1>
+            </h2>
             <div className='d-flex align-items-center'>
                 <h5 className='text-muted'>
                     {/* {resource.date_published} */}
