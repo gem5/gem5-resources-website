@@ -11,6 +11,7 @@ export default function Document() {
           crossOrigin="anonymous"
         />
         <link rel="shortcut icon" href="/favicon.png" />
+        <link rel="stylesheet" type="text/css" href="https://unpkg.com/nprogress@0.2.0/nprogress.css" />
       </Head>
       <body>
         <Main />

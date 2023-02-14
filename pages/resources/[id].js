@@ -1,13 +1,13 @@
 import Information from '@/components/information'
 import Banner from '@/components/resource/banner'
 import Head from 'next/head'
-import { Container } from 'react-bootstrap'
+import { Container, SSRProvider } from 'react-bootstrap'
 import { getResource } from '../api/getresource'
 import ResourceTab from '@/components/resource-tab'
 
 export default function Resource({ resource }) {
     return (
-        <>
+        <SSRProvider>
             <Head>
                 <title>gem5 resources</title>
                 <meta name="description" content="Find the resource you need" />
@@ -15,10 +15,10 @@ export default function Resource({ resource }) {
             </Head>
             <Container className='home'>
                 <Banner resource={resource} />
-                <Information />
+                <Information resource={resource} />
                 <ResourceTab />
             </Container>
-        </>
+        </SSRProvider>
     )
 }
 
