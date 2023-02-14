@@ -1,0 +1,12 @@
+.info {
+    max-width: 22rem;
+}
+
+.info .col {
+    justify-content: center;
+    align-items: center;
+}
+
+.info h5 {
+    width: fit-content;
+}
