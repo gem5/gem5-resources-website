@@ -7,6 +7,7 @@ import remarkToc from 'remark-toc'
 import rehypeHighlight from 'rehype-highlight'
 import rehypeSlug from 'rehype-slug'
 import rehypeRaw from 'rehype-raw'
+import CopyIcon from './copy-icon';
 
 export default function ResourceTab({ resource }) {
   const [selectedTab, setSelectedTab] = useState('readme');
@@ -87,9 +88,18 @@ function ReadmeTab({ url }) {
 
   return (
     <Tab.Container defaultActiveKey="first">
+      {/* wrap pre tags in CopyIcon */}
       <ReactMarkdown
         rehypePlugins={[[rehypeHighlight, { ignoreMissing: true }], rehypeSlug, rehypeRaw]}
         remarkPlugins={[remarkToc, remarkGfm]}
+        components={{
+          pre: ({ node, ...props }) =>
+            <CopyIcon>
+              <pre {...props} >
+                {props.children}
+              </pre>
+            </CopyIcon>,
+        }}
       >
         {readme}
       </ReactMarkdown>

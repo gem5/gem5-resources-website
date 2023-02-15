@@ -6,10 +6,12 @@ import CopyIcon from './copy-icon'
 export default function Banner({ resource }) {
     return (
 
-        <div>
-            <h2 className='text-muted'>
-                {resource.id} <CopyIcon text={resource.id} />
-            </h2>
+        <>
+            <CopyIcon>
+                <h2 className='text-muted pe-5'>
+                    {resource.id}
+                </h2>
+            </CopyIcon>
 
             <div className='d-flex align-items-center'>
                 <h5 className='text-muted'>
@@ -40,6 +42,6 @@ export default function Banner({ resource }) {
                     </p>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
