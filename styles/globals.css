@@ -95,3 +95,12 @@ code {
   border: 1px solid #ccc;
   border-radius: 3px;
 }
+
+.copy-button {
+  fill: var(--bs-gray-500);
+  transition: fill 0.5s ease-in-out;
+}
+
+.copy-button:hover {
+  fill: black;
+}

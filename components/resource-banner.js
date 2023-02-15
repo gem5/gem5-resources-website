@@ -8,7 +8,7 @@ export default function Banner({ resource }) {
 
         <>
             <CopyIcon>
-                <h2 className='text-muted pe-5'>
+                <h2 className='text-muted pe-3'>
                     {resource.id}
                 </h2>
             </CopyIcon>
