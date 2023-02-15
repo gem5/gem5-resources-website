@@ -11,7 +11,7 @@ import power from "/public/power.png";
 export default function Banner({ resource }) {
     function getIcon(architecture) {
         switch (architecture) {
-            case "x86":
+            case "X86":
                 return x86;
             case "RISCV":
                 return risc_v;
