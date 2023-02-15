@@ -20,7 +20,7 @@ export default function SearchResult({ resource }) {
                 return sparc;
             case "MIPS":
                 return mips;
-            case "Power":
+            case "POWER":
                 return power;
             default:
                 return '';
