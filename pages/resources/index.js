@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { getResources } from '../api/findresources'
 import Seachbox from '@/components/searchbox'
+import SearchResult from '@/components/searchresult'
 
 export default function Resources({ resources }) {
     return (
@@ -14,15 +15,19 @@ export default function Resources({ resources }) {
                 <meta name="description" content="Find the resource you need" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
-            <Container className='home'>
-                <Seachbox />
-                {resources.map((resource, index) => (
-                    <p key={index} className='primary'>
-                        <Link href={'/resources/' + resource.id}>
-                            {resource.id}
-                        </Link>
-                    </p>
-                ))}
+            <Container className='d-flex flex-column gap-4 align-items-center'>
+                <h1 className=' text-muted text-uppercase'>Gem5 Resources</h1>
+                <div className='search-results'>
+                    <Seachbox buttons={false} />
+                    <div>
+                        {resources.map((resource, index) => (
+                            <>
+                                <hr />
+                                <SearchResult resource={resource} />
+                            </>
+                        ))}
+                    </div>
+                </div>
             </Container>
         </SSRProvider>
     )

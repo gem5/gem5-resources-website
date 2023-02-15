@@ -3,7 +3,7 @@ import styles from '/styles/searchbox.module.css'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from "react";
 
-export default function Seachbox() {
+export default function Seachbox({ buttons = true }) {
     const router = useRouter()
 
     const [search, setSearch] = useState("");
@@ -31,10 +31,15 @@ export default function Seachbox() {
                         />
                     </InputGroup.Text>
                 </InputGroup>
-                <Container className={styles.buttonContainer}>
-                    <Button variant="outline-primary" type="submit">Search</Button>
-                    <Button variant="outline-primary" type="submit">Advanced Search</Button>
-                </Container>
+                {
+                    buttons && (
+                        <Container className={styles.buttonContainer}>
+                            <Button variant="outline-primary" type="submit">Search</Button>
+                            <Button variant="outline-primary" type="submit">Advanced Search</Button>
+                        </Container>
+                    )
+                }
+
             </Form>
         </>
     )
