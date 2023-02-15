@@ -104,3 +104,11 @@ code {
 .copy-button:hover {
   fill: black;
 }
+
+.search-results {
+  width: 60%;
+  min-width: 30rem;
+  background-color: lightgray;
+  padding: 1rem;
+  border-radius: 10px;
+}
