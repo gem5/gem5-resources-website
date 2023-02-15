@@ -17,7 +17,7 @@
                 "disk_image": "x86-ubuntu-18.04-img"
             },
             "additional_params": {},
-            "architecture": null,
+            "architecture": "X86",
             "is_zipped": null,
             "md5sum": null,
             "source": null,
@@ -42,7 +42,7 @@
                 "disk_image": "riscv-ubuntu-20.04-img"
             },
             "additional_params": {},
-            "architecture": null,
+            "architecture": "RISCV",
             "is_zipped": null,
             "md5sum": null,
             "source": null,
@@ -68,7 +68,7 @@
                 "bootloader": "arm64-bootloader-foundation"
             },
             "additional_params": {},
-            "architecture": null,
+            "architecture": "ARM",
             "is_zipped": null,
             "md5sum": null,
             "source": null,
@@ -98,7 +98,7 @@
                     15000
                 ]
             },
-            "architecture": null,
+            "architecture": "X86",
             "is_zipped": null,
             "md5sum": null,
             "source": null,
@@ -129,7 +129,7 @@
                     15000
                 ]
             },
-            "architecture": null,
+            "architecture": "X86",
             "is_zipped": null,
             "md5sum": null,
             "source": null,
