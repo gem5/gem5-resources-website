@@ -2,8 +2,31 @@ import Image from 'next/image'
 import styles from '/styles/banner.module.css'
 import risc_v from '/public/risc_v.png'
 import CopyIcon from './copy-icon'
+import x86 from "/public/x86.png";
+import arm from "/public/arm.png";
+import sparc from "/public/sparc.png";
+import mips from "/public/mips.png";
+import power from "/public/power.png";
 
 export default function Banner({ resource }) {
+    function getIcon(architecture) {
+        switch (architecture) {
+            case "x86":
+                return x86;
+            case "RISCV":
+                return risc_v;
+            case "ARM":
+                return arm;
+            case "SPARC":
+                return sparc;
+            case "MIPS":
+                return mips;
+            case "Power":
+                return power;
+            default:
+                return '';
+        }
+    }
     return (
 
         <>
@@ -26,8 +49,8 @@ export default function Banner({ resource }) {
             <div className='d-flex gap-4'>
                 <p className="d-flex flex-row align-items-center gap-1">
                     <Image
-                        src={risc_v}
-                        alt="Gem5 Logo"
+                        src={getIcon(resource.architecture)}
+                        alt={resource.architecture ?? "Unknown"}
                         height={15}
                     />
                     {resource.architecture}

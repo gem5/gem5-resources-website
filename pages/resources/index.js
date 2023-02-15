@@ -8,6 +8,31 @@ import Seachbox from '@/components/searchbox'
 import SearchResult from '@/components/searchresult'
 
 export default function Resources({ resources }) {
+
+    function Results() {
+        if (resources.length === 0) {
+            return (
+                <>
+                    <hr />
+                    <div className='d-flex flex-column align-items-center justify-content-center p-5'>
+                        <h1 className='text-muted'>No results found</h1>
+                    </div >
+                </>
+            )
+        }
+        return (
+            <div>
+                {
+                    resources.map((resource, index) => (
+                        <>
+                            <hr />
+                            <SearchResult resource={resource} />
+                        </>
+                    ))
+                }
+            </div>
+        )
+    }
     return (
         <SSRProvider>
             <Head>
@@ -19,14 +44,7 @@ export default function Resources({ resources }) {
                 <h1 className=' text-muted text-uppercase'>Gem5 Resources</h1>
                 <div className='search-results'>
                     <Seachbox buttons={false} />
-                    <div>
-                        {resources.map((resource, index) => (
-                            <>
-                                <hr />
-                                <SearchResult resource={resource} />
-                            </>
-                        ))}
-                    </div>
+                    <Results />
                 </div>
             </Container>
         </SSRProvider>
