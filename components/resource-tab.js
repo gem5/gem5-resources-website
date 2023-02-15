@@ -11,8 +11,8 @@ import CopyIcon from './copy-icon';
 
 export default function ResourceTab({ resource }) {
   const [selectedTab, setSelectedTab] = useState('readme');
-  const tabs = ['readme', 'changelog', 'usage', 'parameters', 'example', 'versions'];
   useEffect(() => {
+    const tabs = ['readme', 'changelog', 'usage', 'parameters', 'example', 'versions'];
     if (window.location.hash.substring(1) !== '') {
       const tab = window.location.hash.substring(1);
       if (tabs.includes(tab)) {

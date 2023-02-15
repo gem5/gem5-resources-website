@@ -2,6 +2,7 @@ import { Container, Form, Button, InputGroup, FormControl } from "react-bootstra
 import styles from '/styles/searchbox.module.css'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 export default function Seachbox({ buttons = true }) {
     const router = useRouter()
@@ -23,7 +24,7 @@ export default function Seachbox({ buttons = true }) {
                 <InputGroup>
                     <Form.Control type="text" placeholder="Search" value={search} onChange={(e) => setSearch(e.target.value)} />
                     <InputGroup.Text>
-                        <img
+                        <Image
                             src="https://cdn-icons-png.flaticon.com/512/54/54481.png"
                             alt="Search Icon"
                             height="20"
