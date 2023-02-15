@@ -3,6 +3,7 @@ import styles from '/styles/searchbox.module.css'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import searchImage from "public/search.png"
 
 export default function Seachbox({ buttons = true }) {
     const router = useRouter()
@@ -25,10 +26,9 @@ export default function Seachbox({ buttons = true }) {
                     <Form.Control type="text" placeholder="Search" value={search} onChange={(e) => setSearch(e.target.value)} />
                     <InputGroup.Text>
                         <Image
-                            src="https://cdn-icons-png.flaticon.com/512/54/54481.png"
+                            src={searchImage}
                             alt="Search Icon"
                             height="20"
-                            width="20"
                         />
                     </InputGroup.Text>
                 </InputGroup>
