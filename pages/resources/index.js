@@ -87,7 +87,7 @@ export default function Resources(props) {
                 </div>
                 <div style={{ width: '60%' }} >
                     <Row>
-                        <Col xs={3}>
+                        <Col xs={3} className='filters'>
                             <Filters filters={props.filters} callback={onChange} />
                         </Col>
                         <Col>
