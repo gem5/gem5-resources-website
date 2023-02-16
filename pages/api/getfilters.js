@@ -7,10 +7,13 @@ export async function getFilters() {
     let groups = [...new Set(resources['resources'].map(resource => resource.group))].filter(group => group != null);
     // get unique architectures from resources
     let architectures = [...new Set(resources['resources'].map(resource => resource.architecture))];
+    // get zipped from resources
+    let zippeds = [...new Set(resources['resources'].map(resource => String(resource.is_zipped)))].filter(zipped => zipped != "null");
     return {
         category: categories,
         group: groups,
         architecture: architectures,
+        zipped : zippeds,
     };
 }
 

@@ -58,7 +58,7 @@ export default function Filters({ filters, callback }) {
                     </Accordion.Body>
                 </Accordion.Item>
                 <Accordion.Item eventKey="2">
-                    <Accordion.Header>Arcitecture</Accordion.Header>
+                    <Accordion.Header>Architecture</Accordion.Header>
                     <Accordion.Body>
                         {
                             filterState && Object.keys(filterState.architecture).map((filter, index) => (
@@ -72,6 +72,30 @@ export default function Filters({ filters, callback }) {
                                     onChange={(e) => {
                                         let filterModified = { ...filterState };
                                         filterModified.architecture[filter] = e.target.checked;
+                                        setFilterState(filterModified);
+                                        callback(filterModified);
+                                    }}
+                                />
+                            ))
+                        }
+                    </Accordion.Body>
+                </Accordion.Item>
+                <Accordion.Item eventKey="3">
+                    <Accordion.Header>Zipped</Accordion.Header>
+                    <Accordion.Body>
+                        {
+                            filterState && Object.keys(filterState.zipped).map((filter, index) => (
+                                <Form.Check
+                                    key={index}
+                                    type="checkbox"
+                                    label={filter}
+                                    id={filter}
+                                    className="text-capitalize"
+                                    checked={filterState.zipped[filter]}
+                                    onChange={(e) => {
+                                        console.log(e.target.checked)
+                                        let filterModified = { ...filterState };
+                                        filterModified.zipped[filter] = e.target.checked;
                                         setFilterState(filterModified);
                                         callback(filterModified);
                                     }}
