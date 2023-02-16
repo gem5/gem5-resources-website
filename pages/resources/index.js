@@ -11,7 +11,6 @@ import { useState, useEffect } from "react";
 export default function Resources(props) {
     const router = useRouter()
     const [search, setSearch] = useState("");
-    const [filters, setFilters] = useState(props.filters);
 
     useEffect(() => {
         setSearch(filterToQuery(props.filters))
@@ -59,7 +58,6 @@ export default function Resources(props) {
     function onChange(filters) {
         let q = filterToQuery(filters)
         setSearch(q)
-        setFilters(filters)
         router.push({
             pathname: '/resources',
             query: { q: q }
@@ -138,7 +136,9 @@ export async function getServerSideProps({ query }) {
         }
     });
     queryObject["query"] = queryArray.filter(query => !query.includes(":"))[0];
-
+    if (!queryObject["query"]) {
+        queryObject["query"] = "";
+    }
     const resources = await getResources(queryObject);
     const filters = await getFilters();
 
