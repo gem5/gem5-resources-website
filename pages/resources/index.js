@@ -51,7 +51,8 @@ export default function Resources(props) {
                 }
             }
         }
-        let searchQuery = search.split(' ').filter((word) => !word.includes(':'))[0];
+        let searchQuery = search.split(' ').filter((word) => !word.includes(':'));
+        searchQuery = searchQuery.join(' ');
         if (searchQuery) {
             q += searchQuery;
         }
@@ -138,7 +139,8 @@ export async function getServerSideProps({ query }) {
             }
         }
     });
-    queryObject["query"] = queryArray.filter(query => !query.includes(":"))[0];
+    queryObject["query"] = queryArray.filter(query => !query.includes(":"));
+    queryObject["query"] = queryObject["query"].join(" ");
     if (!queryObject["query"]) {
         queryObject["query"] = "";
     }
