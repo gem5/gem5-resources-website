@@ -3,10 +3,10 @@ import Banner from '@/components/resource-banner'
 import Head from 'next/head'
 import { Row, Col, Container } from 'react-bootstrap'
 import { SSRProvider } from "@react-aria/ssr";
-import { getResource } from '../api/getresource'
+import { getResource } from '../../api/getresource'
 import ResourceTab from '@/components/resource-tab'
 
-export default function Resource({ resource }) {
+export default function Resource({ resource, page, readme }) {
     return (
         <SSRProvider>
             <Head>
@@ -19,7 +19,7 @@ export default function Resource({ resource }) {
                     <Banner resource={resource} />
                 </Row>
                 <Row>
-                    <ResourceTab resource={resource} />
+                    <ResourceTab resource={resource} readme={readme} />
                     <MetaData resource={resource} className='ms-5' />
                 </Row>
             </Container>
@@ -37,5 +37,13 @@ export async function getServerSideProps(ctx) {
         };
     }
 
-    return { props: { resource } };
+    const result = await fetch(resource.documentation_url ?? 'https://raw.githubusercontent.com/remarkjs/react-markdown/main/readme.md');
+    const text = await result.text();
+
+    return {
+        props: {
+            resource: resource,
+            readme: text
+        }
+    };
 };

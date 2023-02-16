@@ -8,33 +8,43 @@ import rehypeHighlight from 'rehype-highlight'
 import rehypeSlug from 'rehype-slug'
 import rehypeRaw from 'rehype-raw'
 import CopyIcon from './copy-icon';
-
-export default function ResourceTab({ resource }) {
+import { useRouter } from 'next/router';
+export default function ResourceTab({ resource, readme }) {
+  const router = useRouter();
   const [selectedTab, setSelectedTab] = useState('readme');
+
   useEffect(() => {
     const tabs = ['readme', 'changelog', 'usage', 'parameters', 'example', 'versions'];
-    if (window.location.hash.substring(1) !== '') {
-      const tab = window.location.hash.substring(1);
-      if (tabs.includes(tab)) {
-        setSelectedTab(window.location.hash.substring(1));
+    const page = router.asPath.split('/').slice(2);
+    if (page[1]) {
+      if (tabs.includes(page[1])) {
+        setSelectedTab(page[1]);
+      } else {
+        router.push(`/resources/${resource.id}`, undefined, { shallow: true });
       }
+    } else {
+      setSelectedTab('readme');
     }
-  }, []);
+  }, [router.asPath]);
 
   const handleSelect = (e) => {
+    if (e === 'readme') {
+      setSelectedTab(e);
+      return router.push(`/resources/${resource.id}`, undefined, { shallow: true });
+    }
     setSelectedTab(e);
-    window.location.hash = e;
+    router.push(`/resources/${resource.id}/${e}`, undefined, { shallow: true });
   }
 
   return (
     <div className='tabs'>
       <Tabs
         defaultActiveKey="readme"
-        activeKey={selectedTab ? selectedTab : 'readme'}
+        activeKey={selectedTab ?? 'readme'}
         onSelect={(e) => handleSelect(e)}
       >
         <Tab eventKey="readme" title="Readme">
-          <ReadmeTab url={resource.documentation_url} />
+          <ReadmeTab readme={readme} />
         </Tab>
         <Tab eventKey="changelog" title="Changelog">
 
@@ -75,22 +85,12 @@ function SEandFSToggle() {
   );
 }
 
-function ReadmeTab({ url }) {
-  const [readme, setReadme] = useState('');
-  useEffect(() => {
-    const fetchReadme = async () => {
-      const result = await fetch(url ?? 'https://raw.githubusercontent.com/remarkjs/react-markdown/main/readme.md');
-      const text = await result.text();
-      setReadme(text);
-    }
-    fetchReadme();
-  }, [url]);
-
+function ReadmeTab({ readme }) {
   return (
     <Tab.Container defaultActiveKey="first">
       {/* wrap pre tags in CopyIcon */}
       <ReactMarkdown
-        rehypePlugins={[[rehypeHighlight, { ignoreMissing: true }], rehypeRaw]}
+        rehypePlugins={[[rehypeHighlight, { ignoreMissing: true }], rehypeRaw, rehypeSlug]}
         remarkPlugins={[remarkToc, remarkGfm]}
         components={{
           pre: ({ node, ...props }) =>
