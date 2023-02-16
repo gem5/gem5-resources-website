@@ -10,7 +10,7 @@ import { useState, useEffect } from "react";
 
 export default function Resources(props) {
     const router = useRouter()
-    const [search, setSearch] = useState("");
+    const [search, setSearch] = useState(props.query)
 
     useEffect(() => {
         setSearch(filterToQuery(props.filters))
@@ -51,7 +51,10 @@ export default function Resources(props) {
                 }
             }
         }
-        q += props.query
+        let searchQuery = search.split(' ').filter((word) => !word.includes(':'))[0];
+        if (searchQuery) {
+            q += searchQuery;
+        }
         return q
     }
 
@@ -80,7 +83,7 @@ export default function Resources(props) {
             </Head>
             <div className='d-flex flex-column gap-4 align-items-center'>
                 <div className='p-5 w-100 bg-light'>
-                    <SearchBox callback={onSearch} query={search} />
+                    <SearchBox callback={onSearch} query={search} setQuery={setSearch} />
                 </div>
                 <div style={{ width: '60%' }} >
                     <Row>

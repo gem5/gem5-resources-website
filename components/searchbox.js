@@ -5,21 +5,21 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import searchImage from "public/search.png"
 
-export default function SearchBox({ callback, query = "" }) {
-    const [search, setSearch] = useState(query)
-    useEffect(() => {
-        setSearch(query)
-    }, [query])
-    
+export default function SearchBox({ callback, query = "", setQuery = () => { } }) {
     function handleSubmit(e) {
         e.preventDefault()
         callback(e.target[0].value)
+    }
+
+    function onChange(e) {
+        setQuery(e.target.value)
+        console.log(query)
     }
     return (
         <>
             <Form className="w-100" onSubmit={handleSubmit}>
                 <InputGroup>
-                    <Form.Control type="text" placeholder="Search" value={search} onChange={(e) => setSearch(e.target.value)} />
+                    <Form.Control type="text" placeholder="Search" value={query} onChange={(e) => onChange(e)} />
                     <InputGroup.Text>
                         <Button variant="link" type="submit">
                             <Image
