@@ -10,11 +10,6 @@ export async function getResources(queryObject) {
     for (let filter in queryObject) {
         if (filter !== "query") {
             results = results.filter((resource) => {
-                if (resource[filter] == true) {
-                    console.log(queryObject[filter]);
-                    console.log(resource[filter]);
-                    console.log(queryObject[filter].includes(String(resource[filter])));
-                }
                 return queryObject[filter].includes(String(resource[filter]));
             });
         }
