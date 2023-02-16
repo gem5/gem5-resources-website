@@ -5,18 +5,15 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import searchImage from "public/search.png"
 
-export default function SearchBox() {
-    const router = useRouter()
-
-    const [search, setSearch] = useState("");
-
+export default function SearchBox({ callback, query = "" }) {
+    const [search, setSearch] = useState(query)
     useEffect(() => {
-        setSearch(new URLSearchParams(new URL(window.location.href).search).get('q'));
-    }, []);
-
+        setSearch(query)
+    }, [query])
+    
     function handleSubmit(e) {
         e.preventDefault()
-        router.push(`/resources?q=${e.target[0].value}`)
+        callback(e.target[0].value)
     }
     return (
         <>
