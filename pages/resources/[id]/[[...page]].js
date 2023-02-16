@@ -19,7 +19,7 @@ export default function Resource({ resource, page, readme }) {
                     <Banner resource={resource} />
                 </Row>
                 <Row>
-                    <ResourceTab resource={resource} page={page} readme={readme} />
+                    <ResourceTab resource={resource} readme={readme} />
                     <MetaData resource={resource} className='ms-5' />
                 </Row>
             </Container>
@@ -29,7 +29,6 @@ export default function Resource({ resource, page, readme }) {
 
 export async function getServerSideProps(ctx) {
     const id = ctx.params.id
-    const page = ctx.params.page ?? null
     ctx.res.setHeader('Cache-Control', 's-maxage=10, stale-while-revalidate')
     let resource = await getResource(id)
     if (resource.error) {
@@ -44,7 +43,6 @@ export async function getServerSideProps(ctx) {
     return {
         props: {
             resource: resource,
-            page: page,
             readme: text
         }
     };

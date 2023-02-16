@@ -9,19 +9,23 @@ import rehypeSlug from 'rehype-slug'
 import rehypeRaw from 'rehype-raw'
 import CopyIcon from './copy-icon';
 import { useRouter } from 'next/router';
-export default function ResourceTab({ resource, page, readme }) {
+export default function ResourceTab({ resource, readme }) {
   const router = useRouter();
   const [selectedTab, setSelectedTab] = useState('readme');
 
   useEffect(() => {
-    const tabs = ['', 'changelog', 'usage', 'parameters', 'example', 'versions'];
-    if (page) {
-      if (tabs.includes(page[0])) {
-        return setSelectedTab(page[0]);
+    const tabs = ['readme', 'changelog', 'usage', 'parameters', 'example', 'versions'];
+    const page = router.asPath.split('/').slice(2);
+    if (page[1]) {
+      if (tabs.includes(page[1])) {
+        setSelectedTab(page[1]);
+      } else {
+        router.push(`/resources/${resource.id}`, undefined, { shallow: true });
       }
-      router.push(`/resources/${resource.id}`, undefined, { shallow: true });
+    } else {
+      setSelectedTab('readme');
     }
-  }, []);
+  }, [router.asPath]);
 
   const handleSelect = (e) => {
     if (e === 'readme') {
