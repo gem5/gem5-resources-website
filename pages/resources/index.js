@@ -89,7 +89,7 @@ export default function Resources(props) {
                         </Col>
                         <Col>
                             <Row className='justify-content-between align-items-center'>
-                                <div>
+                                <div className='w-auto'>
                                     <span className='text-uppercase me-2 text-muted'>
                                         Results
                                     </span>
@@ -97,12 +97,12 @@ export default function Resources(props) {
                                         {props.resources.length}
                                     </span>
                                 </div>
-                                <div>
+                                <div className='w-auto'>
                                     <span className='text-uppercase me-2 text-muted'>
-                                        Results
+                                        Sort by
                                     </span>
-                                    <span className='primary'>
-                                        {props.resources.length}
+                                    <span className='text-uppercase primary'>
+                                        Relevance
                                     </span>
                                 </div>
                             </Row>
