@@ -6,11 +6,38 @@ export default function Filters({ filters, callback }) {
     useEffect(() => {
         setFilterState(filters);
     }, [filters]);
-
     return (
         <>
-            <Accordion alwaysOpen>
-                <Accordion.Item eventKey="0">
+            <Accordion alwaysOpen className="my-accordion">
+                {
+                    Object.keys(filterState).map((filter, index) => (
+                        <Accordion.Item eventKey={index}>
+                            <Accordion.Header>{filter}</Accordion.Header>
+                            <Accordion.Body>
+                                {
+                                    Object.keys(filterState[filter]).map((value, index) => (
+                                        <Form.Check
+                                            key={index}
+                                            type="checkbox"
+                                            label={value}
+                                            id={value}
+                                            className="text-capitalize"
+                                            checked={filterState[filter][value]}
+                                            onChange={(e) => {
+                                                let filterModified = { ...filterState };
+                                                filterModified[filter][value] = e.target.checked;
+                                                setFilterState(filterModified);
+                                                callback(filterModified);
+                                            }
+                                            }
+                                        />
+                                    ))
+                                }
+                            </Accordion.Body>
+                        </Accordion.Item>
+                    ))
+                }
+                {/* <Accordion.Item eventKey="0">
                     <Accordion.Header>Category</Accordion.Header>
                     <Accordion.Body>
                         {
@@ -84,18 +111,17 @@ export default function Filters({ filters, callback }) {
                     <Accordion.Header>Zipped</Accordion.Header>
                     <Accordion.Body>
                         {
-                            filterState && Object.keys(filterState.zipped).map((filter, index) => (
+                            filterState && Object.keys(filterState.is_zipped).map((filter, index) => (
                                 <Form.Check
                                     key={index}
                                     type="checkbox"
                                     label={filter}
                                     id={filter}
                                     className="text-capitalize"
-                                    checked={filterState.zipped[filter]}
+                                    checked={filterState.is_zipped[filter]}
                                     onChange={(e) => {
-                                        console.log(e.target.checked)
                                         let filterModified = { ...filterState };
-                                        filterModified.zipped[filter] = e.target.checked;
+                                        filterModified.is_zipped[filter] = e.target.checked;
                                         setFilterState(filterModified);
                                         callback(filterModified);
                                     }}
@@ -103,7 +129,7 @@ export default function Filters({ filters, callback }) {
                             ))
                         }
                     </Accordion.Body>
-                </Accordion.Item>
+                </Accordion.Item> */}
             </Accordion>
         </>
     )

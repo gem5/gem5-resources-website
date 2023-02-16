@@ -9,11 +9,14 @@ export async function getFilters() {
     let architectures = [...new Set(resources['resources'].map(resource => resource.architecture))];
     // get zipped from resources
     let zippeds = [...new Set(resources['resources'].map(resource => String(resource.is_zipped)))].filter(zipped => zipped != "null");
+    // get gem5_version from resources
+    let gem5_versions = [...new Set(resources['resources'].map(resource => resource.gem5_version))].filter(gem5_version => gem5_version != null);
     return {
         category: categories,
         group: groups,
         architecture: architectures,
-        zipped : zippeds,
+        is_zipped : zippeds,
+        gem5_version: gem5_versions
     };
 }
 

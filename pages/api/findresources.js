@@ -4,14 +4,19 @@ export async function getResources(queryObject) {
     const query = queryObject.query;
 
     // do search like
-    console.log(query);
     // filter json file to find the resources that contain the query in their id
     let results = resources['resources'].filter(resource => resource.id.toLowerCase().includes(query.toLowerCase()) || resource.description.toLowerCase().includes(query.toLowerCase()));
     // filter based on queryObject filters
-    console.log(queryObject)
     for (let filter in queryObject) {
         if (filter !== "query") {
-            results = results.filter(resource => queryObject[filter].includes(resource[filter]));
+            results = results.filter((resource) => {
+                if (resource[filter] == true) {
+                    console.log(queryObject[filter]);
+                    console.log(resource[filter]);
+                    console.log(queryObject[filter].includes(String(resource[filter])));
+                }
+                return queryObject[filter].includes(String(resource[filter]));
+            });
         }
     }
     return results;
