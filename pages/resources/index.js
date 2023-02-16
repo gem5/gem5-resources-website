@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { getResources } from '../api/findresources'
-import Seachbox from '@/components/searchbox'
+import SearchBox from '@/components/searchbox'
 import SearchResult from '@/components/searchresult'
 
 export default function Resources({ resources }) {
@@ -24,10 +24,9 @@ export default function Resources({ resources }) {
             <div>
                 {
                     resources.map((resource, index) => (
-                        <>
-                            <hr />
+                        <div key={index} className='mt-5'>
                             <SearchResult resource={resource} />
-                        </>
+                        </div>
                     ))
                 }
             </div>
@@ -40,10 +39,18 @@ export default function Resources({ resources }) {
                 <meta name="description" content="Find the resource you need" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
+            <div className='d-flex flex-column gap-4 align-items-center'>
+                <div style={{ backgroundColor: 'lightgray' }} className='p-5 w-100'>
+                    <SearchBox />
+                </div>
+                <div style={{ width: '60%' }} >
+                    <Results />
+                </div>
+            </div>
             <Container className='d-flex flex-column gap-4 align-items-center'>
                 <h1 className=' text-muted text-uppercase'>Gem5 Resources</h1>
                 <div className='search-results'>
-                    <Seachbox buttons={false} />
+                    <SearchBox />
                     <Results />
                 </div>
             </Container>

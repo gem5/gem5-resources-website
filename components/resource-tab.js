@@ -90,7 +90,7 @@ function ReadmeTab({ url }) {
     <Tab.Container defaultActiveKey="first">
       {/* wrap pre tags in CopyIcon */}
       <ReactMarkdown
-        rehypePlugins={[[rehypeHighlight, { ignoreMissing: true }], rehypeSlug, rehypeRaw]}
+        rehypePlugins={[[rehypeHighlight, { ignoreMissing: true }], rehypeRaw]}
         remarkPlugins={[remarkToc, remarkGfm]}
         components={{
           pre: ({ node, ...props }) =>

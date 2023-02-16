@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import searchImage from "public/search.png"
 
-export default function Seachbox({ buttons = true }) {
+export default function SearchBox() {
     const router = useRouter()
 
     const [search, setSearch] = useState("");
@@ -16,7 +16,6 @@ export default function Seachbox({ buttons = true }) {
 
     function handleSubmit(e) {
         e.preventDefault()
-        // console.log(e.nativeEvent.submitter.innerText)
         router.push(`/resources?q=${e.target[0].value}`)
     }
     return (
@@ -25,22 +24,16 @@ export default function Seachbox({ buttons = true }) {
                 <InputGroup>
                     <Form.Control type="text" placeholder="Search" value={search} onChange={(e) => setSearch(e.target.value)} />
                     <InputGroup.Text>
-                        <Image
-                            src={searchImage}
-                            alt="Search Icon"
-                            height="20"
-                        />
+                        <Button variant="link" type="submit">
+                            <Image
+                                src={searchImage}
+                                alt="Search Icon"
+                                height="20"
+                                type="submit"
+                            />
+                        </Button>
                     </InputGroup.Text>
                 </InputGroup>
-                {
-                    buttons && (
-                        <Container className={styles.buttonContainer}>
-                            <Button variant="outline-primary" type="submit">Search</Button>
-                            <Button variant="outline-primary" type="submit">Advanced Search</Button>
-                        </Container>
-                    )
-                }
-
             </Form>
         </>
     )
