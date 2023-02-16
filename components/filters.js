@@ -11,7 +11,7 @@ export default function Filters({ filters, callback }) {
             <Accordion alwaysOpen className="my-accordion">
                 {
                     Object.keys(filterState).map((filter, index) => (
-                        <Accordion.Item eventKey={index}>
+                        <Accordion.Item eventKey={index} key={index}>
                             <Accordion.Header>{filter}</Accordion.Header>
                             <Accordion.Body>
                                 {
