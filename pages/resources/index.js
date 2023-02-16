@@ -25,6 +25,7 @@ export default function Resources({ resources }) {
                 {
                     resources.map((resource, index) => (
                         <div key={index} className='mt-5'>
+                            <hr />
                             <SearchResult resource={resource} />
                         </div>
                     ))
@@ -40,7 +41,7 @@ export default function Resources({ resources }) {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
             <div className='d-flex flex-column gap-4 align-items-center'>
-                <div style={{ backgroundColor: 'lightgray' }} className='p-5 w-100'>
+                <div className='p-5 w-100 bg-light'>
                     <SearchBox />
                 </div>
                 <div style={{ width: '60%' }} >

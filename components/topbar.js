@@ -6,7 +6,7 @@ import Link from "next/link";
 export default function Topbar() {
     return (
         <>
-            <Navbar bg="light">
+            <Navbar bg="light" className="shadow-sm">
                 <Container>
                     <Navbar.Brand href="/" as={Link}>
                         <Image
