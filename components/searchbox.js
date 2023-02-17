@@ -9,7 +9,7 @@ const SearchBox = forwardRef((props, ref) => {
     const [search, setSearch] = useState(props.query)
     useEffect(() => {
         setSearch(props.query)
-    }, [])
+    }, [props.query])
 
     function handleSubmit(e) {
         e.preventDefault()
@@ -53,5 +53,7 @@ const SearchBox = forwardRef((props, ref) => {
         </>
     )
 })
+
+SearchBox.displayName = 'SearchBox'
 
 export default SearchBox
