@@ -1,25 +1,43 @@
 import { Container, Form, Button, InputGroup, FormControl } from "react-bootstrap";
 import styles from '/styles/searchbox.module.css'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from "react";
+import { useEffect, useState, setState, forwardRef, useImperativeHandle } from "react";
 import Image from "next/image";
 import searchImage from "public/search.png"
 
-export default function SearchBox({ callback, query = "", setQuery = () => { } }) {
+const SearchBox = forwardRef((props, ref) => {
+    const [search, setSearch] = useState(props.query)
+    useEffect(() => {
+        setSearch(props.query)
+    }, [])
+
     function handleSubmit(e) {
         e.preventDefault()
-        callback(e.target[0].value)
+        props.callback(e.target[0].value)
+    }
+
+    useImperativeHandle(ref, () => ({
+        setSearchQuery,
+        getSearchQuery
+    }))
+
+    function setSearchQuery(query) {
+        setSearch(query)
+    }
+
+    function getSearchQuery() {
+        return search
     }
 
     function onChange(e) {
-        setQuery(e.target.value)
-        console.log(query)
+        // change props.query to e.target.value
+        setSearch(e.target.value)
     }
     return (
         <>
             <Form className="w-100" onSubmit={handleSubmit}>
                 <InputGroup>
-                    <Form.Control type="text" placeholder="Search" value={query} onChange={(e) => onChange(e)} />
+                    <Form.Control type="text" placeholder="Search" value={search} onChange={(e) => onChange(e)} />
                     <InputGroup.Text>
                         <Button variant="link" type="submit">
                             <Image
@@ -34,4 +52,6 @@ export default function SearchBox({ callback, query = "", setQuery = () => { } }
             </Form>
         </>
     )
-}
+})
+
+export default SearchBox

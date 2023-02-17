@@ -1,19 +1,20 @@
 import Head from 'next/head'
-import { Col, Row, SSRProvider } from 'react-bootstrap'
+import { Button, Col, Row, SSRProvider } from 'react-bootstrap'
 import { getResources } from '../api/findresources'
 import SearchBox from '@/components/searchbox'
 import SearchResult from '@/components/searchresult'
 import Filters from '@/components/filters'
 import { getFilters } from "../api/getfilters";
 import { useRouter } from 'next/router'
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function Resources(props) {
     const router = useRouter()
-    const [search, setSearch] = useState(props.query)
+    const ref = useRef()
 
     useEffect(() => {
-        setSearch(filterToQuery(props.filters))
+        let q = filterToQuery(props.filters)
+        ref.current.setSearchQuery(q)
     }, [])
 
     function Results() {
@@ -51,7 +52,7 @@ export default function Resources(props) {
                 }
             }
         }
-        let searchQuery = search.split(' ').filter((word) => !word.includes(':'));
+        let searchQuery = ref.current.getSearchQuery().split(' ').filter((word) => !word.includes(':'));
         searchQuery = searchQuery.join(' ');
         if (searchQuery) {
             q += searchQuery;
@@ -61,7 +62,7 @@ export default function Resources(props) {
 
     function onChange(filters) {
         let q = filterToQuery(filters)
-        setSearch(q)
+        ref.current.setSearchQuery(q)
         router.push({
             pathname: '/resources',
             query: { q: q }
@@ -69,12 +70,13 @@ export default function Resources(props) {
     }
 
     function onSearch(query) {
-        setSearch(query)
+        ref.current.setSearchQuery(query)
         router.push({
             pathname: '/resources',
             query: { q: query }
         })
     }
+
     return (
         <SSRProvider>
             <Head>
@@ -84,7 +86,7 @@ export default function Resources(props) {
             </Head>
             <div className='d-flex flex-column gap-4 align-items-center'>
                 <div className='p-5 w-100 bg-light'>
-                    <SearchBox callback={onSearch} query={search} setQuery={setSearch} />
+                    <SearchBox callback={onSearch} query={props.query} ref={ref} />
                 </div>
                 <div style={{ width: '60%' }} >
                     <Row>
