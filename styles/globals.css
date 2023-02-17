@@ -105,17 +105,29 @@ code {
   fill: black;
 }
 
-.search-results {
+
+.my-accordion .accordion-button {
+  text-transform: capitalize;
+}
+
+.content {
   width: 60%;
-  min-width: 30rem;
-  background-color: lightgray;
-  padding: 1rem;
-  border-radius: 10px;
 }
 
 @media (max-width: 768px) {
   .search-results {
     width: 100%;
     min-width: 0;
+  }
+
+  .filters {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .content {
+    width: 100%;
+    padding-left: 2%;
+    padding-right: 2%;
   }
 }

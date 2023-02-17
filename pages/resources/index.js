@@ -1,16 +1,23 @@
 import Head from 'next/head'
-import { Container, SSRProvider } from 'react-bootstrap'
-import { useEffect, useState } from 'react'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { Button, Col, Row, SSRProvider } from 'react-bootstrap'
 import { getResources } from '../api/findresources'
-import Seachbox from '@/components/searchbox'
+import SearchBox from '@/components/searchbox'
 import SearchResult from '@/components/searchresult'
+import Filters from '@/components/filters'
+import { getFilters } from "../api/getfilters";
+import { useRouter } from 'next/router'
+import { useState, useEffect, useRef } from "react";
 
-export default function Resources({ resources }) {
+export default function Resources(props) {
+    const router = useRouter()
+    const ref = useRef()
+
+    useEffect(() => {
+        ref.current.setSearchQuery(filterToQuery(props.filters))
+    }, [])
 
     function Results() {
-        if (resources.length === 0) {
+        if (props.resources.length === 0) {
             return (
                 <>
                     <hr />
@@ -23,16 +30,53 @@ export default function Resources({ resources }) {
         return (
             <div>
                 {
-                    resources.map((resource, index) => (
-                        <>
-                            <hr />
+                    props.resources.map((resource, index) => (
+                        <div key={index}>
                             <SearchResult resource={resource} />
-                        </>
+                            <hr />
+                        </div>
                     ))
                 }
             </div>
         )
     }
+
+    function filterToQuery(filters) {
+        // convert filters to query string
+        let q = '';
+        for (let filter in filters) {
+            for (let value in filters[filter]) {
+                if (filters[filter][value]) {
+                    q += `${filter}:${value} `;
+                }
+            }
+        }
+        let searchQuery = ref.current.getSearchQuery().split(' ').filter((word) => !word.includes(':'));
+        searchQuery = searchQuery.join(' ');
+        if (searchQuery) {
+            q += searchQuery;
+        }
+        return q
+    }
+
+    function onChange(filters) {
+        let q = filterToQuery(filters)
+        ref.current.setSearchQuery(q)
+        router.push({
+            pathname: '/resources',
+            query: { q: q }
+        })
+    }
+
+    function onSearch(query) {
+        console.log(query)
+        ref.current.setSearchQuery(query)
+        router.push({
+            pathname: '/resources',
+            query: { q: query }
+        })
+    }
+
     return (
         <SSRProvider>
             <Head>
@@ -40,13 +84,41 @@ export default function Resources({ resources }) {
                 <meta name="description" content="Find the resource you need" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
-            <Container className='d-flex flex-column gap-4 align-items-center'>
-                <h1 className=' text-muted text-uppercase'>Gem5 Resources</h1>
-                <div className='search-results'>
-                    <Seachbox buttons={false} />
-                    <Results />
+            <div className='d-flex flex-column gap-4 align-items-center'>
+                <div className='p-5 w-100 bg-light'>
+                    <SearchBox callback={onSearch} query={props.query} ref={ref} />
                 </div>
-            </Container>
+                <div className='content'>
+                    <Row>
+                        <Col xs={3} className='filters'>
+                            <Filters filters={props.filters} callback={onChange} />
+                        </Col>
+                        <Col>
+                            <Row className='justify-content-between align-items-center'>
+                                <div className='w-auto'>
+                                    <span className='text-uppercase me-2 text-muted'>
+                                        Results
+                                    </span>
+                                    <span className='primary'>
+                                        {props.resources.length}
+                                    </span>
+                                </div>
+                                <div className='w-auto'>
+                                    <span className='text-uppercase me-2 text-muted'>
+                                        Sort by
+                                    </span>
+                                    <span className='text-uppercase primary'>
+                                        Relevance
+                                    </span>
+                                </div>
+                            </Row>
+                            <Row>
+                                <Results />
+                            </Row>
+                        </Col>
+                    </Row>
+                </div>
+            </div>
         </SSRProvider>
     )
 }
@@ -55,6 +127,48 @@ export async function getServerSideProps({ query }) {
     if (!query.q) {
         query.q = ''
     }
-    const resources = await getResources(query.q)
-    return { props: { resources } };
+    // query.q might contain something like "category:workload category:kernel query"
+    // parse the query and convert to something like category: ["gem5", "gem5art"] query: ["query"]
+    let queryObject = {};
+    let queryArray = query.q.split(" ");
+    queryArray.forEach(query => {
+        let querySplit = query.split(":");
+        if (querySplit.length === 2) {
+            if (queryObject[querySplit[0]]) {
+                queryObject[querySplit[0]].push(querySplit[1]);
+            } else {
+                queryObject[querySplit[0]] = [querySplit[1]];
+            }
+        }
+    });
+    queryObject["query"] = queryArray.filter(query => !query.includes(":"));
+    queryObject["query"] = queryObject["query"].join(" ");
+    if (!queryObject["query"]) {
+        queryObject["query"] = "";
+    }
+    const resources = await getResources(queryObject);
+    const filters = await getFilters();
+
+    let filterModified = {};
+    for (let filter in filters) {
+        let filterObject = {};
+        filters[filter].forEach(filterOption => {
+            if (queryObject[filter] && queryObject[filter].includes(filterOption)) {
+                filterObject[filterOption] = true;
+            } else {
+                filterObject[filterOption] = false;
+            }
+        }
+        );
+        filterModified[filter] = filterObject;
+    }
+
+    return {
+        props: {
+            resources: resources,
+            filters: filterModified,
+            query: queryObject.query,
+            fullQuery: query.q
+        }
+    };
 };

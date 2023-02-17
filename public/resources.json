@@ -280,7 +280,7 @@
             "github_url": null
         },
         {
-            "category": "disk image",
+            "category": "diskimage",
             "id": "riscv-disk-img",
             "description": "A simple RISCV disk image based on busybox.",
             "function": null,
@@ -304,7 +304,7 @@
             "github_url": null
         },
         {
-            "category": "disk image",
+            "category": "diskimage",
             "id": "riscv-lupio-busybox-img",
             "description": "A RISCV disk image, based on busybox, to be used with the LupvBoard. Should be used with the 'riscv-lupio-linux-kernel' kernel resource.",
             "function": null,
@@ -466,7 +466,7 @@
             "github_url": null
         },
         {
-            "category": "disk image",
+            "category": "diskimage",
             "id": "x86-gpu-fs-img",
             "description": "An Ubuntu 18.04 disk image with ROCm 4.2 installed. This can be used to run GPU full-system simulations.",
             "function": null,
@@ -490,7 +490,7 @@
             "github_url": null
         },
         {
-            "category": "disk image",
+            "category": "diskimage",
             "id": "x86-ubuntu-18.04-img",
             "description": "A disk image containing Ubuntu 18.04 for x86. This image will run an `m5 readfile` instruction after booting. If no script file is specified an `m5 exit` instruction will be executed.",
             "function": null,
@@ -514,7 +514,7 @@
             "github_url": null
         },
         {
-            "category": "disk image",
+            "category": "diskimage",
             "id": "riscv-ubuntu-20.04-img",
             "description": "A disk image containing Ubuntu 20.04 for RISCV which will run an `m5 readfile` instruction after booting. If no script file is specified an `m5 exit` instruction will be exected",
             "function": null,
@@ -538,7 +538,7 @@
             "github_url": null
         },
         {
-            "category": "disk image",
+            "category": "diskimage",
             "id": "arm64-ubuntu-18.04-img",
             "description": "A disk image containing Ubuntu 18.04 for arm64.",
             "function": null,
@@ -562,7 +562,7 @@
             "github_url": null
         },
         {
-            "category": "disk image",
+            "category": "diskimage",
             "id": "arm64-ubuntu-20.04-img",
             "description": "A disk image containing Ubuntu 20.04 for ARM which will run an `m5 readfile` instruction after booting. If no script file is specified an `m5 exit` instruction will be executed.",
             "function": null,
