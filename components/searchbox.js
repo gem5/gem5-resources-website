@@ -7,12 +7,10 @@ import searchImage from "public/search.png"
 
 const SearchBox = forwardRef((props, ref) => {
     const [search, setSearch] = useState(props.query)
-    useEffect(() => {
-        setSearch(props.query)
-    }, [props.query])
 
     function handleSubmit(e) {
         e.preventDefault()
+        console.log(e.target[0].value)
         props.callback(e.target[0].value)
     }
 
@@ -30,7 +28,6 @@ const SearchBox = forwardRef((props, ref) => {
     }
 
     function onChange(e) {
-        // change props.query to e.target.value
         setSearch(e.target.value)
     }
     return (

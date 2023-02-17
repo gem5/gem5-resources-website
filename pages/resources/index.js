@@ -13,8 +13,7 @@ export default function Resources(props) {
     const ref = useRef()
 
     useEffect(() => {
-        let q = filterToQuery(props.filters)
-        ref.current.setSearchQuery(q)
+        ref.current.setSearchQuery(filterToQuery(props.filters))
     }, [])
 
     function Results() {
@@ -70,6 +69,7 @@ export default function Resources(props) {
     }
 
     function onSearch(query) {
+        console.log(query)
         ref.current.setSearchQuery(query)
         router.push({
             pathname: '/resources',
