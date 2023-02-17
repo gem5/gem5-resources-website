@@ -2,7 +2,6 @@ import { Container, Navbar, Nav, Offcanvas } from "react-bootstrap";
 import Image from "next/image";
 import logo from "public/gem5ColorLong.gif";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 
 export default function Topbar() {
     return (

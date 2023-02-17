@@ -110,6 +110,10 @@ code {
   text-transform: capitalize;
 }
 
+.content {
+  width: 60%;
+}
+
 @media (max-width: 768px) {
   .search-results {
     width: 100%;
@@ -119,5 +123,11 @@ code {
   .filters {
     width: 100%;
     min-width: 0;
+  }
+
+  .content {
+    width: 100%;
+    padding-left: 2%;
+    padding-right: 2%;
   }
 }

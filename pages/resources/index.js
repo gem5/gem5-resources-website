@@ -88,7 +88,7 @@ export default function Resources(props) {
                 <div className='p-5 w-100 bg-light'>
                     <SearchBox callback={onSearch} query={props.query} ref={ref} />
                 </div>
-                <div style={{ width: '60%' }} >
+                <div className='content'>
                     <Row>
                         <Col xs={3} className='filters'>
                             <Filters filters={props.filters} callback={onChange} />
