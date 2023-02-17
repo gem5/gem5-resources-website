@@ -58,7 +58,20 @@ export default function MetaData({ resource, className }) {
                 <Row className="border-bottom">
                     <p className="text-muted">Dependencies</p>
                     <p className="primary">
-                        {resource.dependencies ?? 'None'}
+                        {
+                            resource.resources ? Object.keys(resource.resources).map((key) => {
+                                return (
+                                    <>
+                                        <Link
+                                            href={'/resources/' + resource.resources[key]}
+                                        >
+                                            {resource.resources[key]}
+                                        </Link>
+                                        {', '}
+                                    </>
+                                )
+                            }) : 'None'
+                        }
                     </p>
                 </Row>
             </Container >
