@@ -26,6 +26,7 @@ export default function SearchResult({ resource }) {
                 return '';
         }
     }
+
     return (
         <div className="search-result">
             <Link href={'/resources/' + resource.id} style={{ textDecoration: 'none', color: 'inherit' }}>
