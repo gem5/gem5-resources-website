@@ -26,13 +26,13 @@ export default function MetaData({ resource, className }) {
                     </Col>
                 </Row>
                 <Row className="border-bottom">
-                    <p className="text-muted">Publisher</p>
+                    <p className="text-muted">Author</p>
                     <h4 className="primary">
                         {resource.author ?? 'Bobby R. Bruce'}
                     </h4>
                 </Row>
                 <Row className="border-bottom">
-                    <p className="text-muted">Metadata</p>
+                    <p className="text-muted">Description</p>
                     <p className="primary">
                         {resource.description ?? 'This is a description of the resource.'}
                     </p>
