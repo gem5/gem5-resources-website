@@ -29,16 +29,16 @@ function Resource({ resource, readme }) {
 }
 
 export async function getStaticPaths() {
-    // const resources = await getResources({ query: '' })
+    const resources = await getResources({ query: '' })
     // create paths for all /resources/[id]/[...page]
-    // const paths = resources.map((resource) => ({
-    //     params: {
-    //         id: resource.id.toString(),
-    //         page: ['']
-    //     },
-    // }))
-    const paths = [
-    ]
+    const paths = resources.map((resource) => ({
+        params: {
+            id: resource.id.toString(),
+            page: ['']
+        },
+    }))
+    /* const paths = [
+    ] */
     return { paths, fallback: true }
 }
 
