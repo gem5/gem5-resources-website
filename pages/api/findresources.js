@@ -7,10 +7,15 @@ export async function getResources(queryObject) {
   let results = resources['resources'].filter(resource => {
     const idMatches = keywords.filter(keyword => resource.id.toLowerCase().includes(keyword.toLowerCase())).length;
     const descMatches = keywords.filter(keyword => resource.description.toLowerCase().includes(keyword.toLowerCase())).length;
-    const totalMatches = idMatches + descMatches;
+    let resMatches = 0;
+    if (resource.resources) { // only search if resource.resources exists
+        const resourceJSON = JSON.stringify(resource.resources).toLowerCase();
+        resMatches = keywords.filter(keyword => resourceJSON.includes(keyword.toLowerCase())).length;
+    }
+    const totalMatches = idMatches + descMatches + resMatches;
     resource['totalMatches'] = totalMatches;
     return totalMatches > 0;
-  }).sort((a, b) => b.totalMatches - a.totalMatches);
+}).sort((a, b) => b.totalMatches - a.totalMatches);
 
   for (let filter in queryObject) {
     if (filter !== "query") {
