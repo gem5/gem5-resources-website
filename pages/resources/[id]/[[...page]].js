@@ -4,9 +4,10 @@ import Head from 'next/head'
 import { Row, Col, Container } from 'react-bootstrap'
 import { SSRProvider } from "@react-aria/ssr";
 import { getResource } from '../../api/getresource'
+import { getResources } from '../../api/findresources'
 import ResourceTab from '@/components/resource-tab'
 
-export default function Resource({ resource, page, readme }) {
+function Resource({ resource, readme }) {
     return (
         <SSRProvider>
             <Head>
@@ -16,20 +17,39 @@ export default function Resource({ resource, page, readme }) {
             </Head>
             <Container className='mt-5'>
                 <Row>
-                    <Banner resource={resource} />
+                    <Banner resource={resource ?? {}} />
                 </Row>
                 <Row>
-                    <ResourceTab resource={resource} readme={readme} />
-                    <MetaData resource={resource} className='ms-5' />
+                    <ResourceTab resource={resource ?? {}} readme={readme} />
+                    <MetaData resource={resource ?? {}} className='ms-5' />
                 </Row>
             </Container>
         </SSRProvider >
     )
 }
 
-export async function getServerSideProps(ctx) {
+export async function getStaticPaths() {
+    // const resources = await getResources({ query: '' })
+    // create paths for all /resources/[id]/[...page]
+    // const paths = resources.map((resource) => ({
+    //     params: {
+    //         id: resource.id.toString(),
+    //         page: ['']
+    //     },
+    // }))
+    const paths = [
+    ]
+    return { paths, fallback: true }
+}
+
+
+
+// export async function getServerSideProps(ctx) {
+export async function getStaticProps(ctx) {
+    // Resource.getInitialProps = async (ctx) => {
     const id = ctx.params.id
-    ctx.res.setHeader('Cache-Control', 's-maxage=10, stale-while-revalidate')
+    // const id = ctx.query.id
+    // ctx.res.setHeader('Cache-Control', 's-maxage=10, stale-while-revalidate')
     let resource = await getResource(id)
     if (resource.error) {
         return {
@@ -47,3 +67,5 @@ export async function getServerSideProps(ctx) {
         }
     };
 };
+
+export default Resource

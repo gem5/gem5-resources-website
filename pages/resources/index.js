@@ -8,7 +8,7 @@ import { getFilters } from "../api/getfilters";
 import { useRouter } from 'next/router'
 import { useState, useEffect, useRef } from "react";
 
-export default function Resources(props) {
+function Resources(props) {
     const router = useRouter()
     const ref = useRef()
 
@@ -123,7 +123,8 @@ export default function Resources(props) {
     )
 }
 
-export async function getServerSideProps({ query }) {
+// export async function getServerSideProps({ query }) {
+Resources.getInitialProps = async ({ query }) => {
     if (!query.q) {
         query.q = ''
     }
@@ -164,11 +165,13 @@ export async function getServerSideProps({ query }) {
     }
 
     return {
-        props: {
-            resources: resources,
-            filters: filterModified,
-            query: queryObject.query,
-            fullQuery: query.q
-        }
+        // props: {
+        resources: resources,
+        filters: filterModified,
+        query: queryObject.query,
+        fullQuery: query.q
+        // }
     };
 };
+
+export default Resources
