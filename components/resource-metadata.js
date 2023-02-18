@@ -78,10 +78,10 @@ export default function MetaData({ resource, className }) {
                     <p className="text-muted">Depend on this resource</p>
                     <p className="primary">
                         {
-                            resource.workloads ? resource.workloads.map((workload) => {
+                            resource.workloads ? resource.workloads.map((workload, index) => {
                                 return (
                                     <>
-                                        <Link key={workload.id}
+                                        <Link key={index}
                                             href={'/resources/' + workload.id}
                                         >
                                             {workload.id}

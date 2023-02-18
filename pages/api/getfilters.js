@@ -1,6 +1,7 @@
-import resources from '/public/resources.json';
+import { fetchResources } from "./resources";
 
 export async function getFilters() {
+    const resources = await fetchResources();
     // get unique categories from resources
     let categories = [...new Set(resources['resources'].map(resource => resource.category))];
     // get unique groups from resources and remove null values
@@ -15,7 +16,7 @@ export async function getFilters() {
         category: categories,
         group: groups,
         architecture: architectures,
-        is_zipped : zippeds,
+        is_zipped: zippeds,
         gem5_version: gem5_versions
     };
 }

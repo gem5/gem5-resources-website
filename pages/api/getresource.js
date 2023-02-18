@@ -1,6 +1,8 @@
-import resources from '/public/resources.json';
+import { fetchResources } from "./resources";
+
 
 export async function getResource(id) {
+    const resources = await fetchResources();
     // filter json file to find the resources that contain the query in their id
     let results = resources['resources'].filter(resource => resource.id === id);
     if (results.length === 0) {

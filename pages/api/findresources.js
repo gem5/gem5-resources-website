@@ -1,6 +1,7 @@
-import resources from '/public/resources.json';
+import { fetchResources } from "./resources";
 
 export async function getResources(queryObject) {
+  const resources = await fetchResources();
   const query = queryObject.query.trim();
   const keywords = query.split(" ");
 
@@ -9,13 +10,13 @@ export async function getResources(queryObject) {
     const descMatches = keywords.filter(keyword => resource.description.toLowerCase().includes(keyword.toLowerCase())).length;
     let resMatches = 0;
     if (resource.resources) { // only search if resource.resources exists
-        const resourceJSON = JSON.stringify(resource.resources).toLowerCase();
-        resMatches = keywords.filter(keyword => resourceJSON.includes(keyword.toLowerCase())).length;
+      const resourceJSON = JSON.stringify(resource.resources).toLowerCase();
+      resMatches = keywords.filter(keyword => resourceJSON.includes(keyword.toLowerCase())).length;
     }
     const totalMatches = idMatches + descMatches + resMatches;
     resource['totalMatches'] = totalMatches;
     return totalMatches > 0;
-}).sort((a, b) => b.totalMatches - a.totalMatches);
+  }).sort((a, b) => b.totalMatches - a.totalMatches);
 
   for (let filter in queryObject) {
     if (filter !== "query") {
