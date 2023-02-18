@@ -5,6 +5,7 @@ module.exports = {
   reactStrictMode: true,
   assetPrefix: isProd ? '/gem5-resources-website/' : '',
   images: {
+    loader: 'akamai',
     unoptimized: true,
   },
 }
