@@ -7,7 +7,7 @@ import { getResource } from '../../api/getresource'
 import { getResources } from '../../api/findresources'
 import ResourceTab from '@/components/resource-tab'
 
-function Resource({ resource, readme }) {
+function Resource({ resource }) {
     return (
         <SSRProvider>
             <Head>
@@ -20,7 +20,7 @@ function Resource({ resource, readme }) {
                     <Banner resource={resource ?? {}} />
                 </Row>
                 <Row>
-                    <ResourceTab resource={resource ?? {}} readme={readme} />
+                    <ResourceTab resource={resource ?? {}} />
                     <MetaData resource={resource ?? {}} className='ms-5' />
                 </Row>
             </Container>
@@ -57,13 +57,9 @@ export async function getStaticProps(ctx) {
         };
     }
 
-    const result = await fetch(resource.documentation_url ?? 'https://raw.githubusercontent.com/remarkjs/react-markdown/main/readme.md');
-    const text = await result.text();
-
     return {
         props: {
             resource: resource,
-            readme: text
         }
     };
 };

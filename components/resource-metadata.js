@@ -28,7 +28,14 @@ export default function MetaData({ resource, className }) {
                 <Row className="border-bottom">
                     <p className="text-muted">Author</p>
                     <h4 className="primary">
-                        {resource.author ?? 'Bobby R. Bruce'}
+                        {resource.author ? resource.author.map((author, index) => {
+                            return (
+                                <>
+                                    {author}
+                                    {index < resource.author.length - 1 ? ', ' : ''}
+                                </>
+                            )
+                        }) : 'Unknown'}
                     </h4>
                 </Row>
                 <Row className="border-bottom">
@@ -36,11 +43,14 @@ export default function MetaData({ resource, className }) {
                     <p className="primary">
                         {resource.description ?? 'This is a description of the resource.'}
                     </p>
-                    <Link
-                        href={resource.github_url ?? 'https://www.gem5.org/documentation/general_docs/resources'}
-                    >
-                        Repository (GitHub)
-                    </Link>
+                    {
+                        resource.github_url ?
+                            <Link
+                                href={resource.github_url}
+                            >
+                                Repository (GitHub)
+                            </Link> : null
+                    }
                 </Row>
                 <Row className="border-bottom">
                     <p className="text-muted">License</p>
