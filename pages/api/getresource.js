@@ -6,12 +6,23 @@ export async function getResource(id) {
     if (results.length === 0) {
         return { error: 'Resource not found' }
     }
+    let workloads = resources['resources'].filter(resource => {
+        if (resource.resources) {
+            return Object.keys(resource.resources).map((key) => {
+                return resource.resources[key]
+            }).includes(id)
+        }
+    })
+    if (workloads.length === 0) {
+        workloads = null
+    } else {
+        results[0].workloads = workloads;
+    }
     return results[0];
 }
 
 export default async function handler(req, res) {
     // check if the request is a POST request
-    console.log(req.body.id)
     if (req.method === 'POST') {
         let data = await getResource(req.body.id)
         if (data.error) {

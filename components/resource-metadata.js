@@ -62,10 +62,29 @@ export default function MetaData({ resource, className }) {
                             resource.resources ? Object.keys(resource.resources).map((key) => {
                                 return (
                                     <>
-                                        <Link
+                                        <Link key={key}
                                             href={'/resources/' + resource.resources[key]}
                                         >
                                             {resource.resources[key]}
+                                        </Link>
+                                        {', '}
+                                    </>
+                                )
+                            }) : 'None'
+                        }
+                    </p>
+                </Row>
+                <Row className="border-bottom">
+                    <p className="text-muted">Depend on this resource</p>
+                    <p className="primary">
+                        {
+                            resource.workloads ? resource.workloads.map((workload) => {
+                                return (
+                                    <>
+                                        <Link key={workload.id}
+                                            href={'/resources/' + workload.id}
+                                        >
+                                            {workload.id}
                                         </Link>
                                         {', '}
                                     </>
