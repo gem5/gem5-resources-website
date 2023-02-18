@@ -6,5 +6,7 @@ module.exports = {
   basePath: isProd ? '/gem5-resources-website' : '',
   images: {
     unoptimized: true,
+    loader: 'imgix',
+    path: '',
   },
 }

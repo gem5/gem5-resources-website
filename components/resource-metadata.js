@@ -26,13 +26,13 @@ export default function MetaData({ resource, className }) {
                     </Col>
                 </Row>
                 <Row className="border-bottom">
-                    <p className="text-muted">Publisher</p>
+                    <p className="text-muted">Author</p>
                     <h4 className="primary">
                         {resource.author ?? 'Bobby R. Bruce'}
                     </h4>
                 </Row>
                 <Row className="border-bottom">
-                    <p className="text-muted">Metadata</p>
+                    <p className="text-muted">Description</p>
                     <p className="primary">
                         {resource.description ?? 'This is a description of the resource.'}
                     </p>
@@ -62,10 +62,29 @@ export default function MetaData({ resource, className }) {
                             resource.resources ? Object.keys(resource.resources).map((key) => {
                                 return (
                                     <>
-                                        <Link
+                                        <Link key={key}
                                             href={'/resources/' + resource.resources[key]}
                                         >
                                             {resource.resources[key]}
+                                        </Link>
+                                        {', '}
+                                    </>
+                                )
+                            }) : 'None'
+                        }
+                    </p>
+                </Row>
+                <Row className="border-bottom">
+                    <p className="text-muted">Depend on this resource</p>
+                    <p className="primary">
+                        {
+                            resource.workloads ? resource.workloads.map((workload, index) => {
+                                return (
+                                    <>
+                                        <Link key={index}
+                                            href={'/resources/' + workload.id}
+                                        >
+                                            {workload.id}
                                         </Link>
                                         {', '}
                                     </>
