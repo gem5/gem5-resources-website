@@ -1,13 +1,10 @@
-/** @type {import('next').NextConfig} */
+// This file is used to configure Next.js
 const isProd = process.env.NODE_ENV === 'production'
 
-const nextConfig = {
+module.exports = {
   reactStrictMode: true,
-  assetPrefix: isProd ? '/your-github-repo-name/' : '',
+  assetPrefix: isProd ? '/gem5-resources-website/' : '',
   images: {
     unoptimized: true,
   },
-
 }
-
-module.exports = nextConfig
