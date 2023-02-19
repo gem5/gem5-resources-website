@@ -1,6 +1,6 @@
 import Head from 'next/head'
-import { Button, Col, Row, SSRProvider } from 'react-bootstrap'
-import { getResources } from '../api/findresources'
+import { Button, Col, Row, Spinner, SSRProvider } from 'react-bootstrap'
+import { getResources, getResourcesMongoDB } from '../api/findresources'
 import SearchBox from '@/components/searchbox'
 import SearchResult from '@/components/searchresult'
 import Filters from '@/components/filters'
@@ -8,16 +8,77 @@ import { getFilters } from "../api/getfilters";
 import { useRouter } from 'next/router'
 import { useState, useEffect, useRef } from "react";
 
-function Resources(props) {
+function Resources() {
     const router = useRouter()
-    const ref = useRef()
+    const [query, setQuery] = useState(null)
+    const [resources, setResources] = useState([])
+    const [filters, setFilters] = useState({})
+    const [queryObject, setQueryObject] = useState(null)
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        ref.current.setSearchQuery(filterToQuery(props.filters))
-    }, [])
+        if (router.query.q) {
+            setQuery(router.query.q)
+        }
+    }, [router.query.q])
+
+    useEffect(() => {
+        if (query != null) {
+            let qo = {};
+            let queryArray = query.split(" ");
+            queryArray.forEach(query => {
+                let querySplit = query.split(":");
+                if (querySplit.length === 2) {
+                    if (qo[querySplit[0]]) {
+                        qo[querySplit[0]].push(querySplit[1]);
+                    } else {
+                        qo[querySplit[0]] = [querySplit[1]];
+                    }
+                }
+            });
+            qo["query"] = queryArray.filter(query => !query.includes(":"));
+            qo["query"] = qo["query"].join(" ");
+            if (!qo["query"]) {
+                qo["query"] = "";
+            }
+            setQueryObject(qo);
+        }
+    }, [query])
+
+    useEffect(() => {
+        const fetchFilters = async () => {
+            const filters = await getFilters();
+            setFilters(filters);
+            let filterModified = {};
+            for (let filter in filters) {
+                let filterObject = {};
+                filters[filter].forEach(filterOption => {
+                    if (queryObject[filter] && queryObject[filter].includes(filterOption)) {
+                        filterObject[filterOption] = true;
+                    } else {
+                        filterObject[filterOption] = false;
+                    }
+                }
+                );
+                filterModified[filter] = filterObject;
+            }
+            setFilters(filterModified);
+        };
+
+        const fetchResources = async () => {
+            setLoading(true);
+            const resources = await getResourcesMongoDB(queryObject);
+            setResources(resources);
+            setLoading(false);
+        };
+        if (queryObject) {
+            fetchFilters();
+            fetchResources();
+        }
+    }, [queryObject])
 
     function Results() {
-        if (props.resources.length === 0) {
+        if (resources?.length === 0) {
             return (
                 <>
                     <hr />
@@ -30,7 +91,7 @@ function Resources(props) {
         return (
             <div>
                 {
-                    props.resources.map((resource, index) => (
+                    resources?.map((resource, index) => (
                         <div key={index}>
                             <SearchResult resource={resource} />
                             <hr />
@@ -51,7 +112,8 @@ function Resources(props) {
                 }
             }
         }
-        let searchQuery = ref.current.getSearchQuery().split(' ').filter((word) => !word.includes(':'));
+        // let searchQuery = ref.current.getSearchQuery().split(' ').filter((word) => !word.includes(':'));
+        let searchQuery = query.split(' ').filter((word) => !word.includes(':'));
         searchQuery = searchQuery.join(' ');
         if (searchQuery) {
             q += searchQuery;
@@ -61,7 +123,6 @@ function Resources(props) {
 
     function onChange(filters) {
         let q = filterToQuery(filters)
-        ref.current.setSearchQuery(q)
         router.push({
             pathname: '/resources',
             query: { q: q }
@@ -69,8 +130,7 @@ function Resources(props) {
     }
 
     function onSearch(query) {
-        console.log(query)
-        ref.current.setSearchQuery(query)
+        setQuery(query)
         router.push({
             pathname: '/resources',
             query: { q: query }
@@ -86,12 +146,12 @@ function Resources(props) {
             </Head>
             <div className='d-flex flex-column gap-4 align-items-center'>
                 <div className='p-5 w-100 bg-light'>
-                    <SearchBox callback={onSearch} query={props.query} ref={ref} />
+                    <SearchBox callback={onSearch} query={query} />
                 </div>
                 <div className='content'>
                     <Row>
                         <Col xs={3} className='filters'>
-                            <Filters filters={props.filters} callback={onChange} />
+                            <Filters filters={filters} callback={onChange} />
                         </Col>
                         <Col>
                             <Row className='justify-content-between align-items-center'>
@@ -100,7 +160,7 @@ function Resources(props) {
                                         Results
                                     </span>
                                     <span className='primary'>
-                                        {props.resources.length}
+                                        {resources?.length}
                                     </span>
                                 </div>
                                 <div className='w-auto'>
@@ -113,7 +173,13 @@ function Resources(props) {
                                 </div>
                             </Row>
                             <Row>
-                                <Results />
+                                {
+                                    loading ?
+                                        <div className='d-flex flex-column align-items-center justify-content-center p-5'>
+                                            <Spinner animation="border" />
+                                        </div>
+                                        : <Results />
+                                }
                             </Row>
                         </Col>
                     </Row>
@@ -124,12 +190,10 @@ function Resources(props) {
 }
 
 // export async function getServerSideProps({ query }) {
-Resources.getInitialProps = async ({ query }) => {
+/* Resources.getInitialProps = async ({ query }) => {
     if (!query.q) {
         query.q = ''
     }
-    // query.q might contain something like "category:workload category:kernel query"
-    // parse the query and convert to something like category: ["gem5", "gem5art"] query: ["query"]
     let queryObject = {};
     let queryArray = query.q.split(" ");
     queryArray.forEach(query => {
@@ -147,9 +211,8 @@ Resources.getInitialProps = async ({ query }) => {
     if (!queryObject["query"]) {
         queryObject["query"] = "";
     }
-    const resources = await getResources(queryObject);
+    const resources = await getResourcesMongoDB(queryObject);
     const filters = await getFilters();
-
     let filterModified = {};
     for (let filter in filters) {
         let filterObject = {};
@@ -172,6 +235,6 @@ Resources.getInitialProps = async ({ query }) => {
         fullQuery: query.q
         // }
     };
-};
+}; */
 
 export default Resources
