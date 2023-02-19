@@ -1,12 +1,13 @@
 import { fetchResources } from "./resources";
 
 export async function getResourceMongoDB(id) {
-    const res = await fetch('https://us-west-2.aws.data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/findOne', {
+    const res = await fetch('https://cors-anywhere.herokuapp.com/https://us-west-2.aws.data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/findOne', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'api-key': 'pKkhRJGJaQ3NdJyDt69u4GPGQTDUIhHlx4a3lrKUNx2hxuc8uba8NrP3IVRvlzlo',
             'Access-Control-Request-Headers': '*',
+            'origin': 'https://gem5vision.github.io',
         },
         body: JSON.stringify({
             "dataSource": "gem5-vision",
