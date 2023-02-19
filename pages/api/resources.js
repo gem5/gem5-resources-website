@@ -1,16 +1,19 @@
-export async function fetchResourcesMongo() {
-    return fetch('https://us-west-2.aws.data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/find', {
+export async function fetchResourcesMongoDB() {
+    const res = await fetch('https://us-west-2.aws.data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/find', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'api-key': process.env.MONGODB_API_KEY,
+            'api-key': 'pKkhRJGJaQ3NdJyDt69u4GPGQTDUIhHlx4a3lrKUNx2hxuc8uba8NrP3IVRvlzlo',
+            'Access-Control-Request-Headers': '*',
         },
         body: JSON.stringify({
             "dataSource": "gem5-vision",
             "database": "gem5-vision",
             "collection": "resources",
         })
-    }).then(res => res.json())
+    }).catch(err => console.log(err));
+    const resources = await res.json();
+    return resources['documents']
 }
 
 export async function fetchResources() {
@@ -19,7 +22,7 @@ export async function fetchResources() {
 }
 
 export default async function handler(req, res) {
-    const resources = await fetchResourcesMongo();
+    const resources = await fetchResourcesMongoDB();
 
     res.status(200).json(resources);
 }

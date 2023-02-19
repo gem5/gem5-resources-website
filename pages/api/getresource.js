@@ -1,5 +1,28 @@
 import { fetchResources } from "./resources";
 
+export async function getResourceMongoDB(id) {
+    const res = await fetch('https://us-west-2.aws.data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/findOne', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'api-key': 'pKkhRJGJaQ3NdJyDt69u4GPGQTDUIhHlx4a3lrKUNx2hxuc8uba8NrP3IVRvlzlo',
+            'Access-Control-Request-Headers': '*',
+        },
+        body: JSON.stringify({
+            "dataSource": "gem5-vision",
+            "database": "gem5-vision",
+            "collection": "resources",
+            "filter": {
+                "id": id
+            }
+        })
+    }).catch(err => console.log(err));
+    const resource = await res.json();
+    if (resource['document'] === null) {
+        return { error: 'Resource not found' }
+    }
+    return resource['document']
+}
 
 export async function getResource(id) {
     const resources = await fetchResources();
@@ -24,15 +47,7 @@ export async function getResource(id) {
 }
 
 export default async function handler(req, res) {
-    // check if the request is a POST request
-    if (req.method === 'POST') {
-        let data = await getResource(req.body.id)
-        if (data.error) {
-            return res.status(400).json({ error: data.error })
-        }
-        return res.status(200).json(data)
-    }
-    else {
-        return res.status(405).json({ error: 'Method not allowed' })
-    }
+    const { id } = req.query;
+    let results = await getResourceMongoDB(id);
+    res.status(200).json(results);
 }
