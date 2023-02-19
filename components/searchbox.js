@@ -9,6 +9,8 @@ export default function SearchBox(props) {
     useEffect(() => {
         if (props.query) {
             setSearch(props.query)
+        } else {
+            setSearch("")
         }
     }, [props.query])
 
