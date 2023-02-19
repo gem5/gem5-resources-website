@@ -4,7 +4,7 @@ import { getResources, getResourcesMongoDB } from '../api/findresources'
 import SearchBox from '@/components/searchbox'
 import SearchResult from '@/components/searchresult'
 import Filters from '@/components/filters'
-import { getFilters } from "../api/getfilters";
+import { getFilters, getFiltersMongoDB } from "../api/getfilters";
 import { useRouter } from 'next/router'
 import { useState, useEffect } from "react";
 
@@ -51,7 +51,7 @@ function Resources() {
 
     useEffect(() => {
         const fetchFilters = async () => {
-            const filters = await getFilters();
+            const filters = await getFiltersMongoDB();
             setFilters(filters);
             let filterModified = {};
             for (let filter in filters) {

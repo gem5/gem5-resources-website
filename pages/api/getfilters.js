@@ -1,5 +1,37 @@
 import { fetchResources } from "./resources";
 
+export async function getFiltersMongoDB() {
+    // get all distinct categories from resources
+    const res = await fetch('https://us-west-2.aws.data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/aggregate', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'api-key': 'pKkhRJGJaQ3NdJyDt69u4GPGQTDUIhHlx4a3lrKUNx2hxuc8uba8NrP3IVRvlzlo',
+            'Access-Control-Request-Headers': '*',
+        },
+        body: JSON.stringify({
+            "dataSource": "gem5-vision",
+            "database": "gem5-vision",
+            "collection": "resources",
+            "pipeline": [
+                {
+                    // remove null values from architectures
+                    "$group": {
+                        "_id": null,
+                        "category": { "$addToSet": "$category" },
+                        "architecture": { "$addToSet": "$architecture" },
+                        "gem5_version": { "$addToSet": "$gem5_version" },
+                    },
+                },
+            ],
+        })
+    }).catch(err => console.log(err));
+    let filters = await res.json();
+    filters['documents'][0]['architecture'] = filters['documents'][0]['architecture'].filter(architecture => architecture != null);
+    delete filters['documents'][0]['_id'];
+    return filters['documents'][0];
+}
+
 export async function getFilters() {
     const resources = await fetchResources();
     // get unique categories from resources
@@ -22,6 +54,6 @@ export async function getFilters() {
 }
 
 export default async function handler(req, res) {
-    let results = await getFiltersMongo();
+    let results = await getFiltersMongoDB();
     res.status(200).json(results);
 }
