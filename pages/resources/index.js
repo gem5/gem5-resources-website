@@ -17,8 +17,12 @@ function Resources() {
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        if (router.query.q) {
-            setQuery(router.query.q)
+        let q = window.location.href.split('?')[1]
+        if (q) {
+            q = q.split('=')[1]
+            q = decodeURIComponent(q)
+            q = q.replace(/\+/g, ' ')
+            setQuery(q)
         }
     }, [router.query.q])
 
