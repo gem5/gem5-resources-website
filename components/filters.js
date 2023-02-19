@@ -2,9 +2,11 @@ import { Accordion, Form } from "react-bootstrap";
 // get filters from /pages/api/getfilters.js
 import { useState, useEffect } from "react";
 export default function Filters({ filters, callback }) {
-    const [filterState, setFilterState] = useState(filters);
+    const [filterState, setFilterState] = useState({});
     useEffect(() => {
-        setFilterState(filters);
+        if (filters) {
+            setFilterState(filters);
+        }
     }, [filters]);
     return (
         <>

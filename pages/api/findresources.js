@@ -22,7 +22,7 @@ export async function getResourcesMongoDB(queryObject, filters) {
     }
     queryObject.gem5_version = gem5_versions;
   }
-  
+
   const res = await fetch('https://us-west-2.aws.data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/aggregate', {
     method: 'POST',
     headers: {

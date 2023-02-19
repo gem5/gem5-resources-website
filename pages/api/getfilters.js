@@ -15,7 +15,6 @@ export async function getFiltersMongoDB() {
             "collection": "resources",
             "pipeline": [
                 {
-                    // remove null values from architectures
                     "$group": {
                         "_id": null,
                         "category": { "$addToSet": "$category" },
@@ -29,6 +28,10 @@ export async function getFiltersMongoDB() {
     let filters = await res.json();
     filters['documents'][0]['architecture'] = filters['documents'][0]['architecture'].filter(architecture => architecture != null);
     delete filters['documents'][0]['_id'];
+    // sort categories, architectures, and gem5_versions alphabetically
+    filters['documents'][0]['category'].sort();
+    filters['documents'][0]['architecture'].sort();
+    filters['documents'][0]['gem5_version'].sort();
     return filters['documents'][0];
 }
 
