@@ -37,12 +37,21 @@ export async function getResourcesMongoDB(queryObject, filters) {
       "collection": "resources",
       "pipeline": [
         {
-          "$match": {
-            "$or": [
-              { "id": { "$regex": queryObject.query, "$options": "i" } },
-              { "description": { "$regex": queryObject.query, "$options": "i" } },
-            ]
-          },
+          "$search": {
+            "text": {
+              "query": queryObject.query,
+              "path": ["id", "description", "resources"],
+              "fuzzy": {
+                "maxEdits": 2,
+                "maxExpansions": 100
+              }
+            },
+          }
+        },
+        {
+          "$sort": {
+            "score": { "$meta": "textScore" }
+          }
         },
         {
           "$match": {
@@ -53,6 +62,7 @@ export async function getResourcesMongoDB(queryObject, filters) {
             ]
           },
         },
+
       ],
     })
   }).catch(err => console.log(err));
@@ -91,6 +101,6 @@ export default async function handler(req, res) {
   // res.status(200).json(resources);
   // find the resources that contain the query in their id
   const query = req.query.q;
-  let results = await getResourcesMongoDB({ query: query });
+  let results = await getResourcesMongoDB({ query: query }, {});
   res.status(200).json(results);
 }
