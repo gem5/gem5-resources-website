@@ -25,55 +25,87 @@ export async function getResourcesMongoDB(queryObject, filters) {
   }
 
   const access_token = await getToken();
-
-  const res = await fetch('https://us-west-2.aws.data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/aggregate', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      // 'api-key': 'pKkhRJGJaQ3NdJyDt69u4GPGQTDUIhHlx4a3lrKUNx2hxuc8uba8NrP3IVRvlzlo',
-      'Access-Control-Request-Headers': '*',
-      // 'origin': 'https://gem5vision.github.io',
-      "Authorization": "Bearer " + access_token,
-    },
-    // also apply filters on
-    body: JSON.stringify({
-      "dataSource": "gem5-vision",
-      "database": "gem5-vision",
-      "collection": "resources",
-      "pipeline": [
-        {
-          "$search": {
-            "text": {
-              "query": queryObject.query,
-              "path": ["id", "description", "resources"],
-              "fuzzy": {
-                "maxEdits": 2,
-                "maxExpansions": 100
-              }
-            },
-          }
-        },
-        {
-          "$sort": {
-            "score": { "$meta": "textScore" }
-          }
-        },
-        {
-          "$match": {
-            "$and": [
-              { "category": { "$in": queryObject.category || [] } },
-              { "architecture": { "$in": queryObject.architecture || [] } },
-              { "gem5_version": { "$in": queryObject.gem5_version || [] }, }
-            ]
+  if (queryObject.query.trim() === '') {
+    const res1 = await fetch('https://us-west-2.aws.data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/aggregate', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        // 'api-key': 'pKkhRJGJaQ3NdJyDt69u4GPGQTDUIhHlx4a3lrKUNx2hxuc8uba8NrP3IVRvlzlo',
+        'Access-Control-Request-Headers': '*',
+        // 'origin': 'https://gem5vision.github.io',
+        "Authorization": "Bearer " + access_token,
+      },
+      // also apply filters on
+      body: JSON.stringify({
+        "dataSource": "gem5-vision",
+        "database": "gem5-vision",
+        "collection": "resources",
+        "pipeline": [
+          {
+            "$match": {
+              "$and": [
+                { "category": { "$in": queryObject.category || [] } },
+                { "architecture": { "$in": queryObject.architecture || [] } },
+                { "gem5_version": { "$in": queryObject.gem5_version || [] } },
+              ]
+            }
           },
-        },
+        ]
+      })
+    }
+    ).catch(err => console.log(err));
+    const resources = await res1.json();
+    return resources['documents'];
+  } else {
+    const res = await fetch('https://us-west-2.aws.data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/aggregate', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        // 'api-key': 'pKkhRJGJaQ3NdJyDt69u4GPGQTDUIhHlx4a3lrKUNx2hxuc8uba8NrP3IVRvlzlo',
+        'Access-Control-Request-Headers': '*',
+        // 'origin': 'https://gem5vision.github.io',
+        "Authorization": "Bearer " + access_token,
+      },
+      // also apply filters on
+      body: JSON.stringify({
+        "dataSource": "gem5-vision",
+        "database": "gem5-vision",
+        "collection": "resources",
+        "pipeline": [
+          {
+            "$search": {
+              "text": {
+                "query": queryObject.query,
+                "path": ["id", "description", "resources"],
+                "fuzzy": {
+                  "maxEdits": 2,
+                  "maxExpansions": 100
+                }
+              },
+            }
+          },
+          {
+            "$sort": {
+              "score": { "$meta": "textScore" }
+            }
+          },
+          {
+            "$match": {
+              "$and": [
+                { "category": { "$in": queryObject.category || [] } },
+                { "architecture": { "$in": queryObject.architecture || [] } },
+                { "gem5_version": { "$in": queryObject.gem5_version || [] }, }
+              ]
+            },
+          },
 
-      ],
-    })
-  }).catch(err => console.log(err));
-  const resources = await res.json();
-  console.log(resources);
-  return resources['documents']
+        ],
+      })
+    }).catch(err => console.log(err));
+    const resources = await res.json();
+    console.log(resources);
+    return resources['documents']
+  }
 }
 
 export async function getResources(queryObject) {
