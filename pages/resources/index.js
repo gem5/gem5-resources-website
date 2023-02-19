@@ -6,7 +6,7 @@ import SearchResult from '@/components/searchresult'
 import Filters from '@/components/filters'
 import { getFilters } from "../api/getfilters";
 import { useRouter } from 'next/router'
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 
 function Resources() {
     const router = useRouter()
@@ -63,17 +63,14 @@ function Resources() {
                 filterModified[filter] = filterObject;
             }
             setFilters(filterModified);
-        };
-
-        const fetchResources = async () => {
             setLoading(true);
-            const resources = await getResourcesMongoDB(queryObject);
+            const resources = await getResourcesMongoDB(queryObject, filters);
             setResources(resources);
             setLoading(false);
         };
+
         if (queryObject) {
             fetchFilters();
-            fetchResources();
         }
     }, [queryObject])
 
