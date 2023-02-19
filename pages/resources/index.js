@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { Button, Col, Row, Spinner, SSRProvider } from 'react-bootstrap'
+import { Button, Col, Form, Row, Spinner, SSRProvider } from 'react-bootstrap'
 import { getResources, getResourcesMongoDB } from '../api/findresources'
 import SearchBox from '@/components/searchbox'
 import SearchResult from '@/components/searchresult'
@@ -45,7 +45,9 @@ function Resources() {
             if (!qo["query"]) {
                 qo["query"] = "";
             }
+            qo["sort"] = "relevance";
             setQueryObject(qo);
+            console.log(qo);
         }
     }, [query])
 
@@ -138,6 +140,10 @@ function Resources() {
         })
     }
 
+    function onSortChange(e) {
+        setQueryObject({ ...queryObject, sort: e.target.value })
+    }
+
     return (
         <SSRProvider>
             <Head>
@@ -164,13 +170,22 @@ function Resources() {
                                         {resources?.length}
                                     </span>
                                 </div>
-                                <div className='w-auto'>
+                                <div className='w-auto d-flex align-items-center'>
                                     <span className='text-uppercase me-2 text-muted'>
                                         Sort by
                                     </span>
-                                    <span className='text-uppercase primary'>
-                                        Relevance
-                                    </span>
+                                    <Form.Select
+                                        className='w-auto primary text-uppercase border-0'
+                                        aria-label="Default select example"
+                                        defaultValue='relevance'
+                                        onChange={onSortChange}
+                                    >
+                                        <option value='relevance'>Relevance</option>
+                                        <option value='date'>Date</option>
+                                        <option value='date'>Version</option>
+                                        <option value='id_asc'>Id Ascending</option>
+                                        <option value='id_desc'>Id Descending</option>
+                                    </Form.Select>
                                 </div>
                             </Row>
                             <Row>

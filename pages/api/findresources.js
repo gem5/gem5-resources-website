@@ -2,6 +2,8 @@ import { fetchResources } from "./resources";
 import { getToken } from "./getToken";
 
 export async function getResourcesMongoDB(queryObject, filters) {
+  // pass queryObject by value
+  queryObject = { ...queryObject };
   if (!queryObject.category) {
     let categories = [];
     for (let category in filters.category) {
@@ -24,8 +26,34 @@ export async function getResourcesMongoDB(queryObject, filters) {
     queryObject.gem5_version = gem5_versions;
   }
 
+  function getSort() {
+    console.log(queryObject.sort);
+    switch (queryObject.sort) {
+      case "date":
+        return { "date": -1 };
+      case "name":
+        return { "id": 1 };
+      case "version":
+        return { "gem5_version": -1 };
+      case "id_asc":
+        return { "id": 1 };
+      case "id_desc":
+        return { "id": -1 };
+      case "default":
+        return {
+          "_id": -1
+        };
+      default:
+        return {
+          "score": { "$meta": "textScore" }
+        };
+    }
+  }
   const access_token = await getToken();
   if (queryObject.query.trim() === '') {
+    if (queryObject.sort === "relevance") {
+      queryObject.sort = "default";
+    }
     const res1 = await fetch('https://us-west-2.aws.data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/aggregate', {
       method: 'POST',
       headers: {
@@ -48,8 +76,11 @@ export async function getResourcesMongoDB(queryObject, filters) {
                 { "architecture": { "$in": queryObject.architecture || [] } },
                 { "gem5_version": { "$in": queryObject.gem5_version || [] } },
               ]
-            }
+            },
           },
+          {
+            "$sort": getSort()
+          }
         ]
       })
     }
@@ -84,10 +115,9 @@ export async function getResourcesMongoDB(queryObject, filters) {
               },
             }
           },
+
           {
-            "$sort": {
-              "score": { "$meta": "textScore" }
-            }
+            "$sort": getSort()
           },
           {
             "$match": {
