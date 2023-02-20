@@ -9,4 +9,9 @@ module.exports = {
     loader: 'imgix',
     path: '',
   },
+  env: {
+    IS_MONGODB_ENABLED: process.env.IS_MONGODB_ENABLED,
+    MONGODB_URI: process.env.MONGODB_URI,
+    MONGODB_API_KEY: process.env.MONGODB_API_KEY,
+  }
 }

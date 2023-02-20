@@ -1,10 +1,10 @@
 import Head from 'next/head'
 import { Button, Col, Form, Row, Spinner, SSRProvider } from 'react-bootstrap'
-import { getResources, getResourcesMongoDB } from '../api/findresources'
+import { getResources } from '../api/findresources'
 import SearchBox from '@/components/searchbox'
 import SearchResult from '@/components/searchresult'
 import Filters from '@/components/filters'
-import { getFilters, getFiltersMongoDB } from "../api/getfilters";
+import { getFilters } from "../api/getfilters";
 import { useRouter } from 'next/router'
 import { useState, useEffect } from "react";
 
@@ -53,7 +53,7 @@ function Resources() {
 
     useEffect(() => {
         const fetchFilters = async () => {
-            const filters = await getFiltersMongoDB();
+            const filters = await getFilters();
             setFilters(filters);
             let filterModified = {};
             for (let filter in filters) {
@@ -70,7 +70,7 @@ function Resources() {
             }
             setFilters(filterModified);
             setLoading(true);
-            const resources = await getResourcesMongoDB(queryObject, filters);
+            const resources = await getResources(queryObject, filters);
             setResources(resources);
             setLoading(false);
         };

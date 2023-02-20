@@ -3,9 +3,9 @@ import Banner from '@/components/resource-banner'
 import Head from 'next/head'
 import { Row, Col, Container } from 'react-bootstrap'
 import { SSRProvider } from "@react-aria/ssr";
-import { getResource, getResourceMongoDB } from '../../api/getresource'
+import { getResource } from '../../api/getresource'
 import ResourceTab from '@/components/resource-tab'
-import { fetchResourcesMongoDB } from '../../api/resources'
+import { fetchResources } from '../../api/resources'
 
 function Resource({ resource }) {
     return (
@@ -29,7 +29,7 @@ function Resource({ resource }) {
 }
 
 export async function getStaticPaths() {
-    const resources = await fetchResourcesMongoDB();
+    const resources = await fetchResources();
     // create paths for all /resources/[id]/[...page]
     const paths = resources.map((resource) => ({
         params: {
@@ -50,7 +50,7 @@ export async function getStaticProps(ctx) {
     const id = ctx.params.id
     // const id = ctx.query.id
     // ctx.res.setHeader('Cache-Control', 's-maxage=10, stale-while-revalidate')
-    let resource = await getResourceMongoDB(id);
+    let resource = await getResource(id);
     if (resource.error) {
         return {
             notFound: true,

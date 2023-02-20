@@ -1,7 +1,7 @@
 import { fetchResources } from "./resources";
-import { getToken } from "./getToken";
+import getToken from "./getToken";
 
-export async function getFiltersMongoDB() {
+async function getFiltersMongoDB() {
     let accessToken = await getToken();
     // get all distinct categories from resources
     const res = await fetch('https://us-west-2.aws.data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/aggregate', {
@@ -39,18 +39,18 @@ export async function getFiltersMongoDB() {
     return filters['documents'][0];
 }
 
-export async function getFilters() {
+async function getFiltersJSON() {
     const resources = await fetchResources();
     // get unique categories from resources
-    let categories = [...new Set(resources['resources'].map(resource => resource.category))];
+    let categories = [...new Set(resources.map(resource => resource.category))];
     // get unique groups from resources and remove null values
     // let groups = [...new Set(resources['resources'].map(resource => resource.group))].filter(group => group != null);
     // get unique architectures from resources
-    let architectures = [...new Set(resources['resources'].map(resource => resource.architecture))];
+    let architectures = [...new Set(resources.map(resource => resource.architecture))];
     // get zipped from resources
     // let zippeds = [...new Set(resources['resources'].map(resource => String(resource.is_zipped)))].filter(zipped => zipped != "null");
     // get gem5_version from resources
-    let gem5_versions = [...new Set(resources['resources'].map(resource => resource.gem5_version))].filter(gem5_version => gem5_version != null);
+    let gem5_versions = [...new Set(resources.map(resource => resource.gem5_version))].filter(gem5_version => gem5_version != null);
     return {
         category: categories,
         // group: groups,
@@ -58,6 +58,16 @@ export async function getFilters() {
         // is_zipped : zippeds,
         gem5_version: gem5_versions
     };
+}
+
+export async function getFilters() {
+    let filters;
+    if (process.env.IS_MONGODB_ENABLED === "true") {
+        filters = await getFiltersMongoDB();
+    } else {
+        filters = await getFiltersJSON();
+    }
+    return filters;
 }
 
 export default async function handler(req, res) {

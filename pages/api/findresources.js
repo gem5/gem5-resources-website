@@ -1,7 +1,7 @@
 import { fetchResources } from "./resources";
-import { getToken } from "./getToken";
+import getToken from "./getToken";
 
-export async function getResourcesMongoDB(queryObject, filters) {
+async function getResourcesMongoDB(queryObject, filters) {
   // pass queryObject by value
   queryObject = { ...queryObject };
   if (!queryObject.category) {
@@ -138,12 +138,11 @@ export async function getResourcesMongoDB(queryObject, filters) {
   }
 }
 
-export async function getResources(queryObject) {
+async function getResourcesJSON(queryObject) {
   const resources = await fetchResources();
   const query = queryObject.query.trim();
   const keywords = query.split(" ");
-
-  let results = resources['resources'].filter(resource => {
+  let results = resources.filter(resource => {
     const idMatches = keywords.filter(keyword => resource.id.toLowerCase().includes(keyword.toLowerCase())).length;
     const descMatches = keywords.filter(keyword => resource.description.toLowerCase().includes(keyword.toLowerCase())).length;
     let resMatches = 0;
@@ -155,14 +154,24 @@ export async function getResources(queryObject) {
     resource['totalMatches'] = totalMatches;
     return totalMatches > 0;
   }).sort((a, b) => b.totalMatches - a.totalMatches);
-
+  console.log(queryObject);
   for (let filter in queryObject) {
-    if (filter !== "query") {
+    if (filter !== "query" && filter !== "sort") {
       results = results.filter(resource => queryObject[filter].includes(String(resource[filter])));
     }
   }
-
   return results;
+}
+
+export async function getResources(queryObject, filters) {
+  let resources;
+  console.log(process.env.IS_MONGODB_ENABLED);
+  if (process.env.IS_MONGODB_ENABLED === "true") {
+    resources = await getResourcesMongoDB(queryObject, filters);
+  } else {
+    resources = await getResourcesJSON(queryObject);
+  }
+  return resources;
 }
 
 export default async function handler(req, res) {

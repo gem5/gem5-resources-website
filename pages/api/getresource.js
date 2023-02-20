@@ -1,7 +1,7 @@
 import { fetchResources } from "./resources";
-import { getToken } from "./getToken";
+import getToken from "./getToken";
 
-export async function getResourceMongoDB(id) {
+async function getResourceMongoDB(id) {
     const token = await getToken();
     const res = await fetch('https://us-west-2.aws.data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/findOne', {
         method: 'POST',
@@ -28,14 +28,14 @@ export async function getResourceMongoDB(id) {
     return resource['document']
 }
 
-export async function getResource(id) {
+async function getResourceJSON(id) {
     const resources = await fetchResources();
     // filter json file to find the resources that contain the query in their id
-    let results = resources['resources'].filter(resource => resource.id === id);
+    let results = resources.filter(resource => resource.id === id);
     if (results.length === 0) {
         return { error: 'Resource not found' }
     }
-    let workloads = resources['resources'].filter(resource => {
+    let workloads = resources.filter(resource => {
         if (resource.resources) {
             return Object.keys(resource.resources).map((key) => {
                 return resource.resources[key]
@@ -48,6 +48,16 @@ export async function getResource(id) {
         results[0].workloads = workloads;
     }
     return results[0];
+}
+
+export async function getResource(id) {
+    let resource;
+    if (process.env.IS_MONGODB_ENABLED) {
+        resource = await getResourceMongoDB(id);
+    } else {
+        resource = await getResourceJSON(id);
+    }
+    return resource;
 }
 
 export default async function handler(req, res) {
