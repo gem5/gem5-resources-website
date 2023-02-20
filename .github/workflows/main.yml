@@ -22,13 +22,13 @@ jobs:
 
       - name: Build
         env:
-          IS_MONGODB_ENABLED: ${{env.IS_MONGODB_ENABLED}}
-          MONGODB_API_KEY: ${{env.MONGODB_API_KEY}}
+          IS_MONGODB_ENABLED: ${{secrets.IS_MONGODB_ENABLED}}
+          MONGODB_API_KEY: ${{secrets.MONGODB_API_KEY}}
         run: |
           npm i
           npm run build
           npm run export
-          echo $IS_MONGODB_ENABLED $MONGODB_API_KEY
+          echo '${{secrets.IS_MONGODB_ENABLED}} ${{secrets.MONGODB_API_KEY}}'
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
