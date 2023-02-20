@@ -5,7 +5,7 @@ import { Row, Col, Container } from 'react-bootstrap'
 import { SSRProvider } from "@react-aria/ssr";
 import { getResource } from '../../api/getresource'
 import ResourceTab from '@/components/resource-tab'
-import { fetchResources } from '../../api/resources'
+import { fetchResources, fetchResourcesJSON } from '../../api/resources'
 
 function Resource({ resource }) {
     return (
@@ -29,7 +29,7 @@ function Resource({ resource }) {
 }
 
 export async function getStaticPaths() {
-    const resources = await fetchResources();
+    const resources = await fetchResourcesJSON();
     // create paths for all /resources/[id]/[...page]
     const paths = resources.map((resource) => ({
         params: {
