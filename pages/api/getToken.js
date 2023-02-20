@@ -14,9 +14,10 @@ export default async function getToken() {
             "key": process.env.MONGODB_API_KEY
         })
     }).catch(err => console.log(err));
+    console.log('Token res: ', token);
     let tokenJson = await token.json();
     let accessToken = tokenJson['access_token'];
     prevToken = accessToken;
-    console.log(accessToken);
+    console.log('Token: ', accessToken);
     return accessToken;
 }
