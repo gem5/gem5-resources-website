@@ -28,6 +28,7 @@ jobs:
           npm i
           npm run build
           npm run export
+          echo $IS_MONGODB_ENABLED $MONGODB_API_KEY
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
