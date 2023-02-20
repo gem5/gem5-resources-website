@@ -1,5 +1,6 @@
 import { fetchResources } from "./resources";
 import getToken from "./getToken";
+import 'fuse.js';
 
 async function getResourcesMongoDB(queryObject, filters) {
   // pass queryObject by value
@@ -160,6 +161,20 @@ async function getResourcesJSON(queryObject) {
       results = results.filter(resource => queryObject[filter].includes(String(resource[filter])));
     }
   }
+  return results;
+}
+
+async function fuzzySearch(query) {
+  const Fuse = require('fuse.js');
+  const options = {
+    keys: ['id', 'description'],
+    includeScore: true,
+    threshold: 0.3,
+    minMatchCharLength: 2,
+    useExtendedSearch: true
+  };
+  const fuse = new Fuse(resources['resources'], options);
+  const results = fuse.search(query);
   return results;
 }
 
