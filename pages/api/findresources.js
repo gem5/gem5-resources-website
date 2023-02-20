@@ -144,14 +144,36 @@ async function getResourcesJSON(queryObject) {
   const query = queryObject.query.trim();
   const keywords = query.split(" ");
   let results = resources.filter(resource => {
-    const idMatches = keywords.filter(keyword => resource.id.toLowerCase().includes(keyword.toLowerCase())).length;
-    const descMatches = keywords.filter(keyword => resource.description.toLowerCase().includes(keyword.toLowerCase())).length;
+    let idMatches = keywords.filter(keyword => resource.id.toLowerCase().includes(keyword.toLowerCase())).length;
+    let descMatches = keywords.filter(keyword => resource.description.toLowerCase().includes(keyword.toLowerCase())).length;
     let resMatches = 0;
     if (resource.resources) { // only search if resource.resources exists
       const resourceJSON = JSON.stringify(resource.resources).toLowerCase();
       resMatches = keywords.filter(keyword => resourceJSON.includes(keyword.toLowerCase())).length;
     }
-    const totalMatches = idMatches + descMatches + resMatches;
+    let totalMatches = idMatches + descMatches + resMatches;
+    if (totalMatches === 0) {
+      let idDistances = keywords.map(keyword => {
+        const keywordLower = keyword.toLowerCase();
+        return Math.min(...resource.id.toLowerCase()
+          .split("-")
+          .map(idPart => damerauLevenshteinDistance(keywordLower, idPart)));
+      });
+      idMatches = idDistances.filter(d => d < 3).length;
+
+      // let descDistances = keywords.map(keyword => {
+      //   const keywordLower = keyword.toLowerCase();
+      //   return Math.min(...resource.description.toLowerCase()
+      //     .split(" ")
+      //     .map(descPart => damerauLevenshteinDistance(keywordLower, descPart)));
+      // });
+      // descMatches = descDistances.filter(d => d < 3).length;
+      if (resource.resources) { // only search if resource.resources exists
+        const resourceJSON = JSON.stringify(resource.resources).toLowerCase();
+        resMatches = keywords.filter(keyword => resourceJSON.includes(keyword.toLowerCase())).length;
+      }
+      totalMatches = idMatches + descMatches + resMatches;
+    }
     resource['totalMatches'] = totalMatches;
     return totalMatches > 0;
   }).sort((a, b) => b.totalMatches - a.totalMatches);
@@ -195,4 +217,42 @@ export default async function handler(req, res) {
   const query = req.query.q;
   let results = await getResourcesMongoDB({ query: query }, {});
   res.status(200).json(results);
+}
+
+
+function damerauLevenshteinDistance(a, b) {
+  if (a.length == 0) return b.length;
+  if (b.length == 0) return a.length;
+  var matrix = [];
+  for (var i = 0; i <= b.length; i++) {
+    matrix[i] = [i];
+  }
+  for (var j = 0; j <= a.length; j++) {
+    matrix[0][j] = j;
+  }
+  for (i = 1; i <= b.length; i++) {
+    for (j = 1; j <= a.length; j++) {
+      if (b.charAt(i - 1) == a.charAt(j - 1)) {
+        matrix[i][j] = matrix[i - 1][j - 1];
+      } else {
+        matrix[i][j] = Math.min(
+          matrix[i - 1][j - 1] + 1, // substitution
+          matrix[i][j - 1] + 1,     // insertion
+          matrix[i - 1][j] + 1      // deletion
+        );
+        if (
+          i > 1 &&
+          j > 1 &&
+          b.charAt(i - 1) == a.charAt(j - 2) &&
+          b.charAt(i - 2) == a.charAt(j - 1)
+        ) {
+          matrix[i][j] = Math.min(
+            matrix[i][j],
+            matrix[i - 2][j - 2] + 1 // transposition
+          );
+        }
+      }
+    }
+  }
+  return matrix[b.length][a.length];
 }
