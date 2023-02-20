@@ -143,14 +143,36 @@ async function getResourcesJSON(queryObject) {
   const query = queryObject.query.trim();
   const keywords = query.split(" ");
   let results = resources.filter(resource => {
-    const idMatches = keywords.filter(keyword => resource.id.toLowerCase().includes(keyword.toLowerCase())).length;
-    const descMatches = keywords.filter(keyword => resource.description.toLowerCase().includes(keyword.toLowerCase())).length;
+    let idMatches = keywords.filter(keyword => resource.id.toLowerCase().includes(keyword.toLowerCase())).length;
+    let descMatches = keywords.filter(keyword => resource.description.toLowerCase().includes(keyword.toLowerCase())).length;
     let resMatches = 0;
     if (resource.resources) { // only search if resource.resources exists
       const resourceJSON = JSON.stringify(resource.resources).toLowerCase();
       resMatches = keywords.filter(keyword => resourceJSON.includes(keyword.toLowerCase())).length;
     }
-    const totalMatches = idMatches + descMatches + resMatches;
+    let totalMatches = idMatches + descMatches + resMatches;
+    if (totalMatches === 0) {
+      let idDistances = keywords.map(keyword => {
+        const keywordLower = keyword.toLowerCase();
+        return Math.min(...resource.id.toLowerCase()
+          .split("-")
+          .map(idPart => damerauLevenshteinDistance(keywordLower, idPart)));
+      });
+      idMatches = idDistances.filter(d => d < 3).length;
+
+      // let descDistances = keywords.map(keyword => {
+      //   const keywordLower = keyword.toLowerCase();
+      //   return Math.min(...resource.description.toLowerCase()
+      //     .split(" ")
+      //     .map(descPart => damerauLevenshteinDistance(keywordLower, descPart)));
+      // });
+      // descMatches = descDistances.filter(d => d < 3).length;
+      if (resource.resources) { // only search if resource.resources exists
+        const resourceJSON = JSON.stringify(resource.resources).toLowerCase();
+        resMatches = keywords.filter(keyword => resourceJSON.includes(keyword.toLowerCase())).length;
+      }
+      totalMatches = idMatches + descMatches + resMatches;
+    }
     resource['totalMatches'] = totalMatches;
     return totalMatches > 0;
   }).sort((a, b) => b.totalMatches - a.totalMatches);
