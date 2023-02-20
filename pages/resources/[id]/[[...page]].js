@@ -29,7 +29,7 @@ function Resource({ resource }) {
 }
 
 export async function getStaticPaths() {
-    const resources = await fetchResourcesJSON();
+    const resources = await fetchResources();
     // create paths for all /resources/[id]/[...page]
     const paths = resources.map((resource) => ({
         params: {
