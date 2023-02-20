@@ -22,7 +22,7 @@ async function fetchResourcesMongoDB() {
     return resources['documents']
 }
 
-async function fetchResourcesJSON() {
+export async function fetchResourcesJSON() {
     const res = await fetch('https://raw.githubusercontent.com/Gem5Vision/json-to-mongodb/main/resources.json')
         .then(res => res.json())
     return res['resources'];
