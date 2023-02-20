@@ -21,6 +21,9 @@ jobs:
           cache: "npm"
 
       - name: Build
+        env:
+          IS_MONGODB_ENABLED: ${{env.IS_MONGODB_ENABLED}}
+          MONGODB_API_KEY: ${{env.MONGODB_API_KEY}}
         run: |
           npm i
           npm run build
