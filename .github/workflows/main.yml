@@ -22,6 +22,8 @@ jobs:
 
       - name: Build
         run: |
+          echo '${{secrets.IS_MONGODB_ENABLED}} ${{secrets.MONGODB_API_KEY}}'
+          echo '${{env.IS_MONGODB_ENABLED}} ${{env.MONGODB_API_KEY}}'
           npm i
           npm run build
           npm run export
