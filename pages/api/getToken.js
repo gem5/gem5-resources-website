@@ -8,6 +8,7 @@ export default async function getToken() {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            'Access-Control-Request-Headers': '*',
         },
         body: JSON.stringify({
             "key": process.env.MONGODB_API_KEY
