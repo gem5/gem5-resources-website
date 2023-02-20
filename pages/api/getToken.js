@@ -11,7 +11,7 @@ export default async function getToken() {
             'Access-Control-Request-Headers': '*',
         },
         body: JSON.stringify({
-            "key": process.env.MONGODB_API_KEY
+            "key": 'pKkhRJGJaQ3NdJyDt69u4GPGQTDUIhHlx4a3lrKUNx2hxuc8uba8NrP3IVRvlzlo'
         })
     }).catch(err => console.log(err));
     console.log('Token res: ', token);
