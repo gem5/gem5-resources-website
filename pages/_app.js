@@ -30,7 +30,7 @@ export default function App({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <link rel="shortcut icon" type="image/x-icon" href="/static/favicon.png" />
+        <link rel="shortcut icon" type="image/x-icon" href="/gem5-resources-website/favicon.png" />
       </Head>
       <Layout>
         <Component {...pageProps} />

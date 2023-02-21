@@ -10,20 +10,9 @@ export default function Custom404() {
     const [loading, setLoading] = useState(true)
     useEffect(() => {
         console.log("404")
-        async function fetchResource() {
+        async function fetchResource(id) {
             setLoading(true)
-            // get the url in the form of /resources/[id]/[...page]
-            // print the url and get each part of the url
-            console.log(router.asPath)
-            const url = router.asPath.split("/")
-            if (url.length < 3 && url[1] !== "resources") {
-                setError(true)
-                router.push(`/404`)
-            }
-            const id = url[2]
-            console.log(id)
             let resource = await getResource(id);
-            console.log(resource)
             if (resource.error) {
                 setError(true)
                 // change url to 404 without reloading the page
@@ -33,9 +22,21 @@ export default function Custom404() {
                 setError(false)
             setLoading(false)
         }
-        if (router.isReady && router.query !== undefined)
-            fetchResource();
-    }, [router, router.query.id, router.isReady])
+        // check if path 
+        if (router.isReady && router.query !== undefined) {
+            console.log(router.asPath)
+            const url = router.asPath.split("/")
+            console.log(url)
+            if (url.length < 3 || url[1] !== "resources") {
+                setError(true)
+                setLoading(false)
+                return
+            }
+            const id = url[2]
+            console.log(id)
+            fetchResource(id);
+        }
+    }, [router.query.id, router.isReady])
 
     return (
         loading ? <div>Loading...</div> :

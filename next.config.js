@@ -1,6 +1,8 @@
 // This file is used to configure Next.js
 const isProd = process.env.NODE_ENV === 'production'
+// const isProd = false;
 
+// get path of the websie hosted on github pages from the environment variable
 module.exports = {
   assetPrefix: isProd ? '/gem5-resources-website/' : '',
   basePath: isProd ? '/gem5-resources-website' : '',

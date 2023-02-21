@@ -13,15 +13,8 @@ function Resource() {
     const router = useRouter()
 
     useEffect(() => {
-        console.log("404")
-        async function fetchResource() {
+        async function fetchResource(id) {
             setLoading(true)
-            // get the url in the form of /resources/[id]/[...page]
-            // print the url and get each part of the url
-            console.log(router.asPath)
-            const url = router.asPath.split("/")
-            const id = url[2]
-            console.log(id)
             let resource = await getResource(id);
             console.log(resource)
             if (resource.error) {
@@ -31,9 +24,12 @@ function Resource() {
                 setResource(resource)
             setLoading(false)
         }
-        if (router.isReady && router.query !== undefined)
-            fetchResource();
-    }, [router, router.query.id, router.isReady])
+        if (router.isReady && router.query !== undefined) {
+            const id = router.query.id
+            console.log(id)
+            fetchResource(id);
+        }
+    }, [router.query.id, router.isReady])
 
     return (
         loading ? <div>Loading...</div> :
