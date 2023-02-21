@@ -27,7 +27,7 @@ export default function ResourceTab({ resource }) {
     } else {
       setSelectedTab('readme');
     }
-  }, [router.asPath]);
+  }, [router, resource.id]);
 
   const handleSelect = (e) => {
     if (e === 'readme') {
