@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, Button } from "react-bootstrap";
 import styles from "@/styles/cards.module.css";
+import Link from "next/link";
 
 export default function MyCards() {
   return (
@@ -19,7 +20,9 @@ export default function MyCards() {
             <Card.Text>
               A full boot of Ubuntu 20.04 with Linux 5.10 for RISCV.
             </Card.Text>
-            <Button variant="outline-primary" href="/resources/riscv-ubuntu-20.04-boot">Learn More</Button>
+            <Link href="/resources/arm-hello64-static" passHref legacyBehavior>
+              <Button variant="outline-primary" href="/resources/riscv-ubuntu-20.04-boot">Learn More</Button>
+            </Link>
           </Card.Body>
         </Card>
 
@@ -29,7 +32,9 @@ export default function MyCards() {
             <Card.Text>
               A 'Hello World!' binary, statically compiled to ARM 64 bit.
             </Card.Text>
-            <Button variant="outline-primary" href="/resources/arm-hello64-static">Learn More</Button>
+            <Link href="/resources/arm-hello64-static" passHref legacyBehavior>
+              <Button variant="outline-primary">Learn More</Button>
+            </Link>
           </Card.Body>
         </Card>
 
@@ -39,7 +44,9 @@ export default function MyCards() {
             <Card.Text>
               A disk image containing Ubuntu 18.04 for x86.
             </Card.Text>
-            <Button variant="outline-primary" href="/resources/x86-ubuntu-18.04-img">Learn More</Button>
+            <Link href="/resources/arm-hello64-static" passHref legacyBehavior>
+              <Button variant="outline-primary" href="/resources/x86-ubuntu-18.04-img">Learn More</Button>
+            </Link>
           </Card.Body>
         </Card>
       </div>
