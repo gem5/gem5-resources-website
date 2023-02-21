@@ -14,10 +14,8 @@ export default async function getToken() {
             "key": 'pKkhRJGJaQ3NdJyDt69u4GPGQTDUIhHlx4a3lrKUNx2hxuc8uba8NrP3IVRvlzlo'
         })
     }).catch(err => console.log(err));
-    console.log('Token res: ', token);
     let tokenJson = await token.json();
     let accessToken = tokenJson['access_token'];
     prevToken = accessToken;
-    console.log('Token: ', accessToken);
     return accessToken;
 }
