@@ -36,7 +36,7 @@ export default function Custom404() {
             console.log(id)
             fetchResource(id);
         }
-    }, [router.query.id, router.isReady])
+    }, [router.isReady])
 
     return (
         loading ? <div>Loading...</div> :

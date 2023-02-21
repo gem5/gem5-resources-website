@@ -25,11 +25,12 @@ function Resource() {
             setLoading(false)
         }
         if (router.isReady && router.query !== undefined) {
-            const id = router.query.id
+            const url = router.asPath.split("/")
+            const id = url[2]
             console.log(id)
             fetchResource(id);
         }
-    }, [router.query.id, router.isReady])
+    }, [router.isReady])
 
     return (
         loading ? <div>Loading...</div> :
