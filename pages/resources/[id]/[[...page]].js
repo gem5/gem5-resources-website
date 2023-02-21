@@ -33,7 +33,7 @@ function Resource() {
         }
         if (router.isReady && router.query !== undefined)
             fetchResource();
-    }, [router.query.id, router.isReady])
+    }, [router, router.query.id, router.isReady])
 
     return (
         loading ? <div>Loading...</div> :
