@@ -5,7 +5,7 @@ import { Row, Col, Container } from 'react-bootstrap'
 import { SSRProvider } from "@react-aria/ssr";
 import { getResource } from '../../api/getresource'
 import ResourceTab from '@/components/resource-tab'
-import { fetchResources, fetchResourcesJSON } from '../../api/resources'
+import { fetchResources } from '../../api/resources'
 
 function Resource({ resource }) {
     return (
