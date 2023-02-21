@@ -6,8 +6,22 @@ import { SSRProvider } from "@react-aria/ssr";
 import { getResource } from '../../api/getresource'
 import ResourceTab from '@/components/resource-tab'
 import { fetchResources } from '../../api/resources'
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
-function Resource({ resource }) {
+function Resource() {
+    const [resource, setResource] = useState([])
+    const router = useRouter()
+
+    useEffect(() => {
+        async function fetchResource() {
+            const id = router.query.id
+            let resource = await getResource(id);
+            setResource(resource);
+        }
+        fetchResource();
+    }, [router.query.id])
+
     return (
         <SSRProvider>
             <Head>
@@ -27,41 +41,5 @@ function Resource({ resource }) {
         </SSRProvider >
     )
 }
-
-export async function getStaticPaths() {
-    const resources = await fetchResources();
-    // create paths for all /resources/[id]/[...page]
-    const paths = resources.map((resource) => ({
-        params: {
-            id: resource.id.toString(),
-            page: ['']
-        },
-    }))
-    /* const paths = [
-    ] */
-    return { paths, fallback: true }
-}
-
-
-
-// export async function getServerSideProps(ctx) {
-export async function getStaticProps(ctx) {
-    // Resource.getInitialProps = async (ctx) => {
-    const id = ctx.params.id
-    // const id = ctx.query.id
-    // ctx.res.setHeader('Cache-Control', 's-maxage=10, stale-while-revalidate')
-    let resource = await getResource(id);
-    if (resource.error) {
-        return {
-            notFound: true,
-        };
-    }
-
-    return {
-        props: {
-            resource: resource,
-        }
-    };
-};
 
 export default Resource
