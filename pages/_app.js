@@ -25,7 +25,7 @@ export default function App({ Component, pageProps }) {
       Router.events.off("routeChangeComplete", end);
       Router.events.off("routeChangeError", end);
     };
-  }, [Router])
+  }, [])
 
   return (
     <>

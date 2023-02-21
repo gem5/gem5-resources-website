@@ -1,9 +1,4 @@
-let prevToken = null;
-
 export default async function getToken() {
-    if (prevToken) {
-        return prevToken;
-    }
     let token = await fetch('https://realm.mongodb.com/api/client/v2.0/app/data-ejhjf/auth/providers/api-key/login', {
         method: 'POST',
         headers: {
@@ -14,10 +9,11 @@ export default async function getToken() {
             "key": 'pKkhRJGJaQ3NdJyDt69u4GPGQTDUIhHlx4a3lrKUNx2hxuc8uba8NrP3IVRvlzlo'
         })
     }).catch(err => console.log(err));
-    console.log('Token res: ', token);
     let tokenJson = await token.json();
     let accessToken = tokenJson['access_token'];
-    prevToken = accessToken;
-    console.log('Token: ', accessToken);
+    if (accessToken)
+        console.log("Successfully got access token");
+    else
+        console.log("Failed to get access token");
     return accessToken;
 }
