@@ -49,23 +49,29 @@ async function getFiltersJSON() {
     let architectures = [...new Set(resources.map(resource => resource.architecture))];
     // get zipped from resources
     // let zippeds = [...new Set(resources['resources'].map(resource => String(resource.is_zipped)))].filter(zipped => zipped != "null");
-    // get gem5_version from resources
-    let gem5_versions = [...new Set(resources.map(resource => resource.gem5_version))].filter(gem5_version => gem5_version != null);
+    // get versions from resources
+    let versions = [...new Set(resources.map(resource => resource.versions))];
+    // this is a list of dictionaries, find a way to get the unique values
+    versions = versions.map(version => {
+        return Object.keys(version);
+    });
+    // merge the lists
+    versions = [].concat.apply([], versions);
     return {
         category: categories,
         // group: groups,
         architecture: architectures,
         // is_zipped : zippeds,
-        gem5_version: gem5_versions
+        versions: versions
     };
 }
 
 export async function getFilters() {
     let filters;
     // if (process.env.IS_MONGODB_ENABLED === "true") {
-    filters = await getFiltersMongoDB();
+    // filters = await getFiltersMongoDB();
     // } else {
-    // filters = await getFiltersJSON();
+    filters = await getFiltersJSON();
     // }
     return filters;
 }

@@ -1,5 +1,6 @@
 import { fetchResources } from "./resources";
 import getToken from "./getToken";
+import { version } from "nprogress";
 
 async function getResourcesMongoDB(queryObject, filters) {
   // pass queryObject by value
@@ -178,7 +179,17 @@ async function getResourcesJSON(queryObject) {
   }).sort((a, b) => b.totalMatches - a.totalMatches);
   console.log(queryObject);
   for (let filter in queryObject) {
-    if (filter !== "query" && filter !== "sort") {
+    if (filter === 'versions') {
+      results = results.filter(resource => {
+        for (let version in queryObject[filter]) {
+          if (resource.versions[queryObject[filter][version]]) {
+            return true;
+          }
+        }
+        return false;
+      });
+    }
+    else if (filter !== "query" && filter !== "sort") {
       results = results.filter(resource => queryObject[filter].includes(String(resource[filter])));
     }
   }
@@ -188,9 +199,9 @@ async function getResourcesJSON(queryObject) {
 export async function getResources(queryObject, filters) {
   let resources;
   // if (process.env.IS_MONGODB_ENABLED === "true") {
-  resources = await getResourcesMongoDB(queryObject, filters);
+  // resources = await getResourcesMongoDB(queryObject, filters);
   // } else {
-  // resources = await getResourcesJSON(queryObject);
+  resources = await getResourcesJSON(queryObject);
   // }
   return resources;
 }
