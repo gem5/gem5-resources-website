@@ -60,7 +60,12 @@ export default function Banner({ resource }) {
                     <h6 style={{ lineHeight: 'inherit', margin: '0' }}>
                         VERSION
                     </h6>
-                    <p>{Object.keys(resource.versions)[0]}</p>
+                    <p>
+                        {
+                            Object.keys(resource.versions).length > 1 ? Object.keys(resource.versions)[1] :
+                                Object.keys(resource.versions)[0]
+                        }
+                    </p>
                 </div>
             </div>
         </>

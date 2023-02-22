@@ -62,7 +62,8 @@ export default function ResourceTab({ resource }) {
           <SEandFSToggle />
         </Tab>
         <Tab eventKey="versions" title="Versions">
-          <VersionPage versions={resource.versions} />
+          <h3 className='font-weight-light'>Versions of {resource.id}</h3>
+          <VersionPage versions={resource.versions} url={resource.download_url} />
         </Tab>
       </Tabs>
     </div>
