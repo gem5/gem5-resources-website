@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Container, Row, Col } from "react-bootstrap";
 import styles from '/styles/metadata.module.css'
 export default function MetaData({ resource, className }) {
+    console.log(resource)
     return (
         <>
             <Container className={styles.info + ' ' + className}>

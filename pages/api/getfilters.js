@@ -23,7 +23,7 @@ async function getFiltersMongoDB() {
                         "_id": null,
                         "category": { "$addToSet": "$category" },
                         "architecture": { "$addToSet": "$architecture" },
-                        "gem5_version": { "$addToSet": "$gem5_version" },
+                        "versions": { "$addToSet": "$versions" },
                     },
                 },
             ],
@@ -33,9 +33,20 @@ async function getFiltersMongoDB() {
     filters['documents'][0]['architecture'] = filters['documents'][0]['architecture'].filter(architecture => architecture != null);
     delete filters['documents'][0]['_id'];
     // sort categories, architectures, and gem5_versions alphabetically
+    console.log(filters['documents'][0]['versions']);
+    // get the one with the most versions
+    let maxVersions = 0;
+    let maxVersionsIndex = 0;
+    for (let i = 0; i < filters['documents'][0]['versions'].length; i++) {
+        if (Object.keys(filters['documents'][0]['versions'][i]).length > maxVersions) {
+            maxVersions = Object.keys(filters['documents'][0]['versions'][i]).length;
+            maxVersionsIndex = i;
+        }
+    }
+    filters['documents'][0]['versions'] = Object.keys(filters['documents'][0]['versions'][maxVersionsIndex]);
     filters['documents'][0]['category'].sort();
     filters['documents'][0]['architecture'].sort();
-    filters['documents'][0]['gem5_version'].sort();
+    filters['documents'][0]['versions'].sort();
     return filters['documents'][0];
 }
 

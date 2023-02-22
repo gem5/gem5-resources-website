@@ -20,11 +20,11 @@ async function getResourcesMongoDB(queryObject, filters) {
     queryObject.architecture = architectures;
   }
   if (!queryObject.gem5_version) {
-    let gem5_versions = [];
-    for (let gem5_version in filters.gem5_version) {
-      gem5_versions.push(filters.gem5_version[gem5_version]);
+    let versions = [];
+    for (let version in filters.versions) {
+      versions.push(filters.versions[version]);
     }
-    queryObject.gem5_version = gem5_versions;
+    queryObject.versions = versions;
   }
 
   function getSort() {
@@ -75,7 +75,8 @@ async function getResourcesMongoDB(queryObject, filters) {
               "$and": [
                 { "category": { "$in": queryObject.category || [] } },
                 { "architecture": { "$in": queryObject.architecture || [] } },
-                { "gem5_version": { "$in": queryObject.gem5_version || [] } },
+                // check if any keys of versions is in queryObject.versions
+                { "gem5_version": { "$in": queryObject.versions || [] } },
               ]
             },
           },
