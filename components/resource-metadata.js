@@ -72,11 +72,11 @@ export default function MetaData({ resource, className }) {
                             resource.resources ? Object.keys(resource.resources).map((key) => {
                                 return (
                                     <>
-                                        <Link key={key}
+                                        <a key={key}
                                             href={'/resources/' + resource.resources[key]}
                                         >
                                             {resource.resources[key]}
-                                        </Link>
+                                        </a>
                                         {', '}
                                     </>
                                 )
@@ -91,11 +91,11 @@ export default function MetaData({ resource, className }) {
                             resource.workloads ? resource.workloads.map((workload, index) => {
                                 return (
                                     <>
-                                        <Link key={index}
+                                        <a key={index}
                                             href={'/resources/' + workload.id}
                                         >
                                             {workload.id}
-                                        </Link>
+                                        </a>
                                         {', '}
                                     </>
                                 )

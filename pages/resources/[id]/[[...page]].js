@@ -33,7 +33,7 @@ function Resource() {
     }, [router.isReady])
 
     return (
-        loading ? <div>Loading...</div> :
+        loading ? <div></div> :
             <>
                 <Head>
                     <title>gem5 resources</title>

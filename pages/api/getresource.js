@@ -35,13 +35,16 @@ async function getResourceJSON(id) {
     if (results.length === 0) {
         return { error: 'Resource not found' }
     }
-    let workloads = resources.filter(resource => {
-        if (resource.resources) {
-            return Object.keys(resource.resources).map((key) => {
-                return resource.resources[key]
-            }).includes(id)
+    // find workloads that contain the resource id is a value in resource.resources disctionary
+    let workloads = []
+    for (let res in resources) {
+        for (let r in resources[res].resources) {
+            if (resources[res].resources[r] === id) {
+                workloads.push(resources[res]);
+            }
         }
-    })
+    }
+    console.log(workloads);
     if (workloads.length === 0) {
         workloads = null
     } else {
@@ -52,11 +55,11 @@ async function getResourceJSON(id) {
 
 export async function getResource(id) {
     let resource;
-    if (process.env.IS_MONGODB_ENABLED) {
-        resource = await getResourceMongoDB(id);
-    } else {
-        resource = await getResourceJSON(id);
-    }
+    // if (process.env.IS_MONGODB_ENABLED) {
+    // resource = await getResourceMongoDB(id);
+    // } else {
+    resource = await getResourceJSON(id);
+    // }
     return resource;
 }
 
