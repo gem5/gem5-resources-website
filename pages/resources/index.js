@@ -7,14 +7,36 @@ import Filters from '@/components/filters'
 import { getFilters } from "../api/getfilters";
 import { useRouter } from 'next/router'
 import { useState, useEffect, useRef } from "react";
+import Paginate from '@/components/paginate'
 
 export default function Resources(props) {
     const router = useRouter()
     const ref = useRef()
 
+    const [pageCount, setPageCount] = useState(1);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [resourcesDisplayed, setResourcesDisplayed] = useState([]);
+    const numberOfItemsPerPage = 10;
+    const maxPageNumbersShown = 10;
+    const startIndex = (currentPage - 1) * numberOfItemsPerPage;
+    const endIndex = Math.min(startIndex + 10, props.resources.length);
+
     useEffect(() => {
         ref.current.setSearchQuery(filterToQuery(props.filters))
     }, [])
+
+    useEffect(() => {
+        setPageCount(() => {
+            return Math.ceil(props.resources.length / numberOfItemsPerPage);
+        });
+        setCurrentPage(1);
+    }, [props.resources]);
+
+    useEffect(() => {
+        setResourcesDisplayed(() => {
+            return props.resources.slice(startIndex, endIndex);
+        });
+    }, [props.resources, currentPage]);
 
     function Results() {
         if (props.resources.length === 0) {
@@ -30,7 +52,7 @@ export default function Resources(props) {
         return (
             <div>
                 {
-                    props.resources.map((resource, index) => (
+                    resourcesDisplayed.map((resource, index) => (
                         <div key={index}>
                             <SearchResult resource={resource} />
                             <hr />
@@ -100,7 +122,7 @@ export default function Resources(props) {
                                         Results
                                     </span>
                                     <span className='primary'>
-                                        {props.resources.length}
+                                        {`${startIndex + 1} - ${endIndex} of ${props.resources.length}`}
                                     </span>
                                 </div>
                                 <div className='w-auto'>
@@ -114,6 +136,14 @@ export default function Resources(props) {
                             </Row>
                             <Row>
                                 <Results />
+                            </Row>
+                            <Row>
+                                <Paginate 
+                                    pageCount={pageCount} 
+                                    currentPage={currentPage} 
+                                    maxNumberPages={maxPageNumbersShown} 
+                                    setCurrentPage={setCurrentPage}
+                                />
                             </Row>
                         </Col>
                     </Row>
