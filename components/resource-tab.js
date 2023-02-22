@@ -61,7 +61,7 @@ export default function ResourceTab({ resource }) {
           <SEandFSToggle />
         </Tab>
         <Tab eventKey="versions" title="Versions">
-
+          
         </Tab>
       </Tabs>
     </div>
