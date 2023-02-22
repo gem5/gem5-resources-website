@@ -187,12 +187,11 @@ async function getResourcesJSON(queryObject) {
 
 export async function getResources(queryObject, filters) {
   let resources;
-  console.log(process.env.IS_MONGODB_ENABLED);
-  if (process.env.IS_MONGODB_ENABLED === "true") {
-    resources = await getResourcesMongoDB(queryObject, filters);
-  } else {
-    resources = await getResourcesJSON(queryObject);
-  }
+  // if (process.env.IS_MONGODB_ENABLED === "true") {
+  resources = await getResourcesMongoDB(queryObject, filters);
+  // } else {
+  // resources = await getResourcesJSON(queryObject);
+  // }
   return resources;
 }
 
