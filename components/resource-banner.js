@@ -43,7 +43,7 @@ export default function Banner({ resource }) {
                 </h5>
                 <div className={styles.dot}></div>
                 <h5 className='primary'>
-                    {String(resource.category).charAt(0).toUpperCase()+String(resource.category).substring(1) ?? "Unknown"}
+                    {String(resource.category).charAt(0).toUpperCase() + String(resource.category).substring(1) ?? "Unknown"}
                 </h5>
             </div>
             <div className='d-flex gap-4'>
@@ -60,9 +60,7 @@ export default function Banner({ resource }) {
                     <h6 style={{ lineHeight: 'inherit', margin: '0' }}>
                         VERSION
                     </h6>
-                    {Object.keys(resource.versions).map(key => (
-                        <p key={key}>{key}</p>
-                    ))}
+                    <p>{Object.keys(resource.versions)[0]}</p>
                 </div>
             </div>
         </>
