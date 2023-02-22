@@ -10,6 +10,7 @@ import rehypeRaw from 'rehype-raw'
 import remarkFrontmatter from 'remark-frontmatter';
 import CopyIcon from './copy-icon';
 import { useRouter } from 'next/router';
+import VersionPage from './version-page';
 
 export default function ResourceTab({ resource }) {
   const router = useRouter();
@@ -61,7 +62,7 @@ export default function ResourceTab({ resource }) {
           <SEandFSToggle />
         </Tab>
         <Tab eventKey="versions" title="Versions">
-          
+          <VersionPage versions={resource.versions} />
         </Tab>
       </Tabs>
     </div>
