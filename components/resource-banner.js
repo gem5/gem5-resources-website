@@ -60,9 +60,9 @@ export default function Banner({ resource }) {
                     <h6 style={{ lineHeight: 'inherit', margin: '0' }}>
                         VERSION
                     </h6>
-                    <p>
-                        {resource.gem5_version}
-                    </p>
+                    {Object.keys(resource.versions).map(key => (
+                        <p key={key}>{key}</p>
+                    ))}
                 </div>
             </div>
         </>
