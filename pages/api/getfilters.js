@@ -62,11 +62,11 @@ async function getFiltersJSON() {
 
 export async function getFilters() {
     let filters;
-    if (process.env.IS_MONGODB_ENABLED === "true") {
-        filters = await getFiltersMongoDB();
-    } else {
-        filters = await getFiltersJSON();
-    }
+    // if (process.env.IS_MONGODB_ENABLED === "true") {
+    filters = await getFiltersMongoDB();
+    // } else {
+    // filters = await getFiltersJSON();
+    // }
     return filters;
 }
 
