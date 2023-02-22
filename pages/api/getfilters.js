@@ -23,7 +23,7 @@ async function getFiltersMongoDB() {
                         "_id": null,
                         "category": { "$addToSet": "$category" },
                         "architecture": { "$addToSet": "$architecture" },
-                        "gem5_version": { "$addToSet": "$gem5_version" },
+                        "versions": { "$addToSet": "$versions" },
                     },
                 },
             ],
@@ -33,9 +33,20 @@ async function getFiltersMongoDB() {
     filters['documents'][0]['architecture'] = filters['documents'][0]['architecture'].filter(architecture => architecture != null);
     delete filters['documents'][0]['_id'];
     // sort categories, architectures, and gem5_versions alphabetically
+    console.log(filters['documents'][0]['versions']);
+    // get the one with the most versions
+    let maxVersions = 0;
+    let maxVersionsIndex = 0;
+    for (let i = 0; i < filters['documents'][0]['versions'].length; i++) {
+        if (Object.keys(filters['documents'][0]['versions'][i]).length > maxVersions) {
+            maxVersions = Object.keys(filters['documents'][0]['versions'][i]).length;
+            maxVersionsIndex = i;
+        }
+    }
+    filters['documents'][0]['versions'] = Object.keys(filters['documents'][0]['versions'][maxVersionsIndex]);
     filters['documents'][0]['category'].sort();
     filters['documents'][0]['architecture'].sort();
-    filters['documents'][0]['gem5_version'].sort();
+    filters['documents'][0]['versions'].sort();
     return filters['documents'][0];
 }
 
@@ -49,23 +60,29 @@ async function getFiltersJSON() {
     let architectures = [...new Set(resources.map(resource => resource.architecture))];
     // get zipped from resources
     // let zippeds = [...new Set(resources['resources'].map(resource => String(resource.is_zipped)))].filter(zipped => zipped != "null");
-    // get gem5_version from resources
-    let gem5_versions = [...new Set(resources.map(resource => resource.gem5_version))].filter(gem5_version => gem5_version != null);
+    // get versions from resources
+    let versions = [...new Set(resources.map(resource => resource.versions))];
+    // this is a list of dictionaries, find a way to get the unique values
+    versions = versions.map(version => {
+        return Object.keys(version);
+    });
+    // merge the lists
+    versions = [].concat.apply([], versions);
     return {
         category: categories,
         // group: groups,
         architecture: architectures,
         // is_zipped : zippeds,
-        gem5_version: gem5_versions
+        versions: versions
     };
 }
 
 export async function getFilters() {
     let filters;
     // if (process.env.IS_MONGODB_ENABLED === "true") {
-    filters = await getFiltersMongoDB();
+    // filters = await getFiltersMongoDB();
     // } else {
-    // filters = await getFiltersJSON();
+    filters = await getFiltersJSON();
     // }
     return filters;
 }

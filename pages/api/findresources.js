@@ -1,5 +1,6 @@
 import { fetchResources } from "./resources";
 import getToken from "./getToken";
+import { version } from "nprogress";
 
 async function getResourcesMongoDB(queryObject, filters) {
   // pass queryObject by value
@@ -19,11 +20,11 @@ async function getResourcesMongoDB(queryObject, filters) {
     queryObject.architecture = architectures;
   }
   if (!queryObject.gem5_version) {
-    let gem5_versions = [];
-    for (let gem5_version in filters.gem5_version) {
-      gem5_versions.push(filters.gem5_version[gem5_version]);
+    let versions = [];
+    for (let version in filters.versions) {
+      versions.push(filters.versions[version]);
     }
-    queryObject.gem5_version = gem5_versions;
+    queryObject.versions = versions;
   }
 
   function getSort() {
@@ -74,7 +75,8 @@ async function getResourcesMongoDB(queryObject, filters) {
               "$and": [
                 { "category": { "$in": queryObject.category || [] } },
                 { "architecture": { "$in": queryObject.architecture || [] } },
-                { "gem5_version": { "$in": queryObject.gem5_version || [] } },
+                // check if any keys of versions is in queryObject.versions
+                { "gem5_version": { "$in": queryObject.versions || [] } },
               ]
             },
           },
@@ -178,7 +180,17 @@ async function getResourcesJSON(queryObject) {
   }).sort((a, b) => b.totalMatches - a.totalMatches);
   console.log(queryObject);
   for (let filter in queryObject) {
-    if (filter !== "query" && filter !== "sort") {
+    if (filter === 'versions') {
+      results = results.filter(resource => {
+        for (let version in queryObject[filter]) {
+          if (resource.versions[queryObject[filter][version]]) {
+            return true;
+          }
+        }
+        return false;
+      });
+    }
+    else if (filter !== "query" && filter !== "sort") {
       results = results.filter(resource => queryObject[filter].includes(String(resource[filter])));
     }
   }
@@ -188,9 +200,9 @@ async function getResourcesJSON(queryObject) {
 export async function getResources(queryObject, filters) {
   let resources;
   // if (process.env.IS_MONGODB_ENABLED === "true") {
-  resources = await getResourcesMongoDB(queryObject, filters);
+  // resources = await getResourcesMongoDB(queryObject, filters);
   // } else {
-  // resources = await getResourcesJSON(queryObject);
+  resources = await getResourcesJSON(queryObject);
   // }
   return resources;
 }
