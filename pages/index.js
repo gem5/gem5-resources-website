@@ -9,6 +9,11 @@ import { useState } from 'react'
 import MyCards from '@/components/cards'
 const inter = Inter({ subsets: ['latin'] })
 
+/**
+ * @component
+ * @description The home page of the website.
+ * @returns {JSX.Element} The JSX element to be rendered.
+*/
 export default function Home() {
   const router = useRouter()
   const [query, setQuery] = useState('')

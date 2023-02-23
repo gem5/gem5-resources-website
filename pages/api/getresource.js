@@ -1,6 +1,13 @@
 import { fetchResources } from "./resources";
 import getToken from "./getToken";
 
+/**
+ * @helper
+ * @async
+ * @description Fetches a resource from the MongoDB database.
+ * @param {string} id The id of the resource to be fetched.
+ * @returns {json} The resource in JSON format.
+*/
 async function getResourceMongoDB(id) {
     const token = await getToken();
     const res = await fetch('https://us-west-2.aws.data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/findOne', {
@@ -28,6 +35,13 @@ async function getResourceMongoDB(id) {
     return resource['document']
 }
 
+/**
+ * @helper
+ * @async
+ * @description Fetches a resource from the JSON file.
+ * @param {string} id The id of the resource to be fetched.
+ * @returns {json} The resource in JSON format.
+*/
 async function getResourceJSON(id) {
     const resources = await fetchResources();
     // filter json file to find the resources that contain the query in their id
@@ -53,6 +67,13 @@ async function getResourceJSON(id) {
     return results[0];
 }
 
+/**
+ * @wrapper
+ * @async
+ * @description Fetches a resource from the MongoDB database or JSON file.
+ * @param {string} id The id of the resource to be fetched.
+ * @returns {json} The resource in JSON format.
+*/
 export async function getResource(id) {
     let resource;
     // if (process.env.IS_MONGODB_ENABLED) {

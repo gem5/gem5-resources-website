@@ -1,5 +1,11 @@
 import getToken from "./getToken";
 
+/**
+ * @helper
+ * @async
+ * @description Fetches all the resources from the MongoDB database.
+ * @returns {json} A JSON object containing all the resources.
+*/
 async function fetchResourcesMongoDB() {
     const accessToken = await getToken();
     const res = await fetch('https://us-west-2.aws.data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/find', {
@@ -22,6 +28,12 @@ async function fetchResourcesMongoDB() {
     return resources['documents']
 }
 
+/**
+ * @helper
+ * @async
+ * @description Fetches all the resources from the JSON file. Hosted on GitHub.
+ * @returns {json} A JSON object containing all the resources.
+*/
 export async function fetchResourcesJSON() {
     console.log("Fetching resources from JSON");
     const res = await fetch('https://raw.githubusercontent.com/Gem5Vision/json-to-mongodb/versions/resources.json')
@@ -29,6 +41,12 @@ export async function fetchResourcesJSON() {
     return res;
 }
 
+/**
+ * @function
+ * @async
+ * @description Fetches resources either from a MongoDB database or from a JSON file based on the value of the IS_MONGODB_ENABLED environment variable.
+ * @returns {Promise} A Promise that resolves to an array of resources.
+*/
 export async function fetchResources() {
     let resources;
     // if (process.env.IS_MONGODB_ENABLED === 'true') {

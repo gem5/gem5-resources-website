@@ -1,6 +1,16 @@
 import Link from "next/link";
 import { Container, Row, Col } from "react-bootstrap";
 import styles from '/styles/metadata.module.css'
+
+/**
+ * @component
+ * @description A component that renders the metadata of a resource that includes
+ *             the number of likes, views, downloads, author, description, license,
+ *            dependencies, and depend on this resource.
+ * @param {Object} resource The resource object.
+ * @param {string} className The class name of the component.
+ * @returns {JSX.Element} The JSX element to be rendered.
+*/
 export default function MetaData({ resource, className }) {
     console.log(resource)
     return (

@@ -8,6 +8,12 @@ import sparc from "/public/sparc.png";
 import mips from "/public/mips.png";
 import power from "/public/power.png";
 
+
+/**
+ * @component
+ * @description A Banner that displays the resource's ID, category, architecture, and version.
+ * @returns {JSX.Element} The JSX element to be rendered.
+*/
 export default function Banner({ resource }) {
     function getIcon(architecture) {
         switch (architecture) {

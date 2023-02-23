@@ -3,6 +3,14 @@ import { useState } from "react";
 import React from 'react';
 import { HTMLDivElement } from 'react'
 
+/**
+ * @component
+ * @description This component renders a copy icon alongside the given child element, and copies the text content of the child element to the clipboard when the icon is clicked. 
+ * It also displays a tooltip message when the text has been successfully copied to the clipboard.
+ * @param {Object} props - The props object.
+ * @param {JSX.Element} props.children - The child element to copy the text from.
+ * @returns {JSX.Element} - The JSX element representing the copy icon and child element.
+*/
 export default function CopyIcon(props) {
     const [text, setText] = useState('');
     const [target, setTarget] = useState(null);

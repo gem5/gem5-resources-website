@@ -1,6 +1,12 @@
 import { fetchResources } from "./resources";
 import getToken from "./getToken";
 
+/**
+ * @helper
+ * @async
+ * @description Gets the filters from the MongoDB database. It gets the unique values for columns.
+ * @returns {json} A json object with the filters.
+*/
 async function getFiltersMongoDB() {
     let accessToken = await getToken();
     // get all distinct categories from resources
@@ -50,6 +56,12 @@ async function getFiltersMongoDB() {
     return filters['documents'][0];
 }
 
+/**
+ * @helper
+ * @async
+ * @description Gets the filters from the JSON file. It gets the unique values for columns.
+ * @returns {json} A json object with the filters.
+*/
 async function getFiltersJSON() {
     const resources = await fetchResources();
     // get unique categories from resources
@@ -77,6 +89,12 @@ async function getFiltersJSON() {
     };
 }
 
+/**
+ * @wrapper
+ * @async
+ * @description Gets the filters from the database.
+ * @returns {json} A json object with the filters.
+*/
 export async function getFilters() {
     let filters;
     // if (process.env.IS_MONGODB_ENABLED === "true") {
