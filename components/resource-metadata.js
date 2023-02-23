@@ -74,7 +74,7 @@ export default function MetaData({ resource, className }) {
                                 return (
                                     <>
                                         <a key={key}
-                                            href={'/resources/' + resource.resources[key]}
+                                            href={'/gem5-resources-website/resources/' + resource.resources[key]}
                                         >
                                             {resource.resources[key]}
                                         </a>
@@ -93,7 +93,7 @@ export default function MetaData({ resource, className }) {
                                 return (
                                     <>
                                         <a key={index}
-                                            href={'/resources/' + workload.id}
+                                            href={'/gem5-resources-website/resources/' + workload.id}
                                         >
                                             {workload.id}
                                         </a>
