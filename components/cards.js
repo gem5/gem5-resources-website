@@ -20,7 +20,7 @@ export default function MyCards() {
             <Card.Text>
               A full boot of Ubuntu 20.04 with Linux 5.10 for RISCV.
             </Card.Text>
-            <Link href="/resources/arm-hello64-static" passHref legacyBehavior>
+            <Link href="/resources/riscv-ubuntu-20.04-boot" passHref legacyBehavior>
               <Button variant="outline-primary" href="/resources/riscv-ubuntu-20.04-boot">Learn More</Button>
             </Link>
           </Card.Body>
@@ -44,7 +44,7 @@ export default function MyCards() {
             <Card.Text>
               A disk image containing Ubuntu 18.04 for x86.
             </Card.Text>
-            <Link href="/resources/arm-hello64-static" passHref legacyBehavior>
+            <Link href="/resources/x86-ubuntu-18.04-img" passHref legacyBehavior>
               <Button variant="outline-primary" href="/resources/x86-ubuntu-18.04-img">Learn More</Button>
             </Link>
           </Card.Body>
