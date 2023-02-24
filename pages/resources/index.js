@@ -18,6 +18,7 @@ export default function Resources(props) {
     const [currentPage, setCurrentPage] = useState(1);
     const [resourcesDisplayed, setResourcesDisplayed] = useState([]);
     const [maxPageNumbersShown, setMaxPageNumbersShown] = useState(10);
+    const [paginationSize, setPaginationSize] = useState(null);
     const startIndex = (currentPage - 1) * numberOfItemsPerPage;
     const endIndex = Math.min(startIndex + 10, props.resources.length);
 
@@ -39,7 +40,15 @@ export default function Resources(props) {
     }, [props.resources, currentPage]);
 
     useEffect(() => {
-        function pageNumbersOnResize() {window.innerWidth < 768 ? setMaxPageNumbersShown(5) : setMaxPageNumbersShown(10)}
+        function pageNumbersOnResize() { 
+            if (window.innerWidth < 768) {
+                setMaxPageNumbersShown(5); 
+                setPaginationSize("sm");
+            } else {
+                setMaxPageNumbersShown(10); 
+                setPaginationSize(null);
+            }
+        }
         pageNumbersOnResize();
         window.addEventListener("resize", pageNumbersOnResize);
         return () => {window.removeEventListener("resize", pageNumbersOnResize)}
@@ -150,6 +159,7 @@ export default function Resources(props) {
                                     currentPage={currentPage} 
                                     maxPageNumbersShown={maxPageNumbersShown} 
                                     setCurrentPage={setCurrentPage}
+                                    paginationSize={paginationSize}
                                 />
                             </Row>
                         </Col>

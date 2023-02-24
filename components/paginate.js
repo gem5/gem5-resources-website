@@ -1,6 +1,7 @@
 import Pagination from 'react-bootstrap/Pagination'
+import styles from '/styles/paginate.module.css'
 
-export default function Paginate({pageCount, currentPage, maxPageNumbersShown, setCurrentPage}) {
+export default function Paginate({pageCount, currentPage, maxPageNumbersShown, setCurrentPage, paginationSize}) {
     const halfPagesToShow = Math.floor(maxPageNumbersShown / 2);
 
     if (pageCount <= 1) {
@@ -15,7 +16,7 @@ export default function Paginate({pageCount, currentPage, maxPageNumbersShown, s
     }
 
     return (
-        <Pagination className="justify-content-center gap-1">
+        <Pagination className={`${styles.pagination} justify-content-center gap-1`} size={paginationSize}>
             <Pagination.First onClick={()=>{setCurrentPage(1)}} disabled={currentPage === 1} />
             <Pagination.Prev onClick={()=>{setCurrentPage(currentPage - 1)}} disabled={currentPage === 1} />
             {Array.from({length: endPage - startPage + 1}).map((_, index) => {
