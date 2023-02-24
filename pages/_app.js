@@ -1,5 +1,4 @@
 import '@/styles/globals.css'
-import Head from 'next/head'
 import Layout from '@/components/layout'
 import Router from 'next/router'
 import { useEffect } from 'react'
@@ -29,9 +28,6 @@ export default function App({ Component, pageProps }) {
 
   return (
     <>
-      <Head>
-        <link rel="shortcut icon" type="image/x-icon" href="/favicon.png" />
-      </Head>
       <Layout>
         <Component {...pageProps} />
       </Layout>
