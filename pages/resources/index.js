@@ -13,11 +13,11 @@ export default function Resources(props) {
     const router = useRouter()
     const ref = useRef()
 
+    const numberOfItemsPerPage = 10;
     const [pageCount, setPageCount] = useState(1);
     const [currentPage, setCurrentPage] = useState(1);
     const [resourcesDisplayed, setResourcesDisplayed] = useState([]);
-    const numberOfItemsPerPage = 10;
-    const maxPageNumbersShown = 10;
+    const [maxPageNumbersShown, setMaxPageNumbersShown] = useState(10);
     const startIndex = (currentPage - 1) * numberOfItemsPerPage;
     const endIndex = Math.min(startIndex + 10, props.resources.length);
 
@@ -37,6 +37,13 @@ export default function Resources(props) {
             return props.resources.slice(startIndex, endIndex);
         });
     }, [props.resources, currentPage]);
+
+    useEffect(() => {
+        function pageNumbersOnResize() {window.innerWidth < 768 ? setMaxPageNumbersShown(5) : setMaxPageNumbersShown(10)}
+        pageNumbersOnResize();
+        window.addEventListener("resize", pageNumbersOnResize);
+        return () => {window.removeEventListener("resize", pageNumbersOnResize)}
+    }, []);
 
     function Results() {
         if (props.resources.length === 0) {
@@ -141,7 +148,7 @@ export default function Resources(props) {
                                 <Paginate 
                                     pageCount={pageCount} 
                                     currentPage={currentPage} 
-                                    maxNumberPages={maxPageNumbersShown} 
+                                    maxPageNumbersShown={maxPageNumbersShown} 
                                     setCurrentPage={setCurrentPage}
                                 />
                             </Row>
