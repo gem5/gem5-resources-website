@@ -12,6 +12,13 @@ import CopyIcon from './copy-icon';
 import { useRouter } from 'next/router';
 import VersionPage from './version-page';
 
+/**
+ * @component
+ * @description The tab component for the resource page. This component is responsible for rendering the tabs and their content.
+ *            It also handles the routing for the tabs.
+ * @param {Object} resource The resource object.
+ * @returns {JSX.Element} The JSX element to be rendered.
+*/
 export default function ResourceTab({ resource }) {
   const router = useRouter();
   const [selectedTab, setSelectedTab] = useState('readme');

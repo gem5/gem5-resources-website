@@ -4,6 +4,12 @@ import { Button, Container } from "react-bootstrap";
 import { getResource } from "./api/getresource";
 import Resource from "./resources/[id]/[[...page]]";
 
+/**
+ * @component
+ * @description The 404 page of the website. This is also reused to
+ * do dynamic routing for resources.
+ * @returns {JSX.Element} The JSX element to be rendered.
+*/
 export default function Custom404() {
     const router = useRouter()
     const [error, setError] = useState(false)

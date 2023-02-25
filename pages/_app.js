@@ -6,6 +6,13 @@ import NProgress from 'nprogress';
 
 NProgress.configure({ showSpinner: false });
 
+/**
+ * @component
+ * @description The main component of the application. It is used to initialize the application.
+ * @param {Object} Component The component to be rendered.
+ * @param {Object} pageProps The props of the component to be rendered.
+ * @returns {JSX.Element} The JSX element to be rendered.
+*/
 export default function App({ Component, pageProps }) {
   useEffect(() => {
     const start = () => {

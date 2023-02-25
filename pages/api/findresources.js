@@ -2,6 +2,14 @@ import { fetchResources } from "./resources";
 import getToken from "./getToken";
 import { version } from "nprogress";
 
+/**
+ * @helper
+ * @async
+ * @description Fetches the resources based on the query object from the MongoDB database.
+ * @param {json} queryObject The query object.
+ * @param {json} filters The filters object.
+ * @returns {JSX.Element} The JSX element to be rendered.
+*/
 async function getResourcesMongoDB(queryObject, filters) {
   // pass queryObject by value
   queryObject = { ...queryObject };
@@ -140,6 +148,13 @@ async function getResourcesMongoDB(queryObject, filters) {
   }
 }
 
+/**
+ * @helper
+ * @async
+ * @description Fetches the resources based on the query object from the JSON file.
+ * @param {json} queryObject The query object.
+ * @returns {JSX.Element} The JSX element to be rendered.
+*/
 async function getResourcesJSON(queryObject) {
   const resources = await fetchResources();
   const query = queryObject.query.trim();
@@ -197,6 +212,14 @@ async function getResourcesJSON(queryObject) {
   return results;
 }
 
+/**
+ * @wrapper
+ * @async
+ * @description Wrapper function to fetch the resources based on the query object.
+ * @param {json} queryObject The query object.
+ * @param {json} filters The filters to be applied.
+ * @returns {json} The resources in JSON format.
+*/
 export async function getResources(queryObject, filters) {
   let resources;
   // if (process.env.IS_MONGODB_ENABLED === "true") {
@@ -215,7 +238,11 @@ export default async function handler(req, res) {
   res.status(200).json(results);
 }
 
-
+/**
+ * @helper
+ * @description Calculates the Damerau-Levenshtein distance between two strings. Used for fuzzy search.
+ * @returns {number} The Damerau-Levenshtein distance between the two strings.
+*/
 function damerauLevenshteinDistance(a, b) {
   if (a.length == 0) return b.length;
   if (b.length == 0) return a.length;
