@@ -183,7 +183,7 @@ function Resources() {
                                     >
                                         <option value='relevance'>Relevance</option>
                                         <option value='date'>Date</option>
-                                        <option value='date'>Version</option>
+                                        <option value='version'>Version</option>
                                         <option value='id_asc'>Id Ascending</option>
                                         <option value='id_desc'>Id Descending</option>
                                     </Form.Select>

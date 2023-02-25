@@ -19,13 +19,6 @@ async function getResourcesMongoDB(queryObject, filters) {
     }
     queryObject.architecture = architectures;
   }
-  if (!queryObject.gem5_version) {
-    let versions = [];
-    for (let version in filters.versions) {
-      versions.push(filters.versions[version]);
-    }
-    queryObject.versions = versions;
-  }
 
   function getSort() {
     console.log(queryObject.sort);
@@ -76,7 +69,6 @@ async function getResourcesMongoDB(queryObject, filters) {
                 { "category": { "$in": queryObject.category || [] } },
                 { "architecture": { "$in": queryObject.architecture || [] } },
                 // check if any keys of versions is in queryObject.versions
-                { "gem5_version": { "$in": queryObject.versions || [] } },
               ]
             },
           },
@@ -126,7 +118,6 @@ async function getResourcesMongoDB(queryObject, filters) {
               "$and": [
                 { "category": { "$in": queryObject.category || [] } },
                 { "architecture": { "$in": queryObject.architecture || [] } },
-                { "gem5_version": { "$in": queryObject.gem5_version || [] }, }
               ]
             },
           },
@@ -177,8 +168,26 @@ async function getResourcesJSON(queryObject) {
     }
     resource['totalMatches'] = totalMatches;
     return totalMatches > 0;
-  }).sort((a, b) => b.totalMatches - a.totalMatches);
+  })
   console.log(queryObject);
+  if (queryObject.sort) {
+    switch (queryObject.sort) {
+      case "id_asc":
+        results = results.sort((a, b) => a.id.localeCompare(b.id));
+        break;
+      case "id_desc":
+        results = results.sort((a, b) => b.id.localeCompare(a.id));
+        break;
+      case "date":
+        results = results.sort((a, b) => a.date.localeCompare(b.date));
+        break;
+      default:
+        results = results.sort((a, b) => b.totalMatches - a.totalMatches);
+    }
+  } else {
+    results = results.sort((a, b) => b.totalMatches - a.totalMatches);
+  }
+
   for (let filter in queryObject) {
     if (filter === 'versions') {
       results = results.filter(resource => {
@@ -200,9 +209,9 @@ async function getResourcesJSON(queryObject) {
 export async function getResources(queryObject, filters) {
   let resources;
   // if (process.env.IS_MONGODB_ENABLED === "true") {
-  // resources = await getResourcesMongoDB(queryObject, filters);
+  resources = await getResourcesMongoDB(queryObject, filters);
   // } else {
-  resources = await getResourcesJSON(queryObject);
+  // resources = await getResourcesJSON(queryObject);
   // }
   return resources;
 }
