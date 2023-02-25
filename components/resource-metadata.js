@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Container, Row, Col } from "react-bootstrap";
 import styles from '/styles/metadata.module.css'
 export default function MetaData({ resource, className }) {
+    console.log(resource)
     return (
         <>
             <Container className={styles.info + ' ' + className}>
@@ -26,21 +27,31 @@ export default function MetaData({ resource, className }) {
                     </Col>
                 </Row>
                 <Row className="border-bottom">
-                    <p className="text-muted">Publisher</p>
+                    <p className="text-muted">Author</p>
                     <h4 className="primary">
-                        {resource.author ?? 'Bobby R. Bruce'}
+                        {resource.author ? resource.author.map((author, index) => {
+                            return (
+                                <>
+                                    {author}
+                                    {index < resource.author.length - 1 ? ', ' : ''}
+                                </>
+                            )
+                        }) : 'Unknown'}
                     </h4>
                 </Row>
                 <Row className="border-bottom">
-                    <p className="text-muted">Metadata</p>
+                    <p className="text-muted">Description</p>
                     <p className="primary">
                         {resource.description ?? 'This is a description of the resource.'}
                     </p>
-                    <Link
-                        href={resource.github_url ?? 'https://www.gem5.org/documentation/general_docs/resources'}
-                    >
-                        Repository (GitHub)
-                    </Link>
+                    {
+                        resource.github_url ?
+                            <Link
+                                href={resource.github_url}
+                            >
+                                Repository (GitHub)
+                            </Link> : null
+                    }
                 </Row>
                 <Row className="border-bottom">
                     <p className="text-muted">License</p>
@@ -62,11 +73,30 @@ export default function MetaData({ resource, className }) {
                             resource.resources ? Object.keys(resource.resources).map((key) => {
                                 return (
                                     <>
-                                        <Link
-                                            href={'/resources/' + resource.resources[key]}
+                                        <a key={key}
+                                            href={'/gem5-resources-website/resources/' + resource.resources[key]}
                                         >
                                             {resource.resources[key]}
-                                        </Link>
+                                        </a>
+                                        {', '}
+                                    </>
+                                )
+                            }) : 'None'
+                        }
+                    </p>
+                </Row>
+                <Row className="border-bottom">
+                    <p className="text-muted">Depend on this resource</p>
+                    <p className="primary">
+                        {
+                            resource.workloads ? resource.workloads.map((workload, index) => {
+                                return (
+                                    <>
+                                        <a key={index}
+                                            href={'/gem5-resources-website/resources/' + workload.id}
+                                        >
+                                            {workload.id}
+                                        </a>
                                         {', '}
                                     </>
                                 )

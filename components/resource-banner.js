@@ -43,7 +43,7 @@ export default function Banner({ resource }) {
                 </h5>
                 <div className={styles.dot}></div>
                 <h5 className='primary'>
-                    {resource.author ?? "Unknown"}
+                    {String(resource.category).charAt(0).toUpperCase() + String(resource.category).substring(1) ?? "Unknown"}
                 </h5>
             </div>
             <div className='d-flex gap-4'>
@@ -61,7 +61,10 @@ export default function Banner({ resource }) {
                         VERSION
                     </h6>
                     <p>
-                        {resource.gem5_version}
+                        {
+                            Object.keys(resource.versions).length > 1 ? Object.keys(resource.versions)[1] :
+                                Object.keys(resource.versions)[0]
+                        }
                     </p>
                 </div>
             </div>

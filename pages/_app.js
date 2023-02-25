@@ -1,5 +1,4 @@
 import '@/styles/globals.css'
-import Head from 'next/head'
 import Layout from '@/components/layout'
 import Router from 'next/router'
 import { useEffect } from 'react'
@@ -25,7 +24,7 @@ export default function App({ Component, pageProps }) {
       Router.events.off("routeChangeComplete", end);
       Router.events.off("routeChangeError", end);
     };
-  }, [Router])
+  }, [])
 
   return (
     <>

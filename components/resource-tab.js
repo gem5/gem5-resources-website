@@ -7,9 +7,12 @@ import remarkToc from 'remark-toc'
 import rehypeHighlight from 'rehype-highlight'
 import rehypeSlug from 'rehype-slug'
 import rehypeRaw from 'rehype-raw'
+import remarkFrontmatter from 'remark-frontmatter';
 import CopyIcon from './copy-icon';
 import { useRouter } from 'next/router';
-export default function ResourceTab({ resource, readme }) {
+import VersionPage from './version-page';
+
+export default function ResourceTab({ resource }) {
   const router = useRouter();
   const [selectedTab, setSelectedTab] = useState('readme');
 
@@ -25,7 +28,7 @@ export default function ResourceTab({ resource, readme }) {
     } else {
       setSelectedTab('readme');
     }
-  }, [router.asPath]);
+  }, [router, resource.id]);
 
   const handleSelect = (e) => {
     if (e === 'readme') {
@@ -44,7 +47,7 @@ export default function ResourceTab({ resource, readme }) {
         onSelect={(e) => handleSelect(e)}
       >
         <Tab eventKey="readme" title="Readme">
-          <ReadmeTab readme={readme} />
+          <ReadmeTab github_url={resource.github_url} />
         </Tab>
         <Tab eventKey="changelog" title="Changelog">
 
@@ -59,7 +62,8 @@ export default function ResourceTab({ resource, readme }) {
           <SEandFSToggle />
         </Tab>
         <Tab eventKey="versions" title="Versions">
-
+          <h3 className='font-weight-light'>Versions of {resource.id}</h3>
+          <VersionPage versions={resource.versions} url={resource.download_url} />
         </Tab>
       </Tabs>
     </div>
@@ -85,13 +89,20 @@ function SEandFSToggle() {
   );
 }
 
-function ReadmeTab({ readme }) {
+function ReadmeTab({ github_url }) {
+  const [readme, setReadme] = useState('');
+  useEffect(() => {
+    if (!github_url) return;
+    const url = github_url.replace('github.com', 'raw.githubusercontent.com').replace('tree/', '') + '/README.md';
+    fetch(url).then((res) => res.text()).then((text) => setReadme(text));
+  }, [github_url]);
   return (
     <Tab.Container defaultActiveKey="first">
       {/* wrap pre tags in CopyIcon */}
       <ReactMarkdown
+        className='markdown-body mt-3'
         rehypePlugins={[[rehypeHighlight, { ignoreMissing: true }], rehypeRaw, rehypeSlug]}
-        remarkPlugins={[remarkToc, remarkGfm]}
+        remarkPlugins={[remarkGfm, remarkToc, remarkFrontmatter]}
         components={{
           pre: ({ node, ...props }) =>
             <CopyIcon>

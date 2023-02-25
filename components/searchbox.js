@@ -1,28 +1,22 @@
 import { Form, Button, InputGroup } from "react-bootstrap";
-import { useState, forwardRef, useImperativeHandle } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import searchImage from "public/search.png"
 
-const SearchBox = forwardRef((props, ref) => {
-    const [search, setSearch] = useState(props.query)
+export default function SearchBox(props) {
+    const [search, setSearch] = useState("")
+
+    useEffect(() => {
+        if (props.query) {
+            setSearch(props.query)
+        } else {
+            setSearch("")
+        }
+    }, [props.query])
 
     function handleSubmit(e) {
         e.preventDefault()
-        console.log(e.target[0].value)
         props.callback(e.target[0].value)
-    }
-
-    useImperativeHandle(ref, () => ({
-        setSearchQuery,
-        getSearchQuery
-    }))
-
-    function setSearchQuery(query) {
-        setSearch(query)
-    }
-
-    function getSearchQuery() {
-        return search
     }
 
     function onChange(e) {
@@ -47,8 +41,4 @@ const SearchBox = forwardRef((props, ref) => {
             </Form>
         </>
     )
-})
-
-SearchBox.displayName = 'SearchBox'
-
-export default SearchBox
+}

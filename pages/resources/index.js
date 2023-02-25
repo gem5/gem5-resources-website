@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { Button, Col, Row, SSRProvider } from 'react-bootstrap'
+import { Button, Col, Form, Row, Spinner, SSRProvider } from 'react-bootstrap'
 import { getResources } from '../api/findresources'
 import SearchBox from '@/components/searchbox'
 import SearchResult from '@/components/searchresult'
@@ -9,9 +9,13 @@ import { useRouter } from 'next/router'
 import { useState, useEffect, useRef } from "react";
 import Paginate from '@/components/paginate'
 
-export default function Resources(props) {
+function Resources() {
     const router = useRouter()
-    const ref = useRef()
+    const [query, setQuery] = useState(null)
+    const [resources, setResources] = useState([])
+    const [filters, setFilters] = useState({})
+    const [queryObject, setQueryObject] = useState(null)
+    const [loading, setLoading] = useState(true)
 
     const numberOfItemsPerPage = 10;
     const [pageCount, setPageCount] = useState(1);
@@ -23,8 +27,68 @@ export default function Resources(props) {
     const endIndex = Math.min(startIndex + 10, props.resources.length);
 
     useEffect(() => {
-        ref.current.setSearchQuery(filterToQuery(props.filters))
-    }, [])
+        let q = window.location.href.split('?')[1]
+        if (q) {
+            q = q.split('=')[1]
+            q = decodeURIComponent(q)
+            q = q.replace(/\+/g, ' ')
+            setQuery(q)
+        }
+    }, [router.query.q])
+
+    useEffect(() => {
+        if (query != null) {
+            let qo = {};
+            let queryArray = query.split(" ");
+            queryArray.forEach(query => {
+                let querySplit = query.split(":");
+                if (querySplit.length === 2) {
+                    if (qo[querySplit[0]]) {
+                        qo[querySplit[0]].push(querySplit[1]);
+                    } else {
+                        qo[querySplit[0]] = [querySplit[1]];
+                    }
+                }
+            });
+            qo["query"] = queryArray.filter(query => !query.includes(":"));
+            qo["query"] = qo["query"].join(" ");
+            if (!qo["query"]) {
+                qo["query"] = "";
+            }
+            qo["sort"] = "relevance";
+            setQueryObject(qo);
+            console.log(qo);
+        }
+    }, [query])
+
+    useEffect(() => {
+        const fetchFilters = async () => {
+            const filters = await getFilters();
+            setFilters(filters);
+            let filterModified = {};
+            for (let filter in filters) {
+                let filterObject = {};
+                filters[filter].forEach(filterOption => {
+                    if (queryObject[filter] && queryObject[filter].includes(filterOption)) {
+                        filterObject[filterOption] = true;
+                    } else {
+                        filterObject[filterOption] = false;
+                    }
+                }
+                );
+                filterModified[filter] = filterObject;
+            }
+            setFilters(filterModified);
+            setLoading(true);
+            const resources = await getResources(queryObject, filters);
+            setResources(resources);
+            setLoading(false);
+        };
+
+        if (queryObject) {
+            fetchFilters();
+        }
+    }, [queryObject])
 
     useEffect(() => {
         setPageCount(() => {
@@ -55,7 +119,7 @@ export default function Resources(props) {
     }, []);
 
     function Results() {
-        if (props.resources.length === 0) {
+        if (resources?.length === 0) {
             return (
                 <>
                     <hr />
@@ -89,7 +153,8 @@ export default function Resources(props) {
                 }
             }
         }
-        let searchQuery = ref.current.getSearchQuery().split(' ').filter((word) => !word.includes(':'));
+        // let searchQuery = ref.current.getSearchQuery().split(' ').filter((word) => !word.includes(':'));
+        let searchQuery = query.split(' ').filter((word) => !word.includes(':'));
         searchQuery = searchQuery.join(' ');
         if (searchQuery) {
             q += searchQuery;
@@ -99,7 +164,6 @@ export default function Resources(props) {
 
     function onChange(filters) {
         let q = filterToQuery(filters)
-        ref.current.setSearchQuery(q)
         router.push({
             pathname: '/resources',
             query: { q: q }
@@ -107,12 +171,15 @@ export default function Resources(props) {
     }
 
     function onSearch(query) {
-        console.log(query)
-        ref.current.setSearchQuery(query)
+        setQuery(query)
         router.push({
             pathname: '/resources',
             query: { q: query }
         })
+    }
+
+    function onSortChange(e) {
+        setQueryObject({ ...queryObject, sort: e.target.value })
     }
 
     return (
@@ -124,12 +191,12 @@ export default function Resources(props) {
             </Head>
             <div className='d-flex flex-column gap-4 align-items-center'>
                 <div className='p-5 w-100 bg-light'>
-                    <SearchBox callback={onSearch} query={props.query} ref={ref} />
+                    <SearchBox callback={onSearch} query={query} />
                 </div>
                 <div className='content'>
                     <Row>
                         <Col xs={3} className='filters'>
-                            <Filters filters={props.filters} callback={onChange} />
+                            <Filters filters={filters} callback={onChange} />
                         </Col>
                         <Col>
                             <Row className='justify-content-between align-items-center'>
@@ -141,17 +208,32 @@ export default function Resources(props) {
                                         {`${startIndex + 1} - ${endIndex} of ${props.resources.length}`}
                                     </span>
                                 </div>
-                                <div className='w-auto'>
+                                <div className='w-auto d-flex align-items-center'>
                                     <span className='text-uppercase me-2 text-muted'>
                                         Sort by
                                     </span>
-                                    <span className='text-uppercase primary'>
-                                        Relevance
-                                    </span>
+                                    <Form.Select
+                                        className='w-auto primary text-uppercase border-0'
+                                        aria-label="Default select example"
+                                        defaultValue='relevance'
+                                        onChange={onSortChange}
+                                    >
+                                        <option value='relevance'>Relevance</option>
+                                        <option value='date'>Date</option>
+                                        <option value='date'>Version</option>
+                                        <option value='id_asc'>Id Ascending</option>
+                                        <option value='id_desc'>Id Descending</option>
+                                    </Form.Select>
                                 </div>
                             </Row>
                             <Row>
-                                <Results />
+                                {
+                                    loading ?
+                                        <div className='d-flex flex-column align-items-center justify-content-center p-5'>
+                                            <Spinner animation="border" />
+                                        </div>
+                                        : <Results />
+                                }
                             </Row>
                             <Row>
                                 <Paginate 
@@ -170,12 +252,11 @@ export default function Resources(props) {
     )
 }
 
-export async function getServerSideProps({ query }) {
+// export async function getServerSideProps({ query }) {
+/* Resources.getInitialProps = async ({ query }) => {
     if (!query.q) {
         query.q = ''
     }
-    // query.q might contain something like "category:workload category:kernel query"
-    // parse the query and convert to something like category: ["gem5", "gem5art"] query: ["query"]
     let queryObject = {};
     let queryArray = query.q.split(" ");
     queryArray.forEach(query => {
@@ -193,9 +274,8 @@ export async function getServerSideProps({ query }) {
     if (!queryObject["query"]) {
         queryObject["query"] = "";
     }
-    const resources = await getResources(queryObject);
+    const resources = await getResourcesMongoDB(queryObject);
     const filters = await getFilters();
-
     let filterModified = {};
     for (let filter in filters) {
         let filterObject = {};
@@ -211,11 +291,13 @@ export async function getServerSideProps({ query }) {
     }
 
     return {
-        props: {
-            resources: resources,
-            filters: filterModified,
-            query: queryObject.query,
-            fullQuery: query.q
-        }
+        // props: {
+        resources: resources,
+        filters: filterModified,
+        query: queryObject.query,
+        fullQuery: query.q
+        // }
     };
-};
+}; */
+
+export default Resources

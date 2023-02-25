@@ -1,0 +1,25 @@
+.cardContainerStyle {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.cardStyle {
+    width: calc(100% / 3 - 1rem);
+}
+
+.cardStyle>div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.containerStyle {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    padding: 1rem;
+}

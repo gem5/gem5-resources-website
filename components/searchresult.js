@@ -23,7 +23,7 @@ export default function SearchResult({ resource }) {
             case "POWER":
                 return power;
             default:
-                return '';
+                return x86;
         }
     }
 
