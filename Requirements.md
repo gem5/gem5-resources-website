@@ -236,13 +236,13 @@ Conclusion: ReactJS
       C[v22.1] --> B[JSON];
         D[v22.0] --> B[JSON];
         E[v21.2] --> B[JSON];
-      F[gem5/gem5_resources] --> I[gem5 Vision] 
-       G[gem5/configs/gem5_library] --> I[gem5 Vision] 
+      F[gem5/gem5_resources] --> I[gem5 Vision]
+       G[gem5/configs/gem5_library] --> I[gem5 Vision]
       B[JSON] --> H[MongoDB]
       B[JSON] --> I[gem5 Vision]
-      H[MongoDB] --> I[gem5 Vision] 
-      J[Server to Track Stats] --> I[gem5 Vision] 
-       K[gem5 prebuilt boards] -.-> I[gem5 Vision] 
+      H[MongoDB] --> I[gem5 Vision]
+      J[Server to Track Stats] --> I[gem5 Vision]
+       K[gem5 prebuilt boards] -.-> I[gem5 Vision]
         I[gem5 Vision] --> L[gem5 Resources Website]
         I[gem5 Vision] --> M[Documentation]
         I[gem5 Vision] --> N[Python Wrapper]
@@ -251,256 +251,256 @@ Conclusion: ReactJS
 
 ## Requirements
 
-    **User Stories #1: Documentation for a Resource**
+**User Stories #1: Documentation for a Resource**
 
-    Problem: Dr. Finn is a seasoned gem5 researcher who knows the exact ID of the resource he wants to download, down to the architecture, category, and whether he requires SimPoints or not. But, he forgot how to use a resource in gem5.
+Problem: Dr. Finn is a seasoned gem5 researcher who knows the exact ID of the resource he wants to download, down to the architecture, category, and whether he requires SimPoints or not. But, he forgot how to use a resource in gem5.
 
-    Solution: All he needs is, therefore, a search bar, where he can enter the ID of the required resource and see the instructions on how to use it in gem5.
+Solution: All he needs is, therefore, a search bar, where he can enter the ID of the required resource and see the instructions on how to use it in gem5.
 
-    **User Stories #2: Advanced Exact Search**
+**User Stories #2: Advanced Exact Search**
 
-    Problem: Dr. Bose is a researcher who requires a particular version of a resource for a particular architecture for a particular release of gem5.
+Problem: Dr. Bose is a researcher who requires a particular version of a resource for a particular architecture for a particular release of gem5.
 
-    Solution: Therefore, he needs an advanced feature search where they can filter all the resources by their versions, and architectures, and check out instructions for a particular version of gem5.
+Solution: Therefore, he needs an advanced feature search where they can filter all the resources by their versions, and architectures, and check out instructions for a particular version of gem5.
 
-    **User Stories #3: Browsing a Category**
+**User Stories #3: Browsing a Category**
 
-    Problem: Professor Lev Bronstein has a simulation setup for RISC-V. He has everything ready now he is trying to look for different Kernels supported by his architecture.
+Problem: Professor Lev Bronstein has a simulation setup for RISC-V. He has everything ready now he is trying to look for different Kernels supported by his architecture.
 
-    Solution: He can select the category Kernels and filter by RISC-V to check what’s available (under “Advanced Search”).
+Solution: He can select the category Kernels and filter by RISC-V to check what’s available (under “Advanced Search”).
 
-    **User Stories #4: Link to Resource Dependencies**
+**User Stories #4: Link to Resource Dependencies**
 
-    Problem: Dr. Allison is working on code written by a researcher who no longer works with them. The researcher used some workloads but they don’t know what it does and what it depends upon.
+Problem: Dr. Allison is working on code written by a researcher who no longer works with them. The researcher used some workloads but they don’t know what it does and what it depends upon.
 
-    Solution: They know the exact ID for the workload. They need to search the ID for the resources and click on the resources it depends upon.
+Solution: They know the exact ID for the workload. They need to search the ID for the resources and click on the resources it depends upon.
 
-    **User Stories #5: Partial Search**
+**User Stories #5: Partial Search**
 
-    Problem: Dr. Caroline Bracey is trying to find the Linux kernel (v4.19.83) for x86 systems but they don’t know the exact ID for it. Now she wants to find the ID for it so that they can use it for their x86 simulation.
+Problem: Dr. Caroline Bracey is trying to find the Linux kernel (v4.19.83) for x86 systems but they don’t know the exact ID for it. Now she wants to find the ID for it so that they can use it for their x86 simulation.
 
-    Solution: Here, she can use the advanced search, select the category as Kernel, Filter by x86 architecture, Filter from “Date Oldest to Newest”, and search for Linux v4.19.83.
+Solution: Here, she can use the advanced search, select the category as Kernel, Filter by x86 architecture, Filter from “Date Oldest to Newest”, and search for Linux v4.19.83.
 
-    OR
+OR
 
-    Search for Linux v4.19.83, if not satisfied with the results, use the advanced search and choose the category as Kernel, apply the x86 filter, and sort by “Date Oldest to Newest”.
+Search for Linux v4.19.83, if not satisfied with the results, use the advanced search and choose the category as Kernel, apply the x86 filter, and sort by “Date Oldest to Newest”.
 
-    **User Stories #6: Compatibility and Versioning**
+**User Stories #6: Compatibility and Versioning**
 
-    Problem: Dr. Kevin Patel recently updated to the new Gem5 version and now are trying to run a simulation that uses the riscv-bootloader-vmlinux-5.10. However, they’re running into compatibility issues since the bootloader was designed for an older version.
+Problem: Dr. Kevin Patel recently updated to the new Gem5 version and now are trying to run a simulation that uses the riscv-bootloader-vmlinux-5.10. However, they’re running into compatibility issues since the bootloader was designed for an older version.
 
-    Solution: The user now searches for id and views all of the versions for the bootloader and if there is a version that the newest version of gem5 supports. Something similar to [https://pub.dev/packages/flutter_native_splash/versions](https://pub.dev/packages/flutter_native_splash/versions)
+Solution: The user now searches for id and views all of the versions for the bootloader and if there is a version that the newest version of gem5 supports. Something similar to [https://pub.dev/packages/flutter_native_splash/versions](https://pub.dev/packages/flutter_native_splash/versions)
 
-    **User Stories #7: Examples of How to Use**
+**User Stories #7: Examples of How to Use**
 
-    Problem: Neha Kakkar is a researcher who wants to run NAS Parallel Benchmark for a particular system to gem5 but does not know how to use that resource for a particular mode of gem5 (SE or FS).
+Problem: Neha Kakkar is a researcher who wants to run NAS Parallel Benchmark for a particular system to gem5 but does not know how to use that resource for a particular mode of gem5 (SE or FS).
 
-    Solution: Therefore, they need particular instructions for using that resource in SE mode and in FS mode on viewing more information about the resource.
+Solution: Therefore, they need particular instructions for using that resource in SE mode and in FS mode on viewing more information about the resource.
 
-    **User Stories #8: Filtering based on SimPoints/checkpoints**
+**User Stories #8: Filtering based on SimPoints/checkpoints**
 
-    Problem: Professor Jennifer Drakos wants to speed up her simulation time. She would need to pick the exact same resource, down to the gem5 version, resource version, architecture, etc. but just a version with SimPoints or CheckPoints.
+Problem: Professor Jennifer Drakos wants to speed up her simulation time. She would need to pick the exact same resource, down to the gem5 version, resource version, architecture, etc. but just a version with SimPoints or CheckPoints.
 
-    Solution: Therefore, she needs a checkbox that can toggle between showing all resources or just resources that support SimPoints or CheckPoints.
+Solution: Therefore, she needs a checkbox that can toggle between showing all resources or just resources that support SimPoints or CheckPoints.
 
-    **User Stories #9: Seeing Information about a Resource**
+**User Stories #9: Seeing Information about a Resource**
 
-    Problem: Dr. Harshil is trying to run a simulation for a benchmark suite under RISC-V but gem5 is throwing errors when he loads the benchmark into his code.
+Problem: Dr. Harshil is trying to run a simulation for a benchmark suite under RISC-V but gem5 is throwing errors when he loads the benchmark into his code.
 
-    Solution: Having documentation with a Resource that lists expected output, input files for the resource, logging for particular benchmarks within the suite that do not work, dependencies and version compatibilities can help the user debug the problem within the resource easier.
+Solution: Having documentation with a Resource that lists expected output, input files for the resource, logging for particular benchmarks within the suite that do not work, dependencies and version compatibilities can help the user debug the problem within the resource easier.
 
-    **User Stories #10: Existence of filtering by “Groups”**
+**User Stories #10: Existence of filtering by “Groups”**
 
-    Problem: Dr. Bao wants to find assembly tests for RISC-V but filtering by “Test” gives a huge number of binaries, and the ID of the resource does not contain “asmtest”, so searching via the search bar does not give an accurate result either.
+Problem: Dr. Bao wants to find assembly tests for RISC-V but filtering by “Test” gives a huge number of binaries, and the ID of the resource does not contain “asmtest”, so searching via the search bar does not give an accurate result either.
 
-    Solution: Having a group that lists all the Linux kernels, hello tests, print-this binaries and assembly tests can help a user find all versions for all members of these respective groups so that searches that cannot be indexed can still be found.
+Solution: Having a group that lists all the Linux kernels, hello tests, print-this binaries and assembly tests can help a user find all versions for all members of these respective groups so that searches that cannot be indexed can still be found.
 
-    **User Stories #11: Link to Beginners’ Tutorial**
+**User Stories #11: Link to Beginners’ Tutorial**
 
-    Problem: Walter Goodman is a beginner to gem5. He does not know what resources are or how to use them in gem5.
+Problem: Walter Goodman is a beginner to gem5. He does not know what resources are or how to use them in gem5.
 
-    Solution: A link to the most commonly used or the most beginner-friendly resources on the homepage would help him get started with using resources in gem5.
+Solution: A link to the most commonly used or the most beginner-friendly resources on the homepage would help him get started with using resources in gem5.
 
-    **User Stories #12: Change in Documentation**
+**User Stories #12: Change in Documentation**
 
-    Problem: Dr. Christina realizes that there is an error with the documentation provided along with a Resource on the website and knows how to fix that error.
+Problem: Dr. Christina realizes that there is an error with the documentation provided along with a Resource on the website and knows how to fix that error.
 
-    Solution: Having a button on the documentation to automatically submit a PR would allow a user to fix it.
+Solution: Having a button on the documentation to automatically submit a PR would allow a user to fix it.
 
-    **User Stories #13: Filter by Tested**
+**User Stories #13: Filter by Tested**
 
-    Problem: Professor Zhuangzi wants to only use resources that have been officially tested by the gem5 community.
+Problem: Professor Zhuangzi wants to only use resources that have been officially tested by the gem5 community.
 
-    Solution: Implementing a verified badge for the resources that have been tested, and implementing a “filter by” option that can display those resources solves this problem.
+Solution: Implementing a verified badge for the resources that have been tested, and implementing a “filter by” option that can display those resources solves this problem.
 
-    **User Stories #14: Filter by Tested**
+**User Stories #14: Filter by Tested**
 
-    Problem: Dr. Bobby Bruce is the admin of gem5 and he wants to add a new Resource and fix an existing one.
+Problem: Dr. Bobby Bruce is the admin of gem5 and he wants to add a new Resource and fix an existing one.
 
-    Solution: Specialized CLI tool for Dr. Bruce just for maintaining and adding new Resources.
+Solution: Specialized CLI tool for Dr. Bruce just for maintaining and adding new Resources.
 
-    **User Stories #15: Direct Download**
+**User Stories #15: Direct Download**
 
-    Problem: Dr. Miyamoto wants to directly download an Image file from gem5 resources.
+Problem: Dr. Miyamoto wants to directly download an Image file from gem5 resources.
 
-    Solution: Having a Download button in the documentation of a resource that leads a user to the page where they can directly download the resource solves this problem.
+Solution: Having a Download button in the documentation of a resource that leads a user to the page where they can directly download the resource solves this problem.
 
 ### Functional Requirements
 
-    1. The website must allow users to search for resources related to gem5.
-    2. The website must display results according to the search criteria
-    3. The website must show the following information about each resource on its designated page:
-        1. Readme/Documentation
-        2. Architecture supported
-        3. Author
-        4. Date of publication
-        5. Versions and Compatibility
-        6. Usage (Example code)
-        7. Dependencies
-        8. Tags
-    4. The website must allow the users to sort the resources according to the following criteria
-        1. Search relevance
-        2. Date of publication
-        3. Name
-        4. gem5 Version
-    5. The website must allow the users to apply certain filters such as:
-        1. Workloads
-        2. Category
-            1. Binaries
-            2. Tests
-            3. Kernels
-            4. Benchmarks
-            5. Disk Images
-            6. Bootloaders
-        3. Group
-            1. linux-kernels
-            2. print-this
-            3. hello
-            4. asmtest
-        4. Architecture
-            1. x86
-            2. RISC-V
-            3. ARM
-            4. POWER
-            5. SPARC
-            6. MIPS
-        5. Simpoints and/or Checkpoints
-            1. Infrastructure to add more types
-    6. The website must allow a way for users to download the resources
-    7. The website must allow the users to view the dependencies for workloads
-    8. The website must allow the users to know the compatibility of resources with particular gem5 versions
-    9. Admins should be able to easily add and manage the resources displayed on the webpage
-    10. The Python wrapper must be adequately tested
-    11. Every piece of code should be well-documented
-    12. JSON and MongoDB should be delivered with schemas
-    13. API should be delivered with a design document that specifies how it works
+1. The website must allow users to search for resources related to gem5.
+2. The website must display results according to the search criteria
+3. The website must show the following information about each resource on its designated page:
+    1. Readme/Documentation
+    2. Architecture supported
+    3. Author
+    4. Date of publication
+    5. Versions and Compatibility
+    6. Usage (Example code)
+    7. Dependencies
+    8. Tags
+4. The website must allow the users to sort the resources according to the following criteria
+    1. Search relevance
+    2. Date of publication
+    3. Name
+    4. gem5 Version
+5. The website must allow the users to apply certain filters such as:
+    1. Workloads
+    2. Category
+        1. Binaries
+        2. Tests
+        3. Kernels
+        4. Benchmarks
+        5. Disk Images
+        6. Bootloaders
+    3. Group
+        1. linux-kernels
+        2. print-this
+        3. hello
+        4. asmtest
+    4. Architecture
+        1. x86
+        2. RISC-V
+        3. ARM
+        4. POWER
+        5. SPARC
+        6. MIPS
+    5. Simpoints and/or Checkpoints
+        1. Infrastructure to add more types
+6. The website must allow a way for users to download the resources
+7. The website must allow the users to view the dependencies for workloads
+8. The website must allow the users to know the compatibility of resources with particular gem5 versions
+9. Admins should be able to easily add and manage the resources displayed on the webpage
+10. The Python wrapper must be adequately tested
+11. Every piece of code should be well-documented
+12. JSON and MongoDB should be delivered with schemas
+13. API should be delivered with a design document that specifies how it works
 
 ### Non-Functional Requirements
 
-    1. The website must have a user-friendly design that is easy to navigate.
-    2. The search bar should provide fast and accurate results
-    3. The website must be scalable to support a large number of resources and users
-    4. The website must be responsive and able to handle a large number of screen sizes.
-    5. The website must be secure and should make sure that access is controlled
-    6. The website must be available 24/7 with minimal downtime
-    7. The website must load quickly and efficiently, even with a low connection or poor hardware
-    8. The website must be optimized for search engines, making it easy for users to find it
-    9. The Python wrapper must be as bug-free as possible
-    10. Documentation should follow gem5 standards
+1. The website must have a user-friendly design that is easy to navigate.
+2. The search bar should provide fast and accurate results
+3. The website must be scalable to support a large number of resources and users
+4. The website must be responsive and able to handle a large number of screen sizes.
+5. The website must be secure and should make sure that access is controlled
+6. The website must be available 24/7 with minimal downtime
+7. The website must load quickly and efficiently, even with a low connection or poor hardware
+8. The website must be optimized for search engines, making it easy for users to find it
+9. The Python wrapper must be as bug-free as possible
+10. Documentation should follow gem5 standards
 
 ## Prototyping Code
 
-    Figma Mock-Up of Design Choices:
+Figma Mock-Up of Design Choices:
 
-    [https://www.figma.com/proto/KaXsLJajogOBxIxikxFV14/gem5-Resources?node-id=199%3A173&scaling=scale-down&page-id=199%3A172&starting-point-node-id=199%3A173&show-proto-sidebar=1](https://www.figma.com/proto/KaXsLJajogOBxIxikxFV14/gem5-Resources?node-id=199%3A173&scaling=scale-down&page-id=199%3A172&starting-point-node-id=199%3A173&show-proto-sidebar=1)
+[https://www.figma.com/proto/KaXsLJajogOBxIxikxFV14/gem5-Resources?node-id=199%3A173&scaling=scale-down&page-id=199%3A172&starting-point-node-id=199%3A173&show-proto-sidebar=1](https://www.figma.com/proto/KaXsLJajogOBxIxikxFV14/gem5-Resources?node-id=199%3A173&scaling=scale-down&page-id=199%3A172&starting-point-node-id=199%3A173&show-proto-sidebar=1)
 
-    GitHub Organization where code will be pushed:
+GitHub Organization where code will be pushed:
 
-    [gem5Vision](https://github.com/orgs/Gem5Vision/dashboard)
+[gem5Vision](https://github.com/orgs/Gem5Vision/dashboard)
 
 ## Cost Analysis
 
-    **Option 1:  No server + ReactJs + JSON**
+**Option 1:  No server + ReactJs + JSON**
 
-    Advantages:
+Advantages:
 
-    - Easy to transition from the current implementation
-    - Cheapest
+- Easy to transition from the current implementation
+- Cheapest
 
-    Disadvantages:
+Disadvantages:
 
-    - Harder to maintain once the number of resources increases
-    - Inefficient searches, will not be able to support search query expressions
-    - Difficult to scale up
-    - Difficult to implement time-efficient sorting and filtering since we’ll need to fetch the entire JSON for any operation
+- Harder to maintain once the number of resources increases
+- Inefficient searches, will not be able to support search query expressions
+- Difficult to scale up
+- Difficult to implement time-efficient sorting and filtering since we’ll need to fetch the entire JSON for any operation
 
-    Cost: Hosting on GitHub Pages can give $0/month. Therefore, for our use case, the total cost will be ****************$0/month****************.
+Cost: Hosting on GitHub Pages can give $0/month. Therefore, for our use case, the total cost will be ****************$0/month****************.
 
-    **Option 2:  No server + ReactJs + MongoDB**
+**Option 2:  No server + ReactJs + MongoDB**
 
-    Advantages:
+Advantages:
 
-    - Can support search query expressions like:
-        - “exact phrase”
-        - category:Kernels
-        - dependency:resource:”XYZ”: direct dependency
-        - dependency*:resource:”XYZ”: indirect dependency
+- Can support search query expressions like:
+  - “exact phrase”
+  - category:Kernels
+  - dependency:resource:”XYZ”: direct dependency
+  - dependency*:resource:”XYZ”: indirect dependency
 
-    Disadvantages:
+Disadvantages:
 
-    - Less secure since everything is happening client's side
-    - Not possible to scale up
-    - No flexibility, since once we decide on a methodology to fetch data, it is set in stone (No API calls)
-    - Search query expressions are supported, but having different API endpoints makes it easier to debug and serve data in different formats if required (link and JSON)
+- Less secure since everything is happening client's side
+- Not possible to scale up
+- No flexibility, since once we decide on a methodology to fetch data, it is set in stone (No API calls)
+- Search query expressions are supported, but having different API endpoints makes it easier to debug and serve data in different formats if required (link and JSON)
 
-    Cost: MongoDB is free up to 5GB storage of text data. For 1TB of storage, the price is $0.10 per million reads. Hosting on GitHub Pages can give $0/month. Therefore, for our use case, the total cost will be ****************$0/month****************.
+Cost: MongoDB is free up to 5GB storage of text data. For 1TB of storage, the price is $0.10 per million reads. Hosting on GitHub Pages can give $0/month. Therefore, for our use case, the total cost will be ****************$0/month****************.
 
-    **Option 3:  Cheap Server (Hosting: Heroku/Render.com)+ ReactJs + MongoDB**
+**Option 3:  Cheap Server (Hosting: Heroku/Render.com)+ ReactJs + MongoDB**
 
-    Also used by similar projects like:
+Also used by similar projects like:
 
-    - Flutter pub.dev: [https://pub.dev](https://pub.dev/)
-    - Python pip: [https://pypi.org](https://pypi.org/), Explanation: [https://en.wikipedia.org/wiki/Pip_(package_manager)](https://en.wikipedia.org/wiki/Pip_(package_manager))
+- Flutter pub.dev: [https://pub.dev](https://pub.dev/)
+- Python pip: [https://pypi.org](https://pypi.org/), Explanation: [https://en.wikipedia.org/wiki/Pip_(package_manager)](https://en.wikipedia.org/wiki/Pip_(package_manager))
 
-    Advantages:
+Advantages:
 
-    It provides the following advantages on top of those provided by Option 2:
+It provides the following advantages on top of those provided by Option 2:
 
-    - Can reuse code for both website and python wrapper
-    - Can easily modify API endpoints later if needed
-    - Makes it easier to debug and serve data in different formats if required
-    - If we want to extend to user-uploaded resources, a server is necessary for authentication
-    - Greatly increases the security: Most of the processing is server side and thus not much is visible to the end user
-    - Can easily scale this to AWS EC2+ELB later
+- Can reuse code for both website and python wrapper
+- Can easily modify API endpoints later if needed
+- Makes it easier to debug and serve data in different formats if required
+- If we want to extend to user-uploaded resources, a server is necessary for authentication
+- Greatly increases the security: Most of the processing is server side and thus not much is visible to the end user
+- Can easily scale this to AWS EC2+ELB later
 
-    Disadvantages:
+Disadvantages:
 
-    - Might involve a bit of work to horizontally scale
-    - Cannot expand to multiple regions
+- Might involve a bit of work to horizontally scale
+- Cannot expand to multiple regions
 
-    Cost: [Render.com](http://Render.com) is free. Heroku is $5 and limited to 1000 dyno-hours (hours of API used) a month. Unlimited at a basic tier is $7 dollars an hour. Therefore, for our use case, the total cost will be ****************$0-7/month****************.
+Cost: [Render.com](http://Render.com) is free. Heroku is $5 and limited to 1000 dyno-hours (hours of API used) a month. Unlimited at a basic tier is $7 dollars an hour. Therefore, for our use case, the total cost will be ****************$0-7/month****************.
 
-    **Option 4:  AWS EC2 + Load Balancer (AWS Elastic Beanstalk) + ReactJs + DynamoDB (AWS-supported database)/MongoDB**
+**Option 4:  AWS EC2 + Load Balancer (AWS Elastic Beanstalk) + ReactJs + DynamoDB (AWS-supported database)/MongoDB**
 
-    Advantages:
+Advantages:
 
-    It provides the following advantages on top of those provided by Options 2 and 3:
+It provides the following advantages on top of those provided by Options 2 and 3:
 
-    - Can horizontally scale this infinitely
-    - Can expand to other regions too
+- Can horizontally scale this infinitely
+- Can expand to other regions too
 
-    Disadvantages:
+Disadvantages:
 
-    - Expensive
-    - The learning curve to understand how it works
+- Expensive
+- The learning curve to understand how it works
 
-    Cost: [https://aws.amazon.com/ec2/pricing/on-demand/](https://aws.amazon.com/ec2/pricing/on-demand/) - t4g.nano or t4g.micro. The price is $0.0042 an hour and $0.0084 an hour. Multiplying that by 24 hours for 31 days gives us an upper limit of $3.13/month to $6.25/month. Amazon LightSail is free for a year and then costs $3.50 a month. Therefore, for our use case, the total cost will be ****************$3.13-6.25/month****************.
+Cost: [https://aws.amazon.com/ec2/pricing/on-demand/](https://aws.amazon.com/ec2/pricing/on-demand/) - t4g.nano or t4g.micro. The price is $0.0042 an hour and $0.0084 an hour. Multiplying that by 24 hours for 31 days gives us an upper limit of $3.13/month to $6.25/month. Amazon LightSail is free for a year and then costs $3.50 a month. Therefore, for our use case, the total cost will be ****************$3.13-6.25/month****************.
 
 ## Social and Legal Aspects
 
-    gem5 is an open-source project under the BSD license. This implies that our project is open to receiving contributions from an entire community of gem5 users after its completion. On contributing to gem5, we will receive recognition either in the form of credit in the project's documentation or by being listed as a contributor on the website after our work is merged into the stable branch.
+gem5 is an open-source project under the BSD license. This implies that our project is open to receiving contributions from an entire community of gem5 users after its completion. On contributing to gem5, we will receive recognition either in the form of credit in the project's documentation or by being listed as a contributor on the website after our work is merged into the stable branch.
 
-    We will retain the copyright to the code we write for this project. Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+We will retain the copyright to the code we write for this project. Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 
 - redistributions of source code must retain the above copyright
     notice, this list of conditions and the following disclaimer;
