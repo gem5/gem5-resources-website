@@ -181,6 +181,14 @@ async function getResourcesJSON(queryObject) {
       case "date":
         results = results.sort((a, b) => a.date.localeCompare(b.date));
         break;
+      case "version":
+        results = results.sort((a, b) => {
+          const aVersion = Object.keys(a.versions).length > 1 ? Object.keys(a.versions)[1] : Object.keys(a.versions)[0];
+          const bVersion = Object.keys(b.versions).length > 1 ? Object.keys(b.versions)[1] : Object.keys(b.versions)[0];
+          return bVersion.localeCompare(aVersion);
+        });
+        console.log(results);
+        break;
       default:
         results = results.sort((a, b) => b.totalMatches - a.totalMatches);
     }
@@ -209,9 +217,9 @@ async function getResourcesJSON(queryObject) {
 export async function getResources(queryObject, filters) {
   let resources;
   // if (process.env.IS_MONGODB_ENABLED === "true") {
-  resources = await getResourcesMongoDB(queryObject, filters);
+  // resources = await getResourcesMongoDB(queryObject, filters);
   // } else {
-  // resources = await getResourcesJSON(queryObject);
+  resources = await getResourcesJSON(queryObject);
   // }
   return resources;
 }
