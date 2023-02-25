@@ -511,8 +511,8 @@ We will retain the copyright to the code we write for this project. Redistributi
     contributors may be used to endorse or promote products derived from
     this software without specific prior written permission
 
-    Our software is provided by our team "as is" and any express or implied warranties, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose are disclaimed. In no event shall our team be liable for any direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of use, data, or profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this software, even if advised of the possibility of such damage.
+Our software is provided by our team "as is" and any express or implied warranties, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose are disclaimed. In no event shall our team be liable for any direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of use, data, or profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this software, even if advised of the possibility of such damage.
 
-    Source:
+Source:
 
-    *LICENSE - public/gem5 - Git at Google.* [https://gem5.googlesource.com/public/gem5/+/refs/heads/stable/LICENSE](https://gem5.googlesource.com/public/gem5/+/refs/heads/stable/LICENSE). Accessed 8 Feb. 2023.
+*LICENSE - public/gem5 - Git at Google.* [https://gem5.googlesource.com/public/gem5/+/refs/heads/stable/LICENSE](https://gem5.googlesource.com/public/gem5/+/refs/heads/stable/LICENSE). Accessed 8 Feb. 2023.
