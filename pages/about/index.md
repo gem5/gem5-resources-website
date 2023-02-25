@@ -34,7 +34,7 @@ If you find one of the gem5-resources useful be sure to cite both the resources 
 
 ## UNDER CONSTRUCTION
 
-This website is currently under construction.
+This website is under construction.
 You can see the following links for the current information on gem5-resources.
 More information will be here soon!
 
