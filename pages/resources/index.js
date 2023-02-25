@@ -18,13 +18,11 @@ export default function Resources() {
     const [loading, setLoading] = useState(true)
 
     const numberOfItemsPerPage = 10;
-    const [pageCount, setPageCount] = useState(1);
     const [currentPage, setCurrentPage] = useState(1);
-    const [maxPageNumbersShown, setMaxPageNumbersShown] = useState(numberOfItemsPerPage);
-    const [paginationSize, setPaginationSize] = useState(null);
-    const [startIndex, setStartIndex] = useState(0);
-    const [endIndex, setEndIndex] = useState(startIndex + numberOfItemsPerPage);
-    const [nResources, setNResources] = useState(10);
+    const [pageCount, setPageCount] = useState(1);
+    const [maxPageNumbersShown, setMaxPageNumbersShown] = useState(5);
+    const [paginationSize, setPaginationSize] = useState('sm');
+    const [total, setTotal] = useState(0);
 
     useEffect(() => {
         let q = window.location.href.split('?')[1]
@@ -90,22 +88,10 @@ export default function Resources() {
             }
             setFilters(filterModified);
             setLoading(true);
-            const res = await getResources(queryObject, filters);
-            // setResources(resources);
-            const si = (currentPage - 1) * numberOfItemsPerPage;
-            const ei = Math.min(si + numberOfItemsPerPage, res.length);
-            setStartIndex(si);
-            console.log('Start', (currentPage - 1) * 10);
-            console.log(si);
-            setEndIndex(ei);
-            setPageCount(() => {
-                return Math.ceil(res.length / numberOfItemsPerPage);
-            });
-            setNResources(res.length);
-            console.log(currentPage, si, ei);
-            setResources(() => {
-                return res.slice(si, ei);
-            });
+            const res = await getResources(queryObject, filters, currentPage, numberOfItemsPerPage);
+            setResources(res.resources);
+            setTotal(res.total);
+            setPageCount(Math.ceil(res.total / numberOfItemsPerPage));
             setLoading(false);
         };
 
@@ -224,7 +210,7 @@ export default function Resources() {
                                         Results
                                     </span>
                                     <span className='primary'>
-                                        {`${startIndex + 1} - ${endIndex} of ${nResources}`}
+                                        {total == 0 ? 0 : (currentPage - 1) * numberOfItemsPerPage + 1} - {Math.min(currentPage * numberOfItemsPerPage, total)} of {total}
                                     </span>
                                 </div>
                                 <div className='w-auto d-flex align-items-center'>
