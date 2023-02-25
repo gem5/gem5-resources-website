@@ -7,6 +7,7 @@ import arm from "/public/arm.png";
 import sparc from "/public/sparc.png";
 import mips from "/public/mips.png";
 import power from "/public/power.png";
+import Link from 'next/link';
 
 export default function Banner({ resource }) {
     function getIcon(architecture) {
@@ -43,7 +44,9 @@ export default function Banner({ resource }) {
                 </h5>
                 <div className={styles.dot}></div>
                 <h5 className='primary'>
-                    {String(resource.category).charAt(0).toUpperCase() + String(resource.category).substring(1) ?? "Unknown"}
+                    <Link href={`/category/${resource.category}`}>
+                        {String(resource.category).charAt(0).toUpperCase() + String(resource.category).substring(1) ?? "Unknown"}
+                    </Link>
                 </h5>
             </div>
             <div className='d-flex gap-4'>

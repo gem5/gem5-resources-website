@@ -6,7 +6,7 @@ import SearchResult from '@/components/searchresult'
 import Filters from '@/components/filters'
 import { getFilters } from "../api/getfilters";
 import { useRouter } from 'next/router'
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 function Resources() {
     const router = useRouter()
@@ -16,6 +16,7 @@ function Resources() {
     const [queryObject, setQueryObject] = useState(null)
     const [loading, setLoading] = useState(true)
 
+    const ref = useRef()
     useEffect(() => {
         let q = window.location.href.split('?')[1]
         if (q) {
@@ -116,7 +117,7 @@ function Resources() {
             }
         }
         // let searchQuery = ref.current.getSearchQuery().split(' ').filter((word) => !word.includes(':'));
-        let searchQuery = query.split(' ').filter((word) => !word.includes(':'));
+        let searchQuery = ref.current.getSearchQuery().split(' ').filter((word) => !word.includes(':'));
         searchQuery = searchQuery.join(' ');
         if (searchQuery) {
             q += searchQuery;
@@ -153,7 +154,7 @@ function Resources() {
             </Head>
             <div className='d-flex flex-column gap-4 align-items-center'>
                 <div className='p-5 w-100 bg-light'>
-                    <SearchBox callback={onSearch} query={query} />
+                    <SearchBox callback={onSearch} query={query} ref={ref} />
                 </div>
                 <div className='content'>
                     <Row>
