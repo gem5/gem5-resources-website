@@ -9,7 +9,7 @@ import { useRouter } from 'next/router'
 import { useState, useEffect, useRef } from "react";
 import Paginate from '@/components/paginate'
 
-function Resources() {
+export default function Resources() {
     const router = useRouter()
     const [query, setQuery] = useState(null)
     const [resources, setResources] = useState([])
@@ -20,19 +20,29 @@ function Resources() {
     const numberOfItemsPerPage = 10;
     const [pageCount, setPageCount] = useState(1);
     const [currentPage, setCurrentPage] = useState(1);
-    const [resourcesDisplayed, setResourcesDisplayed] = useState([]);
-    const [maxPageNumbersShown, setMaxPageNumbersShown] = useState(10);
+    const [maxPageNumbersShown, setMaxPageNumbersShown] = useState(numberOfItemsPerPage);
     const [paginationSize, setPaginationSize] = useState(null);
-    const startIndex = (currentPage - 1) * numberOfItemsPerPage;
-    const endIndex = Math.min(startIndex + 10, props.resources.length);
+    const [startIndex, setStartIndex] = useState(0);
+    const [endIndex, setEndIndex] = useState(startIndex + numberOfItemsPerPage);
+    const [nResources, setNResources] = useState(10);
 
     useEffect(() => {
         let q = window.location.href.split('?')[1]
         if (q) {
             q = q.split('=')[1]
+            q = q.split('&')[0]
             q = decodeURIComponent(q)
             q = q.replace(/\+/g, ' ')
             setQuery(q)
+            let page = window.location.href.split('?')[1]
+            // check if page is present in url
+            if (page.includes('page')) {
+                console.log('page present')
+                page = page.split('=')[2]
+                page = page.split('&')[0]
+                page = parseInt(page)
+                setCurrentPage(page)
+            }
         }
     }, [router.query.q])
 
@@ -80,42 +90,43 @@ function Resources() {
             }
             setFilters(filterModified);
             setLoading(true);
-            const resources = await getResources(queryObject, filters);
-            setResources(resources);
+            const res = await getResources(queryObject, filters);
+            // setResources(resources);
+            const si = (currentPage - 1) * numberOfItemsPerPage;
+            const ei = Math.min(si + numberOfItemsPerPage, res.length);
+            setStartIndex(si);
+            console.log('Start', (currentPage - 1) * 10);
+            console.log(si);
+            setEndIndex(ei);
+            setPageCount(() => {
+                return Math.ceil(res.length / numberOfItemsPerPage);
+            });
+            setNResources(res.length);
+            console.log(currentPage, si, ei);
+            setResources(() => {
+                return res.slice(si, ei);
+            });
             setLoading(false);
         };
 
         if (queryObject) {
             fetchFilters();
         }
-    }, [queryObject])
+    }, [queryObject, currentPage]);
 
     useEffect(() => {
-        setPageCount(() => {
-            return Math.ceil(props.resources.length / numberOfItemsPerPage);
-        });
-        setCurrentPage(1);
-    }, [props.resources]);
-
-    useEffect(() => {
-        setResourcesDisplayed(() => {
-            return props.resources.slice(startIndex, endIndex);
-        });
-    }, [props.resources, currentPage]);
-
-    useEffect(() => {
-        function pageNumbersOnResize() { 
+        function pageNumbersOnResize() {
             if (window.innerWidth < 768) {
-                setMaxPageNumbersShown(5); 
+                setMaxPageNumbersShown(5);
                 setPaginationSize("sm");
             } else {
-                setMaxPageNumbersShown(10); 
+                setMaxPageNumbersShown(10);
                 setPaginationSize(null);
             }
         }
         pageNumbersOnResize();
         window.addEventListener("resize", pageNumbersOnResize);
-        return () => {window.removeEventListener("resize", pageNumbersOnResize)}
+        return () => { window.removeEventListener("resize", pageNumbersOnResize) }
     }, []);
 
     function Results() {
@@ -132,7 +143,7 @@ function Resources() {
         return (
             <div>
                 {
-                    resourcesDisplayed.map((resource, index) => (
+                    resources.map((resource, index) => (
                         <div key={index}>
                             <SearchResult resource={resource} />
                             <hr />
@@ -182,6 +193,14 @@ function Resources() {
         setQueryObject({ ...queryObject, sort: e.target.value })
     }
 
+    function onPageChange(page) {
+        setCurrentPage(page)
+        router.push({
+            pathname: '/resources',
+            query: { q: query, page: page }
+        })
+    }
+
     return (
         <SSRProvider>
             <Head>
@@ -205,7 +224,7 @@ function Resources() {
                                         Results
                                     </span>
                                     <span className='primary'>
-                                        {`${startIndex + 1} - ${endIndex} of ${props.resources.length}`}
+                                        {`${startIndex + 1} - ${endIndex} of ${nResources}`}
                                     </span>
                                 </div>
                                 <div className='w-auto d-flex align-items-center'>
@@ -236,11 +255,11 @@ function Resources() {
                                 }
                             </Row>
                             <Row>
-                                <Paginate 
-                                    pageCount={pageCount} 
-                                    currentPage={currentPage} 
-                                    maxPageNumbersShown={maxPageNumbersShown} 
-                                    setCurrentPage={setCurrentPage}
+                                <Paginate
+                                    pageCount={pageCount}
+                                    currentPage={currentPage}
+                                    maxPageNumbersShown={maxPageNumbersShown}
+                                    setCurrentPage={onPageChange}
                                     paginationSize={paginationSize}
                                 />
                             </Row>
@@ -299,5 +318,3 @@ function Resources() {
         // }
     };
 }; */
-
-export default Resources
