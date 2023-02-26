@@ -6,7 +6,8 @@ import SearchResult from '@/components/searchresult'
 import Filters from '@/components/filters'
 import { getFilters } from "../api/getfilters";
 import { useRouter } from 'next/router'
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import Paginate from '@/components/paginate'
 
 /**
  * @component
@@ -15,7 +16,7 @@ import { useState, useEffect } from "react";
  * component to filter the results. It uses the searchresult component to display the results.
  * @returns {JSX.Element} The JSX element to be rendered.
 */
-function Resources() {
+export default function Resources() {
     const router = useRouter()
     const [query, setQuery] = useState(null)
     const [resources, setResources] = useState([])
@@ -23,13 +24,30 @@ function Resources() {
     const [queryObject, setQueryObject] = useState(null)
     const [loading, setLoading] = useState(true)
 
+    const numberOfItemsPerPage = 10;
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageCount, setPageCount] = useState(1);
+    const [maxPageNumbersShown, setMaxPageNumbersShown] = useState(5);
+    const [paginationSize, setPaginationSize] = useState('sm');
+    const [total, setTotal] = useState(0);
+
     useEffect(() => {
         let q = window.location.href.split('?')[1]
         if (q) {
             q = q.split('=')[1]
+            q = q.split('&')[0]
             q = decodeURIComponent(q)
             q = q.replace(/\+/g, ' ')
             setQuery(q)
+            let page = window.location.href.split('?')[1]
+            // check if page is present in url
+            if (page.includes('page')) {
+                console.log('page present')
+                page = page.split('=')[2]
+                page = page.split('&')[0]
+                page = parseInt(page)
+                setCurrentPage(page)
+            }
         }
     }, [router.query.q])
 
@@ -77,15 +95,32 @@ function Resources() {
             }
             setFilters(filterModified);
             setLoading(true);
-            const resources = await getResources(queryObject, filters);
-            setResources(resources);
+            const res = await getResources(queryObject, filters, currentPage, numberOfItemsPerPage);
+            setResources(res.resources);
+            setTotal(res.total);
+            setPageCount(Math.ceil(res.total / numberOfItemsPerPage));
             setLoading(false);
         };
 
         if (queryObject) {
             fetchFilters();
         }
-    }, [queryObject])
+    }, [queryObject, currentPage]);
+
+    useEffect(() => {
+        function pageNumbersOnResize() {
+            if (window.innerWidth < 768) {
+                setMaxPageNumbersShown(5);
+                setPaginationSize("sm");
+            } else {
+                setMaxPageNumbersShown(10);
+                setPaginationSize(null);
+            }
+        }
+        pageNumbersOnResize();
+        window.addEventListener("resize", pageNumbersOnResize);
+        return () => { window.removeEventListener("resize", pageNumbersOnResize) }
+    }, []);
 
     function Results() {
         if (resources?.length === 0) {
@@ -101,7 +136,7 @@ function Resources() {
         return (
             <div>
                 {
-                    resources?.map((resource, index) => (
+                    resources.map((resource, index) => (
                         <div key={index}>
                             <SearchResult resource={resource} />
                             <hr />
@@ -151,6 +186,14 @@ function Resources() {
         setQueryObject({ ...queryObject, sort: e.target.value })
     }
 
+    function onPageChange(page) {
+        setCurrentPage(page)
+        router.push({
+            pathname: '/resources',
+            query: { q: query, page: page }
+        })
+    }
+
     return (
         <SSRProvider>
             <Head>
@@ -174,7 +217,7 @@ function Resources() {
                                         Results
                                     </span>
                                     <span className='primary'>
-                                        {resources?.length}
+                                        {total == 0 ? 0 : (currentPage - 1) * numberOfItemsPerPage + 1} - {Math.min(currentPage * numberOfItemsPerPage, total)} of {total}
                                     </span>
                                 </div>
                                 <div className='w-auto d-flex align-items-center'>
@@ -203,6 +246,15 @@ function Resources() {
                                         </div>
                                         : <Results />
                                 }
+                            </Row>
+                            <Row>
+                                <Paginate
+                                    pageCount={pageCount}
+                                    currentPage={currentPage}
+                                    maxPageNumbersShown={maxPageNumbersShown}
+                                    setCurrentPage={onPageChange}
+                                    paginationSize={paginationSize}
+                                />
                             </Row>
                         </Col>
                     </Row>
@@ -259,5 +311,3 @@ function Resources() {
         // }
     };
 }; */
-
-export default Resources

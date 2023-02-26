@@ -27,13 +27,6 @@ async function getResourcesMongoDB(queryObject, filters) {
     }
     queryObject.architecture = architectures;
   }
-  if (!queryObject.gem5_version) {
-    let versions = [];
-    for (let version in filters.versions) {
-      versions.push(filters.versions[version]);
-    }
-    queryObject.versions = versions;
-  }
 
   function getSort() {
     console.log(queryObject.sort);
@@ -83,8 +76,6 @@ async function getResourcesMongoDB(queryObject, filters) {
               "$and": [
                 { "category": { "$in": queryObject.category || [] } },
                 { "architecture": { "$in": queryObject.architecture || [] } },
-                // check if any keys of versions is in queryObject.versions
-                { "gem5_version": { "$in": queryObject.versions || [] } },
               ]
             },
           },
@@ -134,7 +125,6 @@ async function getResourcesMongoDB(queryObject, filters) {
               "$and": [
                 { "category": { "$in": queryObject.category || [] } },
                 { "architecture": { "$in": queryObject.architecture || [] } },
-                { "gem5_version": { "$in": queryObject.gem5_version || [] }, }
               ]
             },
           },
@@ -144,6 +134,18 @@ async function getResourcesMongoDB(queryObject, filters) {
     }).catch(err => console.log(err));
     const resources = await res.json();
     console.log(resources);
+    for (let filter in queryObject) {
+      if (filter === 'versions') {
+        resources['documents'] = resources['documents'].filter(resource => {
+          for (let version in queryObject[filter]) {
+            if (resource.versions[queryObject[filter][version]]) {
+              return true;
+            }
+          }
+          return false;
+        });
+      }
+    }
     return resources['documents']
   }
 }
@@ -220,14 +222,19 @@ async function getResourcesJSON(queryObject) {
  * @param {json} filters The filters to be applied.
  * @returns {json} The resources in JSON format.
 */
-export async function getResources(queryObject, filters) {
+export async function getResources(queryObject, filters, currentPage, pageSize) {
   let resources;
   // if (process.env.IS_MONGODB_ENABLED === "true") {
-  // resources = await getResourcesMongoDB(queryObject, filters);
+  resources = await getResourcesMongoDB(queryObject, filters);
   // } else {
-  resources = await getResourcesJSON(queryObject);
+  // resources = await getResourcesJSON(queryObject);
+  let total = resources.length;
+  resources = resources.slice((currentPage - 1) * pageSize, currentPage * pageSize);
   // }
-  return resources;
+  return {
+    resources: resources,
+    total: total
+  }
 }
 
 export default async function handler(req, res) {
