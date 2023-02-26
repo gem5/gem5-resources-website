@@ -9,6 +9,13 @@ import { useRouter } from 'next/router'
 import { useState, useEffect, useRef } from "react";
 import Paginate from '@/components/paginate'
 
+/**
+ * @component
+ * @description The resources page. This page is used to search for resources.
+ * It uses the searchbox component to get the search query. It also uses the filters 
+ * component to filter the results. It uses the searchresult component to display the results.
+ * @returns {JSX.Element} The JSX element to be rendered.
+*/
 export default function Resources() {
     const router = useRouter()
     const [query, setQuery] = useState(null)

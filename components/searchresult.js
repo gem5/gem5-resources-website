@@ -7,6 +7,13 @@ import sparc from "/public/sparc.png";
 import mips from "/public/mips.png";
 import power from "/public/power.png";
 
+/**
+ * @component
+ * @description A component that renders a search result which includes 
+ * the resource's name, description, architecture, category and license.
+ *  @param {Object} resource The resource to be rendered.
+ * @returns {JSX.Element} The JSX element to be rendered.
+*/
 export default function SearchResult({ resource }) {
     function getIcon(architecture) {
         switch (architecture) {

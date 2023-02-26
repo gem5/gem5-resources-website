@@ -3,6 +3,14 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import searchImage from "public/search.png"
 
+/**
+ * @component
+ * @description This component is a search box which allows users to input a search query and submit it to a callback function.
+ * @param {object} props - The props object.
+ * @param {string} props.query - The search query.
+ * @param {function} props.callback - The callback function to be executed upon submitting the search query.
+ * @returns {JSX.Element} The JSX element representing the search box.
+*/
 export default function SearchBox(props) {
     const [search, setSearch] = useState("")
 
