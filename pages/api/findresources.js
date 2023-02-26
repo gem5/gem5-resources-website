@@ -165,7 +165,6 @@ async function getResourcesMongoDB(queryObject, filters, currentPage, pageSize) 
       });
     }
   }
-  console.log(resources['documents'][0].totalCount);
   return [resources['documents'], resources['documents'].length > 0 ? resources['documents'][0].totalCount : 0];
 }
 
