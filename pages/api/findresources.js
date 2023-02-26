@@ -51,6 +51,7 @@ async function getResourcesMongoDB(queryObject, filters) {
         };
     }
   }
+  let resources = [];
   const access_token = await getToken();
   if (queryObject.query.trim() === '') {
     if (queryObject.sort === "relevance") {
@@ -87,8 +88,7 @@ async function getResourcesMongoDB(queryObject, filters) {
       })
     }
     ).catch(err => console.log(err));
-    const resources = await res1.json();
-    return resources['documents'];
+    resources = await res1.json();
   } else {
     const res = await fetch('https://us-west-2.aws.data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/aggregate', {
       method: 'POST',
@@ -117,10 +117,6 @@ async function getResourcesMongoDB(queryObject, filters) {
               },
             }
           },
-
-          {
-            "$sort": getSort()
-          },
           {
             "$match": {
               "$and": [
@@ -129,26 +125,28 @@ async function getResourcesMongoDB(queryObject, filters) {
               ]
             },
           },
-
+          {
+            "$sort": getSort()
+          },
         ],
       })
     }).catch(err => console.log(err));
-    const resources = await res.json();
-    console.log(resources);
-    for (let filter in queryObject) {
-      if (filter === 'versions') {
-        resources['documents'] = resources['documents'].filter(resource => {
-          for (let version in queryObject[filter]) {
-            if (resource.versions[queryObject[filter][version]]) {
-              return true;
-            }
-          }
-          return false;
-        });
-      }
-    }
-    return resources['documents']
+    resources = await res.json();
   }
+  console.log(resources);
+  for (let filter in queryObject) {
+    if (filter === 'versions') {
+      resources['documents'] = resources['documents'].filter(resource => {
+        for (let version in queryObject[filter]) {
+          if (resource.versions[queryObject[filter][version]]) {
+            return true;
+          }
+        }
+        return false;
+      });
+    }
+  }
+  return resources['documents']
 }
 
 /**
