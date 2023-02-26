@@ -10,7 +10,7 @@ import { version } from "nprogress";
  * @param {json} filters The filters object.
  * @returns {JSX.Element} The JSX element to be rendered.
 */
-async function getResourcesMongoDB(queryObject, filters) {
+async function getResourcesMongoDB(queryObject, filters, currentPage, pageSize) {
   // pass queryObject by value
   queryObject = { ...queryObject };
   if (!queryObject.category) {
@@ -83,12 +83,18 @@ async function getResourcesMongoDB(queryObject, filters) {
           },
           {
             "$sort": getSort()
-          }
+          },
+          {
+            "$setWindowFields": { output: { totalCount: { $count: {} } } }
+          },
+          { "$skip:": (currentPage - 1) * pageSize },
+          { "$limit:": pageSize },
         ]
       })
     }
     ).catch(err => console.log(err));
     resources = await res1.json();
+    console.log(resources);
   } else {
     const res = await fetch('https://us-west-2.aws.data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/aggregate', {
       method: 'POST',
@@ -250,15 +256,15 @@ async function getResourcesJSON(queryObject) {
 export async function getResources(queryObject, filters, currentPage, pageSize) {
   let resources;
   // if (process.env.IS_MONGODB_ENABLED === "true") {
-  resources = await getResourcesMongoDB(queryObject, filters);
+  // resources = await getResourcesMongoDB(queryObject, filters, currentPage, pageSize);
   // } else {
-  // resources = await getResourcesJSON(queryObject);
+  resources = await getResourcesJSON(queryObject);
   let total = resources.length;
   resources = resources.slice((currentPage - 1) * pageSize, currentPage * pageSize);
   // }
   return {
     resources: resources,
-    total: total
+    total: 0
   }
 }
 
