@@ -1,5 +1,5 @@
 import { Form, Button, InputGroup } from "react-bootstrap";
-import { useEffect, useState } from "react";
+import { useEffect, useState, forwardRef, useImperativeHandle } from "react";
 import Image from "next/image";
 import searchImage from "public/search.png"
 
@@ -11,7 +11,7 @@ import searchImage from "public/search.png"
  * @param {function} props.callback - The callback function to be executed upon submitting the search query.
  * @returns {JSX.Element} The JSX element representing the search box.
 */
-export default function SearchBox(props) {
+const SearchBox = forwardRef((props, ref) => {
     const [search, setSearch] = useState("")
 
     useEffect(() => {
@@ -21,6 +21,14 @@ export default function SearchBox(props) {
             setSearch("")
         }
     }, [props.query])
+
+    useImperativeHandle(ref, () => ({
+        getSearchQuery
+    }))
+
+    function getSearchQuery() {
+        return search
+    }
 
     function handleSubmit(e) {
         e.preventDefault()
@@ -49,4 +57,8 @@ export default function SearchBox(props) {
             </Form>
         </>
     )
-}
+})
+
+SearchBox.displayName = 'SearchBox'
+
+export default SearchBox

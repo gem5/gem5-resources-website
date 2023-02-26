@@ -24,6 +24,7 @@ export default function Resources() {
     const [queryObject, setQueryObject] = useState(null)
     const [loading, setLoading] = useState(true)
 
+    const ref = useRef()
     const numberOfItemsPerPage = 10;
     const [currentPage, setCurrentPage] = useState(1);
     const [pageCount, setPageCount] = useState(1);
@@ -158,7 +159,7 @@ export default function Resources() {
             }
         }
         // let searchQuery = ref.current.getSearchQuery().split(' ').filter((word) => !word.includes(':'));
-        let searchQuery = query.split(' ').filter((word) => !word.includes(':'));
+        let searchQuery = ref.current.getSearchQuery().split(' ').filter((word) => !word.includes(':'));
         searchQuery = searchQuery.join(' ');
         if (searchQuery) {
             q += searchQuery;
@@ -203,7 +204,7 @@ export default function Resources() {
             </Head>
             <div className='d-flex flex-column gap-4 align-items-center'>
                 <div className='p-5 w-100 bg-light'>
-                    <SearchBox callback={onSearch} query={query} />
+                    <SearchBox callback={onSearch} query={query} ref={ref} />
                 </div>
                 <div className='content'>
                     <Row>
@@ -232,7 +233,7 @@ export default function Resources() {
                                     >
                                         <option value='relevance'>Relevance</option>
                                         <option value='date'>Date</option>
-                                        <option value='date'>Version</option>
+                                        <option value='version'>Version</option>
                                         <option value='id_asc'>Id Ascending</option>
                                         <option value='id_desc'>Id Descending</option>
                                     </Form.Select>
