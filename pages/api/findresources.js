@@ -128,9 +128,9 @@ async function getResourcesMongoDB(queryObject, filters) {
                 },
               },
             },
-            {
-              $unwind: "$ver",
-            },
+            // {
+            //   $unwind: "$ver",
+            // },
             {
               $sort: getSort(),
             },
