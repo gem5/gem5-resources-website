@@ -9,8 +9,8 @@ import { version } from "nprogress";
  * @param {json} queryObject The query object.
  * @param {json} filters The filters object.
  * @returns {JSX.Element} The JSX element to be rendered.
- */
-async function getResourcesMongoDB(queryObject, filters) {
+*/
+async function getResourcesMongoDB(queryObject, filters, currentPage, pageSize) {
   // pass queryObject by value
   queryObject = { ...queryObject };
   if (!queryObject.category) {
@@ -51,6 +51,7 @@ async function getResourcesMongoDB(queryObject, filters) {
         };
     }
   }
+  let resources = [];
   const access_token = await getToken();
   if (queryObject.query.trim() === "") {
     if (queryObject.sort === "relevance") {
@@ -82,15 +83,25 @@ async function getResourcesMongoDB(queryObject, filters) {
                 ],
               },
             },
-            {
-              $sort: getSort(),
-            },
-          ],
-        }),
-      }
-    ).catch((err) => console.log(err));
-    const resources = await res1.json();
-    return resources["documents"];
+          },
+          {
+            "$sort": getSort()
+          },
+          {
+            "$setWindowFields": { output: { totalCount: { $count: {} } } }
+          },
+          {
+            "$skip": (currentPage - 1) * pageSize
+          },
+          {
+            "$limit": pageSize
+          }
+        ]
+      })
+    }
+    ).catch(err => console.log(err));
+    resources = await res1.json();
+    console.log(resources);
   } else {
     const res = await fetch(
       "https://us-west-2.aws.data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/aggregate",
@@ -120,51 +131,57 @@ async function getResourcesMongoDB(queryObject, filters) {
                   },
                 },
               },
+            }
+          },
+          {
+            "$match": {
+              "$and": [
+                { "category": { "$in": queryObject.category || [] } },
+                { "architecture": { "$in": queryObject.architecture || [] } },
+              ]
             },
-            {
+          },
+           {
               $addFields: {
                 ver: {
                   $objectToArray: "$versions",
                 },
               },
             },
-            // {
-            //   $unwind: "$ver",
-            // },
-            {
-              $sort: getSort(),
-            },
+          {
+            "$sort": getSort()
+          },
             {
               $unset: "ver",
             },
-            {
-              $match: {
-                $and: [
-                  { category: { $in: queryObject.category || [] } },
-                  { architecture: { $in: queryObject.architecture || [] } },
-                ],
-              },
-            },
-          ],
-        }),
-      }
-    ).catch((err) => console.log(err));
-    const resources = await res.json();
-    console.log(resources);
-    for (let filter in queryObject) {
-      if (filter === "versions") {
-        resources["documents"] = resources["documents"].filter((resource) => {
-          for (let version in queryObject[filter]) {
-            if (resource.versions[queryObject[filter][version]]) {
-              return true;
-            }
+          {
+            "$setWindowFields": { output: { totalCount: { $count: {} } } }
+          },
+          {
+            "$skip": (currentPage - 1) * pageSize
+          },
+          {
+            "$limit": pageSize
           }
-          return false;
-        });
-      }
-    }
-    return resources["documents"];
+        ],
+      })
+    }).catch(err => console.log(err));
+    resources = await res.json();
   }
+  console.log(resources);
+  for (let filter in queryObject) {
+    if (filter === 'versions') {
+      resources['documents'] = resources['documents'].filter(resource => {
+        for (let version in queryObject[filter]) {
+          if (resource.versions[queryObject[filter][version]]) {
+            return true;
+          }
+        }
+        return false;
+      });
+    }
+  }
+  return [resources['documents'], resources['documents'].length > 0 ? resources['documents'][0].totalCount : 0];
 }
 
 /**
@@ -173,8 +190,8 @@ async function getResourcesMongoDB(queryObject, filters) {
  * @description Fetches the resources based on the query object from the JSON file.
  * @param {json} queryObject The query object.
  * @returns {JSX.Element} The JSX element to be rendered.
- */
-async function getResourcesJSON(queryObject) {
+*/
+async function getResourcesJSON(queryObject, currentPage, pageSize) {
   const resources = await fetchResources();
   const query = queryObject.query.trim();
   const keywords = query.split(" ");
@@ -274,7 +291,9 @@ async function getResourcesJSON(queryObject) {
       );
     }
   }
-  return results;
+  const total = results.length;
+  results = results.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+  return [results, total];
 }
 
 /**
@@ -293,14 +312,13 @@ export async function getResources(
 ) {
   let resources;
   // if (process.env.IS_MONGODB_ENABLED === "true") {
-  resources = await getResourcesMongoDB(queryObject, filters);
+  resources = await getResourcesMongoDB(queryObject, filters, currentPage, pageSize);
+  let total = resources[1];
+  resources = resources[0];
   // } else {
   // resources = await getResourcesJSON(queryObject);
-  let total = resources.length;
-  resources = resources.slice(
-    (currentPage - 1) * pageSize,
-    currentPage * pageSize
-  );
+  // let total = resources.length;
+  // resources = resources.slice((currentPage - 1) * pageSize, currentPage * pageSize);
   // }
   return {
     resources: resources,
