@@ -9,6 +9,12 @@ import mips from "/public/mips.png";
 import power from "/public/power.png";
 import Link from 'next/link';
 
+
+/**
+ * @component
+ * @description A Banner that displays the resource's ID, category, architecture, and version.
+ * @returns {JSX.Element} The JSX element to be rendered.
+*/
 export default function Banner({ resource }) {
     function getIcon(architecture) {
         switch (architecture) {

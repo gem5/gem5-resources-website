@@ -1,6 +1,14 @@
 import { Accordion, Form } from "react-bootstrap";
 // get filters from /pages/api/getfilters.js
 import { useState, useEffect } from "react";
+
+/**
+ * @component
+ * @description A component to render the filters.
+ * @param {Object} filters The filters to be rendered.
+ * @param {Function} callback The callback function to be called when a filter is changed.
+ * @returns {JSX.Element} The JSX element to be rendered.
+*/
 export default function Filters({ filters, callback }) {
     const [filterState, setFilterState] = useState({});
     useEffect(() => {

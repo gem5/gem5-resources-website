@@ -3,6 +3,12 @@ import Image from "next/image";
 import logo from "public/gem5ColorLong.gif";
 import Link from "next/link";
 
+/**
+ * @component
+ * @description This component returns the top navigation bar for the gem5 website.
+ * It includes a logo, a toggle button for small screens, and an offcanvas menu with links to Home, About, and Documentation pages.
+ * @returns {JSX.Element} The JSX element representing the top navigation bar.
+*/
 export default function Topbar() {
     return (
         <>

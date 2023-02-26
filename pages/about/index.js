@@ -8,7 +8,12 @@ import rehypeRaw from 'rehype-raw'
 import remarkFrontmatter from 'remark-frontmatter';
 import about from './index.md'
 
-function App() {
+/**
+ * @component
+ * @description The About page. This page is rendered from a Markdown file.
+ * @returns {JSX.Element} The JSX element to be rendered.
+*/
+function About() {
   return (
     <div className="App" style={{
         padding: "50px"
@@ -23,4 +28,4 @@ function App() {
   );
 }
 
-export default App;
+export default About;

@@ -7,6 +7,11 @@ import ResourceTab from '@/components/resource-tab'
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
+/**
+ * @component
+ * @description The resource page. This page is used to display the resource page for a specific resource.
+ * @returns {JSX.Element} The JSX element to be rendered.
+*/
 function Resource() {
     const [resource, setResource] = useState([])
     const [loading, setLoading] = useState(true)

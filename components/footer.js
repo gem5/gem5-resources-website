@@ -1,6 +1,11 @@
 import Link from "next/link";
 import { Col, Row } from "react-bootstrap";
 
+/**
+ * @component
+ * @description This component returns a footer section containing three columns with links to various resources related to gem5.
+ * @returns {JSX.Element} The JSX element representing the footer section.
+*/
 export default function Footer() {
     return (
         <>
