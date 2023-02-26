@@ -76,6 +76,7 @@ async function getResourcesMongoDB(queryObject, filters) {
               "$and": [
                 { "category": { "$in": queryObject.category || [] } },
                 { "architecture": { "$in": queryObject.architecture || [] } },
+                // check if any keys of versions is in queryObject.versions
               ]
             },
           },
@@ -194,8 +195,34 @@ async function getResourcesJSON(queryObject) {
     }
     resource['totalMatches'] = totalMatches;
     return totalMatches > 0;
-  }).sort((a, b) => b.totalMatches - a.totalMatches);
+  })
   console.log(queryObject);
+  if (queryObject.sort) {
+    switch (queryObject.sort) {
+      case "id_asc":
+        results = results.sort((a, b) => a.id.localeCompare(b.id));
+        break;
+      case "id_desc":
+        results = results.sort((a, b) => b.id.localeCompare(a.id));
+        break;
+      case "date":
+        results = results.sort((a, b) => a.date.localeCompare(b.date));
+        break;
+      case "version":
+        results = results.sort((a, b) => {
+          const aVersion = Object.keys(a.versions).length > 1 ? Object.keys(a.versions)[1] : Object.keys(a.versions)[0];
+          const bVersion = Object.keys(b.versions).length > 1 ? Object.keys(b.versions)[1] : Object.keys(b.versions)[0];
+          return bVersion.localeCompare(aVersion);
+        });
+        console.log(results);
+        break;
+      default:
+        results = results.sort((a, b) => b.totalMatches - a.totalMatches);
+    }
+  } else {
+    results = results.sort((a, b) => b.totalMatches - a.totalMatches);
+  }
+
   for (let filter in queryObject) {
     if (filter === 'versions') {
       results = results.filter(resource => {
