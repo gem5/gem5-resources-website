@@ -7,7 +7,12 @@ import rehypeSlug from 'rehype-slug'
 import rehypeRaw from 'rehype-raw'
 import remarkFrontmatter from 'remark-frontmatter';
 
-function App() {
+/**
+ * @component
+ * @description The About page. This page is rendered from a Markdown file.
+ * @returns {JSX.Element} The JSX element to be rendered.
+*/
+function About() {
   const [markdown, setMarkdown] = useState('');
 
   useEffect(() => {
@@ -31,4 +36,4 @@ function App() {
   );
 }
 
-export default App;
+export default About;

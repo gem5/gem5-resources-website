@@ -2,6 +2,14 @@ import { fetchResources } from "./resources";
 import getToken from "./getToken";
 import { version } from "nprogress";
 
+/**
+ * @helper
+ * @async
+ * @description Fetches the resources based on the query object from the MongoDB database.
+ * @param {json} queryObject The query object.
+ * @param {json} filters The filters object.
+ * @returns {JSX.Element} The JSX element to be rendered.
+*/
 async function getResourcesMongoDB(queryObject, filters) {
   // pass queryObject by value
   queryObject = { ...queryObject };
@@ -18,13 +26,6 @@ async function getResourcesMongoDB(queryObject, filters) {
       architectures.push(filters.architecture[architecture]);
     }
     queryObject.architecture = architectures;
-  }
-  if (!queryObject.gem5_version) {
-    let versions = [];
-    for (let version in filters.versions) {
-      versions.push(filters.versions[version]);
-    }
-    queryObject.versions = versions;
   }
 
   function getSort() {
@@ -75,8 +76,6 @@ async function getResourcesMongoDB(queryObject, filters) {
               "$and": [
                 { "category": { "$in": queryObject.category || [] } },
                 { "architecture": { "$in": queryObject.architecture || [] } },
-                // check if any keys of versions is in queryObject.versions
-                { "gem5_version": { "$in": queryObject.versions || [] } },
               ]
             },
           },
@@ -126,7 +125,6 @@ async function getResourcesMongoDB(queryObject, filters) {
               "$and": [
                 { "category": { "$in": queryObject.category || [] } },
                 { "architecture": { "$in": queryObject.architecture || [] } },
-                { "gem5_version": { "$in": queryObject.gem5_version || [] }, }
               ]
             },
           },
@@ -136,10 +134,29 @@ async function getResourcesMongoDB(queryObject, filters) {
     }).catch(err => console.log(err));
     const resources = await res.json();
     console.log(resources);
+    for (let filter in queryObject) {
+      if (filter === 'versions') {
+        resources['documents'] = resources['documents'].filter(resource => {
+          for (let version in queryObject[filter]) {
+            if (resource.versions[queryObject[filter][version]]) {
+              return true;
+            }
+          }
+          return false;
+        });
+      }
+    }
     return resources['documents']
   }
 }
 
+/**
+ * @helper
+ * @async
+ * @description Fetches the resources based on the query object from the JSON file.
+ * @param {json} queryObject The query object.
+ * @returns {JSX.Element} The JSX element to be rendered.
+*/
 async function getResourcesJSON(queryObject) {
   const resources = await fetchResources();
   const query = queryObject.query.trim();
@@ -197,14 +214,27 @@ async function getResourcesJSON(queryObject) {
   return results;
 }
 
-export async function getResources(queryObject, filters) {
+/**
+ * @wrapper
+ * @async
+ * @description Wrapper function to fetch the resources based on the query object.
+ * @param {json} queryObject The query object.
+ * @param {json} filters The filters to be applied.
+ * @returns {json} The resources in JSON format.
+*/
+export async function getResources(queryObject, filters, currentPage, pageSize) {
   let resources;
   // if (process.env.IS_MONGODB_ENABLED === "true") {
-  // resources = await getResourcesMongoDB(queryObject, filters);
+  resources = await getResourcesMongoDB(queryObject, filters);
   // } else {
-  resources = await getResourcesJSON(queryObject);
+  // resources = await getResourcesJSON(queryObject);
+  let total = resources.length;
+  resources = resources.slice((currentPage - 1) * pageSize, currentPage * pageSize);
   // }
-  return resources;
+  return {
+    resources: resources,
+    total: total
+  }
 }
 
 export default async function handler(req, res) {
@@ -215,7 +245,11 @@ export default async function handler(req, res) {
   res.status(200).json(results);
 }
 
-
+/**
+ * @helper
+ * @description Calculates the Damerau-Levenshtein distance between two strings. Used for fuzzy search.
+ * @returns {number} The Damerau-Levenshtein distance between the two strings.
+*/
 function damerauLevenshteinDistance(a, b) {
   if (a.length == 0) return b.length;
   if (b.length == 0) return a.length;
