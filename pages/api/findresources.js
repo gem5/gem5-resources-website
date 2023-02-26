@@ -87,8 +87,12 @@ async function getResourcesMongoDB(queryObject, filters, currentPage, pageSize) 
           {
             "$setWindowFields": { output: { totalCount: { $count: {} } } }
           },
-          { "$skip:": (currentPage - 1) * pageSize },
-          { "$limit:": pageSize },
+          {
+            "$skip": (currentPage - 1) * pageSize
+          },
+          {
+            "$limit": pageSize
+          }
         ]
       })
     }
@@ -134,6 +138,15 @@ async function getResourcesMongoDB(queryObject, filters, currentPage, pageSize) 
           {
             "$sort": getSort()
           },
+          {
+            "$setWindowFields": { output: { totalCount: { $count: {} } } }
+          },
+          {
+            "$skip": (currentPage - 1) * pageSize
+          },
+          {
+            "$limit": pageSize
+          }
         ],
       })
     }).catch(err => console.log(err));
@@ -152,7 +165,8 @@ async function getResourcesMongoDB(queryObject, filters, currentPage, pageSize) 
       });
     }
   }
-  return resources['documents']
+  console.log(resources['documents'][0].totalCount);
+  return [resources['documents'], resources['documents'].length > 0 ? resources['documents'][0].totalCount : 0];
 }
 
 /**
@@ -162,7 +176,7 @@ async function getResourcesMongoDB(queryObject, filters, currentPage, pageSize) 
  * @param {json} queryObject The query object.
  * @returns {JSX.Element} The JSX element to be rendered.
 */
-async function getResourcesJSON(queryObject) {
+async function getResourcesJSON(queryObject, currentPage, pageSize) {
   const resources = await fetchResources();
   const query = queryObject.query.trim();
   const keywords = query.split(" ");
@@ -242,7 +256,9 @@ async function getResourcesJSON(queryObject) {
       results = results.filter(resource => queryObject[filter].includes(String(resource[filter])));
     }
   }
-  return results;
+  const total = results.length;
+  results = results.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+  return [results, total];
 }
 
 /**
@@ -256,15 +272,17 @@ async function getResourcesJSON(queryObject) {
 export async function getResources(queryObject, filters, currentPage, pageSize) {
   let resources;
   // if (process.env.IS_MONGODB_ENABLED === "true") {
-  // resources = await getResourcesMongoDB(queryObject, filters, currentPage, pageSize);
+  resources = await getResourcesMongoDB(queryObject, filters, currentPage, pageSize);
+  let total = resources[1];
+  resources = resources[0];
   // } else {
-  resources = await getResourcesJSON(queryObject);
-  let total = resources.length;
-  resources = resources.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+  // resources = await getResourcesJSON(queryObject);
+  // let total = resources.length;
+  // resources = resources.slice((currentPage - 1) * pageSize, currentPage * pageSize);
   // }
   return {
     resources: resources,
-    total: 0
+    total: total
   }
 }
 
