@@ -83,22 +83,21 @@ async function getResourcesMongoDB(queryObject, filters, currentPage, pageSize) 
                 ],
               },
             },
-          },
-          {
-            "$sort": getSort()
-          },
-          {
-            "$setWindowFields": { output: { totalCount: { $count: {} } } }
-          },
-          {
-            "$skip": (currentPage - 1) * pageSize
-          },
-          {
-            "$limit": pageSize
-          }
-        ]
-      })
-    }
+            {
+              "$sort": getSort()
+            },
+            {
+              "$setWindowFields": { output: { totalCount: { $count: {} } } }
+            },
+            {
+              "$skip": (currentPage - 1) * pageSize
+            },
+            {
+              "$limit": pageSize
+            }
+          ]
+        })
+      }
     ).catch(err => console.log(err));
     resources = await res1.json();
     console.log(resources);
@@ -131,41 +130,40 @@ async function getResourcesMongoDB(queryObject, filters, currentPage, pageSize) 
                   },
                 },
               },
-            }
-          },
-          {
-            "$match": {
-              "$and": [
-                { "category": { "$in": queryObject.category || [] } },
-                { "architecture": { "$in": queryObject.architecture || [] } },
-              ]
             },
-          },
-           {
+            {
+              "$match": {
+                "$and": [
+                  { "category": { "$in": queryObject.category || [] } },
+                  { "architecture": { "$in": queryObject.architecture || [] } },
+                ]
+              },
+            },
+            {
               $addFields: {
                 ver: {
                   $objectToArray: "$versions",
                 },
               },
             },
-          {
-            "$sort": getSort()
-          },
+            {
+              "$sort": getSort()
+            },
             {
               $unset: "ver",
             },
-          {
-            "$setWindowFields": { output: { totalCount: { $count: {} } } }
-          },
-          {
-            "$skip": (currentPage - 1) * pageSize
-          },
-          {
-            "$limit": pageSize
-          }
-        ],
-      })
-    }).catch(err => console.log(err));
+            {
+              "$setWindowFields": { output: { totalCount: { $count: {} } } }
+            },
+            {
+              "$skip": (currentPage - 1) * pageSize
+            },
+            {
+              "$limit": pageSize
+            }
+          ],
+        })
+      }).catch(err => console.log(err));
     resources = await res.json();
   }
   console.log(resources);
@@ -313,12 +311,12 @@ export async function getResources(
   let resources;
   // if (process.env.IS_MONGODB_ENABLED === "true") {
   resources = await getResourcesMongoDB(queryObject, filters, currentPage, pageSize);
+  // } else {
+  // resources = await getResourcesJSON(queryObject, currentPage, pageSize);
+  // let total = resources.length;
+  // resources = resources.slice((currentPage - 1) * pageSize, pageSize);
   let total = resources[1];
   resources = resources[0];
-  // } else {
-  // resources = await getResourcesJSON(queryObject);
-  // let total = resources.length;
-  // resources = resources.slice((currentPage - 1) * pageSize, currentPage * pageSize);
   // }
   return {
     resources: resources,
