@@ -32,124 +32,138 @@ async function getResourcesMongoDB(queryObject, filters, currentPage, pageSize) 
     console.log(queryObject.sort);
     switch (queryObject.sort) {
       case "date":
-        return { "date": -1 };
+        return { date: -1 };
       case "name":
-        return { "id": 1 };
+        return { id: 1 };
       case "version":
-        return { "gem5_version": -1 };
+        return { "ver.k": -1 };
       case "id_asc":
-        return { "id": 1 };
+        return { id: 1 };
       case "id_desc":
-        return { "id": -1 };
+        return { id: -1 };
       case "default":
         return {
-          "_id": -1
+          _id: -1,
         };
       default:
         return {
-          "score": { "$meta": "textScore" }
+          score: { $meta: "textScore" },
         };
     }
   }
   let resources = [];
   const access_token = await getToken();
-  if (queryObject.query.trim() === '') {
+  if (queryObject.query.trim() === "") {
     if (queryObject.sort === "relevance") {
       queryObject.sort = "default";
     }
-    const res1 = await fetch('https://us-west-2.aws.data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/aggregate', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        // 'api-key': 'pKkhRJGJaQ3NdJyDt69u4GPGQTDUIhHlx4a3lrKUNx2hxuc8uba8NrP3IVRvlzlo',
-        'Access-Control-Request-Headers': '*',
-        // 'origin': 'https://gem5vision.github.io',
-        "Authorization": "Bearer " + access_token,
-      },
-      // also apply filters on
-      body: JSON.stringify({
-        "dataSource": "gem5-vision",
-        "database": "gem5-vision",
-        "collection": "resources",
-        "pipeline": [
-          {
-            "$match": {
-              "$and": [
-                { "category": { "$in": queryObject.category || [] } },
-                { "architecture": { "$in": queryObject.architecture || [] } },
-                // check if any keys of versions is in queryObject.versions
-              ]
+    const res1 = await fetch(
+      "https://us-west-2.aws.data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/aggregate",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          // 'api-key': 'pKkhRJGJaQ3NdJyDt69u4GPGQTDUIhHlx4a3lrKUNx2hxuc8uba8NrP3IVRvlzlo',
+          "Access-Control-Request-Headers": "*",
+          // 'origin': 'https://gem5vision.github.io',
+          Authorization: "Bearer " + access_token,
+        },
+        // also apply filters on
+        body: JSON.stringify({
+          dataSource: "gem5-vision",
+          database: "gem5-vision",
+          collection: "resources",
+          pipeline: [
+            {
+              $match: {
+                $and: [
+                  { category: { $in: queryObject.category || [] } },
+                  { architecture: { $in: queryObject.architecture || [] } },
+                  // check if any keys of versions is in queryObject.versions
+                ],
+              },
             },
-          },
-          {
-            "$sort": getSort()
-          },
-          {
-            "$setWindowFields": { output: { totalCount: { $count: {} } } }
-          },
-          {
-            "$skip": (currentPage - 1) * pageSize
-          },
-          {
-            "$limit": pageSize
-          }
-        ]
-      })
-    }
+            {
+              "$sort": getSort()
+            },
+            {
+              "$setWindowFields": { output: { totalCount: { $count: {} } } }
+            },
+            {
+              "$skip": (currentPage - 1) * pageSize
+            },
+            {
+              "$limit": pageSize
+            }
+          ]
+        })
+      }
     ).catch(err => console.log(err));
     resources = await res1.json();
     console.log(resources);
   } else {
-    const res = await fetch('https://us-west-2.aws.data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/aggregate', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        // 'api-key': 'pKkhRJGJaQ3NdJyDt69u4GPGQTDUIhHlx4a3lrKUNx2hxuc8uba8NrP3IVRvlzlo',
-        'Access-Control-Request-Headers': '*',
-        // 'origin': 'https://gem5vision.github.io',
-        "Authorization": "Bearer " + access_token,
-      },
-      // also apply filters on
-      body: JSON.stringify({
-        "dataSource": "gem5-vision",
-        "database": "gem5-vision",
-        "collection": "resources",
-        "pipeline": [
-          {
-            "$search": {
-              "text": {
-                "query": queryObject.query,
-                "path": ["id", "description", "resources"],
-                "fuzzy": {
-                  "maxEdits": 2,
-                  "maxExpansions": 100
-                }
+    const res = await fetch(
+      "https://us-west-2.aws.data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/aggregate",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          // 'api-key': 'pKkhRJGJaQ3NdJyDt69u4GPGQTDUIhHlx4a3lrKUNx2hxuc8uba8NrP3IVRvlzlo',
+          "Access-Control-Request-Headers": "*",
+          // 'origin': 'https://gem5vision.github.io',
+          Authorization: "Bearer " + access_token,
+        },
+        // also apply filters on
+        body: JSON.stringify({
+          dataSource: "gem5-vision",
+          database: "gem5-vision",
+          collection: "resources",
+          pipeline: [
+            {
+              $search: {
+                text: {
+                  query: queryObject.query,
+                  path: ["id", "description", "resources"],
+                  fuzzy: {
+                    maxEdits: 2,
+                    maxExpansions: 100,
+                  },
+                },
               },
-            }
-          },
-          {
-            "$match": {
-              "$and": [
-                { "category": { "$in": queryObject.category || [] } },
-                { "architecture": { "$in": queryObject.architecture || [] } },
-              ]
             },
-          },
-          {
-            "$sort": getSort()
-          },
-          {
-            "$setWindowFields": { output: { totalCount: { $count: {} } } }
-          },
-          {
-            "$skip": (currentPage - 1) * pageSize
-          },
-          {
-            "$limit": pageSize
-          }
-        ],
-      })
-    }).catch(err => console.log(err));
+            {
+              "$match": {
+                "$and": [
+                  { "category": { "$in": queryObject.category || [] } },
+                  { "architecture": { "$in": queryObject.architecture || [] } },
+                ]
+              },
+            },
+            {
+              $addFields: {
+                ver: {
+                  $objectToArray: "$versions",
+                },
+              },
+            },
+            {
+              "$sort": getSort()
+            },
+            {
+              $unset: "ver",
+            },
+            {
+              "$setWindowFields": { output: { totalCount: { $count: {} } } }
+            },
+            {
+              "$skip": (currentPage - 1) * pageSize
+            },
+            {
+              "$limit": pageSize
+            }
+          ],
+        })
+      }).catch(err => console.log(err));
     resources = await res.json();
   }
   console.log(resources);
@@ -179,23 +193,33 @@ async function getResourcesJSON(queryObject, currentPage, pageSize) {
   const resources = await fetchResources();
   const query = queryObject.query.trim();
   const keywords = query.split(" ");
-  let results = resources.filter(resource => {
-    let idMatches = keywords.filter(keyword => resource.id.toLowerCase().includes(keyword.toLowerCase())).length;
-    let descMatches = keywords.filter(keyword => resource.description.toLowerCase().includes(keyword.toLowerCase())).length;
+  let results = resources.filter((resource) => {
+    let idMatches = keywords.filter((keyword) =>
+      resource.id.toLowerCase().includes(keyword.toLowerCase())
+    ).length;
+    let descMatches = keywords.filter((keyword) =>
+      resource.description.toLowerCase().includes(keyword.toLowerCase())
+    ).length;
     let resMatches = 0;
-    if (resource.resources) { // only search if resource.resources exists
+    if (resource.resources) {
+      // only search if resource.resources exists
       const resourceJSON = JSON.stringify(resource.resources).toLowerCase();
-      resMatches = keywords.filter(keyword => resourceJSON.includes(keyword.toLowerCase())).length;
+      resMatches = keywords.filter((keyword) =>
+        resourceJSON.includes(keyword.toLowerCase())
+      ).length;
     }
     let totalMatches = idMatches + descMatches + resMatches;
     if (totalMatches === 0) {
-      let idDistances = keywords.map(keyword => {
+      let idDistances = keywords.map((keyword) => {
         const keywordLower = keyword.toLowerCase();
-        return Math.min(...resource.id.toLowerCase()
-          .split("-")
-          .map(idPart => damerauLevenshteinDistance(keywordLower, idPart)));
+        return Math.min(
+          ...resource.id
+            .toLowerCase()
+            .split("-")
+            .map((idPart) => damerauLevenshteinDistance(keywordLower, idPart))
+        );
       });
-      idMatches = idDistances.filter(d => d < 3).length;
+      idMatches = idDistances.filter((d) => d < 3).length;
 
       // let descDistances = keywords.map(keyword => {
       //   const keywordLower = keyword.toLowerCase();
@@ -204,15 +228,18 @@ async function getResourcesJSON(queryObject, currentPage, pageSize) {
       //     .map(descPart => damerauLevenshteinDistance(keywordLower, descPart)));
       // });
       // descMatches = descDistances.filter(d => d < 3).length;
-      if (resource.resources) { // only search if resource.resources exists
+      if (resource.resources) {
+        // only search if resource.resources exists
         const resourceJSON = JSON.stringify(resource.resources).toLowerCase();
-        resMatches = keywords.filter(keyword => resourceJSON.includes(keyword.toLowerCase())).length;
+        resMatches = keywords.filter((keyword) =>
+          resourceJSON.includes(keyword.toLowerCase())
+        ).length;
       }
       totalMatches = idMatches + descMatches + resMatches;
     }
-    resource['totalMatches'] = totalMatches;
+    resource["totalMatches"] = totalMatches;
     return totalMatches > 0;
-  })
+  });
   console.log(queryObject);
   if (queryObject.sort) {
     switch (queryObject.sort) {
@@ -227,8 +254,14 @@ async function getResourcesJSON(queryObject, currentPage, pageSize) {
         break;
       case "version":
         results = results.sort((a, b) => {
-          const aVersion = Object.keys(a.versions).length > 1 ? Object.keys(a.versions)[1] : Object.keys(a.versions)[0];
-          const bVersion = Object.keys(b.versions).length > 1 ? Object.keys(b.versions)[1] : Object.keys(b.versions)[0];
+          const aVersion =
+            Object.keys(a.versions).length > 1
+              ? Object.keys(a.versions)[1]
+              : Object.keys(a.versions)[0];
+          const bVersion =
+            Object.keys(b.versions).length > 1
+              ? Object.keys(b.versions)[1]
+              : Object.keys(b.versions)[0];
           return bVersion.localeCompare(aVersion);
         });
         console.log(results);
@@ -241,8 +274,8 @@ async function getResourcesJSON(queryObject, currentPage, pageSize) {
   }
 
   for (let filter in queryObject) {
-    if (filter === 'versions') {
-      results = results.filter(resource => {
+    if (filter === "versions") {
+      results = results.filter((resource) => {
         for (let version in queryObject[filter]) {
           if (resource.versions[queryObject[filter][version]]) {
             return true;
@@ -250,9 +283,10 @@ async function getResourcesJSON(queryObject, currentPage, pageSize) {
         }
         return false;
       });
-    }
-    else if (filter !== "query" && filter !== "sort") {
-      results = results.filter(resource => queryObject[filter].includes(String(resource[filter])));
+    } else if (filter !== "query" && filter !== "sort") {
+      results = results.filter((resource) =>
+        queryObject[filter].includes(String(resource[filter]))
+      );
     }
   }
   const total = results.length;
@@ -267,22 +301,27 @@ async function getResourcesJSON(queryObject, currentPage, pageSize) {
  * @param {json} queryObject The query object.
  * @param {json} filters The filters to be applied.
  * @returns {json} The resources in JSON format.
-*/
-export async function getResources(queryObject, filters, currentPage, pageSize) {
+ */
+export async function getResources(
+  queryObject,
+  filters,
+  currentPage,
+  pageSize
+) {
   let resources;
   // if (process.env.IS_MONGODB_ENABLED === "true") {
   resources = await getResourcesMongoDB(queryObject, filters, currentPage, pageSize);
+  // } else {
+  // resources = await getResourcesJSON(queryObject, currentPage, pageSize);
+  // let total = resources.length;
+  // resources = resources.slice((currentPage - 1) * pageSize, pageSize);
   let total = resources[1];
   resources = resources[0];
-  // } else {
-  // resources = await getResourcesJSON(queryObject);
-  // let total = resources.length;
-  // resources = resources.slice((currentPage - 1) * pageSize, currentPage * pageSize);
   // }
   return {
     resources: resources,
-    total: total
-  }
+    total: total,
+  };
 }
 
 export default async function handler(req, res) {
@@ -297,7 +336,7 @@ export default async function handler(req, res) {
  * @helper
  * @description Calculates the Damerau-Levenshtein distance between two strings. Used for fuzzy search.
  * @returns {number} The Damerau-Levenshtein distance between the two strings.
-*/
+ */
 function damerauLevenshteinDistance(a, b) {
   if (a.length == 0) return b.length;
   if (b.length == 0) return a.length;
@@ -315,8 +354,8 @@ function damerauLevenshteinDistance(a, b) {
       } else {
         matrix[i][j] = Math.min(
           matrix[i - 1][j - 1] + 1, // substitution
-          matrix[i][j - 1] + 1,     // insertion
-          matrix[i - 1][j] + 1      // deletion
+          matrix[i][j - 1] + 1, // insertion
+          matrix[i - 1][j] + 1 // deletion
         );
         if (
           i > 1 &&
