@@ -1,6 +1,28 @@
 import { fetchResources } from "./resources";
 import getToken from "./getToken";
-import { version } from "nprogress";
+
+function getSort(sort) {
+  switch (sort) {
+    case "date":
+      return { date: -1 };
+    case "name":
+      return { id: 1 };
+    case "version":
+      return { "ver_latest": -1 };
+    case "id_asc":
+      return { id: 1 };
+    case "id_desc":
+      return { id: -1 };
+    case "default":
+      return {
+        _id: -1,
+      };
+    default:
+      return {
+        score: { $meta: "textScore" },
+      };
+  }
+}
 
 /**
  * @helper
@@ -34,164 +56,85 @@ async function getResourcesMongoDB(queryObject, filters, currentPage, pageSize) 
     }
     queryObject.versions = versions;
   }
-  console.log(queryObject);
-  function getSort() {
-    switch (queryObject.sort) {
-      case "date":
-        return { date: -1 };
-      case "name":
-        return { id: 1 };
-      case "version":
-        return { "ver.k": -1 };
-      case "id_asc":
-        return { id: 1 };
-      case "id_desc":
-        return { id: -1 };
-      case "default":
-        return {
-          _id: -1,
-        };
-      default:
-        return {
-          score: { $meta: "textScore" },
-        };
-    }
-  }
+
   let resources = [];
   const access_token = await getToken();
   if (queryObject.query.trim() === "") {
     if (queryObject.sort === "relevance") {
       queryObject.sort = "default";
     }
-    const res1 = await fetch(
-      "https://us-west-2.aws.data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/aggregate",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          // 'api-key': 'pKkhRJGJaQ3NdJyDt69u4GPGQTDUIhHlx4a3lrKUNx2hxuc8uba8NrP3IVRvlzlo',
-          "Access-Control-Request-Headers": "*",
-          // 'origin': 'https://gem5vision.github.io',
-          Authorization: "Bearer " + access_token,
-        },
-        // also apply filters on
-        body: JSON.stringify({
-          dataSource: "gem5-vision",
-          database: "gem5-vision",
-          collection: "resources",
-          pipeline: [
-            {
-              "$addFields": {
-                "a": "$versions.version"
-              },
-            },
-            {
-              $match: {
-                $and: [
-                  { category: { $in: queryObject.category || [] } },
-                  { architecture: { $in: queryObject.architecture || [] } },
-                  { a: { $in: queryObject.versions || [] } },
-                ],
-              },
-            },
-            {
-              "$unset": "a"
-            },
-            {
-              "$sort": getSort()
-            },
-            {
-              "$setWindowFields": { output: { totalCount: { $count: {} } } }
-            },
-            {
-              "$skip": (currentPage - 1) * pageSize
-            },
-            {
-              "$limit": pageSize
-            }
-          ]
-        })
-      }
-    ).catch(err => console.log(err));
-    resources = await res1.json();
-    console.log(resources);
-  } else {
-    const res = await fetch(
-      "https://us-west-2.aws.data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/aggregate",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          // 'api-key': 'pKkhRJGJaQ3NdJyDt69u4GPGQTDUIhHlx4a3lrKUNx2hxuc8uba8NrP3IVRvlzlo',
-          "Access-Control-Request-Headers": "*",
-          // 'origin': 'https://gem5vision.github.io',
-          Authorization: "Bearer " + access_token,
-        },
-        // also apply filters on
-        body: JSON.stringify({
-          dataSource: "gem5-vision",
-          database: "gem5-vision",
-          collection: "resources",
-          pipeline: [
-            {
-              $search: {
-                text: {
-                  query: queryObject.query,
-                  path: ["id", "description", "resources"],
-                  fuzzy: {
-                    maxEdits: 2,
-                    maxExpansions: 100,
-                  },
-                },
-              },
-            },
-            {
-              "$addFields": {
-                "a": "$versions.version"
-              },
-            },
-            {
-              "$match": {
-                "$and": [
-                  { "category": { "$in": queryObject.category || [] } },
-                  { "architecture": { "$in": queryObject.architecture || [] } },
-                  { "a": { $in: queryObject.versions || [] } },
-                ]
-              },
-            },
-            {
-              "$sort": getSort()
-            },
-            {
-              "$setWindowFields": { output: { totalCount: { $count: {} } } }
-            },
-            {
-              "$skip": (currentPage - 1) * pageSize
-            },
-            {
-              "$limit": pageSize
-            }
-          ],
-        })
-      }).catch(err => console.log(err));
-    resources = await res.json();
   }
-  console.log(resources);
-  /* for (let filter in queryObject) {
-    if (filter === "versions") {
-      results = results.filter((resource) => {
-        for (let version in queryObject[filter]) {
-          // check if the version exists in the resource
-          for (let resourceVersion in resource.versions) {
-            if (resource.versions[resourceVersion]['version'] === queryObject[filter][version]) {
-              return true;
-            }
-          }
+  let pipeline = [
+    {
+      "$addFields": {
+        "a": "$versions.version",
+        "ver_latest": {
+          "$last": "$versions.version"
         }
-        return false;
-      });
+      },
+    },
+    {
+      $match: {
+        $and: [
+          { category: { $in: queryObject.category || [] } },
+          { architecture: { $in: queryObject.architecture || [] } },
+          { a: { $in: queryObject.versions || [] } },
+        ],
+      },
+    },
+    {
+      "$sort": getSort(queryObject.sort),
+    },
+    {
+      "$unset": ["a", "ver_latest"]
+    },
+    {
+      "$setWindowFields": { output: { totalCount: { $count: {} } } }
+    },
+    {
+      "$skip": (currentPage - 1) * pageSize
+    },
+    {
+      "$limit": pageSize
     }
-  } */
+  ]
+  if (queryObject.query.trim() !== "") {
+    // add search pipeline to beginning of pipeline
+    pipeline.unshift({
+      $search: {
+        text: {
+          query: queryObject.query,
+          path: ["id", "description", "resources"],
+          fuzzy: {
+            maxEdits: 2,
+            maxExpansions: 100,
+          },
+        },
+      },
+    });
+  }
+  const res = await fetch(
+    "https://us-west-2.aws.data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/aggregate",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        // 'api-key': 'pKkhRJGJaQ3NdJyDt69u4GPGQTDUIhHlx4a3lrKUNx2hxuc8uba8NrP3IVRvlzlo',
+        "Access-Control-Request-Headers": "*",
+        // 'origin': 'https://gem5vision.github.io',
+        Authorization: "Bearer " + access_token,
+      },
+      // also apply filters on
+      body: JSON.stringify({
+        dataSource: "gem5-vision",
+        database: "gem5-vision",
+        collection: "resources",
+        pipeline: pipeline
+      })
+    }
+  ).catch(err => console.log(err));
+  resources = await res.json();
+
   return [resources['documents'], resources['documents'].length > 0 ? resources['documents'][0].totalCount : 0];
 }
 
