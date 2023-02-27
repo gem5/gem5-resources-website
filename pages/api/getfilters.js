@@ -72,14 +72,25 @@ async function getFiltersJSON() {
     let architectures = [...new Set(resources.map(resource => resource.architecture))];
     // get zipped from resources
     // let zippeds = [...new Set(resources['resources'].map(resource => String(resource.is_zipped)))].filter(zipped => zipped != "null");
-    // get versions from resources
-    let versions = [...new Set(resources.map(resource => resource.versions))];
-    // this is a list of dictionaries, find a way to get the unique values
-    versions = versions.map(version => {
-        return Object.keys(version);
-    });
-    // merge the lists
-    versions = [].concat.apply([], versions);
+    // get versions from resources which is a list of dictionaries
+    /* 
+    looks like this:
+    {
+        "url":"asdasd",
+        "version":"20.0.0",
+        "size":"123123123
+    }
+    */
+    //    get all unique versions
+    let versions = [];
+    for (let i = 0; i < resources.length; i++) {
+        for (let j = 0; j < resources[i].versions.length; j++) {
+            if (!versions.includes(resources[i].versions[j].version)) {
+                versions.push(resources[i].versions[j].version);
+            }
+        }
+    }
+
     return {
         category: categories,
         // group: groups,

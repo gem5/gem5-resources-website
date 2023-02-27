@@ -71,8 +71,7 @@ export default function Banner({ resource }) {
                     </h6>
                     <p>
                         {
-                            Object.keys(resource.versions).length > 1 ? Object.keys(resource.versions)[1] :
-                                Object.keys(resource.versions)[0]
+                            resource.versions.length > 1 ? resource.versions[1].version : resource.versions[0].version
                         }
                     </p>
                 </div>

@@ -168,11 +168,14 @@ async function getResourcesMongoDB(queryObject, filters, currentPage, pageSize) 
   }
   console.log(resources);
   for (let filter in queryObject) {
-    if (filter === 'versions') {
-      resources['documents'] = resources['documents'].filter(resource => {
+    if (filter === "versions") {
+      results = results.filter((resource) => {
         for (let version in queryObject[filter]) {
-          if (resource.versions[queryObject[filter][version]]) {
-            return true;
+          // check if the version exists in the resource
+          for (let resourceVersion in resource.versions) {
+            if (resource.versions[resourceVersion]['version'] === queryObject[filter][version]) {
+              return true;
+            }
           }
         }
         return false;
@@ -272,13 +275,15 @@ async function getResourcesJSON(queryObject, currentPage, pageSize) {
   } else {
     results = results.sort((a, b) => b.totalMatches - a.totalMatches);
   }
-
   for (let filter in queryObject) {
     if (filter === "versions") {
       results = results.filter((resource) => {
         for (let version in queryObject[filter]) {
-          if (resource.versions[queryObject[filter][version]]) {
-            return true;
+          // check if the version exists in the resource
+          for (let resourceVersion in resource.versions) {
+            if (resource.versions[resourceVersion]['version'] === queryObject[filter][version]) {
+              return true;
+            }
           }
         }
         return false;
@@ -310,9 +315,9 @@ export async function getResources(
 ) {
   let resources;
   // if (process.env.IS_MONGODB_ENABLED === "true") {
-  resources = await getResourcesMongoDB(queryObject, filters, currentPage, pageSize);
+  // resources = await getResourcesMongoDB(queryObject, filters, currentPage, pageSize);
   // } else {
-  // resources = await getResourcesJSON(queryObject, currentPage, pageSize);
+  resources = await getResourcesJSON(queryObject, currentPage, pageSize);
   // let total = resources.length;
   // resources = resources.slice((currentPage - 1) * pageSize, pageSize);
   let total = resources[1];

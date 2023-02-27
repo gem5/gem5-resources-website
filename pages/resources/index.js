@@ -171,7 +171,7 @@ export default function Resources() {
         let q = filterToQuery(filters)
         router.push({
             pathname: '/resources',
-            query: { q: q }
+            query: { q: q, page: 1 }
         })
     }
 
@@ -179,7 +179,7 @@ export default function Resources() {
         setQuery(query)
         router.push({
             pathname: '/resources',
-            query: { q: query }
+            query: { q: query, page: 1 }
         })
     }
 
