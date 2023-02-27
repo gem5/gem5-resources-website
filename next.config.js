@@ -13,9 +13,8 @@ module.exports = {
     path: '',
   },
   env: {
-    IS_MONGODB_ENABLED: process.env.IS_MONGODB_ENABLED,
-    MONGODB_URI: process.env.MONGODB_URI,
-    MONGODB_API_KEY: process.env.MONGODB_API_KEY,
+    IS_MONGODB_ENABLED: true,
+    MONGODB_API_KEY: "pKkhRJGJaQ3NdJyDt69u4GPGQTDUIhHlx4a3lrKUNx2hxuc8uba8NrP3IVRvlzlo",
   },
   webpack: (config) => {
     config.module.rules.push({

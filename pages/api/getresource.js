@@ -116,11 +116,11 @@ async function getResourceJSON(id) {
 */
 export async function getResource(id) {
     let resource;
-    // if (process.env.IS_MONGODB_ENABLED) {
-    resource = await getResourceMongoDB(id);
-    // } else {
-    // resource = await getResourceJSON(id);
-    // }
+    if (process.env.IS_MONGODB_ENABLED) {
+        resource = await getResourceMongoDB(id);
+    } else {
+        resource = await getResourceJSON(id);
+    }
     return resource;
 }
 

@@ -267,10 +267,11 @@ export async function getResources(
   pageSize
 ) {
   let resources;
-  // if (process.env.IS_MONGODB_ENABLED === "true") {
-  resources = await getResourcesMongoDB(queryObject, filters, currentPage, pageSize);
-  // } else {
-  // resources = await getResourcesJSON(queryObject, currentPage, pageSize);
+  if (process.env.IS_MONGODB_ENABLED) {
+    resources = await getResourcesMongoDB(queryObject, filters, currentPage, pageSize);
+  } else {
+    resources = await getResourcesJSON(queryObject, currentPage, pageSize);
+  }
   // let total = resources.length;
   // resources = resources.slice((currentPage - 1) * pageSize, pageSize);
   let total = resources[1];
