@@ -20,8 +20,10 @@ export default function Category() {
                 {
                     categories.map((category) => {
                         return (
-                            <ListGroup.Item action href={`/category/${category.toLowerCase()}`} key={category}>
-                                {category}
+                            <ListGroup.Item key={category}>
+                                <Link href={`/category/${category.toLowerCase()}`}>
+                                    {category}
+                                </Link>
                             </ListGroup.Item>
                         )
                     })
