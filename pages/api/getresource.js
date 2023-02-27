@@ -94,16 +94,17 @@ async function getResourceJSON(id) {
     for (let res in resources) {
         for (let r in resources[res].resources) {
             if (resources[res].resources[r] === id) {
-                workloads.push(resources[res]);
+                workloads.push(resources[res].id);
             }
         }
     }
     console.log(workloads);
     if (workloads.length === 0) {
-        workloads = null
-    } else {
-        results[0].workloads = workloads;
+        workloads = []
     }
+    results[0].workloads = workloads;
+
+    console.log(results[0]);
     return results[0];
 }
 

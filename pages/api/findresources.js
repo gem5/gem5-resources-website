@@ -32,31 +32,7 @@ function getSort(sort) {
  * @param {json} filters The filters object.
  * @returns {JSX.Element} The JSX element to be rendered.
 */
-async function getResourcesMongoDB(queryObject, filters, currentPage, pageSize) {
-  // pass queryObject by value
-  queryObject = { ...queryObject };
-  if (!queryObject.category) {
-    let categories = [];
-    for (let category in filters.category) {
-      categories.push(filters.category[category]);
-    }
-    queryObject.category = categories;
-  }
-  if (!queryObject.architecture) {
-    let architectures = [];
-    for (let architecture in filters.architecture) {
-      architectures.push(filters.architecture[architecture]);
-    }
-    queryObject.architecture = architectures;
-  }
-  if (!queryObject.versions) {
-    let versions = [];
-    for (let version in filters.versions) {
-      versions.push(filters.versions[version]);
-    }
-    queryObject.versions = versions;
-  }
-
+async function getResourcesMongoDB(queryObject, currentPage, pageSize) {
   let resources = [];
   const access_token = await getToken();
   if (queryObject.query.trim() === "") {
@@ -64,7 +40,35 @@ async function getResourcesMongoDB(queryObject, filters, currentPage, pageSize) 
       queryObject.sort = "default";
     }
   }
-  let pipeline = [
+  let pipeline = [];
+  if (queryObject.tag) {
+    pipeline = pipeline.concat([
+      {
+        "$unwind": "$tags"
+      },
+      {
+        "$match": {
+          "tags": {
+            "$in": queryObject.tag || []
+          }
+        }
+      },
+      {
+        "$group": {
+          "_id": "$_id",
+          "doc": {
+            "$first": "$$ROOT"
+          }
+        }
+      },
+      {
+        "$replaceRoot": {
+          "newRoot": "$doc"
+        }
+      }
+    ])
+  }
+  pipeline = pipeline.concat([
     {
       "$addFields": {
         "a": "$versions.version",
@@ -73,15 +77,25 @@ async function getResourcesMongoDB(queryObject, filters, currentPage, pageSize) 
         }
       },
     },
-    {
+  ]);
+  let match = []
+  if (queryObject.category) {
+    match.push({ category: { $in: queryObject.category || [] } });
+  }
+  if (queryObject.architecture) {
+    match.push({ architecture: { $in: queryObject.architecture || [] } });
+  }
+  if (queryObject.versions) {
+    match.push({ "versions.version": { $in: queryObject.versions || [] } });
+  }
+  if (match.length > 0) {
+    pipeline.push({
       $match: {
-        $and: [
-          { category: { $in: queryObject.category || [] } },
-          { architecture: { $in: queryObject.architecture || [] } },
-          { a: { $in: queryObject.versions || [] } },
-        ],
+        $and: match
       },
-    },
+    })
+  }
+  pipeline = pipeline.concat([
     {
       "$sort": getSort(queryObject.sort),
     },
@@ -97,7 +111,8 @@ async function getResourcesMongoDB(queryObject, filters, currentPage, pageSize) 
     {
       "$limit": pageSize
     }
-  ]
+  ])
+
   if (queryObject.query.trim() !== "") {
     // add search pipeline to beginning of pipeline
     pipeline.unshift({
@@ -262,18 +277,15 @@ async function getResourcesJSON(queryObject, currentPage, pageSize) {
  */
 export async function getResources(
   queryObject,
-  filters,
   currentPage,
   pageSize
 ) {
   let resources;
   if (process.env.IS_MONGODB_ENABLED) {
-    resources = await getResourcesMongoDB(queryObject, filters, currentPage, pageSize);
+    resources = await getResourcesMongoDB(queryObject, currentPage, pageSize);
   } else {
     resources = await getResourcesJSON(queryObject, currentPage, pageSize);
   }
-  // let total = resources.length;
-  // resources = resources.slice((currentPage - 1) * pageSize, pageSize);
   let total = resources[1];
   resources = resources[0];
   // }

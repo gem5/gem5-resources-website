@@ -64,7 +64,6 @@ export default function Banner({ resource }) {
                     />
                     {resource.architecture}
                 </p>
-
                 <div className='d-flex flex-row gap-1'>
                     <h6 style={{ lineHeight: 'inherit', margin: '0' }}>
                         VERSION
