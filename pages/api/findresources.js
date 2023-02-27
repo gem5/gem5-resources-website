@@ -49,10 +49,7 @@ async function getResourcesMongoDB(queryObject, currentPage, pageSize) {
       {
         "$match": {
           "tags": {
-            "$in": [
-              "asmtest",
-              "hello"
-            ]
+            "$in": queryObject.tag || []
           }
         }
       },

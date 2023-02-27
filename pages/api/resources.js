@@ -50,9 +50,9 @@ export async function fetchResourcesJSON() {
 export async function fetchResources() {
     let resources;
     // if (process.env.IS_MONGODB_ENABLED === 'true') {
-    // resources = await fetchResourcesMongoDB();
+    resources = await fetchResourcesMongoDB();
     // } else {
-    resources = await fetchResourcesJSON();
+    // resources = await fetchResourcesJSON();
     // }
     return resources;
 }
