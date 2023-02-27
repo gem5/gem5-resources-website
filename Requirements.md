@@ -230,24 +230,24 @@ Conclusion: ReactJS
 
 ## System Architecture Overview
 
-    ```mermaid
-    graph TD;
-        A[dev] --> B[JSON];
-      C[v22.1] --> B[JSON];
-        D[v22.0] --> B[JSON];
-        E[v21.2] --> B[JSON];
-      F[gem5/gem5_resources] --> I[gem5 Vision]
-       G[gem5/configs/gem5_library] --> I[gem5 Vision]
-      B[JSON] --> H[MongoDB]
-      B[JSON] --> I[gem5 Vision]
-      H[MongoDB] --> I[gem5 Vision]
-      J[Server to Track Stats] --> I[gem5 Vision]
-       K[gem5 prebuilt boards] -.-> I[gem5 Vision]
-        I[gem5 Vision] --> L[gem5 Resources Website]
-        I[gem5 Vision] --> M[Documentation]
-        I[gem5 Vision] --> N[Python Wrapper]
-        L[gem5 Resources Website] --> M[Documentation]
-    ```
+```mermaid
+graph TD;
+    A[dev] --> B[JSON];
+  C[v22.1] --> B[JSON];
+    D[v22.0] --> B[JSON];
+    E[v21.2] --> B[JSON];
+  F[gem5/gem5_resources] --> I[gem5 Vision]
+   G[gem5/configs/gem5_library] --> I[gem5 Vision]
+  B[JSON] --> H[MongoDB]
+  B[JSON] --> I[gem5 Vision]
+  H[MongoDB] --> I[gem5 Vision]
+  J[Server to Track Stats] --> I[gem5 Vision]
+   K[gem5 prebuilt boards] -.-> I[gem5 Vision]
+    I[gem5 Vision] --> L[gem5 Resources Website]
+    I[gem5 Vision] --> M[Documentation]
+    I[gem5 Vision] --> N[Python Wrapper]
+    L[gem5 Resources Website] --> M[Documentation]
+```
 
 ## Requirements
 
