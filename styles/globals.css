@@ -1,3 +1,38 @@
+@font-face {
+  font-family: 'OpenSansLight';
+  src: url('../public/fonts/OpenSans/OpenSans-Light.ttf');
+  font-style: normal;
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'OpenSansRegular';
+  src: url('../public/fonts/OpenSans/OpenSans-Regular.ttf');
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'OpenSansSemiBold';
+  src: url('../public/fonts/OpenSans/OpenSans-SemiBold.ttf');
+  font-style: normal;
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: 'OpenSansBold';
+  src: url('../public/fonts/OpenSans/OpenSans-Bold.ttf');
+  font-style: normal;
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'MulishBold';
+  src: url('../public/fonts/Mulish/Mulish-Bold.ttf');
+  font-style: normal;
+  font-weight: 700;
+}
+
 .btn-outline-primary {
   --bs-btn-color: #0095AF;
   --bs-btn-border-color: #0095AF;
@@ -105,7 +140,6 @@ code {
   fill: black;
 }
 
-
 .my-accordion .accordion-button {
   text-transform: capitalize;
 }
@@ -119,7 +153,47 @@ code {
     width: 100%;
     min-width: 0;
   }
+}
 
+h2 {
+  font-family: MulishBold, sans-serif;
+  font-weight: 700;
+  font-size: 36px;
+}
+
+h4 {
+  font-family: OpenSansBold, sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+label, p, a, span {
+  font-family: OpenSansRegular, sans-serif;
+  font-weight: 300;
+  font-size: 1rem;
+}
+
+.value, .value option {
+  font-family: OpenSansSemiBold, sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.accordion {
+  --bs-accordion-btn-color: #0095AF;
+}
+
+.value-label, .accordion-header>button {
+  font-family: OpenSansBold, sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.search-result__description {
+  word-wrap: break-word;
+}
+
+@media (max-width: 1222px) {
   .filters {
     width: 100%;
     min-width: 0;
@@ -127,7 +201,27 @@ code {
 
   .content {
     width: 100%;
-    padding-left: 2%;
-    padding-right: 2%;
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .results-sortBy-row {
+    margin: 5px 0px;
+  }
+
+  h2 {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 425px) {
+  .value-label, .value, .accordion-header>button, label, p  {
+    font-size: 0.875rem;
+  }
+
+  h4 {
+    font-size: 1.25rem;
   }
 }
