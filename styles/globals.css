@@ -216,6 +216,12 @@ label, p, a, span {
   }
 }
 
+@media (max-width: 575px) {
+  .home {
+      max-width: 540px;
+  }
+}
+
 @media (max-width: 425px) {
   .value-label, .value, .accordion-header>button, label, p  {
     font-size: 0.875rem;
@@ -223,5 +229,10 @@ label, p, a, span {
 
   h4 {
     font-size: 1.25rem;
+  }
+
+  .gem5-logo {
+    height: 208px;
+    width: 200px;
   }
 }

@@ -10,7 +10,7 @@ import Link from "next/link";
  */
 export default function MyCards() {
   return (
-    <div className={"mt-5 " + styles.containerStyle}>
+    <div className={"mt-3 " + styles.containerStyle}>
       <hr />
       <h2 className={"font-weight-light primary " + styles.headerStyle}>
         Getting Started
