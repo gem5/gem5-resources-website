@@ -339,23 +339,47 @@ Problem: Dr. Bobby Bruce is the admin of gem5 and he wants to add a new Resource
 
 Solution: Specialized CLI tool for Dr. Bruce just for maintaining and adding new Resources.
 
-**User Stories #15: Direct Download**
+**User Stories #15: Direct Download with Viewing its Size**
 
 Problem: Dr. Miyamoto wants to directly download an Image file from gem5 resources.
 
-Solution: Having a Download button in the documentation of a resource that leads a user to the page where they can directly download the resource solves this problem.
+Solution: Having a Download button in the documentation of a resource that leads a user to the page where they can directly download the resource solves this problem. We can also populate the size for the resource while uploading it.
+
+**User Stories #16: Switching of Database**
+    
+Problem: Dr. Bobby Bruce is the admin of gem5 and wants to maintain the gem5 Vision API and the Resources website even if MongoDB updates its implementation anytime in the future, which might require reworking the API itself.
+
+Solution: Having two versions of the API (one for the JSON and one for MongoDB) and a flag that chooses which API to invoke can help Dr. Bruce maintain the website easier. We can easily switch over to the JSON version while we rework the implementation.
+    
+**User Stories #17: Documentation for gem5 Vision**
+    
+Problem: Aditya Kode is an open source contributor of gem5, and wants to contribute to gem5 Vision, but does not understand how its current implementation works.
+
+Solution: Having documentation that explains the API and its functions would help Aditya understand how the codebase works.
+    
+**User Stories #18: Contributing to gem5**
+    
+Problem: The Spidermen are a team working on some components for gem5, but cannot push their code onto gem5’s Gerrit Code Review due to stylistic errors.
+
+Solution: Following the gem5 code conventions, as detailed in [https://www.gem5.org/contributing](https://www.gem5.org/contributing), would help make contributing to gem5 a lot easier.
+
+**User Stories #19: Sorting**
+
+Problem: Peter Parker is trying to find a particular resource but doesn’t know its exact name for it. He tries searching but his query gives him over 100 results. He tries to use the filters but he doesn’t know the category or the architecture.
+
+Solution: Peter sorts the results by relevance and after looking through the first 5-6 results and finds the one he is looking for.
 
 ### Functional Requirements
 
 1. The website must allow users to search for resources related to gem5.
 2. The website must display results according to the search criteria
 3. The website must show the following information about each resource on its designated page:
-    1. Readme/Documentation
+    1. Readme/Documentation (from _gem5_resources/src_)
     2. Architecture supported
     3. Author
     4. Date of publication
     5. Versions and Compatibility
-    6. Usage (Example code)
+    6. Usage (Example code) (from _gem5/configs/example/gem5_library_)
     7. Dependencies
     8. Tags
 4. The website must allow the users to sort the resources according to the following criteria
@@ -394,6 +418,16 @@ Solution: Having a Download button in the documentation of a resource that leads
 11. Every piece of code should be well-documented
 12. JSON and MongoDB should be delivered with schemas
 13. API should be delivered with a design document that specifies how it works
+14. JSON and MongoDB should be delivered with schemas
+15. API should be delivered with a design document that specifies how it works
+16. gem5 Vision should be able to track analytics about the site visits and download links through a server
+17. The database can be switched between the JSON and MongoDB
+
+### Stretch Requirements
+
+1. The website must be able to visualize the stats returned by running resources on specific prebuilt boards present in the source code of gem5
+2. The database must be able to store these stats in a coherent manner
+3. The website must be able to sort on the basis of a chosen subset of these stats
 
 ### Non-Functional Requirements
 
@@ -407,6 +441,8 @@ Solution: Having a Download button in the documentation of a resource that leads
 8. The website must be optimized for search engines, making it easy for users to find it
 9. The Python wrapper must be as bug-free as possible
 10. Documentation should follow gem5 standards
+11. Code should follow gem5 conventions of coding as elucidated here: [https://www.gem5.org/contributing](https://www.gem5.org/contributing)
+12. Server should not be critical to the functionality of the website (i.e. removing code relating to the server should still allow searching, filtering, etc.)
 
 ## Prototyping Code
 

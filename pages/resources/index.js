@@ -31,6 +31,7 @@ export default function Resources() {
     const [maxPageNumbersShown, setMaxPageNumbersShown] = useState(5);
     const [paginationSize, setPaginationSize] = useState('sm');
     const [total, setTotal] = useState(0);
+    const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
         let q = window.location.href.split('?')[1]
@@ -148,6 +149,13 @@ export default function Resources() {
         )
     }
 
+    useEffect(() => {
+        function onMobileResize() { window.innerWidth <= 425 ? setIsMobile(true) : setIsMobile(false); }
+        onMobileResize();
+        window.addEventListener("resize", onMobileResize);
+        return () => { window.removeEventListener("resize", onMobileResize) }
+    }, [])
+
     function filterToQuery(filters) {
         // convert filters to query string
         let q = '';
@@ -202,34 +210,35 @@ export default function Resources() {
                 <meta name="description" content="Find the resource you need" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
-            <div className='d-flex flex-column gap-4 align-items-center'>
-                <div className='p-5 w-100 bg-light'>
+            <div className={`d-flex flex-column ${isMobile ? null : "gap-4"} align-items-center`}>
+                <div className={`${isMobile ? "p-4" : "p-5"} w-100 bg-light`}>
                     <SearchBox callback={onSearch} query={query} ref={ref} />
                 </div>
-                <div className='content'>
+                <div className={`${isMobile ? "p-4" : null} content`}>
                     <Row>
                         <Col xs={3} className='filters'>
                             <Filters filters={filters} callback={onChange} />
                         </Col>
                         <Col>
-                            <Row className='justify-content-between align-items-center'>
+                            <Row className='justify-content-between align-items-center mb-1 results-sortBy-row'>
                                 <div className='w-auto'>
-                                    <span className='text-uppercase me-2 text-muted'>
+                                    <span className='text-uppercase me-2 text-muted value-label'>
                                         Results
                                     </span>
-                                    <span className='primary'>
+                                    <span className='primary value' style={{ paddingLeft: "0.50rem" }}>
                                         {total == 0 ? 0 : (currentPage - 1) * numberOfItemsPerPage + 1} - {Math.min(currentPage * numberOfItemsPerPage, total)} of {total}
                                     </span>
                                 </div>
                                 <div className='w-auto d-flex align-items-center'>
-                                    <span className='text-uppercase me-2 text-muted'>
+                                    <span className='text-uppercase me-2 text-muted value-label'>
                                         Sort by
                                     </span>
                                     <Form.Select
-                                        className='w-auto primary text-uppercase border-0'
+                                        className='w-auto primary text-uppercase border-0 value'
                                         aria-label="Default select example"
                                         defaultValue='relevance'
                                         onChange={onSortChange}
+                                        style={{paddingLeft: '0.50rem', cursor: 'pointer' }}
                                     >
                                         <option value='relevance'>Relevance</option>
                                         <option value='date'>Date</option>
@@ -239,7 +248,7 @@ export default function Resources() {
                                     </Form.Select>
                                 </div>
                             </Row>
-                            <Row>
+                            <Row className='mt-2'>
                                 {
                                     loading ?
                                         <div className='d-flex flex-column align-items-center justify-content-center p-5'>
