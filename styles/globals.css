@@ -167,7 +167,7 @@ h4 {
   font-size: 1.5rem;
 }
 
-label, p, a, span {
+label, p, a/* , span */ {
   font-family: OpenSansRegular, sans-serif;
   font-weight: 300;
   font-size: 1rem;
