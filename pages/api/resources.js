@@ -36,7 +36,7 @@ async function fetchResourcesMongoDB() {
 */
 export async function fetchResourcesJSON() {
     console.log("Fetching resources from JSON");
-    const res = await fetch('https://raw.githubusercontent.com/Gem5Vision/json-to-mongodb/versions/resources.json')
+    const res = await fetch('https://raw.githubusercontent.com/Gem5Vision/json-to-mongodb/tags/resources.json')
         .then(res => res.json())
     return res;
 }
@@ -50,9 +50,9 @@ export async function fetchResourcesJSON() {
 export async function fetchResources() {
     let resources;
     // if (process.env.IS_MONGODB_ENABLED === 'true') {
-    resources = await fetchResourcesMongoDB();
+    // resources = await fetchResourcesMongoDB();
     // } else {
-    // resources = await fetchResourcesJSON();
+    resources = await fetchResourcesJSON();
     // }
     return resources;
 }

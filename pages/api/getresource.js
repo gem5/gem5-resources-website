@@ -94,16 +94,17 @@ async function getResourceJSON(id) {
     for (let res in resources) {
         for (let r in resources[res].resources) {
             if (resources[res].resources[r] === id) {
-                workloads.push(resources[res]);
+                workloads.push(resources[res].id);
             }
         }
     }
     console.log(workloads);
     if (workloads.length === 0) {
-        workloads = null
-    } else {
-        results[0].workloads = workloads;
+        workloads = []
     }
+    results[0].workloads = workloads;
+
+    console.log(results[0]);
     return results[0];
 }
 
@@ -117,9 +118,9 @@ async function getResourceJSON(id) {
 export async function getResource(id) {
     let resource;
     // if (process.env.IS_MONGODB_ENABLED) {
-    resource = await getResourceMongoDB(id);
+    // resource = await getResourceMongoDB(id);
     // } else {
-    // resource = await getResourceJSON(id);
+    resource = await getResourceJSON(id);
     // }
     return resource;
 }
