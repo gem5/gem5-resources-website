@@ -27,9 +27,15 @@ async function getResourcesMongoDB(queryObject, filters, currentPage, pageSize) 
     }
     queryObject.architecture = architectures;
   }
-
+  if (!queryObject.versions) {
+    let versions = [];
+    for (let version in filters.versions) {
+      versions.push(filters.versions[version]);
+    }
+    queryObject.versions = versions;
+  }
+  console.log(queryObject);
   function getSort() {
-    console.log(queryObject.sort);
     switch (queryObject.sort) {
       case "date":
         return { date: -1 };
@@ -75,13 +81,21 @@ async function getResourcesMongoDB(queryObject, filters, currentPage, pageSize) 
           collection: "resources",
           pipeline: [
             {
+              "$addFields": {
+                "a": "$versions.version"
+              },
+            },
+            {
               $match: {
                 $and: [
                   { category: { $in: queryObject.category || [] } },
                   { architecture: { $in: queryObject.architecture || [] } },
-                  // check if any keys of versions is in queryObject.versions
+                  { a: { $in: queryObject.versions || [] } },
                 ],
               },
+            },
+            {
+              "$unset": "a"
             },
             {
               "$sort": getSort()
@@ -132,25 +146,21 @@ async function getResourcesMongoDB(queryObject, filters, currentPage, pageSize) 
               },
             },
             {
+              "$addFields": {
+                "a": "$versions.version"
+              },
+            },
+            {
               "$match": {
                 "$and": [
                   { "category": { "$in": queryObject.category || [] } },
                   { "architecture": { "$in": queryObject.architecture || [] } },
+                  { "a": { $in: queryObject.versions || [] } },
                 ]
               },
             },
             {
-              $addFields: {
-                ver: {
-                  $objectToArray: "$versions",
-                },
-              },
-            },
-            {
               "$sort": getSort()
-            },
-            {
-              $unset: "ver",
             },
             {
               "$setWindowFields": { output: { totalCount: { $count: {} } } }
@@ -167,7 +177,7 @@ async function getResourcesMongoDB(queryObject, filters, currentPage, pageSize) 
     resources = await res.json();
   }
   console.log(resources);
-  for (let filter in queryObject) {
+  /* for (let filter in queryObject) {
     if (filter === "versions") {
       results = results.filter((resource) => {
         for (let version in queryObject[filter]) {
@@ -181,7 +191,7 @@ async function getResourcesMongoDB(queryObject, filters, currentPage, pageSize) 
         return false;
       });
     }
-  }
+  } */
   return [resources['documents'], resources['documents'].length > 0 ? resources['documents'][0].totalCount : 0];
 }
 
@@ -315,9 +325,9 @@ export async function getResources(
 ) {
   let resources;
   // if (process.env.IS_MONGODB_ENABLED === "true") {
-  // resources = await getResourcesMongoDB(queryObject, filters, currentPage, pageSize);
+  resources = await getResourcesMongoDB(queryObject, filters, currentPage, pageSize);
   // } else {
-  resources = await getResourcesJSON(queryObject, currentPage, pageSize);
+  // resources = await getResourcesJSON(queryObject, currentPage, pageSize);
   // let total = resources.length;
   // resources = resources.slice((currentPage - 1) * pageSize, pageSize);
   let total = resources[1];

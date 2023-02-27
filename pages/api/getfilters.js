@@ -25,11 +25,16 @@ async function getFiltersMongoDB() {
             "collection": "resources",
             "pipeline": [
                 {
+                    "$addFields": {
+                        "a": "$versions"
+                    },
+                },
+                {
                     "$group": {
                         "_id": null,
                         "category": { "$addToSet": "$category" },
                         "architecture": { "$addToSet": "$architecture" },
-                        "versions": { "$addToSet": "$versions" },
+                        "versions": { "$addToSet": "$a.version" },
                     },
                 },
             ],
@@ -38,21 +43,14 @@ async function getFiltersMongoDB() {
     let filters = await res.json();
     filters['documents'][0]['architecture'] = filters['documents'][0]['architecture'].filter(architecture => architecture != null);
     delete filters['documents'][0]['_id'];
-    // sort categories, architectures, and gem5_versions alphabetically
+    // get largest list of versions
+    filters['documents'][0]['versions'] = filters['documents'][0]['versions'].reduce((a, b) => a.length > b.length ? a : b);
+
     console.log(filters['documents'][0]['versions']);
-    // get the one with the most versions
-    let maxVersions = 0;
-    let maxVersionsIndex = 0;
-    for (let i = 0; i < filters['documents'][0]['versions'].length; i++) {
-        if (Object.keys(filters['documents'][0]['versions'][i]).length > maxVersions) {
-            maxVersions = Object.keys(filters['documents'][0]['versions'][i]).length;
-            maxVersionsIndex = i;
-        }
-    }
-    filters['documents'][0]['versions'] = Object.keys(filters['documents'][0]['versions'][maxVersionsIndex]);
+    filters['documents'][0]['versions'] = filters['documents'][0]['versions']
     filters['documents'][0]['category'].sort();
     filters['documents'][0]['architecture'].sort();
-    filters['documents'][0]['versions'].sort();
+    filters['documents'][0]['versions'].sort().reverse();
     return filters['documents'][0];
 }
 
@@ -109,9 +107,9 @@ async function getFiltersJSON() {
 export async function getFilters() {
     let filters;
     // if (process.env.IS_MONGODB_ENABLED === "true") {
-    // filters = await getFiltersMongoDB();
+    filters = await getFiltersMongoDB();
     // } else {
-    filters = await getFiltersJSON();
+    // filters = await getFiltersJSON();
     // }
     return filters;
 }
