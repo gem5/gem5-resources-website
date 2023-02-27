@@ -37,6 +37,7 @@ export default function Home() {
           src={logo}
           alt="Gem5 Logo"
           height={250}
+          className='gem5-logo'
         />
         <h1 className='primary mb-5'>Resources</h1>
         <Seachbox callback={onSearch} query={query} setQuery={setQuery} />
