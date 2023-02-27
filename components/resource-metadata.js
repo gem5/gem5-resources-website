@@ -86,7 +86,7 @@ export default function MetaData({ resource, className }) {
                     <p className="text-muted">Dependencies</p>
                     <p className="primary">
                         {
-                            resource.resources ? Object.keys(resource.resources).map((key) => {
+                            resource.resources ? Object.keys(resource.resources).map((key, index) => {
                                 return (
                                     <>
                                         <a key={key}
@@ -94,7 +94,7 @@ export default function MetaData({ resource, className }) {
                                         >
                                             {resource.resources[key]}
                                         </a>
-                                        {', '}
+                                        {index != Object.keys(resource.resources).length - 1 ? ', ' : ''}
                                     </>
                                 )
                             }) : 'None'
@@ -108,12 +108,12 @@ export default function MetaData({ resource, className }) {
                             resource.workloads ? resource.workloads.map((workload, index) => {
                                 return (
                                     <>
-                                        <a key={index}
-                                            href={'/gem5-resources-website/resources/' + workload.id}
+                                        <a key={workload}
+                                            href={'/gem5-resources-website/resources/' + workload}
                                         >
-                                            {workload.id}
+                                            {workload}
                                         </a>
-                                        {', '}
+                                        {index != resource.workloads.length - 1 ? ', ' : ''}
                                     </>
                                 )
                             }) : 'None'

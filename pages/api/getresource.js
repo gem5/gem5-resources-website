@@ -29,6 +29,46 @@ async function getResourceMongoDB(id) {
         })
     }).catch(err => console.log(err));
     const resource = await res.json();
+    const dependendWorkloads = await fetch("https://us-west-2.aws.data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/aggregate", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Request-Headers': '*',
+            'Authorization': 'Bearer ' + token,
+        },
+        body: JSON.stringify({
+            "dataSource": "gem5-vision",
+            "database": "gem5-vision",
+            "collection": "resources",
+            "pipeline": [
+                {
+                    "$addFields": {
+                        "resources": {
+                            "$objectToArray": "$resources"
+                        }
+                    }
+                },
+                {
+                    "$unwind": "$resources"
+                },
+                {
+                    "$match": {
+                        "resources.v": id
+                    }
+                },
+                {
+                    "$group": {
+                        "_id": "$id",
+
+                    }
+                }
+            ]
+        })
+    }).catch(err => console.log(err));
+    const workloads = await dependendWorkloads.json();
+    // convert from array of objects to array of strings
+    resource['document'].workloads = Object.values(workloads['documents']).map(workload => workload['_id']);
+    console.log(resource['document'].workloads);
     if (resource['document'] === null) {
         return { error: 'Resource not found' }
     }
