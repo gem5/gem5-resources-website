@@ -19,19 +19,25 @@ export default function MetaData({ resource, className }) {
                 <Row className="border-bottom">
                     <Col className="border-end">
                         <div>
-                            <h5 className="primary">9001</h5>
+                            <h5 className="primary">
+                                {Math.floor(Math.random() * 100)}
+                            </h5>
                             <p className="text-muted">LIKES</p>
                         </div>
                     </Col>
                     <Col className="border-end">
                         <div>
-                            <h5 className="primary">64503</h5>
+                            <h5 className="primary">
+                                {Math.floor(Math.random() * 10000)}
+                            </h5>
                             <p className="text-muted">VIEWS</p>
                         </div>
                     </Col>
                     <Col>
                         <div>
-                            <h5 className="primary">45</h5>
+                            <h5 className="primary">
+                                {Math.floor(Math.random() * 100)}
+                            </h5>
                             <p className="text-muted">DOWNLOADS</p>
                         </div>
                     </Col>
