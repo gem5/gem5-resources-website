@@ -174,12 +174,11 @@ async function getResourcesJSON(queryObject, currentPage, pageSize) {
       resource.id.toLowerCase().includes(keyword.toLowerCase())
     ).length;
 
-    let tagMatches = keywords.filter(async (keyword) => {
-      await resource.tags.join(" ").than((t) => {
-        t.toLowerCase().includes(keyword.toLowerCase());
-      });
+    let tagMatches = keywords.filter((keyword) => {
+      return resource.tags ? resource.tags.includes(keyword.toLowerCase()) : false;
     }).length;
-    console.log("tagMatchesa: ", tagMatches);
+    console.log(tagMatches);
+
     let descMatches = keywords.filter((keyword) =>
       resource.description.toLowerCase().includes(keyword.toLowerCase())
     ).length;
@@ -191,7 +190,7 @@ async function getResourcesJSON(queryObject, currentPage, pageSize) {
         resourceJSON.includes(keyword.toLowerCase())
       ).length;
     }
-    let totalMatches = idMatches + descMatches + resMatches;
+    let totalMatches = idMatches + descMatches + resMatches + tagMatches;
     if (totalMatches === 0) {
       let idDistances = keywords.map((keyword) => {
         const keywordLower = keyword.toLowerCase();
