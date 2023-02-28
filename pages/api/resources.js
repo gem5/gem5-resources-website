@@ -39,9 +39,8 @@ async function fetchResourcesMongoDB() {
  */
 export async function fetchResourcesJSON() {
   console.log("Fetching resources from JSON");
-  // const res = await fetch('https://raw.githubusercontent.com/Gem5Vision/json-to-mongodb/tags/resources.json')
   const res = await fetch(
-    "https://raw.githubusercontent.com/Gem5Vision/json-to-mongodb/tags/resources.json"
+    "https://raw.githubusercontent.com/Gem5Vision/json-to-mongodb/main/resources.json"
   ).then((res) => res.json());
   return res;
 }
