@@ -8,6 +8,7 @@ import sparc from "/public/sparc.png";
 import mips from "/public/mips.png";
 import power from "/public/power.png";
 import Link from 'next/link';
+import { Badge } from 'react-bootstrap';
 
 
 /**
@@ -62,17 +63,37 @@ export default function Banner({ resource }) {
                         alt={resource.architecture ?? "Unknown"}
                         height={15}
                     />
-                    {resource.architecture}
+                    <Link className='text-decoration-none text-black' href={'/resources?q=architecture:' + resource.architecture}>
+                        {resource.architecture}
+                    </Link>
                 </p>
                 <div className='d-flex flex-row gap-1'>
                     <h6 style={{ lineHeight: 'inherit', margin: '0' }}>
                         VERSION
                     </h6>
-                    <p>
+                    <Link className='text-decoration-none text-black' href={'/resources?q=versions:' + (resource.versions.length > 1 ? resource.versions[1].version : resource.versions[0].version)}>
                         {
                             resource.versions.length > 1 ? resource.versions[1].version : resource.versions[0].version
                         }
-                    </p>
+                    </Link>
+                </div>
+                <div className='d-flex flex-row gap-1'>
+                    <h6 style={{ lineHeight: 'inherit', margin: '0' }}>
+                        TAGS
+                    </h6>
+                    {
+                        resource.tags ? resource.tags.map((tag, index) => {
+                            return (
+                                <Link key={tag}
+                                    href={'/resources?q=tag:' + tag}
+                                >
+                                    <Badge pill bg='primary' >
+                                        {tag}
+                                    </Badge>
+                                </Link>
+                            )
+                        }) : "None"
+                    }
                 </div>
             </div>
         </>

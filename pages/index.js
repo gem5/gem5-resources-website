@@ -16,8 +16,6 @@ const inter = Inter({ subsets: ['latin'] })
 */
 export default function Home() {
   const router = useRouter()
-  const [query, setQuery] = useState('')
-
   function onSearch(query) {
     router.push({
       pathname: '/resources',
@@ -40,7 +38,7 @@ export default function Home() {
           className='gem5-logo'
         />
         <h1 className='primary mb-5'>Resources</h1>
-        <Seachbox callback={onSearch} query={query} setQuery={setQuery} />
+        <Seachbox callback={onSearch} />
         <p className='primary mt-5 text-center'>
           gem5 resources is a repository providing sources for artifacts known and proven compatible with the gem5 architecture simulator. These resources are not necessary for the compilation or running of gem5, but may aid users in producing certain simulations
         </p>
