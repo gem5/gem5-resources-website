@@ -73,7 +73,7 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
                 </Row>
                 <Row className="border-bottom">
                     <p className="text-muted">Description</p>
-                    <p className="primary">
+                    <p className="">
                         {resource.description ?? 'This is a description of the resource.'}
                     </p>
                     {
@@ -87,7 +87,7 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
                 </Row>
                 <Row className="border-bottom">
                     <p className="text-muted">License</p>
-                    <p className="primary">
+                    <p className="">
                         {resource.license ?? 'BSD-3-Clause'}
                         {' ('}
                         <Link
@@ -100,7 +100,7 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
                 </Row>
                 <Row className="border-bottom">
                     <p className="text-muted">Dependencies</p>
-                    <p className="primary">
+                    <p className="">
                         {
                             resource.resources ? Object.keys(resource.resources).map((key, index) => {
                                 return (
@@ -119,7 +119,7 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
                 </Row>
                 <Row className="border-bottom">
                     <p className="text-muted">Depend on this resource</p>
-                    <p className="primary">
+                    <p className="">
                         {
                             resource.workloads.length > 0 ? resource.workloads.map((workload, index) => {
                                 return (

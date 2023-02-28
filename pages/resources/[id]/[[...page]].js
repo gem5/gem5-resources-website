@@ -55,7 +55,7 @@ function Resource() {
                     <meta name="viewport" content="width=device-width, initial-scale=1" />
                 </Head>
                 {showMetadata && isTablet ? <MetaData resource={resource ?? {}} showMetadata={showMetadata} setShowMetadata={setShowMetadata}/>:
-                    <Container className='mt-5'>
+                    <Container className='mt-5 resources_page_container'>
                         <Row>
                             <Banner resource={resource ?? {}} setShowMetadata={setShowMetadata} />
                         </Row>

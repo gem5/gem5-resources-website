@@ -167,7 +167,7 @@ h4 {
   font-size: 1.5rem;
 }
 
-.tabs, label, p, a/* , span */ {
+.tabs, label, p, a, td {
   font-family: OpenSansRegular, sans-serif;
   font-weight: 300;
   font-size: 1rem;
@@ -179,10 +179,14 @@ h4 {
   font-size: 1rem;
 }
 
-.resource-category, .resource-date-published {
+.resource-category, .resource-date-published, th, h3 {
   font-family: OpenSansSemiBold, sans-serif;
   font-weight: 600;
   font-size: 1.25rem;
+}
+
+.versions-table-title {
+  font-size: 1.5rem;
 }
 
 .accordion {
@@ -223,17 +227,17 @@ h4 {
 }
 
 @media (max-width: 575px) {
-  .home {
+  .home, .resources_page_container {
       max-width: 540px;
   }
 }
 
 @media (max-width: 425px) {
-  .value-label, .value, .accordion-header>button, label, p, .tabs  {
+  .value-label, .value, .accordion-header>button, label, p, .tabs, td  {
     font-size: 0.875rem;
   }
 
-  h4 {
+  h4, .versions-table-title {
     font-size: 1.25rem;
   }
 
@@ -242,7 +246,7 @@ h4 {
     width: 200px;
   }
 
-  .resource-category, .resource-date-published {
+  .resource-category, .resource-date-published, th {
     font-size: 1rem;
   }
 }
