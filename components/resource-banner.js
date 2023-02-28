@@ -74,6 +74,24 @@ export default function Banner({ resource }) {
                         }
                     </p>
                 </div>
+                <div className='d-flex flex-row gap-1'>
+                    <h6 style={{ lineHeight: 'inherit', margin: '0' }}>
+                        TAGS
+                    </h6>
+                    {
+                        resource.tags ? resource.tags.map((tag, index) => {
+                            return (
+                                <Link key={tag}
+                                    href={'/resources?q=tag:' + tag}
+                                >
+                                    <span className='badge bg-primary text-white'>
+                                        {tag}
+                                    </span>
+                                </Link>
+                            )
+                        }) : "None"
+                    }
+                </div>
             </div>
         </>
     )
