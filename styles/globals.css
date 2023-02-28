@@ -167,7 +167,7 @@ h4 {
   font-size: 1.5rem;
 }
 
-label, p, a/* , span */ {
+.tabs, label, p, a/* , span */ {
   font-family: OpenSansRegular, sans-serif;
   font-weight: 300;
   font-size: 1rem;
@@ -177,6 +177,12 @@ label, p, a/* , span */ {
   font-family: OpenSansSemiBold, sans-serif;
   font-weight: 600;
   font-size: 1rem;
+}
+
+.resource-category, .resource-date-published {
+  font-family: OpenSansSemiBold, sans-serif;
+  font-weight: 600;
+  font-size: 1.25rem;
 }
 
 .accordion {
@@ -223,7 +229,7 @@ label, p, a/* , span */ {
 }
 
 @media (max-width: 425px) {
-  .value-label, .value, .accordion-header>button, label, p  {
+  .value-label, .value, .accordion-header>button, label, p, .tabs  {
     font-size: 0.875rem;
   }
 
@@ -234,5 +240,9 @@ label, p, a/* , span */ {
   .gem5-logo {
     height: 208px;
     width: 200px;
+  }
+
+  .resource-category, .resource-date-published {
+    font-size: 1rem;
   }
 }

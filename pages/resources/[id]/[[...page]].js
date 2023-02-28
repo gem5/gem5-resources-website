@@ -15,6 +15,8 @@ import { useEffect, useState } from 'react';
 function Resource() {
     const [resource, setResource] = useState([])
     const [loading, setLoading] = useState(true)
+    const [showMetadata, setShowMetadata] = useState(false)
+    const [isTablet, setIsTablet] = useState(false)
     const router = useRouter()
 
     useEffect(() => {
@@ -37,6 +39,13 @@ function Resource() {
         }
     }, [router.isReady])
 
+    useEffect(() => {
+        function onTabletResize() { window.innerWidth <= 768 ? setIsTablet(true) : setIsTablet(false); }
+        onTabletResize();
+        window.addEventListener("resize", onTabletResize);
+        return () => { window.removeEventListener("resize", onTabletResize) }
+    }, [])
+    
     return (
         loading ? <div></div> :
             <>
@@ -45,15 +54,17 @@ function Resource() {
                     <meta name="description" content="Find the resource you need" />
                     <meta name="viewport" content="width=device-width, initial-scale=1" />
                 </Head>
-                <Container className='mt-5'>
-                    <Row>
-                        <Banner resource={resource ?? {}} />
-                    </Row>
-                    <Row>
-                        <ResourceTab resource={resource ?? {}} />
-                        <MetaData resource={resource ?? {}} className='ms-5' />
-                    </Row>
-                </Container>
+                {showMetadata && isTablet ? <MetaData resource={resource ?? {}} showMetadata={showMetadata} setShowMetadata={setShowMetadata}/>:
+                    <Container className='mt-5'>
+                        <Row>
+                            <Banner resource={resource ?? {}} setShowMetadata={setShowMetadata} />
+                        </Row>
+                        <Row>
+                            <ResourceTab resource={resource ?? {}} />
+                            <MetaData resource={resource ?? {}} className='ms-5' />
+                        </Row>
+                    </Container>
+                } 
             </>
     )
 }

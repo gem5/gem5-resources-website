@@ -52,6 +52,7 @@ export default function ResourceTab({ resource }) {
         defaultActiveKey="readme"
         activeKey={selectedTab ?? 'readme'}
         onSelect={(e) => handleSelect(e)}
+        className='mb-2'
       >
         <Tab eventKey="readme" title="Readme">
           <ReadmeTab github_url={resource.github_url} />
