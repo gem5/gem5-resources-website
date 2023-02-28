@@ -119,7 +119,7 @@ async function getResourcesMongoDB(queryObject, currentPage, pageSize) {
       $search: {
         text: {
           query: queryObject.query,
-          path: ["id", "description", "resources"],
+          path: ["id", "description", "resources", "tags"],
           fuzzy: {
             maxEdits: 2,
             maxExpansions: 100,
