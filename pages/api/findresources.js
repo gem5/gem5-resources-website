@@ -114,7 +114,21 @@ async function getResourcesMongoDB(queryObject, currentPage, pageSize) {
   ]);
 
   if (queryObject.query.trim() !== "") {
-    // add search pipeline to beginning of pipeline
+    // find score greater than 0.5
+    pipeline.unshift({
+      $match: {
+        score: {
+          $gt: 0.5,
+        },
+      },
+    });
+    pipeline.unshift({
+      "$addFields": {
+        "score": {
+          "$meta": "searchScore"
+        }
+      }
+    });
     pipeline.unshift({
       $search: {
         text: {
@@ -128,6 +142,7 @@ async function getResourcesMongoDB(queryObject, currentPage, pageSize) {
       },
     });
   }
+  console.log(pipeline);
   const res = await fetch(
     "https://us-west-2.aws.data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/aggregate",
     {
@@ -149,7 +164,7 @@ async function getResourcesMongoDB(queryObject, currentPage, pageSize) {
     }
   ).catch((err) => console.log(err));
   resources = await res.json();
-
+  console.log(resources["documents"]);
   return [
     resources["documents"],
     resources["documents"].length > 0
