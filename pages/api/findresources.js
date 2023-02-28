@@ -115,13 +115,13 @@ async function getResourcesMongoDB(queryObject, currentPage, pageSize) {
 
   if (queryObject.query.trim() !== "") {
     // find score greater than 0.5
-    pipeline.unshift({
+    /* pipeline.unshift({
       $match: {
         score: {
           $gt: 0.5,
         },
       },
-    });
+    }); */
     pipeline.unshift({
       "$addFields": {
         "score": {
