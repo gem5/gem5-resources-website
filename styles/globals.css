@@ -32,9 +32,11 @@
   font-style: normal;
   font-weight: 700;
 }
-
+:root{
+  --bs-primary-rgb: 0, 149, 175;
+}
 .btn-outline-primary {
-  --bs-btn-color: #0095AF;
+  --bs-btn-color:  #0095AF;
   --bs-btn-border-color: #0095AF;
   --bs-btn-hover-color: #fff;
   --bs-btn-hover-bg: #0095AF;
