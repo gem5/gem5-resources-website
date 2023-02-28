@@ -1,0 +1,163 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "category": {
+        "type": "string"
+      },
+      "id": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "function": {
+        "type": "string"
+      },
+      "resources": {
+        "type": "object",
+        "properties": {
+          "binary": {
+            "type": "string"
+          },
+          "looppoint": {
+            "type": "string"
+          },
+          "checkpoint": {
+            "type": "string"
+          },
+          "simpoint": {
+            "type": "string"
+          },
+          "bootloader": {
+            "type": "string"
+          },
+          "kernel": {
+            "type": "string"
+          },
+          "disk_image": {
+            "type": "string"
+          }
+        }
+      },
+      "additional_params": {
+        "type": "object",
+        "properties": {
+          "arguments": {
+            "type": "array",
+            "items": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "integer"
+              }
+            ]
+          },
+          "region_id": {
+            "type": "string"
+          }
+        }
+      },
+      "architecture": {
+        "type": "string"
+      },
+      "versions": {
+        "type": "array",
+        "items": [
+          {
+            "type": "object",
+            "properties": {
+              "version": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
+              "size": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "version",
+              "url",
+              "size"
+            ]
+          }
+        ]
+      },
+      "is_zipped": {
+        "type": "boolean"
+      },
+      "md5sum": {
+        "type": "string"
+      },
+      "source": {
+        "type": "string"
+      },
+      "is_tar_archive": {
+        "type": "boolean"
+      },
+      "download_url": {
+        "type": "string"
+      },
+      "additional_metadata": {
+        "type": "object",
+        "properties": {
+          "simpoint_interval": {
+            "type": "integer"
+          },
+          "warmup_interval": {
+            "type": "integer"
+          },
+          "root_partition": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "simpoint_interval",
+          "warmup_interval"
+        ]
+      },
+      "group": {
+        "type": "null"
+      },
+      "tags": {
+        "type": "array",
+        "items": [
+          {
+            "type": "string"
+          }
+        ]
+      },
+      "name": {
+        "type": "string"
+      },
+      "gem5_version": {
+        "type": "string"
+      },
+      "author": {
+        "type": "array",
+        "items": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "string"
+          }
+        ]
+      },
+      "github_url": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "category",
+      "id",
+      "description",
+      "architecture",
+      "versions",
+      "name",
+      "gem5_version"
+    ]
+}

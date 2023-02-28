@@ -136,25 +136,6 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
                         }
                     </p>
                 </Row>
-                <Row className="">
-                    <p className="text-muted">Tags</p>
-                    <p className="primary">
-                        {
-                            resource.tags ? resource.tags.map((tag, index) => {
-                                return (
-                                    <>
-                                        <Link key={tag}
-                                            href={'/resources?q=tag:' + tag}
-                                        >
-                                            {tag}
-                                        </Link>
-                                        {index < resource.tags.length - 1 ? ', ' : ''}
-                                    </>
-                                )
-                            }) : 'None'
-                        }
-                    </p>
-                </Row>
             </Container >
         </>
     )
