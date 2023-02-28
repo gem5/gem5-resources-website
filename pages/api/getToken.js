@@ -13,7 +13,7 @@ export default async function getToken() {
             'Access-Control-Request-Headers': '*',
         },
         body: JSON.stringify({
-            "key": 'pKkhRJGJaQ3NdJyDt69u4GPGQTDUIhHlx4a3lrKUNx2hxuc8uba8NrP3IVRvlzlo'
+            "key": process.env.MONGODB_API_KEY
         })
     }).catch(err => console.log(err));
     // Extract access token from response
