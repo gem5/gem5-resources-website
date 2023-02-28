@@ -2,7 +2,9 @@ import { Container, Navbar, Nav, Offcanvas } from "react-bootstrap";
 import Image from "next/image";
 import logo from "public/gem5ColorLong.gif";
 import Link from "next/link";
-
+import { useEffect, useState } from "react";
+import SearchBox from "./searchbox";
+import { useRouter } from "next/router";
 /**
  * @component
  * @description This component returns the top navigation bar for the gem5 website.
@@ -10,6 +12,17 @@ import Link from "next/link";
  * @returns {JSX.Element} The JSX element representing the top navigation bar.
 */
 export default function Topbar() {
+    const [show, setShow] = useState(false);
+    const router = useRouter();
+    // check if the route is /resources/[id]
+    useEffect(() => {
+        if (router.pathname.includes("/resources/")) {
+            setShow(true);
+        } else {
+            setShow(false);
+        }
+    }, [router.pathname]);
+
     return (
         <>
             <Navbar bg="light" className="shadow-sm" expand="sm">
@@ -29,11 +42,16 @@ export default function Topbar() {
                     >
                         <Offcanvas.Header closeButton>
                             <Offcanvas.Title id={`offcanvasNavbarLabel-expand-sm`}>
-                                Offcanvas
+                                Gem5 Resources
                             </Offcanvas.Title>
                         </Offcanvas.Header>
                         <Offcanvas.Body>
                             <Nav className="justify-content-end flex-grow-1 pe-3">
+                                {show ?
+                                    <div className="topbar-search">
+                                        <SearchBox />
+                                    </div>
+                                    : null}
                                 <Nav.Link href="/" as={Link}>Home</Nav.Link>
                                 <Nav.Link href="/about" as={Link}>About</Nav.Link>
                                 <Nav.Link href="https://www.gem5.org/documentation/general_docs/gem5_resources/" as={Link}>Documentation</Nav.Link>
