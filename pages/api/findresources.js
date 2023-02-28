@@ -255,7 +255,17 @@ async function getResourcesJSON(queryObject, currentPage, pageSize) {
     results = results.sort((a, b) => b.totalMatches - a.totalMatches);
   }
   for (let filter in queryObject) {
-    if (filter === "versions") {
+    if (filter === "tag") {
+      results = results.filter((resource) => {
+        for (let tag in queryObject[filter]) {
+          if (!resource.tags) return false;
+          if (resource.tags.includes(queryObject[filter][tag])) {
+            return true;
+          }
+        }
+        return false;
+      });
+    } else if (filter === "versions") {
       results = results.filter((resource) => {
         for (let version in queryObject[filter]) {
           // check if the version exists in the resource

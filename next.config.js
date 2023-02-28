@@ -13,7 +13,7 @@ module.exports = {
     path: '',
   },
   env: {
-    IS_MONGODB_ENABLED: true,
+    IS_MONGODB_ENABLED: false,
     MONGODB_API_KEY: "pKkhRJGJaQ3NdJyDt69u4GPGQTDUIhHlx4a3lrKUNx2hxuc8uba8NrP3IVRvlzlo",
   },
   webpack: (config) => {
