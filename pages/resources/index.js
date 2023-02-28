@@ -97,7 +97,7 @@ export default function Resources() {
             }
             setFilters(filterModified);
             setLoading(true);
-            const res = await getResources(queryObject, filters, currentPage, numberOfItemsPerPage);
+            const res = await getResources(queryObject, currentPage, numberOfItemsPerPage);
             setResources(res.resources);
             setTotal(res.total);
             setPageCount(Math.ceil(res.total / numberOfItemsPerPage));
@@ -238,7 +238,7 @@ export default function Resources() {
                                         aria-label="Default select example"
                                         defaultValue='relevance'
                                         onChange={onSortChange}
-                                        style={{paddingLeft: '0.50rem', cursor: 'pointer' }}
+                                        style={{ paddingLeft: '0.50rem', cursor: 'pointer' }}
                                     >
                                         <option value='relevance'>Relevance</option>
                                         <option value='date'>Date</option>

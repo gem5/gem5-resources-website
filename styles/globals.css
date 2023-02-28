@@ -33,6 +33,10 @@
   font-weight: 700;
 }
 
+:root {
+  --bs-primary-rgb: 0, 149, 175;
+}
+
 .btn-outline-primary {
   --bs-btn-color: #0095AF;
   --bs-btn-border-color: #0095AF;
@@ -167,13 +171,19 @@ h4 {
   font-size: 1.5rem;
 }
 
-label, p, a/* , span */ {
+label,
+p,
+a
+
+/* , span */
+  {
   font-family: OpenSansRegular, sans-serif;
   font-weight: 300;
   font-size: 1rem;
 }
 
-.value, .value option {
+.value,
+.value option {
   font-family: OpenSansSemiBold, sans-serif;
   font-weight: 600;
   font-size: 1rem;
@@ -183,7 +193,8 @@ label, p, a/* , span */ {
   --bs-accordion-btn-color: #0095AF;
 }
 
-.value-label, .accordion-header>button {
+.value-label,
+.accordion-header>button {
   font-family: OpenSansBold, sans-serif;
   font-weight: 700;
   font-size: 1rem;
@@ -191,6 +202,66 @@ label, p, a/* , span */ {
 
 .search-result__description {
   word-wrap: break-word;
+}
+
+.topbar-search {
+  height: 10px;
+}
+
+.topbar-search .form-control {
+  opacity: 0;
+  transition: opacity 200ms ease-in-out;
+}
+
+.topbar-search .input-group-text {
+  background-color: transparent;
+  border-color: transparent;
+  transition: background-color 200ms ease-in-out, border-color 200ms ease-in-out;
+  padding: .15rem 0.75rem;
+}
+
+.topbar-search:hover .input-group-text,
+.topbar-search:focus-within .input-group-text {
+  background-color: #e9ecef;
+  border-color: #ced4da;
+}
+
+
+.topbar-search:hover .form-control,
+.topbar-search:focus-within .form-control {
+  opacity: 1;
+}
+
+.topbar-search {
+  height: 100%;
+  width: 20%;
+  transition: width 0.5s ease-in-out;
+}
+
+.topbar-search:hover,
+.topbar-search:focus-within {
+  width: 50%;
+}
+
+@media (max-width: 768px) {
+  .topbar-search {
+    width: 100%;
+  }
+
+  .topbar-search .input-group-text {
+    padding: 0.375rem 0.75rem;
+    background-color: #e9ecef;
+    border-color: #ced4da;
+  }
+
+  .topbar-search .form-control {
+    opacity: 1;
+  }
+
+  .topbar-search:hover,
+  .topbar-search:focus-within {
+    width: 100%;
+  }
 }
 
 @media (max-width: 1222px) {
@@ -218,12 +289,17 @@ label, p, a/* , span */ {
 
 @media (max-width: 575px) {
   .home {
-      max-width: 540px;
+    max-width: 540px;
   }
 }
 
 @media (max-width: 425px) {
-  .value-label, .value, .accordion-header>button, label, p  {
+
+  .value-label,
+  .value,
+  .accordion-header>button,
+  label,
+  p {
     font-size: 0.875rem;
   }
 

@@ -2,6 +2,7 @@ import { Form, Button, InputGroup } from "react-bootstrap";
 import { useEffect, useState, forwardRef, useImperativeHandle } from "react";
 import Image from "next/image";
 import searchImage from "public/search.png"
+import { useRouter } from "next/router";
 
 /**
  * @component
@@ -13,7 +14,7 @@ import searchImage from "public/search.png"
 */
 const SearchBox = forwardRef((props, ref) => {
     const [search, setSearch] = useState("")
-
+    const router = useRouter()
     useEffect(() => {
         if (props.query) {
             setSearch(props.query)
@@ -32,7 +33,14 @@ const SearchBox = forwardRef((props, ref) => {
 
     function handleSubmit(e) {
         e.preventDefault()
-        props.callback(e.target[0].value)
+        if (props.callback) {
+            props.callback(e.target[0].value)
+        } else {
+            router.push({
+                pathname: '/resources',
+                query: { q: e.target[0].value }
+            })
+        }
     }
 
     function onChange(e) {
@@ -40,7 +48,7 @@ const SearchBox = forwardRef((props, ref) => {
     }
     return (
         <>
-            <Form className="w-100" onSubmit={handleSubmit}>
+            <Form className={"w-100 " + props.className} onSubmit={handleSubmit}>
                 <InputGroup>
                     <Form.Control type="text" placeholder="Search" value={search} onChange={(e) => onChange(e)} />
                     <InputGroup.Text>
