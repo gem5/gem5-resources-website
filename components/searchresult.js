@@ -73,7 +73,7 @@ export default function SearchResult({ resource }) {
                         {
                             resource.tags ? resource.tags.map((tag, index) => {
                                 return (
-                                    <div>
+                                    <div key={index}>
                                         <Badge pill bg='primary' >
                                             {tag}
                                         </Badge>
