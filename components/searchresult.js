@@ -6,6 +6,7 @@ import arm from "/public/arm.png";
 import sparc from "/public/sparc.png";
 import mips from "/public/mips.png";
 import power from "/public/power.png";
+import { Badge, Col, Row } from "react-bootstrap";
 
 /**
  * @component
@@ -43,7 +44,7 @@ export default function SearchResult({ resource }) {
                 <div className="search-result__description">
                     <p>{resource.description}</p>
                 </div>
-                <div className="d-flex align-items-center gap-2">
+                <div className='d-flex gap-3'>
                     <div className="d-flex gap-1 align-items-center">
                         <Image
                             src={getIcon(resource.architecture)}
@@ -55,12 +56,32 @@ export default function SearchResult({ resource }) {
                             {resource.architecture ?? "Unknown"}
                         </p>
                     </div>
-                    <p className="text-capitalize fw-light">
-                        {resource.category}
-                    </p>
-                    <p className="fw-light">
-                        {resource.license ?? "Unknown"}
-                    </p>
+                    <div className='d-flex flex-row gap-1'>
+                        <p className="text-capitalize font-weight-light ">
+                            {resource.category}
+                        </p>
+                    </div>
+                    <div className='d-flex flex-row gap-1'>
+                        <h6 style={{ lineHeight: 'inherit', margin: '0' }}>
+                            v
+                        </h6>
+                        {
+                            resource.versions.length > 1 ? resource.versions[1].version : resource.versions[0].version
+                        }
+                    </div>
+                    <div className='d-flex flex-row gap-1'>
+                        {
+                            resource.tags ? resource.tags.map((tag, index) => {
+                                return (
+                                    <div>
+                                        <Badge pill bg='primary' >
+                                            {tag}
+                                        </Badge>
+                                    </div>
+                                )
+                            }) : ""
+                        }
+                    </div>
                 </div>
             </Link>
         </div>
