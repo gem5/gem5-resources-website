@@ -1,0 +1,33 @@
+// MongoDB Playground
+// To disable this template go to Settings | MongoDB | Use Default Template For Playground.
+// Make sure you are connected to enable completions and to be able to run a playground.
+// Use Ctrl+Space inside a snippet or a string literal to trigger completions.
+
+// Select the database to use.
+use('gem5-vision');
+
+db.resources.aggregate([
+  {
+    $search: {
+      text: {
+        query: "test",
+        path: ["id", "description", "resources", "tags"],
+          fuzzy: {
+            maxEdits: 1,
+            maxExpansions: 100,
+          },
+      },
+      highlight: {
+        "path": ["id", "description"]
+      }
+    },
+    
+  },
+  {
+    $addFields: {
+      "highlights": {
+        "$meta": "searchHighlights"
+      }
+    }
+  }
+])
