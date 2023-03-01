@@ -89,7 +89,7 @@ export default function Banner({ resource, setShowMetadata }) {
                         resource.tags ? resource.tags.map((tag, index) => {
                             return (
                                 <Link key={tag}
-                                    href={'/resources?q=tag:' + tag}
+                                    href={'/resources?q=tags:' + tag}
                                 >
                                     <Badge pill bg='primary' >
                                         {tag}

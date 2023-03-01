@@ -41,15 +41,20 @@ async function getResourcesMongoDB(queryObject, currentPage, pageSize) {
     }
   }
   let pipeline = [];
-  if (queryObject.tag) {
+  if (queryObject.tags) {
     pipeline = pipeline.concat([
       {
-        $unwind: "$tags",
+        $addFields: {
+          tag: "$tags",
+        },
+      },
+      {
+        $unwind: "$tag",
       },
       {
         $match: {
-          tags: {
-            $in: queryObject.tag || [],
+          tag: {
+            $in: queryObject.tags || [],
           },
         },
       },
