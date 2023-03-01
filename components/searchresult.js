@@ -39,41 +39,7 @@ export default function SearchResult({ resource }) {
         <div className="search-result">
             <Link href={'/resources/' + resource.id} style={{ textDecoration: 'none', color: 'inherit' }}>
                 <div className="search-result__title">
-                    <div className="d-flex flex-row justify-content-between align-items-start">
-                        <h4>{resource.id}</h4>
-                        <Row>
-                            <Col className="border-end">
-                                <div className="d-flex flex-column justify-content-center align-items-center">
-                                    <h5 className="primary">
-                                        {Math.floor(Math.random() * 100)}
-                                    </h5>
-                                    <p className="text-muted" style={{ fontSize: '0.8rem' }}>
-                                        LIKES
-                                    </p>
-                                </div>
-                            </Col>
-                            <Col className="border-end">
-                                <div className="d-flex flex-column justify-content-center align-items-center">
-                                    <h5 className="primary">
-                                        {Math.floor(Math.random() * 10000)}
-                                    </h5>
-                                    <p className="text-muted" style={{ fontSize: '0.8rem' }}>
-                                        VIEWS
-                                    </p>
-                                </div>
-                            </Col>
-                            <Col>
-                                <div className="d-flex flex-column justify-content-center align-items-center">
-                                    <h5 className="primary">
-                                        {Math.floor(Math.random() * 100)}
-                                    </h5>
-                                    <p className="text-muted" style={{ fontSize: '0.8rem' }}>
-                                        DOWNLOADS
-                                    </p>
-                                </div>
-                            </Col>
-                        </Row>
-                    </div>
+                    <h4>{resource.id}</h4>
                 </div>
                 <div className="search-result__description">
                     <p>{resource.description}</p>
@@ -99,23 +65,19 @@ export default function SearchResult({ resource }) {
                         <h6 style={{ lineHeight: 'inherit', margin: '0' }}>
                             v
                         </h6>
-                        <Link className='text-decoration-none text-black' href={'/resources?q=versions:' + (resource.versions.length > 1 ? resource.versions[1].version : resource.versions[0].version)}>
-                            {
-                                resource.versions.length > 1 ? resource.versions[1].version : resource.versions[0].version
-                            }
-                        </Link>
+                        {
+                            resource.versions.length > 1 ? resource.versions[1].version : resource.versions[0].version
+                        }
                     </div>
                     <div className='d-flex flex-row gap-1'>
                         {
                             resource.tags ? resource.tags.map((tag, index) => {
                                 return (
-                                    <Link key={tag}
-                                        href={'/resources?q=tag:' + tag}
-                                    >
+                                    <div>
                                         <Badge pill bg='primary' >
                                             {tag}
                                         </Badge>
-                                    </Link>
+                                    </div>
                                 )
                             }) : ""
                         }
