@@ -1,0 +1,26 @@
+.versions_td {
+    padding-top: 1rem!important;
+    padding-bottom: 1rem!important; 
+}
+
+.icon_wrapper_div:hover {
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+.versions_td:last-child {
+    padding-right: 5rem;
+}
+
+@media (max-width: 768px) {
+    .icon_wrapper_div > svg { 
+        width: 1rem;
+        height: 1rem;
+    }
+}
+
+@media (max-width: 425px) {
+    .versions_td:last-child {
+        padding-right: 3rem;
+    }
+}

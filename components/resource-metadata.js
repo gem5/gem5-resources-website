@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Container, Row, Col } from "react-bootstrap";
 import styles from '/styles/metadata.module.css'
+import { useEffect, useState } from 'react';
 
 /**
  * @component
@@ -11,11 +12,26 @@ import styles from '/styles/metadata.module.css'
  * @param {string} className The class name of the component.
  * @returns {JSX.Element} The JSX element to be rendered.
 */
-export default function MetaData({ resource, className }) {
-    console.log(resource)
+export default function MetaData({ resource, className, showMetadata, setShowMetadata }) {
+    const [currentStyle, setCurrentStyle] = useState(styles.info)
+
+    useEffect(() => {
+        showMetadata ? setCurrentStyle(styles.active) : setCurrentStyle(styles.info)
+    }, [showMetadata])
+
     return (
         <>
-            <Container className={styles.info + ' ' + className}>
+            <Container className={currentStyle + ' ' + className}>
+                <Row className={styles.tablet_view_header}>
+                    <Col className={styles.back_button_col}>
+                        <button className={styles.collapse_metadata} onClick={()=>{setShowMetadata(false)}}>
+                            <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke='#0095AF'><path d="M2.117 12l7.527 6.235-.644.765-9-7.521 9-7.479.645.764-7.529 6.236h21.884v1h-21.883z"/></svg>
+                        </button>
+                    </Col>
+                    <Col className={styles.metadata_title_col}>
+                        <h2 className="primary">Metadata</h2>
+                    </Col>
+                </Row>
                 <Row className="border-bottom">
                     <Col className="border-end">
                         <div>
@@ -57,7 +73,7 @@ export default function MetaData({ resource, className }) {
                 </Row>
                 <Row className="border-bottom">
                     <p className="text-muted">Description</p>
-                    <p className="primary">
+                    <p className="">
                         {resource.description ?? 'This is a description of the resource.'}
                     </p>
                     {
@@ -71,7 +87,7 @@ export default function MetaData({ resource, className }) {
                 </Row>
                 <Row className="border-bottom">
                     <p className="text-muted">License</p>
-                    <p className="primary">
+                    <p className="">
                         {resource.license ?? 'BSD-3-Clause'}
                         {' ('}
                         <Link
@@ -84,7 +100,7 @@ export default function MetaData({ resource, className }) {
                 </Row>
                 <Row className="border-bottom">
                     <p className="text-muted">Dependencies</p>
-                    <p className="primary">
+                    <p className="">
                         {
                             resource.resources ? Object.keys(resource.resources).map((key, index) => {
                                 return (
@@ -103,7 +119,7 @@ export default function MetaData({ resource, className }) {
                 </Row>
                 <Row className="border-bottom">
                     <p className="text-muted">Depend on this resource</p>
-                    <p className="primary">
+                    <p className="">
                         {
                             resource.workloads.length > 0 ? resource.workloads.map((workload, index) => {
                                 return (

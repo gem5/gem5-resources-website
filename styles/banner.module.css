@@ -5,3 +5,17 @@
     width: 9px;
     margin: 0 10px;
 }
+
+.expand_metadata {
+    display: none;
+    background: none;
+    border: none; 
+    position: relative;
+    width: auto;
+}
+
+@media (max-width: 768px) {
+    .expand_metadata {
+        display: block;
+    }
+}

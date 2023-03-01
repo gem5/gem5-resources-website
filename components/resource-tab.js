@@ -52,6 +52,7 @@ export default function ResourceTab({ resource }) {
         defaultActiveKey="readme"
         activeKey={selectedTab ?? 'readme'}
         onSelect={(e) => handleSelect(e)}
+        className='mb-2'
       >
         <Tab eventKey="readme" title="Readme">
           <ReadmeTab github_url={resource.github_url} />
@@ -69,7 +70,7 @@ export default function ResourceTab({ resource }) {
           <SEandFSToggle />
         </Tab>
         <Tab eventKey="versions" title="Versions">
-          <h3 className='font-weight-light'>Versions of {resource.id}</h3>
+          <h3 className='font-weight-light versions-table-title'>Versions of {resource.id}</h3>
           <VersionPage versions={resource.versions} url={resource.download_url} />
         </Tab>
       </Tabs>
