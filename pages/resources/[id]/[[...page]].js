@@ -50,7 +50,7 @@ function Resource() {
         loading ? <div></div> :
             <>
                 <Head>
-                    <title>gem5 resources</title>
+                    <title>{resource.id}</title>
                     <meta name="description" content="Find the resource you need" />
                     <meta name="viewport" content="width=device-width, initial-scale=1" />
                 </Head>

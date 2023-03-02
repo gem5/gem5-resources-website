@@ -206,7 +206,7 @@ export default function Resources() {
     return (
         <SSRProvider>
             <Head>
-                <title>gem5 resources</title>
+                <title>Search Resources</title>
                 <meta name="description" content="Find the resource you need" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
