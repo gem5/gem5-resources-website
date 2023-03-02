@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Button, Container } from "react-bootstrap";
@@ -54,7 +55,9 @@ export default function Custom404() {
                                 404
                             </h1>
                             <p>The page you are looking for does not seem to exist.</p>
-                            <Button variant="outline-primary" href="/">Home</Button>
+                            <Link href="/" passHref>
+                                <Button variant="outline-primary" as="Link">Go back to home</Button>
+                            </Link>
                         </Container>
                         : <Resource />
                 }

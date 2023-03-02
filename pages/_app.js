@@ -3,6 +3,7 @@ import Layout from '@/components/layout'
 import Router from 'next/router'
 import { useEffect } from 'react'
 import NProgress from 'nprogress';
+import Script from 'next/script';
 
 NProgress.configure({ showSpinner: false });
 
@@ -35,6 +36,19 @@ export default function App({ Component, pageProps }) {
 
   return (
     <>
+      <Script strategy="afterInteractive" src="https://www.googletagmanager.com/gtag/js?id=G-2B1F9HP95Z" />
+      <Script
+        id='google-analytics'
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){ dataLayer.push(arguments); }
+          gtag('js', new Date());
+          gtag('config', 'G-2B1F9HP95Z')
+`,
+        }}
+      />
       <Layout>
         <Component {...pageProps} />
       </Layout>
