@@ -1,3 +1,4 @@
+import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -48,6 +49,9 @@ export default function Custom404() {
     return (
         loading ? <div>Loading...</div> :
             <>
+            <Head>
+                <title>404</title>
+            </Head>
                 {
                     error ?
                         <Container className="d-flex flex-column justify-content-center align-items-center" style={{ height: "80vh" }}>

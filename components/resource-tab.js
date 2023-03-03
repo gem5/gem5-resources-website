@@ -85,7 +85,7 @@ function Parameters({ parameters }) {
   );
 }
 
-{/* function SEandFSToggle() {
+function SEandFSToggle() {
   return (
     <Tab.Container defaultActiveKey="first">
       <Tabs variant="pills" defaultActiveKey="se" id="uncontrolled-tab-example">
@@ -102,7 +102,7 @@ function Parameters({ parameters }) {
       </Tabs>
     </Tab.Container>
   );
-} */}
+}
 
 function ReadmeTab({ github_url }) {
   const [readme, setReadme] = useState('');
