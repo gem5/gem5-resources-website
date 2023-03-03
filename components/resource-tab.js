@@ -64,10 +64,10 @@ export default function ResourceTab({ resource }) {
           <SEandFSToggle />
         </Tab>
         <Tab eventKey="parameters" title="Parameters">
-
+          <Parameters parameters={resource.additional_params} />
         </Tab>
         <Tab eventKey="example" title="Example">
-          <SEandFSToggle />
+          {/* <SEandFSToggle /> */}
         </Tab>
         <Tab eventKey="versions" title="Versions">
           <h3 className='font-weight-light versions-table-title'>Versions of {resource.id}</h3>
@@ -78,7 +78,14 @@ export default function ResourceTab({ resource }) {
   )
 }
 
-function SEandFSToggle() {
+function Parameters({ parameters }) {
+  return (
+    <Tab.Container defaultActiveKey="first">
+    </Tab.Container>
+  );
+}
+
+{/* function SEandFSToggle() {
   return (
     <Tab.Container defaultActiveKey="first">
       <Tabs variant="pills" defaultActiveKey="se" id="uncontrolled-tab-example">
@@ -95,7 +102,7 @@ function SEandFSToggle() {
       </Tabs>
     </Tab.Container>
   );
-}
+} */}
 
 function ReadmeTab({ github_url }) {
   const [readme, setReadme] = useState('');
