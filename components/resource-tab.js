@@ -113,7 +113,6 @@ function Usage({ exampleContent, id }) {
     let string = exampleContent[0].content;
     string = string.replace(/([^\(\.]"""[^\(]*)"""/g, '');
     string = string.replace(/[ \t]*#.*\n/gm, '');
-    console.log(string);
     // remove multiline python comments
     // match first function call
     const regex = /[\w.]+\(/im;
@@ -135,9 +134,11 @@ function Usage({ exampleContent, id }) {
           break;
         }
       }
-      if (str.includes(id)) {
-        // print str such a way that \t and \n are shown
-        console.log(JSON.stringify(str));
+      console.log(str);
+      let keywords = id.split('-');
+      console.log(keywords);
+      let nMatches = keywords.filter((keyword) => str.includes(keyword)).length;
+      if (nMatches >= 2) {
         textToHtml(str);
         return;
       }
