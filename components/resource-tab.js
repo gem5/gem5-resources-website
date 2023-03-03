@@ -40,10 +40,11 @@ export default function ResourceTab({ resource }) {
   const handleSelect = (e) => {
     if (e === 'readme') {
       setSelectedTab(e);
-      return router.push(`/resources/${resource.id}`, undefined, { shallow: true });
+      return router.replace(`/resources/${resource.id}`, undefined, { shallow: true });
     }
     setSelectedTab(e);
-    router.push(`/resources/${resource.id}/${e}`, undefined, { shallow: true });
+    // replace the tab in the url
+    router.replace(`/resources/${resource.id}/${e}`, undefined, { shallow: true });
   }
 
   return (
