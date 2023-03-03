@@ -111,19 +111,18 @@ function Usage({ exampleContent, id }) {
     }
     if (exampleContent.length === 0) return;
     let string = exampleContent[0].content;
+    // remove python comments
     string = string.replace(/([^\(\.]"""[^\(]*)"""/g, '');
     string = string.replace(/[ \t]*#.*\n/gm, '');
-    // remove multiline python comments
     // match first function call
     const regex = /[\w.]+\(/im;
     let m;
+    // find the first function call that has at least 2 keywords matching
     while ((m = regex.exec(string)) !== null) {
-      // m = regex.exec(string);
       let str = m[0];
       let n = 1;
       for (let i = m.index + str.length; i < string.length; i++) {
         str += string[i];
-        // print string[i] as unicode
         if (string[i] === '(') {
           n++;
         }
@@ -165,7 +164,7 @@ function Parameters({ params }) {
             return (
               <CopyIcon>
                 <div>
-                  <i>@param</i>
+                  <i>@param </i>
                   <code>{arg}</code>
                   {" - "}
                   {typeof arg}
