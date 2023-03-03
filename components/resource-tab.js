@@ -11,7 +11,8 @@ import remarkFrontmatter from 'remark-frontmatter';
 import CopyIcon from './copy-icon';
 import { useRouter } from 'next/router';
 import VersionPage from './version-page';
-
+import { rehype } from 'rehype';
+import parse from 'html-react-parser'
 /**
  * @component
  * @description The tab component for the resource page. This component is responsible for rendering the tabs and their content.
@@ -67,7 +68,8 @@ export default function ResourceTab({ resource }) {
 
         </Tab>
         <Tab eventKey="example" title="Example">
-          <SEandFSToggle />
+
+          <ExampleTab exampleUrls={resource.example_urls} />
         </Tab>
         <Tab eventKey="versions" title="Versions">
           <h3 className='font-weight-light versions-table-title'>Versions of {resource.id}</h3>
@@ -76,6 +78,44 @@ export default function ResourceTab({ resource }) {
       </Tabs>
     </div>
   )
+}
+
+function ExampleTab({ exampleUrls }) {
+  const [exampleContent, setExampleContent] = useState([]);
+  useEffect(() => {
+    async function fetchExampleContent() {
+      // convert github url to raw url
+      let contents = []
+      for (let url of exampleUrls) {
+        let raw_url = url.replace('github.com', 'raw.githubusercontent.com').replace('tree/', '');
+        let res = await fetch(raw_url);
+        let text = await res.text();
+        text = `<pre><code class="language-python">${text}</code></pre>`;
+        text = await rehype().data('settings', { fragment: true }).use(rehypeHighlight).process(text);
+        contents.push({
+          url: url,
+          content: parse(text.toString())
+        });
+      }
+      setExampleContent(contents);
+    }
+    fetchExampleContent();
+  }, [exampleUrls]);
+  return (
+    <Tab.Container defaultActiveKey="first">
+      <Tabs variant="pills" defaultActiveKey="0" id="uncontrolled-tab-example">
+        {
+          exampleContent.map((content, index) => {
+            return <Tab eventKey={index} title={content.url.split('/').slice(-1)[0]}>
+              <CopyIcon>
+                {content.content}
+              </CopyIcon>
+            </Tab>
+          })
+        }
+      </Tabs>
+    </Tab.Container>
+  );
 }
 
 function SEandFSToggle() {
