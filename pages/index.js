@@ -36,6 +36,7 @@ export default function Home() {
           alt="Gem5 Logo"
           height={250}
           className='gem5-logo'
+          priority
         />
         <h1 className='primary mb-5'>Resources</h1>
         <Seachbox callback={onSearch} />
