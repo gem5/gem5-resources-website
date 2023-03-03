@@ -66,12 +66,12 @@ async function getResourceMongoDB(id) {
         })
     }).catch(err => console.log(err));
     const workloads = await dependendWorkloads.json();
-    // convert from array of objects to array of strings
-    resource['document'].workloads = Object.values(workloads['documents']).map(workload => workload['_id']);
-    console.log(resource['document'].workloads);
     if (resource['document'] === null) {
+        console.log('Resource not found');
         return { error: 'Resource not found' }
     }
+    console.log("Resource found: " + resource['document'].id);
+    resource['document'].workloads = Object.values(workloads['documents']).map(workload => workload['_id']);
     return resource['document']
 }
 

@@ -1,4 +1,3 @@
-import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -20,19 +19,21 @@ export default function Custom404() {
         console.log("404")
         async function fetchResource(id) {
             setLoading(true)
-            let resource = await getResource(id);
-            if (resource.error) {
-                setError(true)
-                // change url to 404 without reloading the page
-                router.push(`/404`)
-            }
-            else
-                setError(false)
-            setLoading(false)
+            getResource(id).then((resource) => {
+                if (resource.error) {
+                    setError(true)
+                    // change url to 404 without reloading the page
+                    router.push(`/404`)
+                }
+                else
+                    setError(false)
+                setLoading(false)
+            })
         }
         // check if path 
         if (router.isReady && router.query !== undefined) {
-            console.log(router.asPath)
+            setLoading(true)
+            setError(false)
             const url = router.asPath.split("/")
             console.log(url)
             if (url.length < 3 || url[1] !== "resources") {
@@ -46,25 +47,24 @@ export default function Custom404() {
         }
     }, [router.isReady])
 
+    function getPage() {
+        console.log(loading, error)
+        if (loading)
+            return <div>Loading...</div>
+        if (error)
+            return <Container className="d-flex flex-column justify-content-center align-items-center" style={{ height: "80vh" }}>
+                <h1 className="primary" style={{ fontSize: "10rem" }}>
+                    404
+                </h1>
+                <p>The page you are looking for does not seem to exist.</p>
+                <Link href="/" passHref>
+                    <Button variant="outline-primary" as="Link">Go back to home</Button>
+                </Link>
+            </Container>
+        return <Resource />
+    }
+
     return (
-        loading ? <div>Loading...</div> :
-            <>
-            <Head>
-                <title>404</title>
-            </Head>
-                {
-                    error ?
-                        <Container className="d-flex flex-column justify-content-center align-items-center" style={{ height: "80vh" }}>
-                            <h1 className="primary" style={{ fontSize: "10rem" }}>
-                                404
-                            </h1>
-                            <p>The page you are looking for does not seem to exist.</p>
-                            <Link href="/" passHref>
-                                <Button variant="outline-primary" as="Link">Go back to home</Button>
-                            </Link>
-                        </Container>
-                        : <Resource />
-                }
-            </>
+        getPage()
     );
 }

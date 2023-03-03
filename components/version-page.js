@@ -40,7 +40,7 @@ export default function VersionPage({ versions, url }) {
         link = url.replace('{url_base}', link)
         link = link.replace('http://', 'https://')
         return (
-            <tr className={styles.versions_tr}>
+            <tr className={styles.versions_tr} key={version}>
                 <td className={styles.versions_td}>
                     {version}
                 </td>
@@ -89,7 +89,7 @@ export default function VersionPage({ versions, url }) {
                 <tbody>
 
                     {
-                        versions.map((version) => {
+                        versions && versions.map((version) => {
                             return versionComponent(version.version, version.url, version.size)
                         })
                     }

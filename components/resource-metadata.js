@@ -24,8 +24,8 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
             <Container className={currentStyle + ' ' + className}>
                 <Row className={styles.tablet_view_header}>
                     <Col className={styles.back_button_col}>
-                        <button className={styles.collapse_metadata} onClick={()=>{setShowMetadata(false)}}>
-                            <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke='#0095AF'><path d="M2.117 12l7.527 6.235-.644.765-9-7.521 9-7.479.645.764-7.529 6.236h21.884v1h-21.883z"/></svg>
+                        <button className={styles.collapse_metadata} onClick={() => { setShowMetadata(false) }}>
+                            <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd" stroke='#0095AF'><path d="M2.117 12l7.527 6.235-.644.765-9-7.521 9-7.479.645.764-7.529 6.236h21.884v1h-21.883z" /></svg>
                         </button>
                     </Col>
                     <Col className={styles.metadata_title_col}>
@@ -121,16 +121,16 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
                     <p className="text-muted">Depend on this resource</p>
                     <p className="">
                         {
-                            resource.workloads.length > 0 ? resource.workloads.map((workload, index) => {
+                            (resource.workloads && resource.workloads.length > 0) ? resource.workloads.map((workload, index) => {
                                 return (
-                                    <>
-                                        <a key={workload}
+                                    <span key={workload}>
+                                        <a
                                             href={'/gem5-resources-website/resources/' + workload}
                                         >
                                             {workload}
                                         </a>
                                         {index != resource.workloads.length - 1 ? ', ' : ''}
-                                    </>
+                                    </span>
                                 )
                             }) : 'None'
                         }

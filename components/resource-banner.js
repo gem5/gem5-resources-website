@@ -43,9 +43,9 @@ export default function Banner({ resource, setShowMetadata }) {
                     {resource.id}
                 </h2>
             </CopyIcon>
-            
-            <button className={styles.expand_metadata} onClick={()=>{setShowMetadata(true)}}>
-                <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke='#0095AF'><path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z"/></svg>
+
+            <button className={styles.expand_metadata} onClick={() => { setShowMetadata(true) }}>
+                <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd" stroke='#0095AF'><path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z" /></svg>
             </button>
 
             <div className='d-flex align-items-center mb-2'>
@@ -54,7 +54,7 @@ export default function Banner({ resource, setShowMetadata }) {
                     Published 6 months ago
                 </h5>
                 <div className={styles.dot}></div>
-                <h5 className='mb-0' style={{ fontSize: '0px'}}>
+                <h5 className='mb-0' style={{ fontSize: '0px' }}>
                     <Link href={`/category/${resource.category}`} className='primary resource-category'>
                         {String(resource.category).charAt(0).toUpperCase() + String(resource.category).substring(1) ?? "Unknown"}
                     </Link>
@@ -75,9 +75,9 @@ export default function Banner({ resource, setShowMetadata }) {
                     <h6 style={{ lineHeight: 'inherit', margin: '0' }}>
                         VERSION
                     </h6>
-                    <Link className='text-decoration-none text-black' href={'/resources?q=versions:' + (resource.versions.length > 1 ? resource.versions[1].version : resource.versions[0].version)}>
+                    <Link className='text-decoration-none text-black' href={'/resources?q=versions:' + (resource.versions && (resource.versions.length > 1 ? resource.versions[1].version : resource.versions[0].version))}>
                         {
-                            resource.versions.length > 1 ? resource.versions[1].version : resource.versions[0].version
+                            resource.versions && (resource.versions.length > 1 ? resource.versions[1].version : resource.versions[0].version)
                         }
                     </Link>
                 </div>
