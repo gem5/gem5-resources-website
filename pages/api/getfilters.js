@@ -64,22 +64,10 @@ async function getFiltersJSON() {
     const resources = await fetchResources();
     // get unique categories from resources
     let categories = [...new Set(resources.map(resource => resource.category))];
-    // get unique groups from resources and remove null values
-    // let groups = [...new Set(resources['resources'].map(resource => resource.group))].filter(group => group != null);
-    // get unique architectures from resources
     let architectures = [...new Set(resources.map(resource => resource.architecture))];
-    // get zipped from resources
-    // let zippeds = [...new Set(resources['resources'].map(resource => String(resource.is_zipped)))].filter(zipped => zipped != "null");
-    // get versions from resources which is a list of dictionaries
-    /* 
-    looks like this:
-    {
-        "url":"asdasd",
-        "version":"20.0.0",
-        "size":"123123123
-    }
-    */
-    //    get all unique versions
+    // remove null values
+    architectures = architectures.filter(architecture => architecture != null);
+    
     let versions = [];
     for (let i = 0; i < resources.length; i++) {
         for (let j = 0; j < resources[i].versions.length; j++) {

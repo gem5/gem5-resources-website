@@ -275,7 +275,7 @@ async function getResourcesJSON(queryObject, currentPage, pageSize) {
     results = results.sort((a, b) => b.totalMatches - a.totalMatches);
   }
   for (let filter in queryObject) {
-    if (filter === "tag") {
+    if (filter === "tags") {
       results = results.filter((resource) => {
         for (let tag in queryObject[filter]) {
           if (!resource.tags) return false;

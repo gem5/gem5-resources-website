@@ -1,7 +1,6 @@
 import { Overlay, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useState } from "react";
 import React from 'react';
-import { HTMLDivElement } from 'react'
 
 /**
  * @component
@@ -67,7 +66,7 @@ export default function CopyIcon(props) {
             <Overlay target={target} show={show} placement="right">
                 {(properties) => (
                     <Tooltip id="overlay-tooltip" {...properties}>
-                        {text} has been copied to the clipboard
+                        Text has been copied to the clipboard
                     </Tooltip>
                 )}
             </Overlay>
