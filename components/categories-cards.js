@@ -88,7 +88,7 @@ export default function CategoriesCards() {
                 <Card.Body>
                   <Card.Title>{category.name}</Card.Title>
                   <Card.Text>{category.description}</Card.Text>
-                  <Link href={"/category/" + category.name.toLowerCase()} passHref legacyBehavior>
+                  <Link href={"/category/" + category.name.replace(/\s/g, '').toLowerCase()} passHref legacyBehavior>
                     <Button variant="outline-primary" href={"/category/" + category.name.toLowerCase()}>Learn More</Button>
                   </Link>
                 </Card.Body>
