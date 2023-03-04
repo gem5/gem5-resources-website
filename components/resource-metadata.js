@@ -63,10 +63,10 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
                     <h4 className="primary">
                         {resource.author ? resource.author.map((author, index) => {
                             return (
-                                <>
+                                <span key={index}>
                                     {author}
                                     {index < resource.author.length - 1 ? ', ' : ''}
-                                </>
+                                </span>
                             )
                         }) : 'Unknown'}
                     </h4>
@@ -100,20 +100,18 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
                 </Row>
                 <Row className="border-bottom">
                     <p className="text-muted">Properties</p>
-                    <p className="">
-                        {
-                            resource.resources ? Object.keys(resource.resources).map((key, index) => {
-                                return (
-                                    <div>
-                                        <span className="text-muted">{key+" "}</span>
-                                        <a href={'/gem5-resources-website/resources/' + resource.resources[key]}>
-                                            {resource.resources[key]}
-                                        </a>
-                                    </div>
-                                )
-                            }) : 'None'
-                        }
-                    </p>
+                    {
+                        resource.resources ? Object.keys(resource.resources).map((key, index) => {
+                            return (
+                                <div key={key}>
+                                    <span className="text-muted">{key + " "}</span>
+                                    <a href={'/gem5-resources-website/resources/' + resource.resources[key]}>
+                                        {resource.resources[key]}
+                                    </a>
+                                </div>
+                            )
+                        }) : 'None'
+                    }
                 </Row>
                 <Row className="border-bottom">
                     <p className="text-muted">Depend on this resource</p>

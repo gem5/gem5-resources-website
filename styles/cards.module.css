@@ -3,11 +3,12 @@
     flex-wrap: wrap;
     justify-content: space-between;
     width: 100%;
+    gap: 1rem;
 }
 
 .cardStyle {
     /* width: calc(100% / 3 - 1rem); */
-    width: calc(100% / 3 - 0.5rem);
+    width: calc(100% / 3 - 1rem);
 }
 
 .cardStyle>div {
@@ -22,7 +23,7 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    padding: 1rem;
+    /* padding: 1rem; */
 }
 
 @media (max-width: 769px) {

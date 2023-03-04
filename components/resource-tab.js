@@ -163,7 +163,7 @@ function Parameters({ params }) {
         {
           params && params.arguments ? params.arguments.map((arg, index) => {
             return (
-              <CopyIcon>
+              <CopyIcon key={index}>
                 <div>
                   <i>@param </i>
                   <code>{arg}</code>
@@ -201,7 +201,7 @@ function ExampleTab({ exampleContent }) {
       <Tabs variant="pills" defaultActiveKey="0" id="uncontrolled-tab-example">
         {
           examples.map((content, index) => {
-            return <Tab eventKey={index} title={content.url.split('/').slice(-1)[0]}>
+            return <Tab eventKey={index} title={content.url.split('/').slice(-1)[0]} key={index}>
               <CopyIcon>
                 {content.content}
               </CopyIcon>
