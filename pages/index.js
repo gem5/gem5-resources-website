@@ -7,6 +7,7 @@ import logo from 'public/gem5ColorVert.png'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import MyCards from '@/components/cards'
+import CategoriesCards from '@/components/categories-cards'
 const inter = Inter({ subsets: ['latin'] })
 
 /**
@@ -43,6 +44,7 @@ export default function Home() {
         <p className='primary mt-5 text-center'>
           gem5 resources is a repository providing sources for artifacts known and proven compatible with the gem5 architecture simulator. These resources are not necessary for the compilation or running of gem5, but may aid users in producing certain simulations
         </p>
+        <CategoriesCards />
         <MyCards />
       </Container>
     </>
