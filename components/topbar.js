@@ -32,6 +32,7 @@ export default function Topbar() {
                             src={logo}
                             alt="Gem5 Logo"
                             height={55}
+                            priority
                         />
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-sm`} />

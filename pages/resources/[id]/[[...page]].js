@@ -20,6 +20,7 @@ function Resource() {
     const router = useRouter()
 
     useEffect(() => {
+        console.log("Resource Page")
         async function fetchResource(id) {
             setLoading(true)
             let resource = await getResource(id);
