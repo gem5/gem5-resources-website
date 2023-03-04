@@ -1,7 +1,7 @@
 // This file is used to configure Next.js
 let isProd = process.env.NODE_ENV === 'production'
 // isProd = false;
-// isProd = true;
+isProd = true;
 
 // get path of the websie hosted on github pages from the environment variable
 module.exports = {

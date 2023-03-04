@@ -114,7 +114,7 @@ function Usage({ exampleContent, id }) {
     // remove python comments
     string = string.replace(/([^\(\.]"""[^\(]*)"""/g, '');
     string = string.replace(/[ \t]*#.*\n/gm, '');
-    // match first function call
+    // match first function call sdasdasdasd.asdasdasd(
     const regex = /[\w.]+\(/im;
     let m;
     // find the first function call that has at least 2 keywords matching

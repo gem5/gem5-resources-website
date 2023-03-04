@@ -24,8 +24,8 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
             <Container className={currentStyle + ' ' + className}>
                 <Row className={styles.tablet_view_header}>
                     <Col className={styles.back_button_col}>
-                        <button className={styles.collapse_metadata} onClick={()=>{setShowMetadata(false)}}>
-                            <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke='#0095AF'><path d="M2.117 12l7.527 6.235-.644.765-9-7.521 9-7.479.645.764-7.529 6.236h21.884v1h-21.883z"/></svg>
+                        <button className={styles.collapse_metadata} onClick={() => { setShowMetadata(false) }}>
+                            <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke='#0095AF'><path d="M2.117 12l7.527 6.235-.644.765-9-7.521 9-7.479.645.764-7.529 6.236h21.884v1h-21.883z" /></svg>
                         </button>
                     </Col>
                     <Col className={styles.metadata_title_col}>
@@ -88,30 +88,28 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
                 <Row className="border-bottom">
                     <p className="text-muted">License</p>
                     <p className="">
-                        {resource.license ?? 'BSD-3-Clause'}
-                        {' ('}
+                        {resource.license ?? 'Unknown'}
+                        {/* {' ('}
                         <Link
-                            href={resource.license_url ?? 'https://opensource.org/licenses/BSD-3-Clause'}
+                            href={resource.license ?? 'https://opensource.org/licenses/BSD-3-Clause'}
                         >
                             LICENSE
                         </Link>
-                        {')'}
+                        {')'} */}
                     </p>
                 </Row>
                 <Row className="border-bottom">
-                    <p className="text-muted">Dependencies</p>
+                    <p className="text-muted">Properties</p>
                     <p className="">
                         {
                             resource.resources ? Object.keys(resource.resources).map((key, index) => {
                                 return (
-                                    <>
-                                        <a key={key}
-                                            href={'/gem5-resources-website/resources/' + resource.resources[key]}
-                                        >
+                                    <div>
+                                        <span className="text-muted">{key+" "}</span>
+                                        <a href={'/gem5-resources-website/resources/' + resource.resources[key]}>
                                             {resource.resources[key]}
                                         </a>
-                                        {index != Object.keys(resource.resources).length - 1 ? ', ' : ''}
-                                    </>
+                                    </div>
                                 )
                             }) : 'None'
                         }
