@@ -15,8 +15,8 @@ export default function VersionPage({ versions, url }) {
     function sizeof_fmt(num, suffix = 'B') {
         const units = ['', 'K', 'M', 'G', 'T', 'P', 'E', 'Z'];
         let i = 0;
-        while (Math.abs(num) >= 1000.0 && i < units.length - 1) {
-            num /= 1000.0;
+        while (Math.abs(num) >= 1024.0 && i < units.length - 1) {
+            num /= 1024.0;
             i++;
         }
         return `${num.toFixed(1)} ${units[i]}${suffix}`;
