@@ -10,8 +10,8 @@ export default function Paginate({ pageCount, currentPage, maxPageNumbersShown, 
     }
 
     let startPage = Math.max(currentPage - halfPagesToShow, 1);
-    // let endPage = Math.min(startPage + maxPageNumbersShown - 1, pageCount);
-    let endPage = Math.min(currentPage + halfPagesToShow, pageCount);
+    let endPage = Math.min(startPage + maxPageNumbersShown - 1, pageCount);
+    // let endPage = Math.min(currentPage + halfPagesToShow, pageCount);
 
     if (endPage - startPage < maxPageNumbersShown - 1) {
         startPage = Math.max(endPage - maxPageNumbersShown + 1, 1);
