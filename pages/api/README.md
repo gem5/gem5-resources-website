@@ -37,9 +37,8 @@ The API is composed of the following files:
 
 Wrapper function to fetch the resources based on the query object.
 
-**Kind**: global function
-**Returns**: <code>json</code> - The resources in JSON format.
-**Wrapper**:
+**Kind**: global function </br>
+**Returns**: <code>json</code> - The resources in JSON format.</br>
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -52,18 +51,16 @@ Wrapper function to fetch the resources based on the query object.
 
 Gets the filters from the database.
 
-**Kind**: global function
-**Returns**: <code>json</code> - A json object with the filters.
-**Wrapper**:
+**Kind**: global function </br>
+**Returns**: <code>json</code> - A json object with the filters. </br>
 <a name="getResource"></a>
 
 ## getResource(id) ⇒ <code>json</code>
 
 Fetches a resource from the MongoDB database or JSON file.
 
-**Kind**: global function
-**Returns**: <code>json</code> - The resource in JSON format.
-**Wrapper**:
+**Kind**: global function </br>
+**Returns**: <code>json</code> - The resource in JSON format. </br>
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -75,5 +72,5 @@ Fetches a resource from the MongoDB database or JSON file.
 
 Fetches resources either from a MongoDB database or from a JSON file based on the value of the IS_MONGODB_ENABLED environment variable.
 
-**Kind**: global function
-**Returns**: <code>Promise</code> - A Promise that resolves to an array of resources.
+**Kind**: global function </br>
+**Returns**: <code>Promise</code> - A Promise that resolves to an array of resources. </br>
