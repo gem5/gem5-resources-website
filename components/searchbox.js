@@ -15,6 +15,7 @@ import { useRouter } from "next/router";
 const SearchBox = forwardRef((props, ref) => {
     const [search, setSearch] = useState("")
     const router = useRouter()
+    
     useEffect(() => {
         if (props.query) {
             setSearch(props.query)
