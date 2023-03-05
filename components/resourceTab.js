@@ -8,9 +8,9 @@ import rehypeHighlight from 'rehype-highlight'
 import rehypeSlug from 'rehype-slug'
 import rehypeRaw from 'rehype-raw'
 import remarkFrontmatter from 'remark-frontmatter';
-import CopyIcon from './copy-icon';
+import CopyIcon from './copyIcon';
 import { useRouter } from 'next/router';
-import VersionPage from './version-page';
+import VersionPage from './versionPage';
 import { rehype } from 'rehype';
 import parse from 'html-react-parser'
 /**
@@ -134,14 +134,17 @@ function Usage({ exampleContent, id }) {
           break;
         }
       }
-      console.log(str);
-      let keywords = id.split('-');
+      if (str.includes(id)) {
+        textToHtml(str);
+        return;
+      }
+      /* let keywords = id.split('-');
       console.log(keywords);
       let nMatches = keywords.filter((keyword) => str.includes(keyword)).length;
       if (nMatches >= 2) {
         textToHtml(str);
         return;
-      }
+      } */
       string = string.substring(m.index + str.length);
     }
     setUsage(string);

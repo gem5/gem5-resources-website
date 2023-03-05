@@ -1,11 +1,11 @@
 import Head from 'next/head'
 import { Container } from 'react-bootstrap'
-import Seachbox from '@/components/searchbox'
+import Seachbox from '@/components/searchBox'
 import Image from 'next/image'
 import logo from 'public/gem5ColorVert.png'
 import { useRouter } from 'next/router'
 import MyCards from '@/components/cards'
-import CategoriesCards from '@/components/categories-cards'
+import CategoriesCards from '@/components/categoriesCards'
 
 /**
  * @component

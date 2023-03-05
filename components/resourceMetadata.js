@@ -89,29 +89,37 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
                     <p className="text-muted">License</p>
                     <p className="">
                         {resource.license ?? 'Unknown'}
-                        {/* {' ('}
-                        <Link
-                            href={resource.license ?? 'https://opensource.org/licenses/BSD-3-Clause'}
-                        >
-                            LICENSE
-                        </Link>
-                        {')'} */}
+                        {" "}
+                        {
+                            resource.license ? <>
+                                (
+                                < Link
+                                    href={'https://gem5.googlesource.com/public/gem5/+/refs/heads/stable/LICENSE'}
+                                >
+                                    LICENSE
+                                </Link>
+                                )
+                            </> : null
+
+                        }
                     </p>
                 </Row>
                 <Row className="border-bottom">
                     <p className="text-muted">Properties</p>
-                    {
-                        resource.resources ? Object.keys(resource.resources).map((key, index) => {
-                            return (
-                                <div key={key}>
-                                    <span className="text-muted">{key + " "}</span>
-                                    <a href={'/gem5-resources-website/resources/' + resource.resources[key]}>
-                                        {resource.resources[key]}
-                                    </a>
-                                </div>
-                            )
-                        }) : 'None'
-                    }
+                    <p className="">
+                        {
+                            resource.resources ? Object.keys(resource.resources).map((key, index) => {
+                                return (
+                                    <div key={key}>
+                                        <span className="text-muted">{key + " "}</span>
+                                        <a href={'/gem5-resources-website/resources/' + resource.resources[key]}>
+                                            {resource.resources[key]}
+                                        </a>
+                                    </div>
+                                )
+                            }) : 'None'
+                        }
+                    </p>
                 </Row>
                 <Row className="border-bottom">
                     <p className="text-muted">Depend on this resource</p>

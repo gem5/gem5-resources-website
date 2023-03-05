@@ -1,8 +1,8 @@
 import Head from 'next/head'
-import { Button, Col, Form, Row, Spinner, SSRProvider } from 'react-bootstrap'
+import { Col, Form, Row, Spinner } from 'react-bootstrap'
 import { getResources } from '../api/findresources'
-import SearchBox from '@/components/searchbox'
-import SearchResult from '@/components/searchresult'
+import SearchBox from '@/components/searchBox'
+import SearchResult from '@/components/searchResult'
 import Filters from '@/components/filters'
 import { getFilters } from "../api/getfilters";
 import { useRouter } from 'next/router'
@@ -23,9 +23,10 @@ export default function Resources() {
     const [filters, setFilters] = useState({})
     const [queryObject, setQueryObject] = useState(null)
     const [loading, setLoading] = useState(true)
+    const [sort, setSort] = useState("relevance")
 
     const ref = useRef()
-    const numberOfItemsPerPage = 10;
+    const [numberOfItemsPerPage, setNumberOfItemsPerPage] = useState(10);
     const [currentPage, setCurrentPage] = useState(1);
     const [pageCount, setPageCount] = useState(1);
     const [maxPageNumbersShown, setMaxPageNumbersShown] = useState(5);
@@ -34,24 +35,24 @@ export default function Resources() {
     const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
-        let q = window.location.href.split('?')[1]
-        if (q) {
-            q = q.split('=')[1]
-            q = q.split('&')[0]
-            q = decodeURIComponent(q)
-            q = q.replace(/\+/g, ' ')
-            setQuery(q)
-            let page = window.location.href.split('?')[1]
-            // check if page is present in url
-            if (page.includes('page')) {
-                console.log('page present')
-                page = page.split('=')[2]
-                page = page.split('&')[0]
-                page = parseInt(page)
-                setCurrentPage(page)
+        if (router.query) {
+            if (router.query.page) {
+                setCurrentPage(parseInt(router.query.page))
+            }
+            if (router.query.q != null) {
+                let q = router.query.q
+                q = decodeURIComponent(q)
+                q = q.replace(/\+/g, ' ')
+                setQuery(q)
+            }
+            if (router.query.limit) {
+                setNumberOfItemsPerPage(parseInt(router.query.limit))
+            }
+            if (router.query.sort) {
+                setSort(router.query.sort)
             }
         }
-    }, [router.query.q])
+    }, [router.query])
 
     useEffect(() => {
         if (query != null) {
@@ -72,9 +73,8 @@ export default function Resources() {
             if (!qo["query"]) {
                 qo["query"] = "";
             }
-            qo["sort"] = "relevance";
+            qo["sort"] = sort;
             setQueryObject(qo);
-            console.log(qo);
         }
     }, [query])
 
@@ -107,7 +107,7 @@ export default function Resources() {
         if (queryObject) {
             fetchFilters();
         }
-    }, [queryObject, currentPage]);
+    }, [queryObject, currentPage, numberOfItemsPerPage]);
 
     useEffect(() => {
         function pageNumbersOnResize() {
@@ -157,7 +157,6 @@ export default function Resources() {
     }, [])
 
     function filterToQuery(filters) {
-        // convert filters to query string
         let q = '';
         for (let filter in filters) {
             for (let value in filters[filter]) {
@@ -166,7 +165,6 @@ export default function Resources() {
                 }
             }
         }
-        // let searchQuery = ref.current.getSearchQuery().split(' ').filter((word) => !word.includes(':'));
         let searchQuery = ref.current.getSearchQuery().split(' ').filter((word) => !word.includes(':'));
         searchQuery = searchQuery.join(' ');
         if (searchQuery) {
@@ -179,7 +177,7 @@ export default function Resources() {
         let q = filterToQuery(filters)
         router.push({
             pathname: '/resources',
-            query: { q: q, page: 1 }
+            query: { q: q, page: 1, sort: queryObject.sort, limit: numberOfItemsPerPage }
         })
     }
 
@@ -187,24 +185,28 @@ export default function Resources() {
         setQuery(query)
         router.push({
             pathname: '/resources',
-            query: { q: query, page: 1 }
+            query: { q: query, page: 1, sort: queryObject.sort, limit: numberOfItemsPerPage }
         })
     }
 
     function onSortChange(e) {
         setQueryObject({ ...queryObject, sort: e.target.value })
+        router.push({
+            pathname: '/resources',
+            query: { q: query, page: currentPage, sort: e.target.value, limit: numberOfItemsPerPage }
+        })
     }
 
     function onPageChange(page) {
         setCurrentPage(page)
         router.push({
             pathname: '/resources',
-            query: { q: query, page: page }
+            query: { q: query, page: page, sort: queryObject.sort, limit: numberOfItemsPerPage }
         })
     }
 
     return (
-        <SSRProvider>
+        <>
             <Head>
                 <title>Search Resources</title>
                 <meta name="description" content="Find the resource you need" />
@@ -229,6 +231,35 @@ export default function Resources() {
                                         {total == 0 ? 0 : (currentPage - 1) * numberOfItemsPerPage + 1} - {Math.min(currentPage * numberOfItemsPerPage, total)} of {total}
                                     </span>
                                 </div>
+                                <Form.Select
+                                    className='w-auto primary value'
+                                    defaultValue={numberOfItemsPerPage.toString()}
+                                    value={numberOfItemsPerPage.toString()}
+                                    onChange={(value) => {
+                                        // if the page is more than the max page number, set the page to the max page number
+                                        if (currentPage > Math.ceil(total / parseInt(value.target.value))) {
+                                            setNumberOfItemsPerPage(parseInt(value.target.value));
+                                            setCurrentPage(Math.ceil(total / parseInt(value.target.value)))
+                                            router.push({
+                                                pathname: '/resources',
+                                                query: { q: query, page: Math.ceil(total / parseInt(value.target.value)), limit: parseInt(value.target.value) }
+                                            })
+                                        }
+                                        else {
+                                            setNumberOfItemsPerPage(parseInt(value.target.value));
+                                            router.push({
+                                                pathname: '/resources',
+                                                query: { q: query, page: currentPage, limit: parseInt(value.target.value) }
+                                            })
+                                        }
+                                    }}
+                                    style={{ cursor: 'pointer' }}
+                                >
+                                    <option value='10'>10 per page</option>
+                                    <option value='25'>25 per page</option>
+                                    <option value='50'>50 per page</option>
+                                    <option value='100'>100 per page</option>
+                                </Form.Select>
                                 <div className='w-auto d-flex align-items-center'>
                                     <span className='text-uppercase me-2 text-muted value-label'>
                                         Sort by
@@ -236,7 +267,7 @@ export default function Resources() {
                                     <Form.Select
                                         className='w-auto primary text-uppercase border-0 value'
                                         aria-label="Default select example"
-                                        defaultValue='relevance'
+                                        value={sort}
                                         onChange={onSortChange}
                                         style={{ paddingLeft: '0.50rem', cursor: 'pointer' }}
                                     >
@@ -270,54 +301,6 @@ export default function Resources() {
                     </Row>
                 </div>
             </div>
-        </SSRProvider>
+        </>
     )
 }
-
-// export async function getServerSideProps({ query }) {
-/* Resources.getInitialProps = async ({ query }) => {
-    if (!query.q) {
-        query.q = ''
-    }
-    let queryObject = {};
-    let queryArray = query.q.split(" ");
-    queryArray.forEach(query => {
-        let querySplit = query.split(":");
-        if (querySplit.length === 2) {
-            if (queryObject[querySplit[0]]) {
-                queryObject[querySplit[0]].push(querySplit[1]);
-            } else {
-                queryObject[querySplit[0]] = [querySplit[1]];
-            }
-        }
-    });
-    queryObject["query"] = queryArray.filter(query => !query.includes(":"));
-    queryObject["query"] = queryObject["query"].join(" ");
-    if (!queryObject["query"]) {
-        queryObject["query"] = "";
-    }
-    const resources = await getResourcesMongoDB(queryObject);
-    const filters = await getFilters();
-    let filterModified = {};
-    for (let filter in filters) {
-        let filterObject = {};
-        filters[filter].forEach(filterOption => {
-            if (queryObject[filter] && queryObject[filter].includes(filterOption)) {
-                filterObject[filterOption] = true;
-            } else {
-                filterObject[filterOption] = false;
-            }
-        }
-        );
-        filterModified[filter] = filterObject;
-    }
-
-    return {
-        // props: {
-        resources: resources,
-        filters: filterModified,
-        query: queryObject.query,
-        fullQuery: query.q
-        // }
-    };
-}; */

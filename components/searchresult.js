@@ -6,7 +6,7 @@ import arm from "/public/arm.png";
 import sparc from "/public/sparc.png";
 import mips from "/public/mips.png";
 import power from "/public/power.png";
-import { Badge, Col, Row } from "react-bootstrap";
+import { Badge } from "react-bootstrap";
 
 /**
  * @component

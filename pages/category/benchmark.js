@@ -6,7 +6,7 @@ import rehypeHighlight from 'rehype-highlight'
 import rehypeSlug from 'rehype-slug'
 import rehypeRaw from 'rehype-raw'
 import remarkFrontmatter from 'remark-frontmatter';
-import CopyIcon from '@/components/copy-icon';
+import CopyIcon from '@/components/copyIcon';
 import benchmark from './benchmark.md'
 import Link from "next/link";
 

@@ -15,7 +15,6 @@ export default function CategoriesCards() {
     async function getCategory() {
       const filters = await getFilters()
       let category = []
-      console.log(filters.category)
       for (let i = 0; i < filters.category.length; i++) {
         if (filters.category[i] == "workload") {
           category.push({

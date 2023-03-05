@@ -1,9 +1,9 @@
-import MetaData from '@/components/resource-metadata'
-import Banner from '@/components/resource-banner'
+import MetaData from '@/components/resourceMetadata'
+import Banner from '@/components/resourceBanner'
 import Head from 'next/head'
 import { Row, Col, Container } from 'react-bootstrap'
 import { getResource } from '../../api/getresource'
-import ResourceTab from '@/components/resource-tab'
+import ResourceTab from '@/components/resourceTab'
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
@@ -20,11 +20,9 @@ function Resource() {
     const router = useRouter()
 
     useEffect(() => {
-        console.log("Resource Page")
         async function fetchResource(id) {
             setLoading(true)
             let resource = await getResource(id);
-            console.log(resource)
             if (resource.error) {
                 router.push(`/404`)
             }
@@ -35,7 +33,6 @@ function Resource() {
         if (router.isReady && router.query !== undefined) {
             const url = router.asPath.split("/")
             const id = url[2]
-            console.log(id)
             fetchResource(id);
         }
     }, [router.isReady])

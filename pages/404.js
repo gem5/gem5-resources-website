@@ -16,7 +16,6 @@ export default function Custom404() {
     const [error, setError] = useState(false)
     const [loading, setLoading] = useState(true)
     useEffect(() => {
-        console.log("404")
         async function fetchResource(id) {
             setLoading(true)
             getResource(id).then((resource) => {
@@ -35,20 +34,17 @@ export default function Custom404() {
             setLoading(true)
             setError(false)
             const url = router.asPath.split("/")
-            console.log(url)
             if (url.length < 3 || url[1] !== "resources") {
                 setError(true)
                 setLoading(false)
                 return
             }
             const id = url[2]
-            console.log(id)
             fetchResource(id);
         }
     }, [router.isReady])
 
     function getPage() {
-        console.log(loading, error)
         if (loading)
             return <div>Loading...</div>
         if (error)

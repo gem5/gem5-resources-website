@@ -48,10 +48,9 @@ export default function VersionPage({ versions, url }) {
                     {sizeof_fmt(size)}
                 </td>
                 <td style={{ width: '24px', height: '24px' }} className={styles.versions_td}>
-                    {/* <a href={link}> */}
                     <div className={styles.icon_wrapper_div} value="download" onClick={() => {
+                        if (!link || link == '') return
                         gtag('send', 'event', 'download', 'click', 'download')
-                        // window.open(link, '_blank')
                         const element = document.createElement("a");
                         element.href = link;
                         element.download = link;
@@ -60,7 +59,6 @@ export default function VersionPage({ versions, url }) {
                     }}>
                         {downloadSvg}
                     </div>
-                    {/* </a> */}
                 </td>
                 <td style={{ width: '24px', height: '24px' }} className={styles.versions_td}>
                     <div className={styles.icon_wrapper_div}>
@@ -93,12 +91,6 @@ export default function VersionPage({ versions, url }) {
                             return versionComponent(version.version, version.url, version.size)
                         })
                     }
-
-                    {/* {
-                        Object.keys(versions).map((version) => {
-                            return versionComponent(version, versions[version])
-                        })
-                    } */}
 
                 </tbody>
             </Table>

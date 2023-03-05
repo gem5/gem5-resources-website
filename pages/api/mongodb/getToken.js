@@ -20,9 +20,5 @@ export default async function getToken() {
     let tokenJson = await token.json();
     let accessToken = tokenJson['access_token'];
     // Log success/failure and return access token
-    if (accessToken)
-        console.log("Successfully got access token");
-    else
-        console.log("Failed to get access token");
     return accessToken;
 }

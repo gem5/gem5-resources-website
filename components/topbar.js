@@ -3,7 +3,7 @@ import Image from "next/image";
 import logo from "public/gem5ColorLong.gif";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import SearchBox from "./searchbox";
+import SearchBox from "./searchBox";
 import { useRouter } from "next/router";
 /**
  * @component
@@ -14,7 +14,6 @@ import { useRouter } from "next/router";
 export default function Topbar() {
     const [show, setShow] = useState(false);
     const router = useRouter();
-    // check if the route is /resources/[id]
     useEffect(() => {
         if (router.pathname.includes("/resources/")) {
             setShow(true);

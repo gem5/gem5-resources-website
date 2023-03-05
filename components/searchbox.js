@@ -1,4 +1,4 @@
-import { Form, Button, InputGroup } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 import { useEffect, useState, forwardRef, useImperativeHandle } from "react";
 import Image from "next/image";
 import searchImage from "public/search.png"
