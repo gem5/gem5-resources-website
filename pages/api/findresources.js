@@ -6,7 +6,8 @@ import getResourcesJSON from "./json/findresources";
  * @async
  * @description Wrapper function to fetch the resources based on the query object.
  * @param {json} queryObject The query object.
- * @param {json} filters The filters to be applied.
+ * @param {int} currentPage The current page.
+ * @param {int} pageSize The size of the page.
  * @returns {json} The resources in JSON format.
  */
 export async function getResources(queryObject, currentPage, pageSize) {
