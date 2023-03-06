@@ -33,8 +33,8 @@ The API is composed of the following files:
 
 <a name="getResources"></a>
 
-## getResources(queryObject, filters) ⇒ <code>json</code>
-
+## getResources(queryObject, currentPage, pageSize) ⇒ <code>json</code>
+![findresources.js](./docs/findresources.svg)
 Wrapper function to fetch the resources based on the query object.
 
 **Kind**: global function </br>
@@ -48,7 +48,7 @@ Wrapper function to fetch the resources based on the query object.
 <a name="getFilters"></a>
 
 ## getFilters() ⇒ <code>json</code>
-
+![getfilters.js](./docs/getfilters.svg)
 Gets the filters from the database.
 
 **Kind**: global function </br>
@@ -56,7 +56,7 @@ Gets the filters from the database.
 <a name="getResource"></a>
 
 ## getResource(id) ⇒ <code>json</code>
-
+![getresource.js](./docs/getresource.svg)
 Fetches a resource from the MongoDB database or JSON file.
 
 **Kind**: global function </br>
@@ -68,9 +68,9 @@ Fetches a resource from the MongoDB database or JSON file.
 
 <a name="fetchResources"></a>
 
-## fetchResources() ⇒ `Promise`
-
+## fetchResources() ⇒ `json`
+![resources.js](./docs/resources.svg)
 Fetches resources either from a MongoDB database or from a JSON file based on the value of the IS_MONGODB_ENABLED environment variable.
 
 **Kind**: global function </br>
-**Returns**: <code>Promise</code> - A Promise that resolves to an array of resources. </br>
+**Returns**: <code>json</code> - A JSON object containing all the resources. </br>
