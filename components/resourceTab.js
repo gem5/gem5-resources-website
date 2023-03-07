@@ -13,6 +13,7 @@ import { useRouter } from 'next/router';
 import VersionPage from './versionPage';
 import { rehype } from 'rehype';
 import parse from 'html-react-parser'
+
 /**
  * @component
  * @description The tab component for the resource page. This component is responsible for rendering the tabs and their content.
