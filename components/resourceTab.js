@@ -84,7 +84,7 @@ export default function ResourceTab({ resource }) {
 
         </Tab>
         <Tab eventKey="usage" title="Usage">
-          <Usage exampleContent={exampleContent} id={resource.id} />
+          <Usage use={resource.usage} exampleContent={exampleContent} id={resource.id} />
         </Tab>
         <Tab eventKey="parameters" title="Parameters">
           <Parameters params={resource.additional_params} />
@@ -101,7 +101,7 @@ export default function ResourceTab({ resource }) {
   )
 }
 
-function Usage({ exampleContent, id }) {
+function Usage({ use, exampleContent, id }) {
   const [usage, setUsage] = useState(<></>);
 
   useEffect(() => {
@@ -109,6 +109,10 @@ function Usage({ exampleContent, id }) {
       let text = `<pre><code class="language-python">${string}</code></pre>`;
       text = await rehype().data('settings', { fragment: true }).use(rehypeHighlight).process(text);
       setUsage(parse(text.toString()));
+    }
+    if (use != null) {
+      textToHtml(use);
+      return;
     }
     if (exampleContent.length === 0) return;
     let string = exampleContent[0].content;
