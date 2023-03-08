@@ -13,7 +13,7 @@ import { useEffect, useState } from 'react';
  * @returns {JSX.Element} The JSX element to be rendered.
 */
 function Resource() {
-    const [resource, setResource] = useState([])
+    const [resource, setResource] = useState({})
     const [loading, setLoading] = useState(true)
     const [showMetadata, setShowMetadata] = useState(false)
     const [isTablet, setIsTablet] = useState(false)
@@ -45,7 +45,6 @@ function Resource() {
     }, [])
     
     return (
-        loading ? <div></div> :
             <>
                 <Head>
                     <title>{resource.id}</title>

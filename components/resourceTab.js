@@ -13,6 +13,7 @@ import { useRouter } from 'next/router';
 import VersionPage from './versionPage';
 import { rehype } from 'rehype';
 import parse from 'html-react-parser'
+import { Placeholder } from 'react-bootstrap';
 
 /**
  * @component
@@ -47,6 +48,8 @@ export default function ResourceTab({ resource }) {
   }, [resource.example_urls]);
 
   useEffect(() => {
+    if (!router.isReady) return;
+
     const tabs = ['readme', 'changelog', 'usage', 'parameters', 'example', 'versions'];
     const page = router.asPath.split('/').slice(2);
     if (page[1]) {
@@ -71,34 +74,39 @@ export default function ResourceTab({ resource }) {
   }
 
   return (
-    <div className='tabs'>
-      <Tabs
-        defaultActiveKey="readme"
-        activeKey={selectedTab ?? 'readme'}
-        onSelect={(e) => handleSelect(e)}
-        className='mb-2'
-      >
-        <Tab eventKey="readme" title="Readme">
-          <ReadmeTab github_url={resource.github_url} />
-        </Tab>
-        <Tab eventKey="changelog" title="Changelog">
+    Object.keys(resource).length === 0 ?
+      <Placeholder as="div" animation="glow" className='tabs'>
+        <Placeholder xs={12} />
+      </Placeholder>
+      :
+      <div className='tabs'>
+        <Tabs
+          defaultActiveKey="readme"
+          activeKey={selectedTab ?? 'readme'}
+          onSelect={(e) => handleSelect(e)}
+          className='mb-2'
+        >
+          <Tab eventKey="readme" title="Readme">
+            <ReadmeTab github_url={resource.github_url} />
+          </Tab>
+          <Tab eventKey="changelog" title="Changelog">
 
-        </Tab>
-        <Tab eventKey="usage" title="Usage">
-          <Usage use={resource.usage} exampleContent={exampleContent} id={resource.id} />
-        </Tab>
-        <Tab eventKey="parameters" title="Parameters">
-          <Parameters params={resource.additional_params} />
-        </Tab>
-        <Tab eventKey="example" title="Example">
-          <ExampleTab exampleContent={exampleContent} />
-        </Tab>
-        <Tab eventKey="versions" title="Versions">
-          <h3 className='font-weight-light versions-table-title'>Versions of {resource.id}</h3>
-          <VersionPage versions={resource.versions} url={resource.download_url} />
-        </Tab>
-      </Tabs>
-    </div>
+          </Tab>
+          <Tab eventKey="usage" title="Usage">
+            <Usage use={resource.usage} exampleContent={exampleContent} id={resource.id} />
+          </Tab>
+          <Tab eventKey="parameters" title="Parameters">
+            <Parameters params={resource.additional_params} />
+          </Tab>
+          <Tab eventKey="example" title="Example">
+            <ExampleTab exampleContent={exampleContent} />
+          </Tab>
+          <Tab eventKey="versions" title="Versions">
+            <h3 className='font-weight-light versions-table-title'>Versions of {resource.id}</h3>
+            <VersionPage versions={resource.versions} url={resource.download_url} />
+          </Tab>
+        </Tabs>
+      </div>
   )
 }
 
@@ -243,13 +251,19 @@ function SEandFSToggle() {
 function ReadmeTab({ github_url }) {
   const [readme, setReadme] = useState('');
   useEffect(() => {
+    async function getReadme() {
+      const url = github_url.replace('github.com', 'raw.githubusercontent.com').replace('tree/', '') + '/README.md';
+      const res = await fetch(url);
+      if (res.status !== 200) return;
+      const text = await res.text();
+      setReadme(text);
+    }
     if (!github_url) return;
-    const url = github_url.replace('github.com', 'raw.githubusercontent.com').replace('tree/', '') + '/README.md';
-    fetch(url).then((res) => res.text()).then((text) => setReadme(text));
+    getReadme();
   }, [github_url]);
+
   return (
     <Tab.Container defaultActiveKey="first">
-      {/* wrap pre tags in CopyIcon */}
       <ReactMarkdown
         className='markdown-body mt-3'
         rehypePlugins={[[rehypeHighlight, { ignoreMissing: true }], rehypeRaw, rehypeSlug]}
@@ -266,5 +280,5 @@ function ReadmeTab({ github_url }) {
         {readme}
       </ReactMarkdown>
     </Tab.Container>
-  )
+  );
 }
