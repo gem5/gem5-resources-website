@@ -35,32 +35,32 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
                 <Row className="border-bottom">
                     <Col className="border-end">
                         <div>
-                            <h5 className="primary">
+                            <h5 className="primary secondary-text-bold">
                                 {Math.floor(Math.random() * 100)}
                             </h5>
-                            <p className="text-muted">LIKES</p>
+                            <p className="text-muted main-text-regular">LIKES</p>
                         </div>
                     </Col>
                     <Col className="border-end">
                         <div>
-                            <h5 className="primary">
+                            <h5 className="primary secondary-text-bold">
                                 {Math.floor(Math.random() * 10000)}
                             </h5>
-                            <p className="text-muted">VIEWS</p>
+                            <p className="text-muted main-text-regular">VIEWS</p>
                         </div>
                     </Col>
                     <Col>
                         <div>
-                            <h5 className="primary">
+                            <h5 className="primary secondary-text-bold">
                                 {Math.floor(Math.random() * 100)}
                             </h5>
-                            <p className="text-muted">DOWNLOADS</p>
+                            <p className="text-muted main-text-regular">DOWNLOADS</p>
                         </div>
                     </Col>
                 </Row>
                 <Row className="border-bottom">
-                    <p className="text-muted">Author</p>
-                    <h4 className="primary">
+                    <p className="text-muted main-text-regular">Author</p>
+                    <h4 className="primary main-text-title-bold">
                         {resource.author ? resource.author.map((author, index) => {
                             return (
                                 <span key={index}>
@@ -72,22 +72,23 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
                     </h4>
                 </Row>
                 <Row className="border-bottom">
-                    <p className="text-muted">Description</p>
-                    <p className="">
+                    <p className="text-muted main-text-regular">Description</p>
+                    <p className="main-text-regular">
                         {resource.description ?? 'This is a description of the resource.'}
                     </p>
                     {
                         resource.github_url ?
                             <Link
                                 href={resource.github_url}
+                                className="main-text-regular"
                             >
                                 Repository (GitHub)
                             </Link> : null
                     }
                 </Row>
                 <Row className="border-bottom">
-                    <p className="text-muted">License</p>
-                    <p className="">
+                    <p className="text-muted main-text-regular">License</p>
+                    <p className="main-text-regular">
                         {resource.license ?? 'Unknown'}
                         {" "}
                         {
@@ -105,8 +106,8 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
                     </p>
                 </Row>
                 <Row className="border-bottom">
-                    <p className="text-muted">Properties</p>
-                    <p className="">
+                    <p className="text-muted main-text-regular">Properties</p>
+                    <p className="main-text-regular">
                         {
                             resource.resources ? Object.keys(resource.resources).map((key, index) => {
                                 return (
@@ -122,8 +123,8 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
                     </p>
                 </Row>
                 <Row className="border-bottom">
-                    <p className="text-muted">Depend on this resource</p>
-                    <p className="">
+                    <p className="text-muted main-text-regular">Depend on this resource</p>
+                    <p className="main-text-regular">
                         {
                             (resource.workloads && resource.workloads.length > 0) ? resource.workloads.map((workload, index) => {
                                 return (

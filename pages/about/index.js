@@ -19,7 +19,7 @@ function About() {
         padding: "50px"
     }}>
       <ReactMarkdown
-      className='markdown-body mt-3'
+      className='markdown-body mt-3 about-page'
       rehypePlugins={[[rehypeHighlight, { ignoreMissing: true }], rehypeRaw, rehypeSlug]}
       remarkPlugins={[remarkGfm, remarkToc, remarkFrontmatter]}>
         {about}

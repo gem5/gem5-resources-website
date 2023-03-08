@@ -39,10 +39,10 @@ export default function SearchResult({ resource }) {
         <div className="search-result">
             <Link href={'/resources/' + resource.id} style={{ textDecoration: 'none', color: 'inherit' }}>
                 <div className="search-result__title">
-                    <h4>{resource.id}</h4>
+                    <h4 className="main-text-title-bold">{resource.id}</h4>
                 </div>
                 <div className="search-result__description">
-                    <p>{resource.description}</p>
+                    <p className="main-text-regular">{resource.description}</p>
                 </div>
                 <div className='d-flex gap-3'>
                     <div className="d-flex gap-1 align-items-center">
@@ -57,11 +57,11 @@ export default function SearchResult({ resource }) {
                         </p>
                     </div>
                     <div className='d-flex flex-row gap-1'>
-                        <p className="text-capitalize font-weight-light ">
+                        <p className="text-capitalize font-weight-light main-text-regular">
                             {resource.category}
                         </p>
                     </div>
-                    <div className='d-flex flex-row gap-1'>
+                    <div className='d-flex flex-row gap-1 main-text-regular'>
                         <h6 style={{ lineHeight: 'inherit', margin: '0' }}>
                             v
                         </h6>

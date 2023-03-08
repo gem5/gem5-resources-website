@@ -38,7 +38,7 @@ export default function Home() {
         />
         <h1 className='primary mb-5'>Resources</h1>
         <Seachbox callback={onSearch} />
-        <p className='primary mt-5 text-center'>
+        <p className='primary mt-5 text-center main-text-regular'>
           gem5 resources is a repository providing sources for artifacts known and proven compatible with the gem5 architecture simulator. These resources are not necessary for the compilation or running of gem5, but may aid users in producing certain simulations
         </p>
         <MyCards />

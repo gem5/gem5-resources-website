@@ -52,9 +52,9 @@ export default function Topbar() {
                                         <SearchBox />
                                     </div>
                                     : null}
-                                <Nav.Link href="/" as={Link}>Home</Nav.Link>
-                                <Nav.Link href="/about" as={Link}>About</Nav.Link>
-                                <Nav.Link href="https://www.gem5.org/documentation/general_docs/gem5_resources/" as={Link}>Documentation</Nav.Link>
+                                <Nav.Link href="/" as={Link} className="main-text-regular">Home</Nav.Link>
+                                <Nav.Link href="/about" as={Link} className="main-text-regular">About</Nav.Link>
+                                <Nav.Link href="https://www.gem5.org/documentation/general_docs/gem5_resources/" as={Link} className="main-text-regular">Documentation</Nav.Link>
                             </Nav>
                         </Offcanvas.Body>
                     </Navbar.Offcanvas>

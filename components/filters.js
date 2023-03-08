@@ -31,7 +31,7 @@ export default function Filters({ filters, callback }) {
                                             type="checkbox"
                                             label={value}
                                             id={value}
-                                            className="text-capitalize"
+                                            className="text-capitalize main-text-regular"
                                             checked={filterState[filter][value]}
                                             onChange={(e) => {
                                                 let filterModified = { ...filterState };

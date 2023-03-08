@@ -11,9 +11,9 @@ export default function Footer() {
         <>
             <div className="d-flex flex-row justify-content-center align-items-center bg-light mt-5" style={{ height: "20vh" }}>
                 <Row className="h-100 w-75">
-                    <Col className="text-center primary d-flex flex-column h-100 pt-2 pb-2 gap-1">
-                        <span className="text-muted">gem5 Resources</span>
-                        <Link href="/about">
+                    <Col className="text-center primary d-flex flex-column h-100 pt-2 pb-2 gap-1 footer-col">
+                        <span className="text-muted main-text-regular">gem5 Resources</span>
+                        <Link href="/about" className="main-text-regular">
                             About
                         </Link>
                         <Link href="https://www.gem5.org/publications/">
@@ -26,8 +26,8 @@ export default function Footer() {
                             Governance
                         </Link>
                     </Col>
-                    <Col className="text-center primary d-flex flex-column h-100 pt-2 pb-2 gap-1">
-                        <span className="text-muted">Docs</span>
+                    <Col className="text-center primary d-flex flex-column h-100 pt-2 pb-2 gap-1 footer-col">
+                        <span className="text-muted main-text-regular">Docs</span>
                         <Link href="https://www.gem5.org/documentation/">
                             Documentation
                         </Link>
@@ -35,8 +35,8 @@ export default function Footer() {
                             Source
                         </Link>
                     </Col>
-                    <Col className="text-center primary d-flex flex-column h-100 pt-2 pb-2 gap-1">
-                        <span className="text-muted">Help</span>
+                    <Col className="text-center primary d-flex flex-column h-100 pt-2 pb-2 gap-1 footer-col">
+                        <span className="text-muted main-text-regular">Help</span>
                         <Link href="https://www.gem5.org/search/">
                             Search
                         </Link>

@@ -39,7 +39,7 @@ export default function Banner({ resource, setShowMetadata }) {
 
         <>
             <CopyIcon>
-                <h2 className='text-muted pe-3 mb-3'>
+                <h2 className='text-muted pe-3 mb-3 page-title'>
                     {resource.id}
                 </h2>
             </CopyIcon>
@@ -49,19 +49,19 @@ export default function Banner({ resource, setShowMetadata }) {
             </button>
 
             <div className='d-flex align-items-center mb-2'>
-                <h5 className='text-muted resource-date-published mb-0'>
+                <h5 className='text-muted secondary-text-semi mb-0'>
                     {/* {resource.date_published} */}
                     Published 6 months ago
                 </h5>
                 <div className={styles.dot}></div>
                 <h5 className='mb-0' style={{ fontSize: '0px' }}>
-                    <Link href={`/category/${resource.category}`} className='primary resource-category'>
+                    <Link href={`/category/${resource.category}`} className='primary secondary-text-semi'>
                         {String(resource.category).charAt(0).toUpperCase() + String(resource.category).substring(1) ?? "Unknown"}
                     </Link>
                 </h5>
             </div>
             <div className='d-flex gap-4 mb-2'>
-                <p className="d-flex flex-row align-items-center gap-1 mt-0 mb-0">
+                <p className="d-flex flex-row align-items-center gap-1 mt-0 mb-0 main-text-semi">
                     <Image
                         src={getIcon(resource.architecture)}
                         alt={resource.architecture ?? "Unknown"}
@@ -72,17 +72,17 @@ export default function Banner({ resource, setShowMetadata }) {
                     </Link>
                 </p>
                 <div className='d-flex flex-row gap-1'>
-                    <h6 style={{ lineHeight: 'inherit', margin: '0' }}>
+                    <h6 style={{ lineHeight: 'inherit', margin: '0' }} className="main-text-semi">
                         VERSION
                     </h6>
-                    <Link className='text-decoration-none text-black' href={'/resources?q=versions:' + (resource.versions && (resource.versions.length > 1 ? resource.versions[1].version : resource.versions[0].version))}>
+                    <Link className='text-decoration-none text-black main-text-regular' href={'/resources?q=versions:' + (resource.versions && (resource.versions.length > 1 ? resource.versions[1].version : resource.versions[0].version))}>
                         {
                             resource.versions && (resource.versions.length > 1 ? resource.versions[1].version : resource.versions[0].version)
                         }
                     </Link>
                 </div>
                 <div className='d-flex flex-row gap-1'>
-                    <h6 style={{ lineHeight: 'inherit', margin: '0' }}>
+                    <h6 style={{ lineHeight: 'inherit', margin: '0' }} className="main-text-semi">
                         TAGS
                     </h6>
                     {

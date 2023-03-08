@@ -1,4 +1,4 @@
-/* @font-face {
+@font-face {
   font-family: 'OpenSansLight';
   src: url('../public/fonts/OpenSans/OpenSans-Light.ttf');
   font-style: normal;
@@ -31,7 +31,7 @@
   src: url('../public/fonts/Mulish/Mulish-Bold.ttf');
   font-style: normal;
   font-weight: 700;
-} */
+}
 
 :root {
   --bs-primary-rgb: 0, 149, 175;
@@ -164,36 +164,43 @@ code {
   }
 }
 
-/* h2 {
+.page-title,
+.about-page h2 {
   font-family: MulishBold, sans-serif;
   font-weight: 700;
-  font-size: 36px;
+  font-size: 2.25rem;
 }
 
-h4 {
+.main-text-title-bold {
   font-family: OpenSansBold, sans-serif;
   font-weight: 700;
   font-size: 1.5rem;
-} */
+} 
 
-/* .tabs, label, p, a, td
-  {
+.main-text-regular,
+.footer-col a,
+.about-page p {
   font-family: OpenSansRegular, sans-serif;
   font-weight: 300;
   font-size: 1rem;
 }
 
-.value,
-.value option {
+.main-text-semi,
+.main-text-semi option {
   font-family: OpenSansSemiBold, sans-serif;
   font-weight: 600;
   font-size: 1rem;
-} */
+}
 
-.resource-category,
-.resource-date-published,
+.secondary-text-semi,
 th,
 h3 {
+  font-family: OpenSansSemiBold, sans-serif;
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+.secondary-text-bold  {
   font-family: OpenSansSemiBold, sans-serif;
   font-weight: 600;
   font-size: 1.25rem;
@@ -207,8 +214,8 @@ h3 {
   --bs-accordion-btn-color: #0095AF;
 }
 
-.value-label,
-.accordion-header>button {
+.main-text-bold,
+.accordion-header > button {
   font-family: OpenSansBold, sans-serif;
   font-weight: 700;
   font-size: 1rem;
@@ -324,8 +331,9 @@ h3 {
     margin: 5px 0px;
   }
 
-  h2 {
-    font-size: 24px;
+  .page-title,
+  .about-page h2 {
+    font-size: 1.5rem;
   }
 }
 
@@ -338,18 +346,18 @@ h3 {
 }
 
 @media (max-width: 425px) {
-
-  .value-label,
-  .value,
-  .accordion-header>button,
-  label,
-  p,
-  .tabs,
-  td {
+  .main-text-regular, 
+  .about-page p,
+  .main-text-semi,
+  .main-text-semi option 
+  .main-text-bold,
+  .accordion-header > button, 
+  .tabs 
+  .footer-col a {
     font-size: 0.875rem;
   }
 
-  h4,
+  .main-text-title-bold,
   .versions-table-title {
     font-size: 1.25rem;
   }
@@ -359,8 +367,7 @@ h3 {
     width: 200px;
   }
 
-  .resource-category,
-  .resource-date-published,
+  .secondary-text-semi,
   th {
     font-size: 1rem;
   }

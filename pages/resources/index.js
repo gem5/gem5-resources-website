@@ -224,15 +224,16 @@ export default function Resources() {
                         <Col>
                             <Row className='justify-content-between align-items-center mb-1 results-sortBy-row'>
                                 <div className='w-auto'>
-                                    <span className='text-uppercase me-2 text-muted value-label'>
+                                    <span className='text-uppercase me-2 text-muted main-text-bold'>
                                         Results
                                     </span>
-                                    <span className='primary value' style={{ paddingLeft: "0.50rem" }}>
+                                    <span className='primary main-text-semi' style={{ paddingLeft: "0.50rem" }}>
                                         {total == 0 ? 0 : (currentPage - 1) * numberOfItemsPerPage + 1} - {Math.min(currentPage * numberOfItemsPerPage, total)} of {total}
                                     </span>
                                 </div>
                                 <Form.Select
-                                    className='w-auto primary value'
+                                    //value 
+                                    className='w-auto primary main-text-semi'
                                     defaultValue={numberOfItemsPerPage.toString()}
                                     value={numberOfItemsPerPage.toString()}
                                     onChange={(value) => {
@@ -261,11 +262,13 @@ export default function Resources() {
                                     <option value='100'>100 per page</option>
                                 </Form.Select>
                                 <div className='w-auto d-flex align-items-center'>
-                                    <span className='text-uppercase me-2 text-muted value-label'>
+                                    {/*value-label*/}
+                                    <span className='text-uppercase me-2 text-muted main-text-bold'>
                                         Sort by
                                     </span>
                                     <Form.Select
-                                        className='w-auto primary text-uppercase border-0 value'
+                                        //value
+                                        className='w-auto primary text-uppercase border-0 main-text-semi'
                                         aria-label="Default select example"
                                         value={sort}
                                         onChange={onSortChange}
