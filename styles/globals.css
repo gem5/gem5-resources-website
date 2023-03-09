@@ -295,6 +295,25 @@ h3 {
   color: var(--color-primary) !important;
 }
 
+.cardsBlockContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.cardsBlockContainer > p {
+  text-align: center;
+}
+
+.cardsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  gap: 1rem;
+}
+
 @media (max-width: 768px) {
   .topbar-search {
     width: 100%;
