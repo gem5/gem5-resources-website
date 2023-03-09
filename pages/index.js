@@ -84,7 +84,7 @@ export default function Home() {
           <p className='text-muted main-text-regular'>First time using gem5? These resources might help.</p>
           <div className='cardsContainer'>
             {gettingStartedCards.map((card, index) => (
-              <MyCards key={index} cardTitle={card.cardTitle} cardText={card.cardText} pathRef={card.pathRef} buttonText={card.buttonText} />
+              <MyCards className="cardStyle" key={index} cardTitle={card.cardTitle} cardText={card.cardText} pathRef={card.pathRef} buttonText={card.buttonText} />
             ))}
           </div>
           <Link href="/resources/?q=" passHref={true} style={{ alignSelf: 'flex-end' }} className="mt-3">
@@ -96,7 +96,7 @@ export default function Home() {
           <p className='text-muted main-text-regular'>These are the "Categories" of Resources we use on this website.</p>
           <div className='cardsContainer'>
             {categoryCards.map((card, index) => (
-                <MyCards key={index} cardTitle={card.cardTitle} cardText={card.cardText} pathRef={card.pathRef} buttonText={card.buttonText} />
+                <MyCards className="cardStyle" key={index} cardTitle={card.cardTitle} cardText={card.cardText} pathRef={card.pathRef} buttonText={card.buttonText} />
             ))}
           </div>
           <Link href="/category" passHref={true} style={{ alignSelf: 'flex-end' }} className="mt-3">
