@@ -25,17 +25,17 @@ export default function Home() {
     {
       cardTitle: "riscv-ubuntu-20.04-boot",
       cardText: "A full boot of Ubuntu 20.04 with Linux 5.10 for RISCV.",
-      pathRef: "riscv-ubuntu-20.04-boot",
+      pathRef: "resources/riscv-ubuntu-20.04-boot",
       buttonText: "Learn More"  
     }, {
       cardTitle: "arm-hello64-static",
       cardText: "A 'Hello World!' binary, statically compiled to ARM 64 bit.",
-      pathRef: "arm-hello64-static",
+      pathRef: "resources/arm-hello64-static",
       buttonText: "Learn More"  
     }, {
       cardTitle: "x86-ubuntu-18.04-img",
       cardText: "A disk image containing Ubuntu 18.04 for x86.",
-      pathRef: "x86-ubuntu-18.04-img",
+      pathRef: "resources/x86-ubuntu-18.04-img",
       buttonText: "Learn More"  
     }
   ];
