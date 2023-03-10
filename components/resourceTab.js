@@ -119,7 +119,7 @@ function Usage({ use, exampleContent, id }) {
       text = await rehype().data('settings', { fragment: true }).use(rehypeHighlight).process(text);
       setUsage(parse(text.toString()));
     }
-    if (use != null) {
+    if (use != null && use.length > 0) {
       textToHtml(use);
       return;
     }
