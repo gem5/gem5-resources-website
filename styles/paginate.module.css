@@ -1,4 +1,5 @@
 .pagination {
+    width: auto;
     --bs-pagination-color: #0095AF;
     --bs-pagination-active-bg: #0095AF;
     --bs-pagination-active-border-color: #0095AF;

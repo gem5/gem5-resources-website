@@ -44,7 +44,7 @@ export default function SearchResult({ resource }) {
                 <div className="search-result__description">
                     <p className="main-text-regular">{resource.description}</p>
                 </div>
-                <div className='d-flex gap-3'>
+                <div className='d-flex gap-3 flex-wrap'>
                     <div className="d-flex gap-1 align-items-center">
                         <Image
                             src={getIcon(resource.architecture)}
@@ -74,8 +74,8 @@ export default function SearchResult({ resource }) {
                             resource.tags ? resource.tags.map((tag, index) => {
                                 return (
                                     <div key={index}>
-                                        <Badge pill bg='primary' >
-                                            {tag}
+                                        <Badge bg='primary' >
+                                            {tag.toUpperCase()}
                                         </Badge>
                                     </div>
                                 )

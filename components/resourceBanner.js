@@ -60,7 +60,7 @@ export default function Banner({ resource, setShowMetadata }) {
                     </Link>
                 </h5>
             </div>
-            <div className='d-flex gap-4 mb-2'>
+            <div className='d-flex gap-4 mb-2 flex-wrap'>
                 <p className="d-flex flex-row align-items-center gap-1 mt-0 mb-0 main-text-semi">
                     <Image
                         src={getIcon(resource.architecture)}
@@ -81,7 +81,7 @@ export default function Banner({ resource, setShowMetadata }) {
                         }
                     </Link>
                 </div>
-                <div className='d-flex flex-row gap-1'>
+                <div className='d-flex flex-row gap-1 align-items-center'>
                     <h6 style={{ lineHeight: 'inherit', margin: '0' }} className="main-text-semi">
                         TAGS
                     </h6>
@@ -91,8 +91,8 @@ export default function Banner({ resource, setShowMetadata }) {
                                 <Link key={tag}
                                     href={'/resources?q=tags:' + tag}
                                 >
-                                    <Badge pill bg='primary' >
-                                        {tag}
+                                    <Badge bg='primary' className='resource-page-badge'>
+                                        {tag.toUpperCase()}
                                     </Badge>
                                 </Link>
                             )

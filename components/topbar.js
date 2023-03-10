@@ -24,7 +24,7 @@ export default function Topbar() {
 
     return (
         <>
-            <Navbar bg="light" className="shadow-sm" expand="sm">
+            <Navbar bg="light" className="shadow-sm" expand="lg">
                 <Container fluid>
                     <Navbar.Brand href="/" as={Link}>
                         <Image

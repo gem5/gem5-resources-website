@@ -54,7 +54,7 @@ export default function Category() {
     return (
         <Container>
             <div className='cardsBlockContainer mt-5 mb-5'>
-                <h2 className='primary page-title'>Categories</h2>
+                <h2 className='secondary page-title mb-3'>Categories</h2>
                 <p className='text-muted main-text-regular'>These are the "Categories" of Resources we use on this website.</p>
                 <div className='cardsContainer' style={{ justifyContent: 'center' }}>
                     {categoryCards.map((card, index) => (
