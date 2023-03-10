@@ -9,14 +9,12 @@ import remarkFrontmatter from 'remark-frontmatter';
 import CopyIcon from '@/components/copyIcon';
 import workload from './workload.md'
 import Link from "next/link";
+import CategoryHeader from "@/components/categoryHeader";
+
 export default function Workload() {
     return (
         <Container>
-            <Link
-                href="/resources?q=category:workload"
-            >
-                View all workloads
-            </Link>
+            <CategoryHeader category={"workload"} />
             <ReactMarkdown
                 className='markdown-body mt-3'
                 rehypePlugins={[[rehypeHighlight, { ignoreMissing: true }], rehypeRaw, rehypeSlug]}

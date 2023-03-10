@@ -1,0 +1,17 @@
+.categoriesBreadcrumb ol {
+    margin: 0px;
+}
+  
+.categoriesBreadcrumb a {
+    color:#0095AF;
+}
+
+.categoriesHeaderRow {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.categoriesHeaderCol {
+    flex: none; 
+    width: auto;
+}

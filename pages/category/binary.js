@@ -8,16 +8,12 @@ import rehypeRaw from 'rehype-raw'
 import remarkFrontmatter from 'remark-frontmatter';
 import CopyIcon from '@/components/copyIcon';
 import binary from './binary.md'
-import Link from "next/link";
+import CategoryHeader from "@/components/categoryHeader";
 
 export default function Bootloader() {
     return (
         <Container>
-            <Link
-                href="/resources?q=category:binary"
-            >
-                View all binaries
-            </Link>
+            <CategoryHeader category={"binary"} />
             <ReactMarkdown
                 className='markdown-body mt-3'
                 rehypePlugins={[[rehypeHighlight, { ignoreMissing: true }], rehypeRaw, rehypeSlug]}

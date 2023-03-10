@@ -8,16 +8,12 @@ import rehypeRaw from 'rehype-raw'
 import remarkFrontmatter from 'remark-frontmatter';
 import CopyIcon from '@/components/copyIcon';
 import bootloader from './bootloader.md'
-import Link from "next/link";
+import CategoryHeader from "@/components/categoryHeader";
 
 export default function Bootloader() {
     return (
         <Container>
-            <Link
-                href="/resources?q=category:bootloader"
-            >
-                View all Bootloaders
-            </Link>
+            <CategoryHeader category={"bootloader"} />
             <ReactMarkdown
                 className='markdown-body mt-3'
                 rehypePlugins={[[rehypeHighlight, { ignoreMissing: true }], rehypeRaw, rehypeSlug]}

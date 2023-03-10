@@ -8,7 +8,7 @@ import rehypeRaw from 'rehype-raw'
 import remarkFrontmatter from 'remark-frontmatter';
 import CopyIcon from '@/components/copyIcon';
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import CategoryHeader from "@/components/categoryHeader";
 
 export default function Checkpoint() {
     const [checkpoint, setCheckpoint] = useState("");
@@ -21,11 +21,7 @@ export default function Checkpoint() {
     }, []);
     return (
         <Container>
-            <Link
-                href="/resources?q=category:checkpoint"
-            >
-                View all checkpoints
-            </Link>
+            <CategoryHeader category={"checkpoint"} />
             <ReactMarkdown
                 className='markdown-body mt-3'
                 rehypePlugins={[[rehypeHighlight, { ignoreMissing: true }], rehypeRaw, rehypeSlug]}
