@@ -161,7 +161,7 @@ export default async function getResourcesMongoDB(queryObject, currentPage, page
       body: JSON.stringify({
         dataSource: "gem5-vision",
         database: "gem5-vision",
-        collection: "resources",
+        collection: process.env.COLLECTION,
         pipeline: pipeline,
       }),
     }

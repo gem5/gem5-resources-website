@@ -21,7 +21,7 @@ export default async function getResourceMongoDB(id) {
         body: JSON.stringify({
             "dataSource": "gem5-vision",
             "database": "gem5-vision",
-            "collection": "resources",
+            "collection": process.env.COLLECTION,
             "filter": {
                 "id": id
             }
