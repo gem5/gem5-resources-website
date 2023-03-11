@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Table } from "react-bootstrap"
 import styles from '/styles/versionpage.module.css'
 
@@ -48,7 +49,7 @@ export default function VersionPage({ versions, url }) {
                     {sizeof_fmt(size)}
                 </td>
                 <td style={{ width: '24px', height: '24px' }} className={styles.versions_td}>
-                    <div className={styles.icon_wrapper_div} value="download" onClick={() => {
+                    {/* <div className={styles.icon_wrapper_div} value="download" onClick={() => {
                         if (!link || link == '') return
                         gtag('send', 'event', 'download', 'click', 'download')
                         const element = document.createElement("a");
@@ -58,7 +59,10 @@ export default function VersionPage({ versions, url }) {
                         element.click();
                     }}>
                         {downloadSvg}
-                    </div>
+                    </div> */}
+                    <Link href={link} download>
+                        {downloadSvg}
+                    </Link>
                 </td>
                 <td style={{ width: '24px', height: '24px' }} className={styles.versions_td}>
                     <div className={styles.icon_wrapper_div}>
