@@ -22,7 +22,7 @@ export default async function fetchResourcesMongoDB() {
       body: JSON.stringify({
         dataSource: "gem5-vision",
         database: "gem5-vision",
-        collection: "resources",
+        collection: process.env.COLLECTION,
       }),
     }
   ).catch((err) => console.log(err));

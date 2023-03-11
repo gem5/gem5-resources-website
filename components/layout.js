@@ -11,7 +11,9 @@ export default function Layout({ children }) {
     return (
         <>
             <Topbar />
-            <main>{children}</main>
+            <main style={{ minHeight: 'calc(100vh - 100px)' }}>
+                {children}
+            </main>
             <Footer />
         </>
     )

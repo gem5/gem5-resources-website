@@ -29,6 +29,7 @@ export default function Custom404() {
                 setLoading(false)
             })
         }
+        console.log(router.query)
         // check if path 
         if (router.isReady && router.query !== undefined) {
             setLoading(true)

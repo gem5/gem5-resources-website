@@ -5,7 +5,7 @@ import fetchResourcesMongoDB from "./mongodb/resources";
  * @function
  * @async
  * @description Fetches resources either from a MongoDB database or from a JSON file based on the value of the IS_MONGODB_ENABLED environment variable.
- * @returns {Promise} A Promise that resolves to an array of resources.
+ * @returns {json} The resource data.
  */
 export async function fetchResources() {
   let resources;

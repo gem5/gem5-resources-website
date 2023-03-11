@@ -8,7 +8,7 @@ import sparc from "/public/sparc.png";
 import mips from "/public/mips.png";
 import power from "/public/power.png";
 import Link from 'next/link';
-import { Badge } from 'react-bootstrap';
+import { Badge, Placeholder, Row } from 'react-bootstrap';
 
 
 /**
@@ -36,70 +36,109 @@ export default function Banner({ resource, setShowMetadata }) {
         }
     }
     return (
-
-        <>
-            <CopyIcon>
-                <h2 className='text-muted pe-3 mb-3 page-title'>
-                    {resource.id}
-                </h2>
-            </CopyIcon>
-
-            <button className={styles.expand_metadata} onClick={() => { setShowMetadata(true) }}>
-                <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd" stroke='#0095AF'><path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z" /></svg>
-            </button>
-
-            <div className='d-flex align-items-center mb-2'>
-                <h5 className='text-muted secondary-text-semi mb-0'>
-                    {/* {resource.date_published} */}
-                    Published 6 months ago
-                </h5>
+        Object.keys(resource).length === 0 ? <>
+            <Placeholder as="h2" animation="glow">
+                <Placeholder xs={6} />
+            </Placeholder>
+            <Placeholder as="div" animation="glow" className='d-flex align-items-center mb-2 flex=grow-1'>
+                <Placeholder as="h5" animation="glow" style={{ width: '10%' }}>
+                    <Placeholder xs={12} />
+                </Placeholder>
                 <div className={styles.dot}></div>
-                <h5 className='mb-0' style={{ fontSize: '0px' }}>
-                    <Link href={`/category/${resource.category}`} className='primary secondary-text-semi'>
-                        {String(resource.category).charAt(0).toUpperCase() + String(resource.category).substring(1) ?? "Unknown"}
-                    </Link>
-                </h5>
-            </div>
-            <div className='d-flex gap-4 mb-2 flex-wrap'>
-                <p className="d-flex flex-row align-items-center gap-1 mt-0 mb-0 main-text-semi">
-                    <Image
-                        src={getIcon(resource.architecture)}
-                        alt={resource.architecture ?? "Unknown"}
-                        height={15}
-                    />
-                    <Link className='text-decoration-none text-black' href={'/resources?q=architecture:' + resource.architecture}>
-                        {resource.architecture}
-                    </Link>
-                </p>
+                <Placeholder as="h5" animation="glow" style={{ width: '10%' }}>
+                    <Placeholder xs={12} />
+                </Placeholder>
+            </Placeholder>
+            <div className='d-flex gap-4 mb-2'>
+                <div className="d-flex flex-row align-items-center gap-1 mt-0 mb-0">
+                    <Placeholder as="p" animation="glow" style={{ width: '40px' }}>
+                        <Placeholder xs={12} />
+                    </Placeholder>
+                    <Placeholder as="p" animation="glow" style={{ width: '40px' }}>
+                        <Placeholder xs={12} />
+                    </Placeholder>
+                </div>
                 <div className='d-flex flex-row gap-1'>
                     <h6 style={{ lineHeight: 'inherit', margin: '0' }} className="main-text-semi">
                         VERSION
                     </h6>
-                    <Link className='text-decoration-none text-black main-text-regular' href={'/resources?q=versions:' + (resource.versions && (resource.versions.length > 1 ? resource.versions[1].version : resource.versions[0].version))}>
-                        {
-                            resource.versions && (resource.versions.length > 1 ? resource.versions[1].version : resource.versions[0].version)
-                        }
-                    </Link>
+                    <Placeholder as="p" animation="glow" style={{ width: '40px' }}>
+                        <Placeholder xs={12} />
+                    </Placeholder>
                 </div>
                 <div className='d-flex flex-row gap-1 align-items-center'>
                     <h6 style={{ lineHeight: 'inherit', margin: '0' }} className="main-text-semi">
                         TAGS
                     </h6>
-                    {
-                        resource.tags ? resource.tags.map((tag, index) => {
-                            return (
-                                <Link key={tag}
-                                    href={'/resources?q=tags:' + tag}
-                                >
-                                    <Badge bg='primary' className='resource-page-badge'>
-                                        {tag.toUpperCase()}
-                                    </Badge>
-                                </Link>
-                            )
-                        }) : "None"
-                    }
+                    <Placeholder as="p" animation="glow" style={{ width: '40px' }}>
+                        <Placeholder xs={12} />
+                    </Placeholder>
                 </div>
             </div>
-        </>
+        </> :
+            <>
+                <CopyIcon>
+                    <h2 className='text-muted pe-3 mb-3 page-title'>
+                        {resource.id}
+                    </h2>
+                </CopyIcon>
+
+                <button className={styles.expand_metadata} onClick={() => { setShowMetadata(true) }}>
+                    <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd" stroke='#0095AF'><path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z" /></svg>
+                </button>
+
+                <div className='d-flex align-items-center mb-2'>
+                    <h5 className='text-muted secondary-text-semi mb-0'>
+                        {/* {resource.date_published} */}
+                        Published 6 months ago
+                    </h5>
+                    <div className={styles.dot}></div>
+                    <h5 className='mb-0' style={{ fontSize: '0px' }}>
+                        <Link href={`/category/${resource.category}`} className='primary secondary-text-semi'>
+                            {String(resource.category).charAt(0).toUpperCase() + String(resource.category).substring(1) ?? "Unknown"}
+                        </Link>
+                    </h5>
+                </div>
+                <div className='d-flex gap-4 mb-2 flex-wrap'>
+                    <p className="d-flex flex-row align-items-center gap-1 mt-0 mb-0 main-text-semi">
+                        <Image
+                            src={getIcon(resource.architecture)}
+                            alt={resource.architecture ?? "Unknown"}
+                            height={15}
+                        />
+                        <Link className='text-decoration-none text-black' href={'/resources?q=architecture:' + resource.architecture}>
+                            {resource.architecture}
+                        </Link>
+                    </p>
+                    <div className='d-flex flex-row gap-1'>
+                        <h6 style={{ lineHeight: 'inherit', margin: '0' }} className="main-text-semi">
+                            VERSION
+                        </h6>
+                        <Link className='text-decoration-none text-black main-text-regular' href={'/resources?q=versions:' + (resource.versions && (resource.versions.length > 1 ? resource.versions[1].version : resource.versions[0].version))}>
+                            {
+                                resource.versions && (resource.versions.length > 1 ? resource.versions[1].version : resource.versions[0].version)
+                            }
+                        </Link>
+                    </div>
+                    <div className='d-flex flex-row gap-1 align-items-center'>
+                        <h6 style={{ lineHeight: 'inherit', margin: '0' }}>
+                            TAGS
+                        </h6>
+                        {
+                            resource.tags ? resource.tags.map((tag, index) => {
+                                return (
+                                    <Link key={tag}
+                                        href={'/resources?q=tags:' + tag}
+                                    >
+                                        <Badge bg='primary' className='resource-page-badge'>
+                                            {tag.toUpperCase()}
+                                        </Badge>
+                                    </Link>
+                                )
+                            }) : "None"
+                        }
+                    </div>
+                </div>
+            </>
     )
 }
