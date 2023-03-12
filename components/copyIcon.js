@@ -11,7 +11,6 @@ import React from 'react';
  * @returns {JSX.Element} - The JSX element representing the copy icon and child element.
 */
 export default function CopyIcon(props) {
-    const [text, setText] = useState('');
     const [target, setTarget] = useState(null);
     const [show, setShow] = useState(false);
 
@@ -40,17 +39,12 @@ export default function CopyIcon(props) {
         }
     }
 
-
-
-    useState(() => {
-        setText(generateString(props.children.props.children))
-    }, [])
-
     const copy = async (string) => {
         setShow(true);
         await navigator.clipboard.writeText(string);
         setTimeout(() => setShow(false), 750);
     }
+
     return (
         <div style={{ position: "relative", width: "auto" }}>
             {props.children}
@@ -58,7 +52,7 @@ export default function CopyIcon(props) {
                 position: "absolute", right: 0, top: 0, cursor: "pointer", marginRight: "5px",
                 marginTop: "5px"
             }}>
-                <div className='copy-button' onClick={async () => copy(text)}>
+                <div className='copy-button' onClick={async () => copy(generateString(props.children.props.children))}>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18px" height="18px"><path d="M0 0h24v24H0z" fill="none" /><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" /></svg>
                 </div>
             </span >
