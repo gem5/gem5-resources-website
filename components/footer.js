@@ -1,14 +1,30 @@
 import Link from "next/link";
-import { Col, Row } from "react-bootstrap";
-
+import { Button, Col, Row } from "react-bootstrap";
+import CookieConsent from '@/components/cookieConsent'
+import { useEffect, useState } from "react";
 /**
  * @component
  * @description This component returns a footer section containing three columns with links to various resources related to gem5.
  * @returns {JSX.Element} The JSX element representing the footer section.
 */
 export default function Footer() {
+    const [resetConsent, setResetConsent] = useState(false);
+
+    function resetCookies() {
+        gtag('consent', 'update', {
+            'analytics_storage': 'denied'
+        });
+
+        localStorage.removeItem("CookieConsent");
+        localStorage.removeItem("_ga");
+        localStorage.removeItem("_ga_2B1F9HP95Z");
+
+        setResetConsent(true);
+    } 
+    
     return (
         <>
+            <CookieConsent showConsentModal={resetConsent} hasUpdated={setResetConsent} />
             <div className="d-flex flex-row justify-content-center align-items-center bg-light mt-5" style={{ height: "20vh" }}>
                 <Row className="h-100 w-75">
                     <Col className="text-center primary d-flex flex-column h-100 pt-2 pb-2 gap-1 footer-col">
@@ -46,6 +62,7 @@ export default function Footer() {
                         <Link href="https://github.com/Gem5Vision/gem5-resources-website">
                             Website Source
                         </Link>
+                        <Button as='a' onClick={resetCookies} className="btn-variant-none" variant="none">Reset Cookies</Button>
                     </Col>
                 </Row>
             </div>
