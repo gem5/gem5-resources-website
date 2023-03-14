@@ -97,25 +97,26 @@ export default function VersionPage({ versions, url }) {
     }
 
     return (
-        <>
-            <Table>
-                <thead>
-                    <tr>
-                        <th>Version</th>
-                        <th>Size</th>
-                        <th colSpan={3}>Links</th>
-                    </tr>
-                </thead>
-                <tbody>
+        versions.length === 0 ? <></> :
+            <>
+                <Table>
+                    <thead>
+                        <tr>
+                            <th>Version</th>
+                            <th>Size</th>
+                            <th colSpan={3}>Links</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-                    {
-                        versions && versions.map((version) => {
-                            return versionComponent(version.version, version.url, version.size)
-                        })
-                    }
+                        {
+                            versions && versions.map((version) => {
+                                return versionComponent(version.version, version.url, version.size)
+                            })
+                        }
 
-                </tbody>
-            </Table>
-        </>
+                    </tbody>
+                </Table>
+            </>
     )
 }

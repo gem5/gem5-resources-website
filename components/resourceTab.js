@@ -310,6 +310,8 @@ function ReadmeTab({ github_url }) {
                 {props.children}
               </pre>
             </CopyIcon>,
+          // add url to image
+          img: ({ node, ...props }) => <img {...props} src={`${github_url.replace('github.com', 'raw.githubusercontent.com').replace('tree/', '')}/${props.src}`} />,
         }}
       >
         {readme}
