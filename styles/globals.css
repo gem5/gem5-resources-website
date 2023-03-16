@@ -1,37 +1,5 @@
-@font-face {
-  font-family: 'OpenSansLight';
-  src: url('../public/fonts/OpenSans/OpenSans-Light.ttf');
-  font-style: normal;
-  font-weight: 300;
-}
-
-@font-face {
-  font-family: 'OpenSansRegular';
-  src: url('../public/fonts/OpenSans/OpenSans-Regular.ttf');
-  font-style: normal;
-  font-weight: 400;
-}
-
-@font-face {
-  font-family: 'OpenSansSemiBold';
-  src: url('../public/fonts/OpenSans/OpenSans-SemiBold.ttf');
-  font-style: normal;
-  font-weight: 600;
-}
-
-@font-face {
-  font-family: 'OpenSansBold';
-  src: url('../public/fonts/OpenSans/OpenSans-Bold.ttf');
-  font-style: normal;
-  font-weight: 700;
-}
-
-@font-face {
-  font-family: 'MulishBold';
-  src: url('../public/fonts/Mulish/Mulish-Bold.ttf');
-  font-style: normal;
-  font-weight: 700;
-}
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@700&display=swap');
 
 :root {
   --bs-primary-rgb: 0, 149, 175;
@@ -171,19 +139,19 @@ code {
 
 .markdown-body h1,
 .page-title {
-  font-family: MulishBold, sans-serif;
+  font-family: 'Mulish', sans-serif;
   font-weight: 700;
   font-size: 2.5rem;
 }
 
 .main-text-title-bold {
-  font-family: OpenSansBold, sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-weight: 700;
   font-size: 1.5rem;
 } 
 
 .about-page h2 {
-  font-family: OpenSansSemiBold, sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-weight: 600;
   font-size: 2rem;
 }
@@ -193,14 +161,14 @@ code {
 .main-text-regular,
 .footer-col a,
 .about-page p {
-  font-family: OpenSansRegular, sans-serif;
-  font-weight: 300;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
   font-size: 1rem;
 }
 
 .main-text-semi,
 .main-text-semi option {
-  font-family: OpenSansSemiBold, sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-weight: 600;
   font-size: 1rem;
 }
@@ -208,13 +176,13 @@ code {
 .secondary-text-semi,
 th,
 h3 {
-  font-family: OpenSansSemiBold, sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-weight: 600;
   font-size: 1.25rem;
 }
 
 .secondary-text-bold  {
-  font-family: OpenSansSemiBold, sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-weight: 600;
   font-size: 1.25rem;
 }
@@ -229,7 +197,7 @@ h3 {
 
 .main-text-bold,
 .accordion-header > button {
-  font-family: OpenSansBold, sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-weight: 700;
   font-size: 1rem;
 }
