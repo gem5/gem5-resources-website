@@ -16,7 +16,7 @@ Here are the fields in both the JSON and MongoDB and what they are:
 
 - `code_examples`: An array of objects that contain example code and a boolean value indicating whether the code has been tested. Extracted from GitHub src of gem5/configs and gem5/tests.
 
-- `description`': A string that provides a description of the resource.
+- `description`: A string that provides a description of the resource.
 
 - `download_url`: A string that provides a URL for downloading the resource hosted on [dist.gem5.org](dist).
 
