@@ -41,13 +41,13 @@ export default function VersionPage({ versions, url }) {
         const [downloadUrl, setDownloadUrl] = useState('')
 
         useEffect(() => {
-            if (!url) {
+            if (!link) {
                 return setDownloadUrl('')
             }
-            link = url.replace('{url_base}', link)
-            link = link.replace('http://', 'https://')
+            // link = url.replace('{url_base}', link)
+            // link = link.replace('http://', 'https://')
             setDownloadUrl(link)
-        }, [url])
+        }, [link])
 
         return (
             <tr className={styles.versions_tr} key={version}>
@@ -58,7 +58,7 @@ export default function VersionPage({ versions, url }) {
                     {sizeof_fmt(size)}
                 </td>
                 <td style={{ width: '24px', height: '24px' }} className={styles.versions_td}>
-                    {url ?
+                    {link ?
                         <Link href={downloadUrl} download>
                             {downloadSvg}
                         </Link>
