@@ -22,7 +22,7 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
     return (
         Object.keys(resource).length === 0 ?
             <Container className={currentStyle + ' ' + className}>
-                <Row className="border-bottom">
+                {/* <Row className="border-bottom">
                     <Col className="border-end">
                         <div>
                             <Placeholder as="h5" animation="glow" style={{ width: '40px' }}>
@@ -47,7 +47,7 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
                             <p className="text-muted">DOWNLOADS</p>
                         </div>
                     </Col>
-                </Row>
+                </Row> */}
                 <Row className="border-bottom">
                     <p className="text-muted">Author</p>
                     <Placeholder as="h4" animation="glow">
@@ -94,7 +94,7 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
                             <h2 className="primary">Metadata</h2>
                         </Col>
                     </Row>
-                    <Row className="border-bottom">
+                    {/* <Row className="border-bottom">
                         <Col className="border-end">
                             <div>
                                 <h5 className="primary">
@@ -119,7 +119,7 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
                                 <p className="text-muted">DOWNLOADS</p>
                             </div>
                         </Col>
-                    </Row>
+                    </Row> */}
                     <Row className="border-bottom">
                         <p className="text-muted">Author</p>
                         <h4 className="primary">
