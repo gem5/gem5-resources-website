@@ -1,7 +1,7 @@
 // This file is used to configure Next.js
 let isProd = process.env.NODE_ENV === 'production'
 // isProd = false;
-isProd = true;
+// isProd = true;
 
 // get path of the websie hosted on github pages from the environment variable
 module.exports = {
@@ -15,7 +15,7 @@ module.exports = {
   env: {
     IS_MONGODB_ENABLED: true,
     MONGODB_API_KEY: "pKkhRJGJaQ3NdJyDt69u4GPGQTDUIhHlx4a3lrKUNx2hxuc8uba8NrP3IVRvlzlo",
-    COLLECTION: "resources_test",
+    COLLECTION: "resources",
   },
   webpack: (config) => {
     config.module.rules.push({
