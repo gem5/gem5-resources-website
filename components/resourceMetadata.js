@@ -173,7 +173,7 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
                                 resource.resources ? Object.keys(resource.resources).map((key, index) => {
                                     return (
                                         <div key={key}>
-                                            <span className="text-muted">{key + " "}</span>
+                                            <span className="text-muted">{key + ": "}</span>
                                             <a href={'/gem5-resources-website/resources/' + resource.resources[key]}>
                                                 {resource.resources[key]}
                                             </a>

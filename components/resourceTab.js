@@ -13,7 +13,7 @@ import { useRouter } from 'next/router';
 import VersionPage from './versionPage';
 import { rehype } from 'rehype';
 import parse from 'html-react-parser'
-import { Placeholder } from 'react-bootstrap';
+import { Nav, OverlayTrigger, Placeholder, Tooltip } from 'react-bootstrap';
 
 /**
  * @component
@@ -29,28 +29,30 @@ export default function ResourceTab({ resource }) {
   const [exampleContent, setExampleContent] = useState([]);
   useEffect(() => {
     async function fetchExampleContent() {
-      if (!resource.example_urls) return;
+      if (!resource.code_examples) return;
       // convert github url to raw url
       let contents = []
-      for (let url of resource.example_urls) {
+      for (let example of resource.code_examples) {
+        const url = example.example;
         let raw_url = url.replace('github.com', 'raw.githubusercontent.com').replace('tree/', '');
         let res = await fetch(raw_url);
         let text = await res.text();
 
         contents.push({
           url: url,
-          content: text
+          content: text,
+          tested: example.tested,
         });
       }
       setExampleContent(contents);
     }
     fetchExampleContent();
-  }, [resource.example_urls]);
+  }, [resource.code_examples]);
 
   useEffect(() => {
     if (!router.isReady) return;
 
-    const tabs = ['readme', 'changelog', 'usage', 'parameters', 'example', 'versions'];
+    const tabs = ['readme', 'changelog', 'usage', 'parameters', 'example', 'versions', 'raw'];
     const page = router.asPath.split('/').slice(2);
     if (page[1]) {
       if (tabs.includes(page[1])) {
@@ -96,17 +98,40 @@ export default function ResourceTab({ resource }) {
             <Usage use={resource.usage} exampleContent={exampleContent} id={resource.id} />
           </Tab>
           <Tab eventKey="parameters" title="Parameters">
-            <Parameters params={resource.additional_params} />
+            <Parameters params={resource.params} />
           </Tab>
-          <Tab eventKey="example" title="Example">
-            <ExampleTab exampleContent={exampleContent} />
-          </Tab>
+          {exampleContent.length > 0 ?
+            <Tab eventKey="example" title="Example">
+              <ExampleTab exampleContent={exampleContent} />
+            </Tab> : null}
           <Tab eventKey="versions" title="Versions">
             <h3 className='font-weight-light versions-table-title'>Versions of {resource.id}</h3>
             <VersionPage versions={resource.versions} url={resource.download_url} />
           </Tab>
+          <Tab eventKey="raw" title="Raw">
+            <RawTab resource={resource} />
+          </Tab>
         </Tabs>
       </div>
+  )
+}
+
+function RawTab({ resource }) {
+  const [raw, setRaw] = useState(<></>);
+  useEffect(() => {
+    async function textToHtml(string) {
+      let text = `<pre><code class="language-python">${string}</code></pre>`;
+      text = await rehype().data('settings', { fragment: true }).use(rehypeHighlight).process(text);
+      setRaw(parse(text.toString()));
+    }
+    textToHtml(JSON.stringify(resource, null, 4));
+  }, [resource]);
+  return (
+    <Tab.Container defaultActiveKey="first">
+      <CopyIcon>
+        {raw}
+      </CopyIcon>
+    </Tab.Container>
   )
 }
 
@@ -205,7 +230,8 @@ function ExampleTab({ exampleContent }) {
         text = await rehype().data('settings', { fragment: true }).use(rehypeHighlight).process(text);
         content.push({
           url: example.url,
-          content: parse(text.toString())
+          content: parse(text.toString()),
+          tested: example.tested
         });
       }
       setExamples(content);
@@ -213,37 +239,46 @@ function ExampleTab({ exampleContent }) {
     textToHtml();
   }, [exampleContent]);
   return (
-    <Tab.Container defaultActiveKey="first">
-      <Tabs variant="pills" defaultActiveKey="0" id="uncontrolled-tab-example">
+    <Tab.Container defaultActiveKey="0">
+      <Nav variant="pills">
         {
           examples.map((content, index) => {
-            return <Tab eventKey={index} title={content.url.split('/').slice(-1)[0]} key={index}>
+            return <OverlayTrigger key={index} placement="top" overlay={
+              content.tested ?
+                <Tooltip id="tooltip-top">
+                  Tested Example
+                </Tooltip> : <></>
+            }>
+              <Nav.Item>
+                <Nav.Link eventKey={index}>
+                  <>
+                    {content.url.split('/').slice(-1)[0]}
+                    {" "}
+                    {content.tested ?
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-patch-check" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M10.354 6.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
+                        <path d="m10.273 2.513-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911l-1.318.016z" />
+                      </svg>
+                      : null}
+                  </>
+                </Nav.Link>
+              </Nav.Item>
+            </OverlayTrigger>
+          })
+        }
+      </Nav>
+      <Tab.Content>
+        {examples.map((content, index) => {
+          return (
+            <Tab.Pane eventKey={index} key={index}>
               <CopyIcon>
                 {content.content}
               </CopyIcon>
-            </Tab>
-          })
+            </Tab.Pane>
+          )
+        })
         }
-      </Tabs>
-    </Tab.Container>
-  );
-}
-
-function SEandFSToggle() {
-  return (
-    <Tab.Container defaultActiveKey="first">
-      <Tabs variant="pills" defaultActiveKey="se" id="uncontrolled-tab-example">
-        <Tab eventKey="se" title="SE Mode">
-          <code>
-            ## INSERT CODE HERE
-          </code>
-        </Tab>
-        <Tab eventKey="fs" title="FS Mode">
-          <code>
-            ## INSERT CODE HERE
-          </code>
-        </Tab>
-      </Tabs>
+      </Tab.Content>
     </Tab.Container>
   );
 }
@@ -254,7 +289,7 @@ function ReadmeTab({ github_url }) {
     async function getReadme() {
       const url = github_url.replace('github.com', 'raw.githubusercontent.com').replace('tree/', '') + '/README.md';
       const res = await fetch(url);
-      if (res.status !== 200) return;
+      if (res.status !== 200) return setReadme('No README.md found in this repository');
       const text = await res.text();
       setReadme(text);
     }
@@ -275,6 +310,8 @@ function ReadmeTab({ github_url }) {
                 {props.children}
               </pre>
             </CopyIcon>,
+          // add url to image
+          img: ({ node, ...props }) => <img {...props} src={`${github_url.replace('github.com', 'raw.githubusercontent.com').replace('tree/', '')}/${props.src}`} />,
         }}
       >
         {readme}

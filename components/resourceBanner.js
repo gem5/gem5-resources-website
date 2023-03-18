@@ -114,11 +114,14 @@ export default function Banner({ resource, setShowMetadata }) {
                         <h6 style={{ lineHeight: 'inherit', margin: '0' }}>
                             VERSION
                         </h6>
-                        <Link className='text-decoration-none text-black' href={'/resources?q=versions:' + (resource.versions && (resource.versions.length > 1 ? resource.versions[1].version : resource.versions[0].version))}>
-                            {
-                                resource.versions && (resource.versions.length > 1 ? resource.versions[1].version : resource.versions[0].version)
-                            }
-                        </Link>
+                        {
+                            resource.versions && resource.versions.length === 0 ? "None" :
+                                <Link className='text-decoration-none text-black' href={'/resources?q=versions:' + (resource.versions && (resource.versions.length > 1 ? resource.versions[1].version : resource.versions[0].version))}>
+                                    {
+                                        resource.versions && (resource.versions.length > 1 ? resource.versions[1].version : resource.versions[0].version)
+                                    }
+                                </Link>
+                        }
                     </div>
                     <div className='d-flex flex-row gap-1'>
                         <h6 style={{ lineHeight: 'inherit', margin: '0' }}>
