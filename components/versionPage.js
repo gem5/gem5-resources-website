@@ -59,7 +59,7 @@ export default function VersionPage({ versions, url }) {
                 </td>
                 <td style={{ width: '24px', height: '24px' }} className={styles.versions_td}>
                     {link ?
-                        <Link href={downloadUrl} download target="_blank" rel="noopener noreferrer">
+                        <Link href={downloadUrl} download target="_blank">
                             {downloadSvg}
                         </Link>
                         :
