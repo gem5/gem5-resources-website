@@ -135,9 +135,12 @@ export default async function getResourcesMongoDB(queryObject, currentPage, page
     });
     pipeline.unshift({
       $search: {
+        index: "default",
         text: {
           query: queryObject.query,
-          path: ["id", "description", "resources", "tags"],
+          path: {
+            wildcard: "*",
+          },
           fuzzy: {
             maxEdits: 2,
             maxExpansions: 100,

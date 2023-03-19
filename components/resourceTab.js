@@ -89,17 +89,19 @@ export default function ResourceTab({ resource }) {
           className='mb-2'
         >
           <Tab eventKey="readme" title="Readme">
-            <ReadmeTab github_url={resource.github_url} />
+            <ReadmeTab github_url={resource.source_url} />
           </Tab>
           <Tab eventKey="changelog" title="Changelog">
-
+            <ChangelogTab github_url={resource.source_url} />
           </Tab>
           <Tab eventKey="usage" title="Usage">
             <Usage use={resource.usage} exampleContent={exampleContent} id={resource.id} />
           </Tab>
-          <Tab eventKey="parameters" title="Parameters">
-            <Parameters params={resource.params} />
-          </Tab>
+          {resource.arguments ?
+            <Tab eventKey="parameters" title="Parameters">
+              <Parameters params={resource.arguments} />
+            </Tab>
+            : null}
           {exampleContent.length > 0 ?
             <Tab eventKey="example" title="Example">
               <ExampleTab exampleContent={exampleContent} />
@@ -290,6 +292,43 @@ function ReadmeTab({ github_url }) {
       const url = github_url.replace('github.com', 'raw.githubusercontent.com').replace('tree/', '') + '/README.md';
       const res = await fetch(url);
       if (res.status !== 200) return setReadme('No README.md found in this repository');
+      const text = await res.text();
+      setReadme(text);
+    }
+    if (!github_url) return;
+    getReadme();
+  }, [github_url]);
+
+  return (
+    <Tab.Container defaultActiveKey="first">
+      <ReactMarkdown
+        className='markdown-body mt-3'
+        rehypePlugins={[[rehypeHighlight, { ignoreMissing: true }], rehypeRaw, rehypeSlug]}
+        remarkPlugins={[remarkGfm, remarkToc, remarkFrontmatter]}
+        components={{
+          pre: ({ node, ...props }) =>
+            <CopyIcon>
+              <pre {...props} >
+                {props.children}
+              </pre>
+            </CopyIcon>,
+          // add url to image
+          img: ({ node, ...props }) => <img {...props} src={`${github_url.replace('github.com', 'raw.githubusercontent.com').replace('tree/', '')}/${props.src}`} />,
+        }}
+      >
+        {readme}
+      </ReactMarkdown>
+    </Tab.Container>
+  );
+}
+
+function ChangelogTab({ github_url }) {
+  const [readme, setReadme] = useState('');
+  useEffect(() => {
+    async function getReadme() {
+      const url = github_url.replace('github.com', 'raw.githubusercontent.com').replace('tree/', '') + '/CHANGELOG.md';
+      const res = await fetch(url);
+      if (res.status !== 200) return setReadme('No CHANGELOG.md found in this repository');
       const text = await res.text();
       setReadme(text);
     }

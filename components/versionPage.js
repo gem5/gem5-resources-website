@@ -69,23 +69,25 @@ export default function VersionPage({ versions, url }) {
                     }
                 </td>
                 <td style={{ width: '24px', height: '24px' }} className={styles.versions_td}>
-                    <div className={styles.icon_wrapper_div}>
-                        <OverlayTrigger trigger="click" placement="bottom" overlay={
-                            <Popover id="popover-basic" >
-                                <Popover.Header as="h3">Download via Terminal</Popover.Header>
-                                <Popover.Body>
-                                    <CopyIcon>
-                                        <code style={{ display: 'block' }}>
-                                            {"wget " + downloadUrl}
-                                        </code>
-                                    </CopyIcon>
-                                </Popover.Body>
-                            </Popover>
-                        }
-                            rootClose>
-                            {codeSvg}
-                        </OverlayTrigger>
-                    </div>
+                    {link ?
+                        <div className={styles.icon_wrapper_div}>
+                            <OverlayTrigger trigger="click" placement="bottom" overlay={
+                                <Popover id="popover-basic" >
+                                    <Popover.Header as="h3">Download via Terminal</Popover.Header>
+                                    <Popover.Body>
+                                        <CopyIcon>
+                                            <code style={{ display: 'block' }}>
+                                                {"wget " + downloadUrl}
+                                            </code>
+                                        </CopyIcon>
+                                    </Popover.Body>
+                                </Popover>
+                            }
+                                rootClose>
+                                {codeSvg}
+                            </OverlayTrigger>
+                        </div>
+                        : null}
                 </td>
                 {/* <td style={{ width: '24px', height: '24px' }} className={styles.versions_td}>
                     <div className={styles.icon_wrapper_div}>

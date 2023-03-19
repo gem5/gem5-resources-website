@@ -9,7 +9,7 @@ import mips from "/public/mips.png";
 import power from "/public/power.png";
 import Link from 'next/link';
 import { Badge, Placeholder, Row } from 'react-bootstrap';
-
+import invalid from "/public/null.svg";
 
 /**
  * @component
@@ -32,7 +32,7 @@ export default function Banner({ resource, setShowMetadata }) {
             case "POWER":
                 return power;
             default:
-                return '';
+                return invalid;
         }
     }
     return (
@@ -107,7 +107,7 @@ export default function Banner({ resource, setShowMetadata }) {
                             height={15}
                         />
                         <Link className='text-decoration-none text-black' href={'/resources?q=architecture:' + resource.architecture}>
-                            {resource.architecture}
+                            {resource.architecture ?? "NONE"}
                         </Link>
                     </p>
                     <div className='d-flex flex-row gap-1'>
@@ -128,7 +128,7 @@ export default function Banner({ resource, setShowMetadata }) {
                             TAGS
                         </h6>
                         {
-                            resource.tags ? resource.tags.map((tag, index) => {
+                            resource.tags.length > 0 ? resource.tags.map((tag, index) => {
                                 return (
                                     <Link key={tag}
                                         href={'/resources?q=tags:' + tag}

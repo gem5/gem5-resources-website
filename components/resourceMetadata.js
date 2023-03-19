@@ -123,7 +123,7 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
                     <Row className="border-bottom">
                         <p className="text-muted">Author</p>
                         <h4 className="primary">
-                            {resource.author ? resource.author.map((author, index) => {
+                            {resource.author.length > 0 ? resource.author.map((author, index) => {
                                 return (
                                     <span key={index}>
                                         {author}
@@ -139,9 +139,9 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
                             {resource.description ?? 'This is a description of the resource.'}
                         </p>
                         {
-                            resource.github_url ?
+                            resource.source_url ?
                                 <Link
-                                    href={resource.github_url}
+                                    href={resource.source_url}
                                 >
                                     Repository (GitHub)
                                 </Link> : null
@@ -150,19 +150,15 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
                     <Row className="border-bottom">
                         <p className="text-muted">License</p>
                         <p className="">
-                            {resource.license ?? 'Unknown'}
-                            {" "}
                             {
-                                resource.license ? <>
-                                    (
+                                resource.license == "" ? 'Unknown' : <>
+                                    {" "}
                                     < Link
                                         href={'https://gem5.googlesource.com/public/gem5/+/refs/heads/stable/LICENSE'}
                                     >
-                                        LICENSE
+                                        {resource.license}
                                     </Link>
-                                    )
-                                </> : null
-
+                                </>
                             }
                         </p>
                     </Row>
