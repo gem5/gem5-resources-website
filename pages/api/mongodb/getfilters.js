@@ -9,7 +9,7 @@ import getToken from "./getToken";
 export default async function getFiltersMongoDB() {
     let accessToken = await getToken();
     // get all distinct categories from resources
-    const res = await fetch('https://us-west-2.aws.data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/aggregate', {
+    const res = await fetch(`${process.env.MONGODB_URI}/action/aggregate`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

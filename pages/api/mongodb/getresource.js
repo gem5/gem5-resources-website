@@ -9,7 +9,7 @@ import getToken from "./getToken";
 */
 export default async function getResourceMongoDB(id) {
     const token = await getToken();
-    const res = await fetch('https://us-west-2.aws.data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/findOne', {
+    const res = await fetch(`${process.env.MONGODB_URI}/action/findOne`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -28,7 +28,7 @@ export default async function getResourceMongoDB(id) {
         })
     }).catch(err => console.log(err));
     const resource = await res.json();
-    const dependendWorkloads = await fetch("https://us-west-2.aws.data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/aggregate", {
+    const dependendWorkloads = await fetch(`${process.env.MONGODB_URI}/action/aggregate`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
