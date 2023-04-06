@@ -106,7 +106,7 @@ export default function Banner({ resource, setShowMetadata }) {
                             alt={resource.architecture ?? "Unknown"}
                             height={15}
                         />
-                        <Link className='text-decoration-none text-black' href={'/resources?q=architecture:' + resource.architecture}>
+                        <Link className='text-black interactDecoration' href={'/resources?q=architecture:' + resource.architecture}>
                             {resource.architecture ?? "NONE"}
                         </Link>
                     </p>
@@ -116,7 +116,7 @@ export default function Banner({ resource, setShowMetadata }) {
                         </h6>
                         {
                             resource.versions && resource.versions.length === 0 ? "None" :
-                                <Link className='text-decoration-none text-black main-text-regular' href={'/resources?q=versions:' + (resource.versions && (resource.versions.length > 1 ? resource.versions[1].version : resource.versions[0].version))}>
+                                <Link className='text-black main-text-regular interactDecoration' href={'/resources?q=versions:' + (resource.versions && (resource.versions.length > 1 ? resource.versions[1].version : resource.versions[0].version))}>
                                     {
                                         resource.versions && (resource.versions.length > 1 ? resource.versions[1].version : resource.versions[0].version)
                                     }
@@ -133,7 +133,7 @@ export default function Banner({ resource, setShowMetadata }) {
                                     <Link key={tag}
                                         href={'/resources?q=tags:' + tag}
                                     >
-                                        <Badge bg='primary' className='resource-page-badge'>
+                                        <Badge bg='primary' className='interactDecoration'>
                                             {tag.toUpperCase()}
                                         </Badge>
                                     </Link>

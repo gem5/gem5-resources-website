@@ -3,13 +3,13 @@
 }
 
 .info p, .active p {
-    margin-top: 0.75rem;
-    margin-bottom: 0.75rem;
+    margin-top: 0.70rem;
+    margin-bottom: 0.70rem;
     word-wrap: break-word;
 }
 
 .info a, .active a {
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.70rem;
     word-wrap: break-word;
 }
 
@@ -55,6 +55,6 @@
     }
 
     .metadata_title_col > h2 {
-        font-size: 36px;
+        font-size: 2.25rem;
     }
 }

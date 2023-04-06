@@ -309,15 +309,12 @@ h3 {
 .badge {
   font-family: OpenSansSemiBold, sans-serif;
   font-weight: 600;
-  border-radius: 0;
+  border-radius: 5px;
 }
 
-.bg-primary {
-  opacity: 75%;
-}
-
-.resource-page-badge:hover {
-  opacity: 100%;
+.interactDecoration:hover {
+  opacity: 50%;
+  cursor: pointer;
 }
 
 .btn-variant-none {
