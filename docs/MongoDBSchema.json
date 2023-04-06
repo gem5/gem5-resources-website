@@ -1,5 +1,5 @@
 {
-    "title": "resource",
+    "title": "resources_test",
     "properties": {
         "_id": {
             "bsonType": "objectId"
@@ -44,6 +44,20 @@
         "category": {
             "bsonType": "string"
         },
+        "code_examples": {
+            "bsonType": "array",
+            "items": {
+                "bsonType": "object",
+                "properties": {
+                    "example": {
+                        "bsonType": "string"
+                    },
+                    "tested": {
+                        "bsonType": "bool"
+                    }
+                }
+            }
+        },
         "description": {
             "bsonType": "string"
         },
@@ -53,13 +67,7 @@
         "function": {
             "bsonType": "string"
         },
-        "gem5_version": {
-            "bsonType": "string"
-        },
         "github_url": {
-            "bsonType": "string"
-        },
-        "group": {
             "bsonType": "string"
         },
         "id": {
@@ -70,6 +78,9 @@
         },
         "is_zipped": {
             "bsonType": "bool"
+        },
+        "license": {
+            "bsonType": "string"
         },
         "md5sum": {
             "bsonType": "string"
@@ -111,6 +122,9 @@
             "items": {
                 "bsonType": "string"
             }
+        },
+        "usage": {
+            "bsonType": "string"
         },
         "versions": {
             "bsonType": "array",

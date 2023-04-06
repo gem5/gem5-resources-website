@@ -22,7 +22,7 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
     return (
         Object.keys(resource).length === 0 ?
             <Container className={currentStyle + ' ' + className}>
-                <Row className="border-bottom">
+                {/* <Row className="border-bottom">
                     <Col className="border-end">
                         <div>
                             <Placeholder as="h5" animation="glow" style={{ width: '40px' }}>
@@ -47,7 +47,7 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
                             <p className="text-muted main-text-regular">DOWNLOADS</p>
                         </div>
                     </Col>
-                </Row>
+                </Row> */}
                 <Row className="border-bottom">
                     <p className="text-muted main-text-regular">Author</p>
                     <Placeholder as="h4" animation="glow">
@@ -94,7 +94,7 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
                             <h2 className="primary">Metadata</h2>
                         </Col>
                     </Row>
-                    <Row className="border-bottom">
+                    {/* <Row className="border-bottom">
                         <Col className="border-end">
                             <div>
                                 <h5 className="primary secondary-text-bold">
@@ -119,11 +119,11 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
                                 <p className="text-muted main-text-regular">DOWNLOADS</p>
                             </div>
                         </Col>
-                    </Row>
+                    </Row> */}
                     <Row className="border-bottom">
                         <p className="text-muted main-text-regular">Author</p>
                         <h4 className="primary main-text-title-bold">
-                            {resource.author ? resource.author.map((author, index) => {
+                            {resource.author.length > 0 ? resource.author.map((author, index) => {
                                 return (
                                     <span key={index}>
                                         {author}
@@ -139,9 +139,9 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
                             {resource.description ?? 'This is a description of the resource.'}
                         </p>
                         {
-                            resource.github_url ?
+                            resource.source_url ?
                                 <Link
-                                    href={resource.github_url}
+                                    href={resource.source_url}
                                     className="main-text-regular"
                                 >
                                     Repository (GitHub)
@@ -151,19 +151,15 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
                     <Row className="border-bottom">
                         <p className="text-muted main-text-regular">License</p>
                         <p className="main-text-regular">
-                            {resource.license ?? 'Unknown'}
-                            {" "}
                             {
-                                resource.license ? <>
-                                    (
+                                resource.license == "" ? 'Unknown' : <>
+                                    {" "}
                                     < Link
                                         href={'https://gem5.googlesource.com/public/gem5/+/refs/heads/stable/LICENSE'}
                                     >
-                                        LICENSE
+                                        {resource.license}
                                     </Link>
-                                    )
-                                </> : null
-
+                                </>
                             }
                         </p>
                     </Row>
@@ -174,7 +170,7 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
                                 resource.resources ? Object.keys(resource.resources).map((key, index) => {
                                     return (
                                         <div key={key}>
-                                            <span className="text-muted">{key + " "}</span>
+                                            <span className="text-muted">{key + ": "}</span>
                                             <a href={'/gem5-resources-website/resources/' + resource.resources[key]}>
                                                 {resource.resources[key]}
                                             </a>

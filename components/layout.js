@@ -1,5 +1,6 @@
 import Topbar from './topbar'
 import Footer from './footer'
+import { Fade } from 'react-bootstrap'
 
 /**
  * @component
@@ -11,9 +12,11 @@ export default function Layout({ children }) {
     return (
         <>
             <Topbar />
-            <main style={{ minHeight: 'calc(100vh - 100px)' }}>
-                {children}
-            </main>
+            <Fade in={true} appear={true} timeout={10}>
+                <main style={{ minHeight: 'calc(100vh - 100px)' }}>
+                    {children}
+                </main>
+            </Fade>
             <Footer />
         </>
     )

@@ -7,7 +7,7 @@ import sparc from "/public/sparc.png";
 import mips from "/public/mips.png";
 import power from "/public/power.png";
 import { Badge } from "react-bootstrap";
-
+import invalid from "/public/null.svg";
 /**
  * @component
  * @description A component that renders a search result which includes 
@@ -31,7 +31,7 @@ export default function SearchResult({ resource }) {
             case "POWER":
                 return power;
             default:
-                return x86;
+                return invalid;
         }
     }
 
@@ -65,8 +65,10 @@ export default function SearchResult({ resource }) {
                         <h6 style={{ lineHeight: 'inherit', margin: '0' }}>
                             v
                         </h6>
+
                         {
-                            resource.versions.length > 1 ? resource.versions[1].version : resource.versions[0].version
+                            resource.versions.length === 0 ? "None" :
+                                (resource.versions.length > 1 ? resource.versions[1].version : resource.versions[0].version)
                         }
                     </div>
                     <div className='d-flex flex-row gap-1'>

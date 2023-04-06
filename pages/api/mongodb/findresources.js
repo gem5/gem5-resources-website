@@ -135,9 +135,12 @@ export default async function getResourcesMongoDB(queryObject, currentPage, page
     });
     pipeline.unshift({
       $search: {
+        index: "default",
         text: {
           query: queryObject.query,
-          path: ["id", "description", "resources", "tags"],
+          path: {
+            wildcard: "*",
+          },
           fuzzy: {
             maxEdits: 2,
             maxExpansions: 100,
@@ -147,7 +150,7 @@ export default async function getResourcesMongoDB(queryObject, currentPage, page
     });
   }
   const res = await fetch(
-    "https://us-west-2.aws.data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/aggregate",
+    `${process.env.MONGODB_URI}/action/aggregate`,
     {
       method: "POST",
       headers: {

@@ -9,7 +9,7 @@ import getToken from "./getToken";
 export default async function fetchResourcesMongoDB() {
   const accessToken = await getToken();
   const res = await fetch(
-    "https://us-west-2.aws.data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/find",
+    `${process.env.MONGODB_URI}/action/find`,
     {
       method: "POST",
       headers: {
