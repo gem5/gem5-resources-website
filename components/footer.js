@@ -24,7 +24,7 @@ export default function Footer() {
     
     return (
         <>
-            <CookieConsent showConsentModal={resetConsent} hasUpdated={setResetConsent} />
+            <CookieConsent showConsentOverlay={resetConsent} hasUpdated={setResetConsent} />
             <div className="d-flex flex-row justify-content-center align-items-center bg-light mt-5" style={{ height: "20vh" }}>
                 <Row className="h-100 w-75">
                     <Col className="text-center primary d-flex flex-column h-100 pt-2 pb-2 gap-1 footer-col">

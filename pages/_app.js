@@ -37,12 +37,12 @@ export default function App({ Component, pageProps }) {
 
   const [isLoading, setIsLoading] = useState(false); //To prevent hydration faliure w/ modal 
   const [consentExists, setConsentExists] = useState({cachedConsent: false, userPreference: null});
-  const [showConsentModal, setShowConsentModal] = useState(false);
+  const [showConsentOverlay, setShowConsentOverlay] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
     const storedConsent = JSON.parse(localStorage.getItem("CookieConsent"));
-    storedConsent ? setConsentExists({cachedConsent: true, userPreference: storedConsent.userPreference}) : setShowConsentModal(true);
+    storedConsent ? setConsentExists({cachedConsent: true, userPreference: storedConsent.userPreference}) : setShowConsentOverlay(true);
   }, [])
 
   return (
@@ -65,7 +65,7 @@ export default function App({ Component, pageProps }) {
       />
       <Layout>
         {
-          !(consentExists.cachedConsent) && isLoading ? <CookieConsent showConsentModal={showConsentModal} hasUpdated={setShowConsentModal} /> : null
+          !(consentExists.cachedConsent) && isLoading ? <CookieConsent showConsentOverlay={showConsentOverlay} hasUpdated={setShowConsentOverlay} /> : null
         }
         <Component {...pageProps} />
       </Layout>
