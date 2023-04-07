@@ -346,6 +346,33 @@ h3 {
   --bs-gradient: none;
 }
 
+.scrollToTop {
+  position: fixed; 
+  bottom: 1rem; 
+  right: 1rem;
+  z-index: 100;
+  transition: opacity 250ms ease 0s;
+}
+
+.scrollToTopBtn {
+  border: 0; 
+  border-radius: 50%; 
+  width: 40px; 
+  height: 40px; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+  background-color: #0095AF;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 5px -1px,
+              rgba(0, 0, 0, 0.14) 0px 6px 10px 0px, 
+              rgba(0, 0, 0, 0.12) 0px 1px 18px 0px;
+  transition: background-color 250ms ease 0ms, box-shadow 250ms ease 0ms;
+}
+
+.scrollToTopBtn:hover {
+  background-color: #00788d;
+}
+
 @media (max-width: 767px) {
   .cardStyle {
       width: 100%;
