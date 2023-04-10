@@ -21,8 +21,8 @@ export default function CategoryHeader({ category }) {
         <Row className={`${styles.categoriesHeaderRow} d-flex flex-wrap`}>
             <Col className={`${styles.categoriesHeaderCol} mt-3`}>
                 <Breadcrumb className={styles.categoriesBreadcrumb}>
-                    <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
-                    <Breadcrumb.Item href="/category">Category</Breadcrumb.Item>
+                    <Breadcrumb.Item href={process.env.BASE_PATH + "/"}>Home</Breadcrumb.Item>
+                    <Breadcrumb.Item href={process.env.BASE_PATH + "/category"}>Category</Breadcrumb.Item>
                     <Breadcrumb.Item active>{capitalizeWord(category)}</Breadcrumb.Item>
                 </Breadcrumb>
             </Col>
