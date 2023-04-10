@@ -2,10 +2,10 @@ import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import VersionPage from "./versionPage";
+import VersionTab from "./tabs/versionTab";
 import { Placeholder } from "react-bootstrap";
 import ReadmeTab from "./tabs/readmeTab";
-import ChangelogTab from "./tabs/changeLogTab";
+import ChangelogTab from "./tabs/changelogTab";
 import UsageTab from "./tabs/usageTab";
 import ParametersTab from "./tabs/parametersTab";
 import ExampleTab from "./tabs/exampleTab";
@@ -124,7 +124,7 @@ export default function ResourceTab({ resource }) {
           <h3 className="font-weight-light versions-table-title">
             Versions of {resource.id}
           </h3>
-          <VersionPage
+          <VersionTab
             versions={resource.versions}
             url={resource.download_url}
           />

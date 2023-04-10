@@ -6,6 +6,7 @@ import logo from 'public/gem5ColorVert.png'
 import { useRouter } from 'next/router'
 import MyCards from '@/components/myCards'
 import Link from "next/link";
+import { useEffect, useState } from 'react'
 
 /**
  * @component
@@ -26,38 +27,40 @@ export default function Home() {
       cardTitle: "riscv-ubuntu-20.04-boot",
       cardText: "A full boot of Ubuntu 20.04 with Linux 5.10 for RISCV.",
       pathRef: "resources/riscv-ubuntu-20.04-boot",
-      buttonText: "Learn More"  
+      buttonText: "Learn More"
     }, {
       cardTitle: "arm-hello64-static",
       cardText: "A 'Hello World!' binary, statically compiled to ARM 64 bit.",
       pathRef: "resources/arm-hello64-static",
-      buttonText: "Learn More"  
+      buttonText: "Learn More"
     }, {
       cardTitle: "x86-ubuntu-18.04-img",
       cardText: "A disk image containing Ubuntu 18.04 for x86.",
       pathRef: "resources/x86-ubuntu-18.04-img",
-      buttonText: "Learn More"  
+      buttonText: "Learn More"
     }
   ];
 
-  const categoryCards = [
-    {
-      cardTitle: "Kernel",
-      cardText: "A computer program that acts as the core of an operating system by managing system resources.",
-      pathRef: "/category/kernel",
-      buttonText: "Learn More"  
-    }, {
-      cardTitle: "Workload",
-      cardText: "Bundles of resources and any input parameters.",
-      pathRef: "/category/workload",
-      buttonText: "Learn More"  
-    }, {
-      cardTitle: "Benchmark",
-      cardText: "A program that is used to test the performance of a computer system.",
-      pathRef: "/category/benchmark",
-      buttonText: "Learn More"  
-    }
-  ];
+  const [categoryCards, setCategoryCards] = useState([]);
+
+  useEffect(() => {
+    fetch("https://raw.githubusercontent.com/Gem5Vision/json-to-mongodb/main/schema/test.json")
+      .then(res => res.json())
+      .then(data => {
+        console.log(data['properties']['category']['enum']);
+        const categoryCards = []
+        for (let i = 0; i < 3; i++) {
+          const category = data['properties']['category']['enum'][i]
+          categoryCards.push({
+            cardTitle: category.charAt(0).toUpperCase() + category.substr(1).toLowerCase(),
+            cardText: data['definitions'][category]['description'],
+            pathRef: `/category#${category}`,
+            buttonText: "Learn More"
+          })
+        }
+        setCategoryCards(categoryCards);
+      })
+  }, [])
 
   return (
     <>
@@ -96,7 +99,7 @@ export default function Home() {
           <p className='text-muted main-text-regular'>These are the "Categories" of Resources we use on this website.</p>
           <div className='cardsContainer'>
             {categoryCards.map((card, index) => (
-                <MyCards className="cardStyle" key={index} cardTitle={card.cardTitle} cardText={card.cardText} pathRef={card.pathRef} buttonText={card.buttonText} />
+              <MyCards className="cardStyle" key={index} cardTitle={card.cardTitle} cardText={card.cardText} pathRef={card.pathRef} buttonText={card.buttonText} />
             ))}
           </div>
           <Link href="/category" passHref={true} style={{ alignSelf: 'flex-end' }} className="mt-3">

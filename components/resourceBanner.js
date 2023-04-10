@@ -88,13 +88,12 @@ export default function Banner({ resource, setShowMetadata }) {
                 </button>
 
                 <div className='d-flex align-items-center mb-2'>
-                    <h5 className='text-muted secondary-text-semi mb-0'>
-                        {/* {resource.date_published} */}
-                        Published 6 months ago
+                    <h5 className='text-muted secondary-text-semi mb-0 me-1'>
+                        Category:
                     </h5>
-                    <div className={styles.dot}></div>
+                    {/* <div className={styles.dot}></div> */}
                     <h5 className='mb-0' style={{ fontSize: '0px' }}>
-                        <Link href={`/category/${resource.category}`} className='primary secondary-text-semi'>
+                        <Link href={`/category#${resource.category}`} className='primary secondary-text-semi'>
                             {String(resource.category).charAt(0).toUpperCase() + String(resource.category).substring(1) ?? "Unknown"}
                         </Link>
                     </h5>

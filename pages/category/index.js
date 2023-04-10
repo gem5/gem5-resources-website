@@ -1,67 +1,91 @@
 import { Container } from "react-bootstrap"
 import MyCards from "@/components/myCards";
+import { useEffect, useState } from "react";
+import CategoryHeader from "@/components/categoryHeader";
+import { ReactMarkdown } from "react-markdown/lib/react-markdown";
+import rehypeHighlight from "rehype-highlight/lib";
+import remarkGfm from 'remark-gfm'
+import remarkToc from 'remark-toc'
+import rehypeSlug from 'rehype-slug'
+import rehypeRaw from 'rehype-raw'
+import remarkFrontmatter from 'remark-frontmatter';
+import CopyIcon from '@/components/copyIcon';
+import { useRouter } from "next/router";
 
 export default function Category() {
-    const categoryCards = [
-        {
-            cardTitle: "Kernel",
-            cardText: "A computer program that acts as the core of an operating system by managing system resources.",
-            pathRef: "/category/kernel",
-            buttonText: "Learn More"  
-        }, {
-            cardTitle: "Workload",
-            cardText: "Bundles of resources and any input parameters.",
-            pathRef: "/category/workload",
-            buttonText: "Learn More"  
-        }, {
-            cardTitle: "Benchmark",
-            cardText: "A program that is used to test the performance of a computer system.",
-            pathRef: "/category/benchmark",
-            buttonText: "Learn More"  
-        }, {
-            cardTitle: "Binary",
-            cardText: "An executable program.",
-            pathRef: "/category/binary",
-            buttonText: "Learn More"  
-        }, {
-            cardTitle: "Bootloader",
-            cardText: "A small program that is responsible for loading the operating system into memory when a computer starts up.",
-            pathRef: "/category/bootloader",
-            buttonText: "Learn More"  
-        }, {
-            cardTitle: "Diskimage",
-            cardText: "A file that contains an exact copy of the data stored on a storage device.",
-            pathRef: "/category/diskimage",
-            buttonText: "Learn More"  
-        }, {
-            cardTitle: "Resource",
-            cardText: "",
-            pathRef: "/category/resource",
-            buttonText: "Learn More"  
-        }, {
-            cardTitle: "Checkpoint",
-            cardText: "A snapshot of a simulation.",
-            pathRef: "/category/checkpoint",
-            buttonText: "Learn More"  
-        }, {
-            cardTitle: "Simpoint",
-            cardText: "A sampling method that increases the speed of gem5 simulations.",
-            pathRef: "/category/simpoint",
-            buttonText: "Learn More"  
+    const [categoryCards, setCategoryCards] = useState([]);
+    const [category, setCategory] = useState(null);
+    const [content, setContent] = useState("");
+    const router = useRouter();
+
+    useEffect(() => {
+        async function fetchContent(category) {
+            try {
+                const content = (await import(`./${category}.md`)).default;
+                setContent(content);
+            } catch (e) {
+                console.log(e);
+                router.push('/404');
+            }
         }
-    ];
+        // check if #category is in the url
+        const hash = window.location.hash;
+        if (hash) {
+            const category = hash.substr(1);
+            setCategory(category);
+            fetchContent(category);
+            return;
+        }
+    }, [router])
+
+    useEffect(() => {
+        fetch("https://raw.githubusercontent.com/Gem5Vision/json-to-mongodb/main/schema/test.json")
+            .then(res => res.json())
+            .then(data => {
+                console.log(data['properties']['category']['enum']);
+                const categoryCards = data['properties']['category']['enum'].map((category) => {
+                    return {
+                        cardTitle: category.charAt(0).toUpperCase() + category.substr(1).toLowerCase(),
+                        cardText: data['definitions'][category]['description'],
+                        pathRef: `/category#${category}`,
+                        buttonText: "Learn More"
+                    }
+                })
+                setCategoryCards(categoryCards);
+            })
+    }, [])
 
     return (
-        <Container>
-            <div className='cardsBlockContainer mt-5 mb-5'>
-                <h2 className='secondary page-title mb-3'>Categories</h2>
-                <p className='text-muted main-text-regular'>These are the "Categories" of Resources we use on this website.</p>
-                <div className='cardsContainer' style={{ justifyContent: 'center' }}>
-                    {categoryCards.map((card, index) => (
-                        <MyCards className="cardStyle" key={index} cardTitle={card.cardTitle} cardText={card.cardText} pathRef={card.pathRef} buttonText={card.buttonText} />
-                    ))}
+        category ?
+            <Container>
+                <CategoryHeader category={category} />
+                <ReactMarkdown
+                    className='markdown-body mt-3'
+                    rehypePlugins={[[rehypeHighlight, { ignoreMissing: true }], rehypeRaw, rehypeSlug]}
+                    remarkPlugins={[remarkGfm, remarkToc, remarkFrontmatter]}
+                    components={{
+                        pre: ({ node, ...props }) =>
+                            <CopyIcon>
+                                <pre {...props} >
+                                    {props.children}
+                                </pre>
+                            </CopyIcon>,
+                    }}
+                >
+                    {content}
+                </ReactMarkdown>
+            </Container>
+            :
+            <Container>
+                <div className='cardsBlockContainer mt-5 mb-5'>
+                    <h2 className='secondary page-title mb-3'>Categories</h2>
+                    <p className='text-muted main-text-regular'>These are the "Categories" of Resources we use on this website.</p>
+                    <div className='cardsContainer' style={{ justifyContent: 'center' }}>
+                        {categoryCards.map((card, index) => (
+                            <MyCards className="cardStyle" key={index} cardTitle={card.cardTitle} cardText={card.cardText} pathRef={card.pathRef} buttonText={card.buttonText} />
+                        ))}
+                    </div>
                 </div>
-            </div>
-        </Container>
+            </Container>
     );
 }
