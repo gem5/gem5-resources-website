@@ -291,7 +291,7 @@ export default function Resources() {
                                         : <Results />
                                 }
                             </Row>
-                            <Row style={{ justifyContent: 'space-between' }} className='pagingContainer'>
+                            <Row style={{ justifyContent: 'space-around' }} className='pagingContainer'>
                                 <Paginate
                                     pageCount={pageCount}
                                     currentPage={currentPage}
