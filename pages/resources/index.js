@@ -292,36 +292,6 @@ export default function Resources() {
                                 }
                             </Row>
                             <Row style={{ justifyContent: 'space-between' }} className='pagingContainer'>
-                                {/* <Form.Select
-                                    //value 
-                                    className='w-auto primary main-text-semi mt-3'
-                                    defaultValue={numberOfItemsPerPage.toString()}
-                                    value={numberOfItemsPerPage.toString()}
-                                    onChange={(value) => {
-                                        // if the page is more than the max page number, set the page to the max page number
-                                        if (currentPage > Math.ceil(total / parseInt(value.target.value))) {
-                                            setNumberOfItemsPerPage(parseInt(value.target.value));
-                                            setCurrentPage(Math.ceil(total / parseInt(value.target.value)))
-                                            router.push({
-                                                pathname: '/resources',
-                                                query: { q: query, page: Math.ceil(total / parseInt(value.target.value)), limit: parseInt(value.target.value) }
-                                            })
-                                        }
-                                        else {
-                                            setNumberOfItemsPerPage(parseInt(value.target.value));
-                                            router.push({
-                                                pathname: '/resources',
-                                                query: { q: query, page: currentPage, limit: parseInt(value.target.value) }
-                                            })
-                                        }
-                                    }}
-                                    style={{ cursor: 'pointer', height: 'fit-content', paddingRight: '1.75rem' }}
-                                >
-                                    <option value='10'>10 per page</option>
-                                    <option value='25'>25 per page</option>
-                                    <option value='50'>50 per page</option>
-                                    <option value='100'>100 per page</option>
-                                </Form.Select> */}
                                 <Paginate
                                     pageCount={pageCount}
                                     currentPage={currentPage}
