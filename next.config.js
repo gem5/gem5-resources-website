@@ -17,7 +17,8 @@ module.exports = {
     IS_MONGODB_ENABLED: true,
     MONGODB_API_KEY: "pKkhRJGJaQ3NdJyDt69u4GPGQTDUIhHlx4a3lrKUNx2hxuc8uba8NrP3IVRvlzlo",
     COLLECTION: "resources",
-    MONGODB_URI: "https://data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1"
+    MONGODB_URI: "https://data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1",
+    BASE_PATH: isProd ? '/gem5-resources-website' : '',
   },
   webpack: (config) => {
     config.module.rules.push({

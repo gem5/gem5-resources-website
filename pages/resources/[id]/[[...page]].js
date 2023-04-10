@@ -43,15 +43,16 @@ function Resource() {
         window.addEventListener("resize", onTabletResize);
         return () => { window.removeEventListener("resize", onTabletResize) }
     }, [])
-    
+
     return (
+        loading ? <div>Loading...</div> :
             <>
                 <Head>
                     <title>{resource.id}</title>
                     <meta name="description" content="Find the resource you need" />
                     <meta name="viewport" content="width=device-width, initial-scale=1" />
                 </Head>
-                {showMetadata && isTablet ? <MetaData resource={resource ?? {}} showMetadata={showMetadata} setShowMetadata={setShowMetadata}/>:
+                {showMetadata && isTablet ? <MetaData resource={resource ?? {}} showMetadata={showMetadata} setShowMetadata={setShowMetadata} /> :
                     <Container className='mt-5 resources_page_container'>
                         <Row>
                             <Banner resource={resource ?? {}} setShowMetadata={setShowMetadata} />
@@ -61,7 +62,7 @@ function Resource() {
                             <MetaData resource={resource ?? {}} className='ms-5' />
                         </Row>
                     </Container>
-                } 
+                }
             </>
     )
 }

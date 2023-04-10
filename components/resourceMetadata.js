@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Container, Row, Col, Placeholder } from "react-bootstrap";
 import styles from '/styles/metadata.module.css'
 import { useEffect, useState } from 'react';
-
+import { useRouter } from "next/router";
 /**
  * @component
  * @description A component that renders the metadata of a resource that includes
@@ -14,6 +14,7 @@ import { useEffect, useState } from 'react';
 */
 export default function MetaData({ resource, className, showMetadata, setShowMetadata }) {
     const [currentStyle, setCurrentStyle] = useState(styles.info)
+    const router = useRouter()
 
     useEffect(() => {
         showMetadata ? setCurrentStyle(styles.active) : setCurrentStyle(styles.info)
@@ -173,7 +174,7 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
                                             <div>
                                                 {key.charAt(0).toUpperCase() + key.slice(1)}
                                             </div>
-                                            <a href={'/gem5-resources-website/resources/' + resource.resources[key]} style={{ display:'block', paddingTop: '0.0625rem' }}>
+                                            <a href={process.env.BASE_PATH + '/resources/' + resource.resources[key]} style={{ display: 'block', paddingTop: '0.0625rem' }}>
                                                 {resource.resources[key]}
                                             </a>
                                         </div>
@@ -190,7 +191,7 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
                                     return (
                                         <span key={workload}>
                                             <a
-                                                href={'/gem5-resources-website/resources/' + workload}
+                                                href={process.env.BASE_PATH + '/resources/' + workload}
                                             >
                                                 {workload}
                                             </a>
