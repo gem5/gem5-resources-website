@@ -10,13 +10,12 @@ import rehypeSlug from 'rehype-slug'
 import rehypeRaw from 'rehype-raw'
 import remarkFrontmatter from 'remark-frontmatter';
 import CopyIcon from '@/components/copyIcon';
-import { useRouter } from "next/router";
+import Router from "next/router";
 
 export default function Category() {
     const [categoryCards, setCategoryCards] = useState([]);
     const [category, setCategory] = useState(null);
     const [content, setContent] = useState("");
-    const router = useRouter();
 
     useEffect(() => {
         async function fetchContent(category) {
@@ -25,7 +24,7 @@ export default function Category() {
                 setContent(content);
             } catch (e) {
                 console.log(e);
-                router.push('/404');
+                Router.push('/404');
             }
         }
         // check if #category is in the url
