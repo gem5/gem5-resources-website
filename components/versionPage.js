@@ -51,15 +51,15 @@ export default function VersionPage({ versions, url }) {
 
         return (
             <tr className={styles.versions_tr} key={version}>
-                <td className={styles.versions_td}>
+                <td className={`${styles.versions_td} main-text-regular`}>
                     {version}
                 </td>
-                <td className={styles.versions_td}>
+                <td className={`${styles.versions_td} main-text-regular`}>
                     {sizeof_fmt(size)}
                 </td>
                 <td style={{ width: '24px', height: '24px' }} className={styles.versions_td}>
                     {link ?
-                        <Link href={downloadUrl} download target="_blank">
+                        <Link href={downloadUrl} download target="_blank" className="interactDecoration">
                             {downloadSvg}
                         </Link>
                         :

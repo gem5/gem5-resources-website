@@ -1,37 +1,5 @@
-/* @font-face {
-  font-family: 'OpenSansLight';
-  src: url('../public/fonts/OpenSans/OpenSans-Light.ttf');
-  font-style: normal;
-  font-weight: 300;
-}
-
-@font-face {
-  font-family: 'OpenSansRegular';
-  src: url('../public/fonts/OpenSans/OpenSans-Regular.ttf');
-  font-style: normal;
-  font-weight: 400;
-}
-
-@font-face {
-  font-family: 'OpenSansSemiBold';
-  src: url('../public/fonts/OpenSans/OpenSans-SemiBold.ttf');
-  font-style: normal;
-  font-weight: 600;
-}
-
-@font-face {
-  font-family: 'OpenSansBold';
-  src: url('../public/fonts/OpenSans/OpenSans-Bold.ttf');
-  font-style: normal;
-  font-weight: 700;
-}
-
-@font-face {
-  font-family: 'MulishBold';
-  src: url('../public/fonts/Mulish/Mulish-Bold.ttf');
-  font-style: normal;
-  font-weight: 700;
-} */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@700&display=swap');
 
 :root {
   --bs-primary-rgb: 0, 149, 175;
@@ -70,6 +38,11 @@ a:hover {
 
 .primary {
   color: #0095AF;
+}
+
+.markdown-body h1,
+.secondary {
+  color: #425469;
 }
 
 .spinner {
@@ -164,37 +137,52 @@ code {
   }
 }
 
-/* h2 {
-  font-family: MulishBold, sans-serif;
+.markdown-body h1,
+.page-title {
+  font-family: 'Mulish', sans-serif;
   font-weight: 700;
-  font-size: 36px;
+  font-size: 2.5rem;
 }
 
-h4 {
-  font-family: OpenSansBold, sans-serif;
+.main-text-title-bold {
+  font-family: 'Open Sans', sans-serif;
   font-weight: 700;
   font-size: 1.5rem;
-} */
+} 
 
-/* .tabs, label, p, a, td
-  {
-  font-family: OpenSansRegular, sans-serif;
-  font-weight: 300;
+.about-page h2 {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
+  font-size: 2rem;
+}
+
+.btn-variant-none,
+.markdown-body p,
+.main-text-regular,
+.footer-col a,
+.about-page p {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
   font-size: 1rem;
 }
 
-.value,
-.value option {
-  font-family: OpenSansSemiBold, sans-serif;
+.main-text-semi,
+.main-text-semi option {
+  font-family: 'Open Sans', sans-serif;
   font-weight: 600;
   font-size: 1rem;
-} */
+}
 
-.resource-category,
-.resource-date-published,
+.secondary-text-semi,
 th,
 h3 {
-  font-family: OpenSansSemiBold, sans-serif;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+.secondary-text-bold  {
+  font-family: 'Open Sans', sans-serif;
   font-weight: 600;
   font-size: 1.25rem;
 }
@@ -207,9 +195,9 @@ h3 {
   --bs-accordion-btn-color: #0095AF;
 }
 
-.value-label,
-.accordion-header>button {
-  font-family: OpenSansBold, sans-serif;
+.main-text-bold,
+.accordion-header > button {
+  font-family: 'Open Sans', sans-serif;
   font-weight: 700;
   font-size: 1rem;
 }
@@ -288,6 +276,110 @@ h3 {
   color: var(--color-primary) !important;
 }
 
+.cardsBlockContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.cardsBlockContainer > p {
+  text-align: center;
+}
+
+.cardsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  gap: 1rem;
+}
+
+.cardStyle {
+  width: calc(100% / 3 - 1rem);
+}
+
+.cardStyle > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.badge {
+  font-family: OpenSansSemiBold, sans-serif;
+  font-weight: 600;
+  border-radius: 5px;
+}
+
+.interactDecoration:hover {
+  opacity: 50%;
+  cursor: pointer;
+}
+
+.btn-variant-none {
+  color: #0070f3;
+  text-decoration: none;
+  padding: 0;
+  border: none;
+}
+
+.btn-variant-none:hover {
+  color: #0a58ca;
+}
+
+.btn-outline-secondary {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: #0095AF;
+  --bs-btn-border-color: #0095AF;
+  --bs-btn-hover-color: #0095AF;
+  --bs-btn-hover-bg: #fff;
+  --bs-btn-hover-border-color: #0095AF;
+  --bs-btn-focus-shadow-rgb: 13, 110, 253;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #fff;
+  --bs-btn-active-border-color: #0095AF;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #0095AF;
+  --bs-btn-disabled-bg: transparent;
+  --bs-btn-disabled-border-color: #0095AF;
+  --bs-gradient: none;
+}
+
+.scrollToTop {
+  position: fixed; 
+  bottom: 1rem; 
+  right: 1rem;
+  z-index: 100;
+  transition: opacity 250ms ease 0s;
+}
+
+.scrollToTopBtn {
+  border: 0; 
+  border-radius: 50%; 
+  width: 40px; 
+  height: 40px; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+  background-color: #0095AF;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 5px -1px,
+              rgba(0, 0, 0, 0.14) 0px 6px 10px 0px, 
+              rgba(0, 0, 0, 0.12) 0px 1px 18px 0px;
+  transition: background-color 250ms ease 0ms, box-shadow 250ms ease 0ms;
+}
+
+.scrollToTopBtn:hover {
+  background-color: #00788d;
+}
+
+@media (max-width: 767px) {
+  .cardStyle {
+      width: 100%;
+      margin-bottom: 10px;
+  }
+}
+
 @media (max-width: 768px) {
   .topbar-search {
     width: 100%;
@@ -324,8 +416,9 @@ h3 {
     margin: 5px 0px;
   }
 
-  h2 {
-    font-size: 24px;
+  .page-title,
+  .about-page h2 {
+    font-size: 1.5rem;
   }
 }
 
@@ -338,18 +431,24 @@ h3 {
 }
 
 @media (max-width: 425px) {
-
-  .value-label,
-  .value,
-  .accordion-header>button,
-  label,
-  p,
-  .tabs,
-  td {
+  .btn-variant-none,
+  .markdown-body p,
+  .main-text-regular, 
+  .about-page p,
+  .main-text-semi,
+  .main-text-semi option 
+  .main-text-bold,
+  .accordion-header > button, 
+  .tabs 
+  .footer-col a {
     font-size: 0.875rem;
   }
 
-  h4,
+  .markdown-body h1 {
+    font-size: 2rem;
+  }
+
+  .main-text-title-bold,
   .versions-table-title {
     font-size: 1.25rem;
   }
@@ -359,8 +458,7 @@ h3 {
     width: 200px;
   }
 
-  .resource-category,
-  .resource-date-published,
+  .secondary-text-semi,
   th {
     font-size: 1rem;
   }

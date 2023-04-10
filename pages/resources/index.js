@@ -224,48 +224,51 @@ export default function Resources() {
                         <Col>
                             <Row className='justify-content-between align-items-center mb-1 results-sortBy-row'>
                                 <div className='w-auto'>
-                                    <span className='text-uppercase me-2 text-muted value-label'>
+                                    <span className='text-uppercase me-2 text-muted main-text-bold'>
                                         Results
                                     </span>
-                                    <span className='primary value' style={{ paddingLeft: "0.50rem" }}>
+                                    <span className='primary main-text-semi' style={{ paddingLeft: "0.50rem" }}>
                                         {total == 0 ? 0 : (currentPage - 1) * numberOfItemsPerPage + 1} - {Math.min(currentPage * numberOfItemsPerPage, total)} of {total}
                                     </span>
                                 </div>
                                 <Form.Select
-                                    className='w-auto primary value'
-                                    defaultValue={numberOfItemsPerPage.toString()}
-                                    value={numberOfItemsPerPage.toString()}
-                                    onChange={(value) => {
-                                        // if the page is more than the max page number, set the page to the max page number
-                                        if (currentPage > Math.ceil(total / parseInt(value.target.value))) {
-                                            setNumberOfItemsPerPage(parseInt(value.target.value));
-                                            setCurrentPage(Math.ceil(total / parseInt(value.target.value)))
-                                            router.push({
-                                                pathname: '/resources',
-                                                query: { q: query, page: Math.ceil(total / parseInt(value.target.value)), limit: parseInt(value.target.value) }
-                                            })
-                                        }
-                                        else {
-                                            setNumberOfItemsPerPage(parseInt(value.target.value));
-                                            router.push({
-                                                pathname: '/resources',
-                                                query: { q: query, page: currentPage, limit: parseInt(value.target.value) }
-                                            })
-                                        }
-                                    }}
-                                    style={{ cursor: 'pointer' }}
-                                >
-                                    <option value='10'>10 per page</option>
-                                    <option value='25'>25 per page</option>
-                                    <option value='50'>50 per page</option>
-                                    <option value='100'>100 per page</option>
+                                        //value 
+                                        className='w-auto primary main-text-semi'
+                                        defaultValue={numberOfItemsPerPage.toString()}
+                                        value={numberOfItemsPerPage.toString()}
+                                        onChange={(value) => {
+                                            // if the page is more than the max page number, set the page to the max page number
+                                            if (currentPage > Math.ceil(total / parseInt(value.target.value))) {
+                                                setNumberOfItemsPerPage(parseInt(value.target.value));
+                                                setCurrentPage(Math.ceil(total / parseInt(value.target.value)))
+                                                router.push({
+                                                    pathname: '/resources',
+                                                    query: { q: query, page: Math.ceil(total / parseInt(value.target.value)), limit: parseInt(value.target.value) }
+                                                })
+                                            }
+                                            else {
+                                                setNumberOfItemsPerPage(parseInt(value.target.value));
+                                                router.push({
+                                                    pathname: '/resources',
+                                                    query: { q: query, page: currentPage, limit: parseInt(value.target.value) }
+                                                })
+                                            }
+                                        }}
+                                        style={{ cursor: 'pointer', height: 'fit-content', paddingRight: '1.75rem' }}
+                                    >
+                                        <option value='10'>10 per page</option>
+                                        <option value='25'>25 per page</option>
+                                        <option value='50'>50 per page</option>
+                                        <option value='100'>100 per page</option>
                                 </Form.Select>
                                 <div className='w-auto d-flex align-items-center'>
-                                    <span className='text-uppercase me-2 text-muted value-label'>
+                                    {/*value-label*/}
+                                    <span className='text-uppercase me-2 text-muted main-text-bold'>
                                         Sort by
                                     </span>
                                     <Form.Select
-                                        className='w-auto primary text-uppercase border-0 value'
+                                        //value
+                                        className='w-auto primary text-uppercase border-0 main-text-semi'
                                         aria-label="Default select example"
                                         value={sort}
                                         onChange={onSortChange}
@@ -288,7 +291,7 @@ export default function Resources() {
                                         : <Results />
                                 }
                             </Row>
-                            <Row>
+                            <Row style={{ justifyContent: 'space-around' }} className='pagingContainer'>
                                 <Paginate
                                     pageCount={pageCount}
                                     currentPage={currentPage}

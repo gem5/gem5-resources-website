@@ -1,10 +1,10 @@
 import '@/styles/globals.css'
 import Layout from '@/components/layout'
 import Router from 'next/router'
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import NProgress from 'nprogress';
 import Script from 'next/script';
-import CookieConsent from "react-cookie-consent";
+import CookieConsent from '@/components/cookieConsent'
 
 NProgress.configure({ showSpinner: false });
 
@@ -35,6 +35,16 @@ export default function App({ Component, pageProps }) {
     };
   }, [])
 
+  const [isLoading, setIsLoading] = useState(false); //To prevent hydration faliure w/ modal 
+  const [consentExists, setConsentExists] = useState({cachedConsent: false, userPreference: null});
+  const [showConsentOverlay, setShowConsentOverlay] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(true);
+    const storedConsent = JSON.parse(localStorage.getItem("CookieConsent"));
+    storedConsent ? setConsentExists({cachedConsent: true, userPreference: storedConsent.userPreference}) : setShowConsentOverlay(true);
+  }, [])
+
   return (
     <>
       <Script strategy="afterInteractive" src="https://www.googletagmanager.com/gtag/js?id=G-2B1F9HP95Z" />
@@ -47,29 +57,17 @@ export default function App({ Component, pageProps }) {
           function gtag(){ dataLayer.push(arguments); }
           gtag('js', new Date());
           gtag('config', 'G-2B1F9HP95Z')
+          gtag('consent', 'default', {
+            'analytics_storage': 'denied'
+          })
 `,
         }}
       />
       <Layout>
+        {
+          !(consentExists.cachedConsent) && isLoading ? <CookieConsent showConsentOverlay={showConsentOverlay} hasUpdated={setShowConsentOverlay} /> : null
+        }
         <Component {...pageProps} />
-        <CookieConsent
-          // disableStyles={true}
-          style={{ background: "var(--color-primary)", alignItems: "center", justifyContent: "center" }}
-          buttonClasses="cookie-button"
-          buttonStyle={{
-            border: "1px solid white",
-            borderRadius: "0.375rem",
-            color: "white",
-            fontSize: "1rem",
-            fontWeight: "400",
-            lineHeight: "1.5",
-            padding: "0.375rem 0.75rem",
-            backgroundColor: "var(--bs-btn-bg)"
-          }}
-          expires={150}
-        >
-        This website uses non-essential cookies to track analytics, which helps us improve our website's performance and user experience. By using this website, you consent to the use of cookies. If you do not wish to accept cookies, please disable them in your browser settings.
-        </CookieConsent>
       </Layout>
     </>
   )

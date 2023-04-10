@@ -7,6 +7,7 @@ import rehypeSlug from 'rehype-slug'
 import rehypeRaw from 'rehype-raw'
 import remarkFrontmatter from 'remark-frontmatter';
 import about from './index.md'
+import { Container } from 'react-bootstrap';
 
 /**
  * @component
@@ -15,16 +16,14 @@ import about from './index.md'
 */
 function About() {
   return (
-    <div className="App" style={{
-        padding: "50px"
-    }}>
-      <ReactMarkdown
-      className='markdown-body mt-3'
-      rehypePlugins={[[rehypeHighlight, { ignoreMissing: true }], rehypeRaw, rehypeSlug]}
-      remarkPlugins={[remarkGfm, remarkToc, remarkFrontmatter]}>
-        {about}
-      </ReactMarkdown>
-    </div>
+    <Container className='mt-5'>
+        <ReactMarkdown
+        className='markdown-body mt-3 about-page'
+        rehypePlugins={[[rehypeHighlight, { ignoreMissing: true }], rehypeRaw, rehypeSlug]}
+        remarkPlugins={[remarkGfm, remarkToc, remarkFrontmatter]}>
+          {about}
+        </ReactMarkdown>
+    </Container>
   );
 }
 

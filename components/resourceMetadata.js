@@ -28,7 +28,7 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
                             <Placeholder as="h5" animation="glow" style={{ width: '40px' }}>
                                 <Placeholder xs={12} />
                             </Placeholder>
-                            <p className="text-muted">LIKES</p>
+                            <p className="text-muted main-text-regular">LIKES</p>
                         </div>
                     </Col>
                     <Col className="border-end">
@@ -36,7 +36,7 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
                             <Placeholder as="h5" animation="glow" style={{ width: '40px' }}>
                                 <Placeholder xs={12} />
                             </Placeholder>
-                            <p className="text-muted">VIEWS</p>
+                            <p className="text-muted main-text-regular">VIEWS</p>
                         </div>
                     </Col>
                     <Col>
@@ -44,18 +44,18 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
                             <Placeholder as="h5" animation="glow" style={{ width: '40px' }}>
                                 <Placeholder xs={12} />
                             </Placeholder>
-                            <p className="text-muted">DOWNLOADS</p>
+                            <p className="text-muted main-text-regular">DOWNLOADS</p>
                         </div>
                     </Col>
                 </Row> */}
                 <Row className="border-bottom">
-                    <p className="text-muted">Author</p>
+                    <p className="text-muted main-text-regular">Author</p>
                     <Placeholder as="h4" animation="glow">
                         <Placeholder xs={12} />
                     </Placeholder>
                 </Row>
                 <Row className="border-bottom">
-                    <p className="text-muted">Description</p>
+                    <p className="text-muted main-text-regular">Description</p>
                     <Placeholder as="p" animation="glow">
                         <Placeholder xs={12} />
                         <Placeholder xs={12} />
@@ -63,19 +63,19 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
                     </Placeholder>
                 </Row>
                 <Row className="border-bottom">
-                    <p className="text-muted">License</p>
+                    <p className="text-muted main-text-regular">License</p>
                     <Placeholder as="p" animation="glow">
                         <Placeholder xs={12} />
                     </Placeholder>
                 </Row>
                 <Row className="border-bottom">
-                    <p className="text-muted">Properties</p>
+                    <p className="text-muted main-text-regular">Properties</p>
                     <Placeholder as="p" animation="glow">
                         <Placeholder xs={12} />
                     </Placeholder>
                 </Row>
                 <Row className="border-bottom">
-                    <p className="text-muted">Depend on this resource</p>
+                    <p className="text-muted main-text-regular">Depend on this resource</p>
                     <Placeholder as="p" animation="glow">
                         <Placeholder xs={12} />
                     </Placeholder>
@@ -97,32 +97,32 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
                     {/* <Row className="border-bottom">
                         <Col className="border-end">
                             <div>
-                                <h5 className="primary">
+                                <h5 className="primary secondary-text-bold">
                                     {Math.floor(Math.random() * 100)}
                                 </h5>
-                                <p className="text-muted">LIKES</p>
+                                <p className="text-muted main-text-regular">LIKES</p>
                             </div>
                         </Col>
                         <Col className="border-end">
                             <div>
-                                <h5 className="primary">
+                                <h5 className="primary secondary-text-bold">
                                     {Math.floor(Math.random() * 10000)}
                                 </h5>
-                                <p className="text-muted">VIEWS</p>
+                                <p className="text-muted main-text-regular">VIEWS</p>
                             </div>
                         </Col>
                         <Col>
                             <div>
-                                <h5 className="primary">
+                                <h5 className="primary secondary-text-bold">
                                     {Math.floor(Math.random() * 100)}
                                 </h5>
-                                <p className="text-muted">DOWNLOADS</p>
+                                <p className="text-muted main-text-regular">DOWNLOADS</p>
                             </div>
                         </Col>
                     </Row> */}
                     <Row className="border-bottom">
-                        <p className="text-muted">Author</p>
-                        <h4 className="primary">
+                        <p className="text-muted main-text-regular">Author</p>
+                        <h4 className="primary main-text-title-bold">
                             {resource.author.length > 0 ? resource.author.map((author, index) => {
                                 return (
                                     <span key={index}>
@@ -134,22 +134,23 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
                         </h4>
                     </Row>
                     <Row className="border-bottom">
-                        <p className="text-muted">Description</p>
-                        <p className="">
+                        <p className="text-muted main-text-regular">Description</p>
+                        <p className="main-text-regular">
                             {resource.description ?? 'This is a description of the resource.'}
                         </p>
                         {
                             resource.source_url ?
                                 <Link
                                     href={resource.source_url}
+                                    className="main-text-regular"
                                 >
                                     Repository (GitHub)
                                 </Link> : null
                         }
                     </Row>
                     <Row className="border-bottom">
-                        <p className="text-muted">License</p>
-                        <p className="">
+                        <p className="text-muted main-text-regular">License</p>
+                        <p className="main-text-regular">
                             {
                                 resource.license == "" ? 'Unknown' : <>
                                     {" "}
@@ -163,25 +164,27 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
                         </p>
                     </Row>
                     <Row className="border-bottom">
-                        <p className="text-muted">Properties</p>
-                        <p className="">
+                        <p className="text-muted main-text-regular">Properties</p>
+                        <p className="main-text-regular">
                             {
                                 resource.resources ? Object.keys(resource.resources).map((key, index) => {
                                     return (
                                         <div key={key}>
-                                            <span className="text-muted">{key + ": "}</span>
-                                            <a href={'/gem5-resources-website/resources/' + resource.resources[key]}>
+                                            <div>
+                                                {key.charAt(0).toUpperCase() + key.slice(1)}
+                                            </div>
+                                            <a href={'/gem5-resources-website/resources/' + resource.resources[key]} style={{ display:'block', paddingTop: '0.0625rem' }}>
                                                 {resource.resources[key]}
                                             </a>
                                         </div>
-                                    )
+                                    );
                                 }) : 'None'
                             }
                         </p>
                     </Row>
                     <Row className="border-bottom">
-                        <p className="text-muted">Depend on this resource</p>
-                        <p className="">
+                        <p className="text-muted main-text-regular">Depend on this resource</p>
+                        <p className="main-text-regular">
                             {
                                 (resource.workloads && resource.workloads.length > 0) ? resource.workloads.map((workload, index) => {
                                     return (

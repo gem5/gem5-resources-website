@@ -8,16 +8,12 @@ import rehypeRaw from 'rehype-raw'
 import remarkFrontmatter from 'remark-frontmatter';
 import CopyIcon from '@/components/copyIcon';
 import simpoint from './simpoint.md'
-import Link from "next/link";
+import CategoryHeader from "@/components/categoryHeader";
 
 export default function Simpoint() {
     return (
         <Container>
-            <Link
-                href="/resources?q=category:simpoint"
-            >
-                View all simpoints
-            </Link>
+            <CategoryHeader category={"simpoint"} />
             <ReactMarkdown
                 className='markdown-body mt-3'
                 rehypePlugins={[[rehypeHighlight, { ignoreMissing: true }], rehypeRaw, rehypeSlug]}

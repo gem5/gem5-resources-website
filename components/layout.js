@@ -1,6 +1,7 @@
 import Topbar from './topbar'
 import Footer from './footer'
 import { Fade } from 'react-bootstrap'
+import ScrollToTop from './scrollToTop'
 
 /**
  * @component
@@ -17,6 +18,7 @@ export default function Layout({ children }) {
                     {children}
                 </main>
             </Fade>
+            <ScrollToTop />
             <Footer />
         </>
     )

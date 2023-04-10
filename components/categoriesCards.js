@@ -73,10 +73,10 @@ export default function CategoriesCards() {
   return (
     <div className={"mt-3 " + styles.containerStyle}>
       <hr />
-      <h2 className={"font-weight-light primary " + styles.headerStyle}>
+      <h2 className={"font-weight-light primary page-title " + styles.headerStyle}>
         Categories
       </h2>
-      <p className="text-muted">
+      <p className="text-muted main-text-regular">
         These are the "Categories" of Resources we use on this website.
       </p>
       <div className={styles.cardContainerStyle}>
@@ -85,10 +85,10 @@ export default function CategoriesCards() {
             return (
               <Card className={styles.cardStyle} key={category.name}>
                 <Card.Body>
-                  <Card.Title>{category.name}</Card.Title>
-                  <Card.Text>{category.description}</Card.Text>
+                  <Card.Title className="secondary-text-semi">{category.name}</Card.Title>
+                  <Card.Text className="main-text-regular">{category.description}</Card.Text>
                   <Link href={"/category/" + category.name.replace(/\s/g, '').toLowerCase()} passHref legacyBehavior>
-                    <Button variant="outline-primary" href={"/category/" + category.name.toLowerCase()}>Learn More</Button>
+                    <Button variant="outline-primary" href={"/category/" + category.name.toLowerCase()} className="main-text-regular">Learn More</Button>
                   </Link>
                 </Card.Body>
               </Card>
