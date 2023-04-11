@@ -18,41 +18,27 @@ export default function Category() {
     const [content, setContent] = useState("");
     const router = useRouter();
 
-    async function fetchContent(url) {
-        console.log(url);
-        const category = url.split('#')[1];
-        if (category === undefined) {
-            setContent("");
-            setCategory(null);
-        }
-        if (category) {
-            setCategory(category);
+    useEffect(() => {
+        async function fetchContent(category) {
             try {
                 const content = (await import(`./${category}.md`)).default;
                 setContent(content);
-                console.log(content);
             } catch (e) {
                 console.log(e);
                 router.replace('/404');
             }
-            return;
         }
-    }
-
-    useEffect(() => {
-        fetchContent(window.location.hash);
-
-        const onHashChangeStart = async (url) => {
-            console.log(`Path changing to ${url}`);
-            await fetchContent(url);
-        };
-
-        router.events.on("hashChangeStart", onHashChangeStart);
-
-        return () => {
-            router.events.off("hashChangeStart", onHashChangeStart);
-        };
-    }, [router.events]);
+        // check if #category is in the url
+        const hash = window.location.hash;
+        if (hash) {
+            const category = hash.substr(1);
+            setCategory(category);
+            fetchContent(category);
+            return;
+        } else {
+            setCategory(null);
+        }
+    }, [router])
 
     useEffect(() => {
         fetch("https://raw.githubusercontent.com/Gem5Vision/json-to-mongodb/main/schema/test.json")
