@@ -91,6 +91,10 @@
     display: none;
 }
 
+.toggleSwitch input:disabled+.toggleSlider {
+    background-color: #ccc;
+}
+
 .toggleSlider {
     position: absolute;
     cursor: pointer;
@@ -111,11 +115,11 @@
     border-radius: 50%;
 }
 
-input:checked + .toggleSlider {
+input:checked+.toggleSlider {
     background-color: #0095AF;
 }
 
-input:checked + .toggleSlider:before {
+input:checked+.toggleSlider:before {
     transform: translateX(20px);
 }
 
