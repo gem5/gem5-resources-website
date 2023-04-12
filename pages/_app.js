@@ -55,12 +55,11 @@ export default function App({ Component, pageProps }) {
           __html: `
           window.dataLayer = window.dataLayer || [];
           function gtag(){ dataLayer.push(arguments); }
-          gtag('js', new Date());
-          gtag('config', 'G-2B1F9HP95Z')
           gtag('consent', 'default', {
             'analytics_storage': 'denied'
           })
-`,
+          gtag('js', new Date());
+          gtag('config', 'G-2B1F9HP95Z')`,
         }}
       />
       <Layout>

@@ -12,14 +12,18 @@ import CreatePR from "./createPR";
 export default function Footer() {
   const [resetConsent, setResetConsent] = useState(false);
 
+  function deleteCookie(name) {
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+  }  
+
   function resetCookies() {
     gtag('consent', 'update', {
         'analytics_storage': 'denied'
     });
 
     localStorage.removeItem("CookieConsent");
-    localStorage.removeItem("_ga");
-    localStorage.removeItem("_ga_2B1F9HP95Z");
+    deleteCookie("_ga");
+    deleteCookie("_ga_2B1F9HP95Z");
 
     setResetConsent(true);
   }   
