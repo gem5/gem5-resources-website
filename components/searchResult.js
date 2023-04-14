@@ -8,6 +8,7 @@ import mips from "/public/mips.png";
 import power from "/public/power.png";
 import { Badge } from "react-bootstrap";
 import invalid from "/public/null.svg";
+import { useEffect, useState } from "react";
 /**
  * @component
  * @description A component that renders a search result which includes 
@@ -37,9 +38,14 @@ export default function SearchResult({ resource }) {
 
     return (
         <div className="search-result">
-            <Link href={'/resources/' + resource.id} style={{ textDecoration: 'none', color: 'inherit' }}>
-                <div className="search-result__title">
+            <Link href={('/resources/' + resource.id) + (resource.private ? "?database=" + resource.private : "")} style={{ textDecoration: 'none', color: 'inherit' }}>
+                <div className="search-result__title d-flex flex-row gap-2 align-items-center">
                     <h4 className="main-text-title-bold">{resource.id}</h4>
+                    {resource.private &&
+                        <Badge bg="secondary" className="main-text-regular">
+                            {resource.private}
+                        </Badge>
+                    }
                 </div>
                 <div className="search-result__description">
                     <p className="main-text-regular">{resource.description}</p>

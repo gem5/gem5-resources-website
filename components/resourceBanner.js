@@ -17,6 +17,7 @@ import invalid from "/public/null.svg";
  * @returns {JSX.Element} The JSX element to be rendered.
 */
 export default function Banner({ resource, setShowMetadata }) {
+    console.log(resource)
     function getIcon(architecture) {
         switch (architecture) {
             case "X86":
@@ -87,16 +88,21 @@ export default function Banner({ resource, setShowMetadata }) {
                     <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd" stroke='#0095AF'><path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z" /></svg>
                 </button>
 
-                <div className='d-flex align-items-center mb-2'>
-                    <h5 className='text-muted secondary-text-semi mb-0 me-1'>
-                        Category:
-                    </h5>
-                    {/* <div className={styles.dot}></div> */}
-                    <h5 className='mb-0' style={{ fontSize: '0px' }}>
-                        <Link href={`/category#${resource.category}`} className='primary secondary-text-semi'>
-                            {String(resource.category).charAt(0).toUpperCase() + String(resource.category).substring(1) ?? "Unknown"}
-                        </Link>
-                    </h5>
+                <div className='d-flex align-items-center gap-2'>
+                    <div className='d-flex align-items-center'>
+                        <h5 className='text-muted secondary-text-semi mb-0 me-1'>
+                            Category:
+                        </h5>
+                        {/* <div className={styles.dot}></div> */}
+                        <h5 className='mb-0' style={{ fontSize: '0px' }}>
+                            <Link href={`/category#${resource.category}`} className='primary secondary-text-semi'>
+                                {String(resource.category).charAt(0).toUpperCase() + String(resource.category).substring(1) ?? "Unknown"}
+                            </Link>
+                        </h5>
+                    </div>
+                    <Badge bg="secondary" className="main-text-regular">
+                        {resource.database}
+                    </Badge>
                 </div>
                 <div className='d-flex gap-4 mb-2 flex-wrap'>
                     <p className="d-flex flex-row align-items-center gap-1 mt-0 mb-0 main-text-semi">

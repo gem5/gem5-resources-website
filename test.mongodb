@@ -9,24 +9,38 @@ use('gem5-vision');
 db.resources.aggregate([
   {
     $search: {
-      text: {
-        query: "test",
-        path: ["id", "description", "resources", "tags"],
-          fuzzy: {
-            maxEdits: 1,
-            maxExpansions: 100,
+      index: "test_index",
+      compound: {
+        should: [
+          {
+            text: {
+              "path": "id",
+              "query": "riscv-ubuntu-20.04-img",
+              "score": {
+                "boost": {
+                  "value": 10
+                }
+              }
+            }
           },
+        ],
+        must: [{
+          text: {
+            query: "riscv-ubuntu-20.04-img",
+            path: ["desciption", "category", "architecture", "tags"],
+            fuzzy: {
+              maxEdits: 2,
+              maxExpansions: 100,
+            },
+          },
+        }],
       },
-      highlight: {
-        "path": ["id", "description"]
-      }
     },
-    
   },
   {
-    $addFields: {
-      "highlights": {
-        "$meta": "searchHighlights"
+    "$addFields": {
+      "score": {
+        "$meta": "searchScore"
       }
     }
   }

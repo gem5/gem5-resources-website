@@ -18,22 +18,13 @@ function getSort(sort) {
       };
     default:
       return {
-        score: { $meta: "textScore" },
+        score: -1,
       };
   }
 }
 
-/**
- * @helper
- * @async
- * @description Fetches the resources based on the query object from the MongoDB database.
- * @param {json} queryObject The query object.
- * @param {json} filters The filters object.
- * @returns {JSX.Element} The JSX element to be rendered.
- */
-export default async function getResourcesMongoDB(queryObject, currentPage, pageSize) {
+async function getSearchResults(accessToken, url, dataSource, database, collection, queryObject, currentPage, pageSize) {
   let resources = [];
-  const access_token = await getToken();
   if (queryObject.query.trim() === "") {
     if (queryObject.sort === "relevance") {
       queryObject.sort = "default";
@@ -133,38 +124,51 @@ export default async function getResourcesMongoDB(queryObject, currentPage, page
         }
       }
     });
+
     pipeline.unshift({
       $search: {
-        index: "default",
-        text: {
-          query: queryObject.query,
-          path: {
-            wildcard: "*",
-          },
-          fuzzy: {
-            maxEdits: 2,
-            maxExpansions: 100,
-          },
+        compound: {
+          should: [
+            {
+              text: {
+                "path": "id",
+                "query": queryObject.query,
+                "score": {
+                  "boost": {
+                    "value": 10
+                  }
+                }
+              }
+            },
+          ],
+          must: [{
+            text: {
+              query: queryObject.query,
+              path: ["id", "desciption", "category", "architecture", "tags"],
+              fuzzy: {
+                maxEdits: 2,
+                maxExpansions: 100,
+              },
+            },
+          }],
         },
-      },
+      }
     });
   }
   const res = await fetch(
-    `${process.env.MONGODB_URI}/action/aggregate`,
+    `${url}/action/aggregate`,
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        // 'api-key': 'pKkhRJGJaQ3NdJyDt69u4GPGQTDUIhHlx4a3lrKUNx2hxuc8uba8NrP3IVRvlzlo',
         "Access-Control-Request-Headers": "*",
-        // 'origin': 'https://gem5vision.github.io',
-        Authorization: "Bearer " + access_token,
+        Authorization: "Bearer " + accessToken,
       },
       // also apply filters on
       body: JSON.stringify({
-        dataSource: "gem5-vision",
-        database: "gem5-vision",
-        collection: process.env.COLLECTION,
+        dataSource: dataSource,
+        database: database,
+        collection: collection,
         pipeline: pipeline,
       }),
     }
@@ -176,4 +180,49 @@ export default async function getResourcesMongoDB(queryObject, currentPage, page
       ? resources["documents"][0].totalCount
       : 0,
   ];
+}
+
+/**
+ * @helper
+ * @async
+ * @description Fetches the resources based on the query object from the MongoDB database.
+ * @param {json} queryObject The query object.
+ * @param {json} filters The filters object.
+ * @returns {JSX.Element} The JSX element to be rendered.
+ */
+export default async function getResourcesMongoDB(queryObject, currentPage, pageSize) {
+  let accessToken = await getToken();
+  let privateResources = process.env.PRIVATE_RESOURCES
+  let nPrivate = Object.keys(privateResources).length;
+  let resources = await getSearchResults(accessToken,
+    process.env.MONGODB_MAIN.url,
+    process.env.MONGODB_MAIN.dataSource,
+    process.env.MONGODB_MAIN.database,
+    process.env.MONGODB_MAIN.collection,
+    queryObject,
+    currentPage,
+    pageSize / (nPrivate + 1));
+
+  for (let resource in privateResources) {
+    let privateResource = privateResources[resource];
+    let privateAccessToken = await getToken(resource);
+    let privateResourceResults = await getSearchResults(privateAccessToken,
+      privateResource.url,
+      privateResource.dataSource,
+      privateResource.database,
+      privateResource.collection,
+      queryObject,
+      currentPage,
+      pageSize / (nPrivate + 1));
+    // add private field to each resource
+    privateResourceResults[0].forEach((res) => {
+      res.private = resource;
+    });
+    console.log(privateResourceResults);
+    resources[0] = resources[0].concat(privateResourceResults[0]);
+    resources[1] = resources[1] + privateResourceResults[1];
+  }
+  resources[0].sort((a, b) => a.score < b.score ? 1 : -1);
+  console.log(resources);
+  return resources;
 }

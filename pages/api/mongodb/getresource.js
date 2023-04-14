@@ -1,15 +1,7 @@
 import getToken from "./getToken";
 
-/**
- * @helper
- * @async
- * @description Fetches a resource from the MongoDB database.
- * @param {string} id The id of the resource to be fetched.
- * @returns {json} The resource in JSON format.
-*/
-export default async function getResourceMongoDB(id) {
-    const token = await getToken();
-    const res = await fetch(`${process.env.MONGODB_URI}/action/findOne`, {
+async function getResourceByID(token, url, dataSource, database, collection, id) {
+    const res = await fetch(`${url}/action/findOne`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -19,16 +11,16 @@ export default async function getResourceMongoDB(id) {
             "Authorization": "Bearer " + token,
         },
         body: JSON.stringify({
-            "dataSource": "gem5-vision",
-            "database": "gem5-vision",
-            "collection": process.env.COLLECTION,
+            "dataSource": dataSource,
+            "database": database,
+            "collection": collection,
             "filter": {
                 "id": id
             }
         })
     }).catch(err => console.log(err));
     const resource = await res.json();
-    const dependendWorkloads = await fetch(`${process.env.MONGODB_URI}/action/aggregate`, {
+    const dependendWorkloads = await fetch(`${url}/action/aggregate`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -36,9 +28,9 @@ export default async function getResourceMongoDB(id) {
             'Authorization': 'Bearer ' + token,
         },
         body: JSON.stringify({
-            "dataSource": "gem5-vision",
-            "database": "gem5-vision",
-            "collection": "resources",
+            "dataSource": dataSource,
+            "database": database,
+            "collection": collection,
             "pipeline": [
                 {
                     "$addFields": {
@@ -70,4 +62,24 @@ export default async function getResourceMongoDB(id) {
     }
     resource['document'].workloads = Object.values(workloads['documents']).map(workload => workload['_id']);
     return resource['document']
+}
+
+/**
+ * @helper
+ * @async
+ * @description Fetches a resource from the MongoDB database.
+ * @param {string} id The id of the resource to be fetched.
+ * @returns {json} The resource in JSON format.
+*/
+export default async function getResourceMongoDB(id, database = null) {
+    if (!database) {
+        const token = await getToken();
+        const resource = await getResourceByID(token, process.env.MONGODB_MAIN.url, process.env.MONGODB_MAIN.dataSource, process.env.MONGODB_MAIN.database, process.env.MONGODB_MAIN.collection, id);
+        return resource;
+    }
+    const token = await getToken(database);
+    let privateResources = process.env.PRIVATE_RESOURCES[database];
+    const resource = await getResourceByID(token, privateResources.url, privateResources.dataSource, privateResources.database, privateResources.collection, id);
+    resource['database'] = database;
+    return resource;
 }

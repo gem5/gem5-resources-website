@@ -21,8 +21,18 @@ function Resource() {
 
     useEffect(() => {
         async function fetchResource(id) {
+            // if contains query string database, then it is a private resource
+            let database = null
+            if (router.query.database !== undefined) {
+                console.log("private resource")
+                console.log(router.query)
+                id = router.query.id
+                database = router.query.database
+                console.log(id, database)
+            }
+            console.log(database)
             setLoading(true)
-            let resource = await getResource(id);
+            let resource = await getResource(id, database)
             if (resource.error) {
                 router.push(`/404`)
             }

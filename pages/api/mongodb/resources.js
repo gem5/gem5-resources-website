@@ -1,5 +1,26 @@
 import getToken from "./getToken";
 
+async function fetchResources(accessToken, url, dataSource, database, collection) {
+  const res = await fetch(
+    `${url}/action/find`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Request-Headers": "*",
+        Authorization: "Bearer " + accessToken,
+      },
+      body: JSON.stringify({
+        dataSource: dataSource,
+        database: database,
+        collection: collection,
+      }),
+    }
+  ).catch((err) => console.log(err));
+  const resources = await res.json();
+  return resources["documents"];
+}
+
 /**
  * @helper
  * @async
@@ -7,25 +28,18 @@ import getToken from "./getToken";
  * @returns {json} A JSON object containing all the resources.
  */
 export default async function fetchResourcesMongoDB() {
+  console.log(process.env.MONGODB_MAIN);
   const accessToken = await getToken();
-  const res = await fetch(
-    `${process.env.MONGODB_URI}/action/find`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        // 'api-key': 'pKkhRJGJaQ3NdJyDt69u4GPGQTDUIhHlx4a3lrKUNx2hxuc8uba8NrP3IVRvlzlo',
-        "Access-Control-Request-Headers": "*",
-        // 'origin': 'https://gem5vision.github.io',
-        Authorization: "Bearer " + accessToken,
-      },
-      body: JSON.stringify({
-        dataSource: "gem5-vision",
-        database: "gem5-vision",
-        collection: process.env.COLLECTION,
-      }),
-    }
-  ).catch((err) => console.log(err));
-  const resources = await res.json();
-  return resources["documents"];
+  const resources = await fetchResources(accessToken, process.env.MONGODB_MAIN.url, process.env.MONGODB_MAIN.dataSource, process.env.MONGODB_MAIN.database, process.env.MONGODB_MAIN.collection);
+  let privateResources = process.env.PRIVATE_RESOURCES
+  for (let resource in privateResources) {
+    let privateResource = privateResources[resource];
+    let privateAccessToken = await getToken(resource);
+    let privateResourceResults = await fetchResources(privateAccessToken, privateResource.url, privateResource.dataSource, privateResource.database, privateResource.collection);
+    privateResourceResults.forEach((privateResourceResult) => {
+      privateResourceResult["private"] = resource;
+    });
+    resources.push(...privateResourceResults);
+  }
+  return resources;
 }
