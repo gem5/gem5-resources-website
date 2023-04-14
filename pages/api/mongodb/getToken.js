@@ -26,8 +26,9 @@ async function getAccessToken(url, key) {
 export default async function getToken(key = null) {
     // Send API key to Realm API to retrieve access token
     if (!key) {
-        let accessToken = await getAccessToken(`https://realm.mongodb.com/api/client/v2.0/app/${process.env.MONGODB_MAIN.name}/auth/providers/api-key/login`, process.env.MONGODB_MAIN.apiKey);
-        return accessToken;
+        // let accessToken = await getAccessToken(`https://realm.mongodb.com/api/client/v2.0/app/${process.env.MONGODB_MAIN.name}/auth/providers/api-key/login`, process.env.MONGODB_MAIN.apiKey);
+        // return accessToken;
+        key = Object.keys(process.env.PRIVATE_RESOURCES)[0];
     }
     let privateENV = process.env.PRIVATE_RESOURCES[key];
     return await getAccessToken(`https://realm.mongodb.com/api/client/v2.0/app/${privateENV.name}/auth/providers/api-key/login`, privateENV.apiKey);

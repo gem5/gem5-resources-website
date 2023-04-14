@@ -29,8 +29,8 @@ async function fetchResources(accessToken, url, dataSource, database, collection
  */
 export default async function fetchResourcesMongoDB() {
   console.log(process.env.MONGODB_MAIN);
-  const accessToken = await getToken();
-  const resources = await fetchResources(accessToken, process.env.MONGODB_MAIN.url, process.env.MONGODB_MAIN.dataSource, process.env.MONGODB_MAIN.database, process.env.MONGODB_MAIN.collection);
+  // const accessToken = await getToken();
+  // const resources = await fetchResources(accessToken, process.env.MONGODB_MAIN.url, process.env.MONGODB_MAIN.dataSource, process.env.MONGODB_MAIN.database, process.env.MONGODB_MAIN.collection);
   let privateResources = process.env.PRIVATE_RESOURCES
   for (let resource in privateResources) {
     let privateResource = privateResources[resource];

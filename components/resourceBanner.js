@@ -78,6 +78,9 @@ export default function Banner({ resource, setShowMetadata }) {
             </div>
         </> :
             <>
+                <h2 className="main-text-title-bold text-muted">
+                        {resource.database ? `${resource.database} /` : 'gem5-resources /'}
+                </h2>
                 <CopyIcon>
                     <h2 className='text-muted pe-3 mb-3 page-title'>
                         {resource.id}
@@ -100,9 +103,6 @@ export default function Banner({ resource, setShowMetadata }) {
                             </Link>
                         </h5>
                     </div>
-                    <Badge bg="secondary" className="main-text-regular">
-                        {resource.database}
-                    </Badge>
                 </div>
                 <div className='d-flex gap-4 mb-2 flex-wrap'>
                     <p className="d-flex flex-row align-items-center gap-1 mt-0 mb-0 main-text-semi">

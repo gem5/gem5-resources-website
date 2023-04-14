@@ -191,19 +191,18 @@ async function getSearchResults(accessToken, url, dataSource, database, collecti
  * @returns {JSX.Element} The JSX element to be rendered.
  */
 export default async function getResourcesMongoDB(queryObject, currentPage, pageSize) {
-  let accessToken = await getToken();
   let privateResources = process.env.PRIVATE_RESOURCES
   let nPrivate = Object.keys(privateResources).length;
-  let resources = await getSearchResults(accessToken,
-    process.env.MONGODB_MAIN.url,
-    process.env.MONGODB_MAIN.dataSource,
-    process.env.MONGODB_MAIN.database,
-    process.env.MONGODB_MAIN.collection,
-    queryObject,
-    currentPage,
-    pageSize / (nPrivate + 1));
-
+  let databases = queryObject.database;
+  let resources = [[], 0];
+  if (!databases) {
+    databases = Object.keys(privateResources);
+  }
+  nPrivate = databases.length;
   for (let resource in privateResources) {
+    if (databases.indexOf(resource) === -1) {
+      continue;
+    }
     let privateResource = privateResources[resource];
     let privateAccessToken = await getToken(resource);
     let privateResourceResults = await getSearchResults(privateAccessToken,
@@ -213,10 +212,10 @@ export default async function getResourcesMongoDB(queryObject, currentPage, page
       privateResource.collection,
       queryObject,
       currentPage,
-      pageSize / (nPrivate + 1));
+      Math.floor(pageSize / (nPrivate)));
     // add private field to each resource
     privateResourceResults[0].forEach((res) => {
-      res.private = resource;
+      res.database = resource;
     });
     console.log(privateResourceResults);
     resources[0] = resources[0].concat(privateResourceResults[0]);
