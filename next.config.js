@@ -25,6 +25,14 @@ module.exports = {
       apiKey: "pKkhRJGJaQ3NdJyDt69u4GPGQTDUIhHlx4a3lrKUNx2hxuc8uba8NrP3IVRvlzlo",
     },
     PRIVATE_RESOURCES: {
+      "gem5-resources": {
+        dataSource: "gem5-vision",
+        database: "gem5-vision",
+        collection: "resources",
+        url: "https://data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1",
+        name: "data-ejhjf",
+        apiKey: "pKkhRJGJaQ3NdJyDt69u4GPGQTDUIhHlx4a3lrKUNx2hxuc8uba8NrP3IVRvlzlo",
+      },
       "test": {
         name: "data-ejhjf",
         url: "https://data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1",
