@@ -7,15 +7,11 @@ function getSort(sort) {
     case "name":
       return { id: 1 };
     case "version":
-      return { ver_latest: -1 };
+      return { "ver_latest": -1 };
     case "id_asc":
       return { id: 1 };
     case "id_desc":
       return { id: -1 };
-    case "default":
-      return {
-        _id: -1,
-      };
     default:
       return {
         score: -1,
@@ -122,19 +118,23 @@ async function getSearchResults(accessToken, url, dataSource, database, collecti
     });
   }
   pipeline = pipeline.concat([
-    {
+    /* {
       $addFields: {
         a: "$gem5_versions",
         ver_latest: {
           $last: "$gem5_versions",
         },
       },
+    }, */
+    {
+      "$addFields": {
+        "ver_latest": {
+          $max: "$gem5_versions"
+        }
+      }
     },
     {
       $sort: getSort(queryObject.sort),
-    },
-    {
-      $unset: ["a", "ver_latest"],
     },
     {
       $setWindowFields: { output: { totalCount: { $count: {} } } },
@@ -340,11 +340,24 @@ export default async function getResourcesMongoDB(queryObject, currentPage, page
     privateResourceResults[0].forEach((res) => {
       res.database = resource;
     });
-    console.log(privateResourceResults);
     resources[0] = resources[0].concat(privateResourceResults[0]);
     resources[1] = resources[1] + privateResourceResults[1];
   }
-  resources[0].sort((a, b) => a.score < b.score ? 1 : -1);
+  // sort the resources based on the query
+  switch (queryObject.sort) {
+    case "version":
+      resources[0].sort((a, b) => a.ver_latest < b.ver_latest ? 1 : -1);
+      break;
+    case "id_asc":
+      resources[0].sort((a, b) => a.id < b.id ? 1 : -1);
+      break;
+    case "id_desc":
+      resources[0].sort((a, b) => a.id < b.id ? -1 : 1);
+      break;
+    default:
+      resources[0].sort((a, b) => a.score < b.score ? 1 : -1);
+      break;
+  }
   console.log(resources);
   return resources;
 }

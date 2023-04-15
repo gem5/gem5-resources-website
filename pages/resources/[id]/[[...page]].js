@@ -30,9 +30,16 @@ function Resource() {
                 database = router.query.database
                 console.log(id, database)
             }
-            console.log(database)
             setLoading(true)
-            let resource = await getResource(id, database)
+            let resource;
+            if (router.query.version !== undefined) {
+                console.log(router.query.version)
+                // let resource = await getResource(id, database, "1.0.0")
+                resource = await getResource(id, database, router.query.version)
+            }
+            else {
+                resource = await getResource(id, database)
+            }
             if (resource.error) {
                 router.push(`/404`)
             }

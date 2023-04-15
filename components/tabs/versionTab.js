@@ -11,7 +11,7 @@ import getVersionsMongoDB from "@/pages/api/mongodb/getVersions";
     * @param {string} url - The link associated with the version number.
     * @returns {JSX.Element} The JSX element representing the row with the version number and its link.
     */
-function VersionComponent({ version, url, size }) {
+function VersionComponent({ version }) {
     function sizeof_fmt(num, suffix = 'B') {
         const units = ['', 'K', 'M', 'G', 'T', 'P', 'E', 'Z'];
         let i = 0;
@@ -43,14 +43,17 @@ function VersionComponent({ version, url, size }) {
     return (
         <tr className={styles.versions_tr} key={version.resource_version}>
             <td className={`${styles.versions_td} main-text-regular`}>
-                {version.resource_version}
+                <a href={'/resources/' + version.id + "?database=" + version.database + "&version=" + version.resource_version} className="interactDecoration">
+                    {version.resource_version}
+                </a>
             </td>
             <td className={`${styles.versions_td} main-text-regular`}>
                 {sizeof_fmt(version.size ?? 0)}
             </td>
             <td className={`${styles.versions_td} main-text-regular`}>
-                {version.gem5_versions.join(', ')}
+                {version.gem5_versions.sort().join(', ')}
             </td>
+
             <td style={{ width: '24px', height: '24px' }} className={styles.versions_td}>
                 {version.url ?
                     <Link href={downloadUrl} download target="_blank" className="interactDecoration">

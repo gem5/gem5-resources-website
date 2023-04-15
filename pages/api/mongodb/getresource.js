@@ -1,7 +1,7 @@
 import getToken from "./getToken";
 import { compareVersions } from "./getVersions";
 
-async function getResourceByID(token, url, dataSource, database, collection, id) {
+async function getResourceByID(token, url, dataSource, database, collection, id, version = null) {
     const res = await fetch(`${url}/action/find`, {
         method: 'POST',
         headers: {
@@ -15,7 +15,10 @@ async function getResourceByID(token, url, dataSource, database, collection, id)
             "dataSource": dataSource,
             "database": database,
             "collection": collection,
-            "filter": {
+            "filter": version ? {
+                "id": id,
+                "resource_version": version
+            } : {
                 "id": id
             }
         })
@@ -76,7 +79,7 @@ async function getResourceByID(token, url, dataSource, database, collection, id)
  * @param {string} id The id of the resource to be fetched.
  * @returns {json} The resource in JSON format.
 */
-export default async function getResourceMongoDB(id, database = null) {
+export default async function getResourceMongoDB(id, database = null, version = null) {
     if (!database) {
         /* const token = await getToken();
         const resource = await getResourceByID(token, process.env.MONGODB_MAIN.url, process.env.MONGODB_MAIN.dataSource, process.env.MONGODB_MAIN.database, process.env.MONGODB_MAIN.collection, id);
@@ -85,7 +88,7 @@ export default async function getResourceMongoDB(id, database = null) {
     }
     const token = await getToken(database);
     let privateResources = process.env.PRIVATE_RESOURCES[database];
-    const resource = await getResourceByID(token, privateResources.url, privateResources.dataSource, privateResources.database, privateResources.collection, id);
+    const resource = await getResourceByID(token, privateResources.url, privateResources.dataSource, privateResources.database, privateResources.collection, id, version);
     resource['database'] = database;
     return resource;
 }
