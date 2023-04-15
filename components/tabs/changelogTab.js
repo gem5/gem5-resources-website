@@ -24,6 +24,8 @@ export default function ChangelogTab({ github_url }) {
             setReadme(text);
         }
         if (!github_url) return;
+        if (!github_url.match(/github\.com\/[a-zA-Z0-9-_.]+\/[a-zA-Z0-9-_.]+/))
+            return setReadme("Invalid GitHub URL");
         getReadme();
     }, [github_url]);
 

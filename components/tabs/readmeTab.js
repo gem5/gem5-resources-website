@@ -25,6 +25,9 @@ export default function ReadmeTab({ github_url }) {
             setReadme(text);
         }
         if (!github_url) return;
+        // check if the url is a valid github url
+        if (!github_url.match(/github\.com\/[a-zA-Z0-9-_.]+\/[a-zA-Z0-9-_.]+/))
+            return setReadme("Invalid GitHub URL");
         getReadme();
     }, [github_url]);
 

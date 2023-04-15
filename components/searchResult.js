@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
  * @returns {JSX.Element} The JSX element to be rendered.
 */
 export default function SearchResult({ resource }) {
+    console.log(resource);
     function getIcon(architecture) {
         switch (architecture) {
             case "X86":
@@ -69,11 +70,7 @@ export default function SearchResult({ resource }) {
                         <h6 style={{ lineHeight: 'inherit', margin: '0' }}>
                             v
                         </h6>
-
-                        {
-                            resource.versions.length === 0 ? "None" :
-                                (resource.versions.length > 1 ? resource.versions[1].version : resource.versions[0].version)
-                        }
+                        {resource.resource_version}
                     </div>
                     <div className='d-flex flex-row gap-1'>
                         {

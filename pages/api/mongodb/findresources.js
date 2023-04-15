@@ -63,7 +63,41 @@ async function getSearchResults(accessToken, url, dataSource, database, collecti
       },
     ]);
   }
-  pipeline = pipeline.concat([
+
+  if (queryObject.gem5_versions) {
+    pipeline = pipeline.concat([
+      {
+        $addFields: {
+          version: "$gem5_versions",
+        },
+      },
+      {
+        $unwind: "$version",
+      },
+      {
+        $match: {
+          version: {
+            $in: queryObject.gem5_versions || [],
+          },
+        },
+      },
+      {
+        $group: {
+          _id: "$_id",
+          doc: {
+            $first: "$$ROOT",
+          },
+        },
+      },
+      {
+        $replaceRoot: {
+          newRoot: "$doc",
+        },
+      },
+    ]);
+  }
+  // gem5_versions
+  /* pipeline = pipeline.concat([
     {
       $addFields: {
         a: "$versions.version",
@@ -72,16 +106,13 @@ async function getSearchResults(accessToken, url, dataSource, database, collecti
         },
       },
     },
-  ]);
+  ]); */
   let match = [];
   if (queryObject.category) {
     match.push({ category: { $in: queryObject.category || [] } });
   }
   if (queryObject.architecture) {
     match.push({ architecture: { $in: queryObject.architecture || [] } });
-  }
-  if (queryObject.versions) {
-    match.push({ "versions.version": { $in: queryObject.versions || [] } });
   }
   if (match.length > 0) {
     pipeline.push({
@@ -91,6 +122,14 @@ async function getSearchResults(accessToken, url, dataSource, database, collecti
     });
   }
   pipeline = pipeline.concat([
+    {
+      $addFields: {
+        a: "$gem5_versions",
+        ver_latest: {
+          $last: "$gem5_versions",
+        },
+      },
+    },
     {
       $sort: getSort(queryObject.sort),
     },
@@ -107,6 +146,89 @@ async function getSearchResults(accessToken, url, dataSource, database, collecti
       $limit: pageSize,
     },
   ]);
+
+  /* pipeline.unshift(
+    {
+      $group: {
+        _id: "$id",
+        latestVersion: {
+          $max: {
+            $mergeObjects: [
+              {
+                resource_version:
+                  "$resource_version",
+              },
+              "$$ROOT",
+            ],
+          },
+        },
+      },
+    },
+    {
+      $addFields: {
+        id: "$_id",
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+      },
+    },
+    {
+      $unwind: {
+        path: "$latestVersion",
+      },
+    },
+    {
+      $replaceRoot: {
+        newRoot: "$latestVersion",
+      },
+    },
+  ); */
+  pipeline.unshift({
+    $addFields: {
+      resource_version_parts: {
+        $map: {
+          input: {
+            $split: ["$resource_version", "."],
+          },
+          in: { $toInt: "$$this" },
+        },
+      },
+    },
+  },
+    {
+      $sort: {
+        id: 1,
+        "resource_version_parts.0": -1,
+        "resource_version_parts.1": -1,
+        "resource_version_parts.2": -1,
+        "resource_version_parts.3": -1,
+      },
+    },
+    {
+      $group: {
+        _id: "$id",
+        latest_version: {
+          $first: "$resource_version",
+        },
+        document: { $first: "$$ROOT" },
+      },
+    },
+    {
+      $replaceRoot: {
+        newRoot: {
+          $mergeObjects: [
+            "$document",
+            {
+              id: "$_id",
+              latest_version: "$latest_version",
+            },
+          ],
+        },
+      },
+    },
+  );
 
   if (queryObject.query.trim() !== "") {
     // find score greater than 0.5

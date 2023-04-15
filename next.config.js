@@ -16,16 +16,16 @@ module.exports = {
   env: {
     IS_MONGODB_ENABLED: true,
     BASE_PATH: isProd ? '/gem5-resources-website' : '',
-    MONGODB_MAIN: {
-      dataSource: "gem5-vision",
-      database: "gem5-vision",
-      collection: "resources",
-      url: "https://data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1",
-      name: "data-ejhjf",
-      apiKey: "pKkhRJGJaQ3NdJyDt69u4GPGQTDUIhHlx4a3lrKUNx2hxuc8uba8NrP3IVRvlzlo",
-    },
     PRIVATE_RESOURCES: {
-      "gem5-resources": {
+      "versions": {
+        dataSource: "gem5-vision",
+        database: "gem5-vision",
+        collection: "versions_test",
+        url: "https://data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1",
+        name: "data-ejhjf",
+        apiKey: "pKkhRJGJaQ3NdJyDt69u4GPGQTDUIhHlx4a3lrKUNx2hxuc8uba8NrP3IVRvlzlo",
+      },
+      /* "gem5-resources": {
         dataSource: "gem5-vision",
         database: "gem5-vision",
         collection: "resources",
@@ -40,7 +40,7 @@ module.exports = {
         database: "gem5-vision",
         collection: "resources_test",
         apiKey: "pKkhRJGJaQ3NdJyDt69u4GPGQTDUIhHlx4a3lrKUNx2hxuc8uba8NrP3IVRvlzlo",
-      }
+      } */
     },
   },
   webpack: (config) => {

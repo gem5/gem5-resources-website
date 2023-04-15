@@ -79,7 +79,7 @@ export default function Banner({ resource, setShowMetadata }) {
         </> :
             <>
                 <h2 className="main-text-title-bold text-muted">
-                        {resource.database ? `${resource.database} /` : 'gem5-resources /'}
+                    {resource.database ? `${resource.database} /` : 'gem5-resources /'}
                 </h2>
                 <CopyIcon>
                     <h2 className='text-muted pe-3 mb-3 page-title'>
@@ -119,14 +119,9 @@ export default function Banner({ resource, setShowMetadata }) {
                         <h6 style={{ lineHeight: 'inherit', margin: '0' }} className="main-text-semi">
                             VERSION
                         </h6>
-                        {
-                            resource.versions && resource.versions.length === 0 ? "None" :
-                                <Link className='text-black main-text-regular interactDecoration' href={'/resources?q=versions:' + (resource.versions && (resource.versions.length > 1 ? resource.versions[1].version : resource.versions[0].version))}>
-                                    {
-                                        resource.versions && (resource.versions.length > 1 ? resource.versions[1].version : resource.versions[0].version)
-                                    }
-                                </Link>
-                        }
+                        <Link className='text-black main-text-regular interactDecoration' href={'/resources?q=versions:' + (resource.versions && (resource.versions.length > 1 ? resource.versions[1].version : resource.versions[0].version))}>
+                            {resource.resource_version}
+                        </Link>
                     </div>
                     <div className='d-flex flex-row gap-1 align-items-center'>
                         <h6 style={{ lineHeight: 'inherit', margin: '0' }}>

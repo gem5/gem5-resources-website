@@ -15,31 +15,28 @@ async function getFilters(accessToken, url, dataSource, database, collection) {
             "collection": collection,
             "pipeline": [
                 {
-                    "$addFields": {
-                        "a": "$versions"
-                    },
+                    "$unwind": "$gem5_versions"
                 },
                 {
                     "$group": {
                         "_id": null,
                         "category": { "$addToSet": "$category" },
                         "architecture": { "$addToSet": "$architecture" },
-                        "versions": { "$addToSet": "$a.version" },
-                    },
-                },
-            ],
+                        "gem5_versions": { "$addToSet": "$gem5_versions" }
+                    }
+                }
+            ]
         })
     }).catch(err => console.log(err));
     let filters = await res.json();
+    console.log(filters);
     filters['documents'][0]['architecture'] = filters['documents'][0]['architecture'].filter(architecture => architecture != null);
     delete filters['documents'][0]['_id'];
-    // get largest list of versions
-    filters['documents'][0]['versions'] = filters['documents'][0]['versions'].reduce((a, b) => a.length > b.length ? a : b);
 
-    filters['documents'][0]['versions'] = filters['documents'][0]['versions']
+    filters['documents'][0]['gem5_versions'] = filters['documents'][0]['gem5_versions']
     filters['documents'][0]['category'].sort();
     filters['documents'][0]['architecture'].sort();
-    filters['documents'][0]['versions'].sort().reverse();
+    filters['documents'][0]['gem5_versions'].sort().reverse();
     return filters['documents'][0];
 }
 
@@ -55,7 +52,7 @@ export default async function getFiltersMongoDB() {
     let filters = {
         "category": [],
         "architecture": [],
-        "versions": [],
+        "gem5_versions": [],
     };
     let privateResources = process.env.PRIVATE_RESOURCES
     for (let resource in privateResources) {
@@ -72,15 +69,15 @@ export default async function getFiltersMongoDB() {
                 filters['architecture'].push(architecture);
             }
         });
-        privateFilters['versions'].forEach((version) => {
-            if (!filters['versions'].includes(version)) {
-                filters['versions'].push(version);
+        privateFilters['gem5_versions'].forEach((version) => {
+            if (!filters['gem5_versions'].includes(version)) {
+                filters['gem5_versions'].push(version);
             }
         });
     }
     filters['category'].sort();
     filters['architecture'].sort();
-    filters['versions'].sort().reverse();
+    filters['gem5_versions'].sort().reverse();
 
     // get all keys from process.env.PRIVATE_RESOURCES
     let keys = Object.keys(process.env.PRIVATE_RESOURCES);

@@ -1,7 +1,7 @@
 import getToken from "./getToken";
-
+import { compareVersions } from "./getVersions";
 async function getResourceByID(token, url, dataSource, database, collection, id) {
-    const res = await fetch(`${url}/action/findOne`, {
+    const res = await fetch(`${url}/action/find`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -19,7 +19,14 @@ async function getResourceByID(token, url, dataSource, database, collection, id)
             }
         })
     }).catch(err => console.log(err));
-    const resource = await res.json();
+    let resource = await res.json();
+    if (resource['documents'] === null || resource['documents'].length === 0) {
+        return { error: 'Resource not found' }
+    }
+    console.log(resource['documents']);
+
+    resource = resource['documents'].sort((a, b) => -compareVersions(a.resource_version, b.resource_version))[0];
+
     const dependendWorkloads = await fetch(`${url}/action/aggregate`, {
         method: 'POST',
         headers: {
@@ -50,18 +57,15 @@ async function getResourceByID(token, url, dataSource, database, collection, id)
                 {
                     "$group": {
                         "_id": "$id",
-
                     }
                 }
             ]
         })
     }).catch(err => console.log(err));
-    const workloads = await dependendWorkloads.json();
-    if (resource['document'] === null) {
-        return { error: 'Resource not found' }
-    }
-    resource['document'].workloads = Object.values(workloads['documents']).map(workload => workload['_id']);
-    return resource['document']
+    let workloads = await dependendWorkloads.json();
+    resource.workloads = Object.values(workloads['documents']).map(workload => workload['_id']);
+
+    return resource
 }
 
 /**
