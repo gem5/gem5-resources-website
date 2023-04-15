@@ -37,7 +37,7 @@ When you search for a resource, the search algorithm first applies the [filters]
 
 These are all the sorting options available:
 
-- Relevence
+- Relevance
   - Best matches the search query
 - Date
   - Data when the resource was published
