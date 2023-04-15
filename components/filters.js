@@ -14,6 +14,9 @@ export default function Filters({ filters, callback }) {
     const [filterState, setFilterState] = useState({});
     useEffect(() => {
         if (filters) {
+            if (filters.database && Object.keys(filters.database).length === 1) {
+                delete filters.database;
+            }
             setFilterState(filters);
         }
     }, [filters]);
