@@ -185,18 +185,19 @@ async function getSearchResults(accessToken, url, dataSource, database, collecti
       },
     },
   ); */
-  pipeline.unshift({
-    $addFields: {
-      resource_version_parts: {
-        $map: {
-          input: {
-            $split: ["$resource_version", "."],
+  pipeline.unshift(
+    {
+      $addFields: {
+        resource_version_parts: {
+          $map: {
+            input: {
+              $split: ["$resource_version", "."],
+            },
+            in: { $toInt: "$$this" },
           },
-          in: { $toInt: "$$this" },
         },
       },
     },
-  },
     {
       $sort: {
         id: 1,
