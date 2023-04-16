@@ -234,7 +234,6 @@ export default function Resources() {
                                 <Form.Select
                                         //value 
                                         className='w-auto primary main-text-semi'
-                                        defaultValue={numberOfItemsPerPage.toString()}
                                         value={numberOfItemsPerPage.toString()}
                                         onChange={(value) => {
                                             // if the page is more than the max page number, set the page to the max page number
