@@ -17,7 +17,6 @@ import invalid from "/public/null.svg";
  * @returns {JSX.Element} The JSX element to be rendered.
 */
 export default function Banner({ resource, setShowMetadata }) {
-    console.log(resource)
     function getIcon(architecture) {
         switch (architecture) {
             case "X86":

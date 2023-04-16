@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Overlay, OverlayTrigger, Popover, Table } from "react-bootstrap"
 import CopyIcon from "../copyIcon";
 import styles from '/styles/versionpage.module.css'
-import getVersionsMongoDB from "@/pages/api/mongodb/getVersions";
+import getVersions from "@/pages/api/getVersions";
 
 /**
     * @description This function creates a row with a version number and its corresponding link.
@@ -107,9 +107,8 @@ export default function VersionTab({ id, database }) {
     const [versions, setVersions] = useState([])
 
     useEffect(() => {
-        getVersionsMongoDB(id, database).then((data) => {
+        getVersions(id, database).then((data) => {
             setVersions(data)
-            console.log(data)
         })
     }, [id, database])
 

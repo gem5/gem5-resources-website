@@ -50,7 +50,6 @@ export default function UsageTab({ use, exampleContent, id }) {
                 return;
             }
             /* let keywords = id.split('-');
-            console.log(keywords);
             let nMatches = keywords.filter((keyword) => str.includes(keyword)).length;
             if (nMatches >= 2) {
               textToHtml(str);

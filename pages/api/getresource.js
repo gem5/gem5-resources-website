@@ -9,11 +9,14 @@ import getResourceMongoDB from "./mongodb/getresource";
  * @returns {json} The resource in JSON format.
 */
 export async function getResource(id, database = null, version = null) {
+    if (!database) {
+        database = Object.keys(process.env.PRIVATE_RESOURCES)[0];
+    }
     let resource;
-    if (process.env.IS_MONGODB_ENABLED) {
+    if (process.env.PRIVATE_RESOURCES[database].isMongo) {
         resource = await getResourceMongoDB(id, database, version);
     } else {
-        resource = await getResourceJSON(id);
+        resource = await getResourceJSON(id, database, version);
     }
     return resource;
 }

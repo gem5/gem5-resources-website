@@ -24,16 +24,12 @@ function Resource() {
             // if contains query string database, then it is a private resource
             let database = null
             if (router.query.database !== undefined) {
-                console.log("private resource")
-                console.log(router.query)
                 id = router.query.id
                 database = router.query.database
-                console.log(id, database)
             }
             setLoading(true)
             let resource;
             if (router.query.version !== undefined) {
-                console.log(router.query.version)
                 // let resource = await getResource(id, database, "1.0.0")
                 resource = await getResource(id, database, router.query.version)
             }

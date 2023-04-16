@@ -60,7 +60,6 @@ export default function ResourceTab({ resource }) {
       "raw",
     ];
     let page = router.query.page;
-    console.log(page);
     if (page) {
       page = page[0]
       if (tabs.includes(page)) {
@@ -88,7 +87,6 @@ export default function ResourceTab({ resource }) {
     let query = router.query;
     delete query.id;
     delete query.page;
-    console.log(query);
     if (e === "readme") {
       return router.replace({
         pathname: `/resources/${resource.id}`,

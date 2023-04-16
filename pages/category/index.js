@@ -24,7 +24,6 @@ export default function Category() {
                 const content = (await import(`./${category}.md`)).default;
                 setContent(content);
             } catch (e) {
-                console.log(e);
                 router.replace('/404');
             }
         }
@@ -44,7 +43,6 @@ export default function Category() {
         fetch("https://raw.githubusercontent.com/Gem5Vision/json-to-mongodb/main/schema/test.json")
             .then(res => res.json())
             .then(data => {
-                console.log(data['properties']['category']['enum']);
                 const categoryCards = data['properties']['category']['enum'].map((category) => {
                     return {
                         cardTitle: category.charAt(0).toUpperCase() + category.substr(1).toLowerCase(),

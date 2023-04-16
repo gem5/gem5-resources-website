@@ -7,8 +7,8 @@ import fetchResourcesJSON from "./resources";
  * @param {string} id The id of the resource to be fetched.
  * @returns {json} The resource in JSON format.
 */
-export default async function getResourceJSON(id) {
-    const resources = await fetchResourcesJSON();
+export default async function getResourceJSON(id, database, version) {
+    const resources = await fetchResourcesJSON(database);
     // filter json file to find the resources that contain the query in their id
     let results = resources.filter(resource => resource.id === id);
     if (results.length === 0) {
@@ -26,7 +26,22 @@ export default async function getResourceJSON(id) {
     if (workloads.length === 0) {
         workloads = []
     }
-    results[0].workloads = workloads;
-
-    return results[0];
+    let resource = results[0];
+    if (!version) {
+        // go through the results and find most recent version
+        for (let i = 0; i < results.length; i++) {
+            if (results[i].resource_version > resource.resource_version) {
+                resource = results[i];
+            }
+        }
+    } else {
+        for (let i = 0; i < results.length; i++) {
+            if (results[i].resource_version === version) {
+                resource = results[i];
+            }
+        }
+    }
+    resource.workloads = workloads;
+    resource.database = database;
+    return resource;
 }

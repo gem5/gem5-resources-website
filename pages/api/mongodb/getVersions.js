@@ -1,17 +1,6 @@
 import getToken from "./getToken";
+import compareVersions from "../compareVersions";
 
-export function compareVersions(a, b) {
-    const aParts = a.split('.').map(part => parseInt(part));
-    const bParts = b.split('.').map(part => parseInt(part));
-    for (let i = 0; i < Math.max(aParts.length, bParts.length); i++) {
-        const aPart = aParts[i] || 0;
-        const bPart = bParts[i] || 0;
-        if (aPart !== bPart) {
-            return aPart < bPart ? -1 : 1;
-        }
-    }
-    return 0;
-}
 
 async function getVersionsByID(token, url, dataSource, database, collection, id) {
     const res = await fetch(`${url}/action/find`, {
@@ -38,7 +27,6 @@ async function getVersionsByID(token, url, dataSource, database, collection, id)
     }
     resource = resource['documents'].sort((a, b) => -compareVersions(a.resource_version, b.resource_version));
 
-    console.log(resource);
     return resource;
 }
 

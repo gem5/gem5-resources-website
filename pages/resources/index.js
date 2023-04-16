@@ -275,7 +275,6 @@ export default function Resources() {
                                         style={{ paddingLeft: '0.50rem', cursor: 'pointer' }}
                                     >
                                         <option value='relevance'>Relevance</option>
-                                        <option value='date'>Date</option>
                                         <option value='version'>Version</option>
                                         <option value='id_asc'>Name Ascending</option>
                                         <option value='id_desc'>Name Descending</option>

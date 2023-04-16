@@ -7,7 +7,7 @@ function getSort(sort) {
     case "name":
       return { id: 1 };
     case "version":
-      return { "ver_latest": -1 };
+      return { ver_latest: -1 };
     case "id_asc":
       return { id: 1 };
     case "id_desc":
@@ -18,174 +18,8 @@ function getSort(sort) {
       };
   }
 }
-
-async function getSearchResults(accessToken, url, dataSource, database, collection, queryObject, currentPage, pageSize) {
-  let resources = [];
-  if (queryObject.query.trim() === "") {
-    if (queryObject.sort === "relevance") {
-      queryObject.sort = "default";
-    }
-  }
-  let pipeline = [];
-  if (queryObject.tags) {
-    pipeline = pipeline.concat([
-      {
-        $addFields: {
-          tag: "$tags",
-        },
-      },
-      {
-        $unwind: "$tag",
-      },
-      {
-        $match: {
-          tag: {
-            $in: queryObject.tags || [],
-          },
-        },
-      },
-      {
-        $group: {
-          _id: "$_id",
-          doc: {
-            $first: "$$ROOT",
-          },
-        },
-      },
-      {
-        $replaceRoot: {
-          newRoot: "$doc",
-        },
-      },
-    ]);
-  }
-
-  if (queryObject.gem5_versions) {
-    pipeline = pipeline.concat([
-      {
-        $addFields: {
-          version: "$gem5_versions",
-        },
-      },
-      {
-        $unwind: "$version",
-      },
-      {
-        $match: {
-          version: {
-            $in: queryObject.gem5_versions || [],
-          },
-        },
-      },
-      {
-        $group: {
-          _id: "$_id",
-          doc: {
-            $first: "$$ROOT",
-          },
-        },
-      },
-      {
-        $replaceRoot: {
-          newRoot: "$doc",
-        },
-      },
-    ]);
-  }
-  // gem5_versions
-  /* pipeline = pipeline.concat([
-    {
-      $addFields: {
-        a: "$versions.version",
-        ver_latest: {
-          $last: "$versions.version",
-        },
-      },
-    },
-  ]); */
-  let match = [];
-  if (queryObject.category) {
-    match.push({ category: { $in: queryObject.category || [] } });
-  }
-  if (queryObject.architecture) {
-    match.push({ architecture: { $in: queryObject.architecture || [] } });
-  }
-  if (match.length > 0) {
-    pipeline.push({
-      $match: {
-        $and: match,
-      },
-    });
-  }
-  pipeline = pipeline.concat([
-    /* {
-      $addFields: {
-        a: "$gem5_versions",
-        ver_latest: {
-          $last: "$gem5_versions",
-        },
-      },
-    }, */
-    {
-      "$addFields": {
-        "ver_latest": {
-          $max: "$gem5_versions"
-        }
-      }
-    },
-    {
-      $sort: getSort(queryObject.sort),
-    },
-    {
-      $setWindowFields: { output: { totalCount: { $count: {} } } },
-    },
-    {
-      $skip: (currentPage - 1) * pageSize,
-    },
-    {
-      $limit: pageSize,
-    },
-  ]);
-
-  /* pipeline.unshift(
-    {
-      $group: {
-        _id: "$id",
-        latestVersion: {
-          $max: {
-            $mergeObjects: [
-              {
-                resource_version:
-                  "$resource_version",
-              },
-              "$$ROOT",
-            ],
-          },
-        },
-      },
-    },
-    {
-      $addFields: {
-        id: "$_id",
-      },
-    },
-    {
-      $project: {
-        _id: 0,
-      },
-    },
-    {
-      $unwind: {
-        path: "$latestVersion",
-      },
-    },
-    {
-      $replaceRoot: {
-        newRoot: "$latestVersion",
-      },
-    },
-  ); */
-  pipeline.unshift(
+function getLatestVersionPipeline() {
+  let pipeline = [
     {
       $addFields: {
         resource_version_parts: {
@@ -229,73 +63,188 @@ async function getSearchResults(accessToken, url, dataSource, database, collecti
         },
       },
     },
-  );
-
-  if (queryObject.query.trim() !== "") {
-    // find score greater than 0.5
-    /* pipeline.unshift({
-      $match: {
-        score: {
-          $gt: 0.5,
-        },
-      },
-    }); */
-    pipeline.unshift({
-      "$addFields": {
-        "score": {
-          "$meta": "searchScore"
-        }
-      }
-    });
-
-    pipeline.unshift({
+  ]
+  return pipeline;
+}
+function getSearchPipeline(queryObject) {
+  let pipeline = [
+    {
       $search: {
         compound: {
           should: [
             {
               text: {
-                "path": "id",
-                "query": queryObject.query,
-                "score": {
-                  "boost": {
-                    "value": 10
-                  }
-                }
-              }
-            },
-          ],
-          must: [{
-            text: {
-              query: queryObject.query,
-              path: ["id", "desciption", "category", "architecture", "tags"],
-              fuzzy: {
-                maxEdits: 2,
-                maxExpansions: 100,
+                path: "id",
+                query: queryObject.query,
+                score: {
+                  boost: {
+                    value: 10,
+                  },
+                },
               },
             },
-          }],
+          ],
+          must: [
+            {
+              text: {
+                query: queryObject.query,
+                path: [
+                  "id",
+                  "desciption",
+                  "category",
+                  "architecture",
+                  "tags",
+                ],
+                fuzzy: {
+                  maxEdits: 2,
+                  maxExpansions: 100,
+                },
+              },
+            },
+          ],
         },
-      }
+      },
+    },
+    {
+      $addFields: {
+        score: {
+          $meta: "searchScore",
+        },
+      },
+    },
+  ];
+  return pipeline;
+}
+function getFilterPipeline(queryObject) {
+  let pipeline = []
+  // adding filter by gem5 version if the user has selected one
+  if (queryObject.gem5_versions) {
+    pipeline.push(...[
+      {
+        $addFields: {
+          version: "$gem5_versions",
+        },
+      },
+      {
+        $unwind: "$version",
+      },
+      {
+        $match: {
+          version: {
+            $in: queryObject.gem5_versions || [],
+          },
+        },
+      },
+      {
+        $group: {
+          _id: "$_id",
+          doc: {
+            $first: "$$ROOT",
+          },
+        },
+      },
+      {
+        $replaceRoot: {
+          newRoot: "$doc",
+        },
+      },
+    ]);
+  }
+  // adding the other fileters such as category and architecture to the serch pipeline
+  let match = [];
+  if (queryObject.category) {
+    match.push({ category: { $in: queryObject.category || [] } });
+  }
+  if (queryObject.architecture) {
+    match.push({ architecture: { $in: queryObject.architecture || [] } });
+  }
+  // adding the match to the pipeline if there are some filters selected
+  if (match.length > 0) {
+    pipeline.push({
+      $match: {
+        $and: match,
+      },
     });
   }
-  const res = await fetch(
-    `${url}/action/aggregate`,
+  return pipeline;
+}
+function getSortPipeline(queryObject) {
+  let pipeline = [
     {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Request-Headers": "*",
-        Authorization: "Bearer " + accessToken,
+      $addFields: {
+        ver_latest: {
+          $max: "$gem5_versions",
+        },
       },
-      // also apply filters on
-      body: JSON.stringify({
-        dataSource: dataSource,
-        database: database,
-        collection: collection,
-        pipeline: pipeline,
-      }),
+    },
+    {
+      $sort: getSort(queryObject.sort),
+    }];
+  return pipeline;
+}
+function getPagePipeline(currentPage, pageSize) {
+  let pipeline = [
+    {
+      $setWindowFields: { output: { totalCount: { $count: {} } } },
+    },
+    {
+      $skip: (currentPage - 1) * pageSize,
+    },
+    {
+      $limit: pageSize,
+    },
+  ];
+  return pipeline;
+}
+function getPipeline(queryObject, currentPage, pageSize) {
+  let pipeline = [];
+  if (queryObject.query.trim() === "") {
+    if (queryObject.sort === "relevance") {
+      queryObject.sort = "default";
     }
-  ).catch((err) => console.log(err));
+  }
+  // adding search query if something is entered
+  if (queryObject.query.trim() !== "") {
+    pipeline.push(...getSearchPipeline(queryObject));
+  }
+  // getting latest resource version for each resource and removing the rest
+  pipeline.push(...getLatestVersionPipeline());
+  // adding the filters to the pipeline
+  pipeline.push(...getFilterPipeline(queryObject));
+  // adding the sorting to the pipeline
+  pipeline.push(...getSortPipeline(queryObject));
+  // adding the pagination to the pipeline
+  pipeline.push(...getPagePipeline(currentPage, pageSize));
+  return pipeline;
+}
+
+async function getSearchResults(
+  accessToken,
+  url,
+  dataSource,
+  database,
+  collection,
+  queryObject,
+  currentPage,
+  pageSize
+) {
+  let resources = [];
+  const pipeline = getPipeline(queryObject, currentPage, pageSize);
+  const res = await fetch(`${url}/action/aggregate`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Request-Headers": "*",
+      Authorization: "Bearer " + accessToken,
+    },
+    // also apply filters on
+    body: JSON.stringify({
+      dataSource: dataSource,
+      database: database,
+      collection: collection,
+      pipeline: pipeline,
+    }),
+  }).catch((err) => console.log(err));
   resources = await res.json();
   return [
     resources["documents"],
@@ -305,6 +254,7 @@ async function getSearchResults(accessToken, url, dataSource, database, collecti
   ];
 }
 
+
 /**
  * @helper
  * @async
@@ -313,51 +263,21 @@ async function getSearchResults(accessToken, url, dataSource, database, collecti
  * @param {json} filters The filters object.
  * @returns {JSX.Element} The JSX element to be rendered.
  */
-export default async function getResourcesMongoDB(queryObject, currentPage, pageSize) {
+export default async function getResourcesMongoDB(queryObject, currentPage, pageSize, database) {
   let privateResources = process.env.PRIVATE_RESOURCES
-  let nPrivate = Object.keys(privateResources).length;
-  let databases = queryObject.database;
-  let resources = [[], 0];
-  if (!databases) {
-    databases = Object.keys(privateResources);
-  }
-  nPrivate = databases.length;
-  for (let resource in privateResources) {
-    if (databases.indexOf(resource) === -1) {
-      continue;
-    }
-    let privateResource = privateResources[resource];
-    let privateAccessToken = await getToken(resource);
-    let privateResourceResults = await getSearchResults(privateAccessToken,
-      privateResource.url,
-      privateResource.dataSource,
-      privateResource.database,
-      privateResource.collection,
-      queryObject,
-      currentPage,
-      Math.floor(pageSize / (nPrivate)));
-    // add private field to each resource
-    privateResourceResults[0].forEach((res) => {
-      res.database = resource;
-    });
-    resources[0] = resources[0].concat(privateResourceResults[0]);
-    resources[1] = resources[1] + privateResourceResults[1];
-  }
-  // sort the resources based on the query
-  switch (queryObject.sort) {
-    case "version":
-      resources[0].sort((a, b) => a.ver_latest < b.ver_latest ? 1 : -1);
-      break;
-    case "id_asc":
-      resources[0].sort((a, b) => a.id < b.id ? 1 : -1);
-      break;
-    case "id_desc":
-      resources[0].sort((a, b) => a.id < b.id ? -1 : 1);
-      break;
-    default:
-      resources[0].sort((a, b) => a.score < b.score ? 1 : -1);
-      break;
-  }
-  console.log(resources);
-  return resources;
+  let privateResource = privateResources[database];
+  let privateAccessToken = await getToken(database);
+  let privateResourceResults = await getSearchResults(privateAccessToken,
+    privateResource.url,
+    privateResource.dataSource,
+    privateResource.database,
+    privateResource.collection,
+    queryObject,
+    currentPage,
+    pageSize);
+  privateResourceResults[0].forEach((resource) => {
+    resource.database = database;
+  });
+
+  return privateResourceResults;
 }

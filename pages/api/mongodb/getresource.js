@@ -27,7 +27,6 @@ async function getResourceByID(token, url, dataSource, database, collection, id,
     if (resource['documents'] === null || resource['documents'].length === 0) {
         return { error: 'Resource not found' }
     }
-    console.log(resource['documents']);
 
     resource = resource['documents'].sort((a, b) => -compareVersions(a.resource_version, b.resource_version))[0];
 
@@ -80,12 +79,6 @@ async function getResourceByID(token, url, dataSource, database, collection, id,
  * @returns {json} The resource in JSON format.
 */
 export default async function getResourceMongoDB(id, database = null, version = null) {
-    if (!database) {
-        /* const token = await getToken();
-        const resource = await getResourceByID(token, process.env.MONGODB_MAIN.url, process.env.MONGODB_MAIN.dataSource, process.env.MONGODB_MAIN.database, process.env.MONGODB_MAIN.collection, id);
-        return resource; */
-        database = Object.keys(process.env.PRIVATE_RESOURCES)[0];
-    }
     const token = await getToken(database);
     let privateResources = process.env.PRIVATE_RESOURCES[database];
     const resource = await getResourceByID(token, privateResources.url, privateResources.dataSource, privateResources.database, privateResources.collection, id, version);
