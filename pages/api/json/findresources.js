@@ -154,13 +154,13 @@ export default async function getResourcesJSON(queryObject, currentPage, pageSiz
         }
         return false;
       });
-    } else if (filter === "versions") {
+    } else if (filter === "gem5_versions") {
       results = results.filter((resource) => {
         for (let version in queryObject[filter]) {
           // check if the version exists in the resource
-          for (let resourceVersion in resource.versions) {
+          for (let gem5Version in resource.gem5_versions) {
             if (
-              resource.versions[resourceVersion]["version"] ===
+              resource.gem5_versions[gem5Version] ===
               queryObject[filter][version]
             ) {
               return true;
