@@ -118,6 +118,38 @@ function getSearchPipeline(queryObject) {
 function getFilterPipeline(queryObject) {
   let pipeline = []
   // adding filter by gem5 version if the user has selected one
+  if (queryObject.tags) {
+    pipeline.push(...[
+      {
+        $addFields: {
+          tag: "$tags",
+        },
+      },
+      {
+        $unwind: "$tag",
+      },
+      {
+        $match: {
+          tag: {
+            $in: queryObject.tags || [],
+          },
+        },
+      },
+      {
+        $group: {
+          _id: "$_id",
+          doc: {
+            $first: "$$ROOT",
+          },
+        },
+      },
+      {
+        $replaceRoot: {
+          newRoot: "$doc",
+        },
+      },
+    ]);
+  }
   if (queryObject.gem5_versions) {
     pipeline.push(...[
       {
