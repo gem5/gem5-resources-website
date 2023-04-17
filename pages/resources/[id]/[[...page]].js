@@ -35,7 +35,6 @@ function Resource() {
             else {
                 resource = await getResource(id, database)
             }
-            console.log(resource)
             if (resource.error) {
                 // trigger replace current page with 404 page
                 window.location.replace(process.env.BASE_PATH + "/404")
