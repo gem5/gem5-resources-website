@@ -44,11 +44,15 @@ function damerauLevenshteinDistance(a, b) {
 }
 
 /**
- * @helper
+ * @function getResourcesJSON
  * @async
- * @description Fetches the resources based on the query object from the JSON file.
- * @param {json} queryObject The query object.
- * @returns {JSX.Element} The JSX element to be rendered.
+ * @description This function retrieves resources from a JSON database based on the provided query object, current page, and page size.
+ * It performs filtering, sorting, and pagination on the retrieved resources.
+ * @param {Object} queryObject - The query object containing filters and sort options.
+ * @param {number} currentPage - The current page number.
+ * @param {number} pageSize - The number of resources to be displayed per page.
+ * @param {string} database - The name of the JSON database.
+ * @returns {Array} - An array containing two elements: an array of filtered and sorted resources, and the total number of resources.
  */
 export default async function getResourcesJSON(queryObject, currentPage, pageSize, database) {
   const resources = await fetchResourcesJSON(database);

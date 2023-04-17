@@ -7,8 +7,6 @@ import { useState, useEffect } from "react";
  * the window's vertical scroll position, and it fades in and out based on its opacity style.
  * @returns {JSX.Element} - The JSX element representing the "scroll to top" button.
  */
-
-
 export default function ScrollToTop() {
   const [visible, setVisible] = useState(false);
   const pageYOffsetTrigger = 300;

@@ -14,7 +14,6 @@ import getVersions from "@/pages/api/getVersions";
 * @param {number} props.version - The version number of the file.
 * @returns {JSX.Element} - The JSX element representing the version component.
 */
-
 function VersionComponent({ version }) {
     function sizeof_fmt(num, suffix = 'B') {
         const units = ['', 'K', 'M', 'G', 'T', 'P', 'E', 'Z'];
@@ -112,7 +111,6 @@ function VersionComponent({ version }) {
  * @param {Object} props.database - The database object used to fetch versions data.
  * @returns {JSX.Element} - The JSX element representing the table of versions.
  */
-
 export default function VersionTab({ id, database }) {
     const [versions, setVersions] = useState([])
 

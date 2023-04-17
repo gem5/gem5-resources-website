@@ -1,5 +1,18 @@
 import getToken from "./getToken";
 
+/**
+ * @function getFilters
+ * @async
+ * @description This asynchronous function fetches distinct categories, architectures, and gem5 versions from a specified data source using MongoDB aggregation pipeline.
+ * It takes in an access token, URL, data source, database, and collection as input parameters, and returns an object containing the
+ * distinct categories, architectures, and gem5 versions sorted in ascending or descending order.
+ * @param {string} accessToken - The access token for authentication.
+ * @param {string} url - The URL of the data source.
+ * @param {string} dataSource - The name of the data source.
+ * @param {string} database - The name of the database.
+ * @param {string} collection - The name of the collection.
+ * @returns {Object} - An object containing the distinct categories, architectures, and gem5 versions sorted in ascending or descending order.
+ */
 async function getFilters(accessToken, url, dataSource, database, collection) {
     // get all distinct categories from resources
     const res = await fetch(`${url}/action/aggregate`, {
@@ -40,7 +53,7 @@ async function getFilters(accessToken, url, dataSource, database, collection) {
 }
 
 /**
- * @helper
+ * @function getFiltersMongoDB
  * @async
  * @description Gets the filters from the MongoDB database. It gets the unique values for columns.
  * @returns {json} A json object with the filters.

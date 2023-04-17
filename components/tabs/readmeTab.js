@@ -22,7 +22,6 @@ import Image from "next/image";
  * @param {string} props.github_url - The GitHub repository URL.
  * @returns {JSX.Element} - The JSX element representing the tab container and rendered markdown content.
 */
-
 export default function ReadmeTab({ github_url }) {
     const [readme, setReadme] = useState("");
     useEffect(() => {

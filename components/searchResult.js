@@ -9,6 +9,7 @@ import power from "/public/power.png";
 import { Badge } from "react-bootstrap";
 import invalid from "/public/null.svg";
 import { useEffect, useState } from "react";
+
 /**
  * @component
  * @description A component that renders a search result which includes

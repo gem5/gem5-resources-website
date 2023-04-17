@@ -14,7 +14,7 @@ import RawTab from "./tabs/rawTab";
 /**
  * @component
  * @description The tab component for the resource page. This component is responsible for rendering the tabs and their content.
- *            It also handles the routing for the tabs.
+ * It also handles the routing for the tabs.
  * @param {Object} resource The resource object.
  * @returns {JSX.Element} The JSX element to be rendered.
  */

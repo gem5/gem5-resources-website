@@ -13,7 +13,7 @@ export default async function getFiltersJSON(database) {
     let architectures = [...new Set(resources.map(resource => resource.architecture))];
     // remove null values
     architectures = architectures.filter(architecture => architecture != null);
-    
+
     let versions = [];
     for (let i = 0; i < resources.length; i++) {
         for (let j = 0; j < resources[i].gem5_versions.length; j++) {

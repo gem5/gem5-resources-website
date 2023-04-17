@@ -7,7 +7,6 @@ import Link from "next/link";
  * It also displays a tooltip message when the text has been successfully copied to the clipboard.
  * @returns {JSX.Element} - The JSX element representing the "Create Pull Request" section with copy icon and child element.
  */
-
 export default function CreatePR() {
   return (
     <div className="w-100 d-flex flex-column align-items-center justify-content-center pb-3">

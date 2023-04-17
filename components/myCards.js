@@ -13,7 +13,6 @@ import Link from "next/link";
  * @param {string} props.buttonText - The text to be displayed on the button.
  * @returns {JSX.Element} - The JSX element representing the card component with title, text, and button.
  */
-
 export default function MyCards({ className, cardTitle, cardText, pathRef, buttonText }) {
     return (
         <Card className={className}>

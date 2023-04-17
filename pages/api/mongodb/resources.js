@@ -1,5 +1,16 @@
 import getToken from "./getToken";
 
+/**
+ * @function
+ * @async
+ * @description Fetches resources from a specified data source, database, and collection using a Bearer token for authorization.
+ * @param {string} accessToken - The access token used for authorization.
+ * @param {string} url - The URL of the API endpoint.
+ * @param {string} dataSource - The data source to fetch resources from.
+ * @param {string} database - The database to fetch resources from.
+ * @param {string} collection - The collection to fetch resources from.
+ * @returns {Array} - An array of resources retrieved from the specified data source, database, and collection.
+*/
 async function fetchResources(accessToken, url, dataSource, database, collection) {
   const res = await fetch(
     `${url}/action/find`,
@@ -22,7 +33,7 @@ async function fetchResources(accessToken, url, dataSource, database, collection
 }
 
 /**
- * @helper
+ * @function fetchResourcesMongoDB
  * @async
  * @description Fetches all the resources from the MongoDB database.
  * @returns {json} A JSON object containing all the resources.

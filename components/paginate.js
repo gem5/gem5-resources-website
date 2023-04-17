@@ -13,7 +13,6 @@ import styles from '/styles/paginate.module.css'
  * @param {string} props.paginationSize - The size of the pagination component (e.g., 'sm', 'md', 'lg').
  * @returns {JSX.Element} - The JSX element representing the pagination component.
  */
-
 export default function Paginate({ pageCount, currentPage, maxPageNumbersShown, setCurrentPage, paginationSize }) {
     const halfPagesToShow = Math.floor(maxPageNumbersShown / 2);
     // const halfPagesToShow = 4;

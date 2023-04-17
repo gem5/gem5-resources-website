@@ -13,7 +13,6 @@ import styles from '@/styles/cookieConsent.module.css';
 * @param {function} props.hasUpdated - A callback function to be called when the user updates their cookie preferences.
 * @returns {JSX.Element|null} - The JSX element representing the cookie consent overlay.
 */
-
 export default function CookieConsent({ showConsentOverlay, hasUpdated }) {
     const [showOverlay, setShowOverlay] = useState(false);
     const [showModal, setShowModal] = useState(false);
@@ -71,6 +70,14 @@ export default function CookieConsent({ showConsentOverlay, hasUpdated }) {
     }
 }
 
+/**
+ * @component
+ * @description This component renders a cookie consent modal with options for required, preferences, and statistics cookies.
+ * Users can toggle their consent for each type of cookie, and their preferences are stored locally in the browser using the localStorage API.
+ * @param {Object} props - The props object.
+ * @param {Function} props.updateVisbility - The function to update the visibility of the modal.
+ * @returns {JSX.Element} - The JSX element representing the cookie consent modal.
+ */
 function CookieConsentModal({ updateVisbility }) {
     const [isToggled, setIsToggled] = useState([true, true, true]);
 
@@ -167,7 +174,6 @@ function CookieConsentModal({ updateVisbility }) {
  * @param {function} props.setIsToggled - A function to update the toggle state.
  * @returns {JSX.Element} - The JSX element representing the toggle switch.
  */
-
 function ToggleSwitch({ setPermanentActive, index, isToggled, setIsToggled }) {
     return (
         <label className={`${styles.toggleSwitch}`}>

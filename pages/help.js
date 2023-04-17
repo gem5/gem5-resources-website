@@ -17,7 +17,6 @@ import help from './help.md'
  * @returns {JSX.Element} - The JSX element representing the help page.
  * @props {Object} props - The props object (none in this case).
  */
-
 export default function Help() {
     return (
         <Container>

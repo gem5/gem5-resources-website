@@ -1,7 +1,19 @@
 import getToken from "./getToken";
 import compareVersions from "../compareVersions";
 
-
+/**
+ * @function
+ * @async
+ * @description Fetches versions of a resource with a specific ID from a specified data source, database, and collection using a Bearer token for authorization.
+ * @param {string} token - The access token used for authorization.
+ * @param {string} url - The URL of the API endpoint.
+ * @param {string} dataSource - The data source to fetch resources from.
+ * @param {string} database - The database to fetch resources from.
+ * @param {string} collection - The collection to fetch resources from.
+ * @param {string} id - The ID of the resource to retrieve versions for.
+ * @returns {Array} - An array of resource versions retrieved from the specified data source, database, and collection, sorted in descending order of resource version.
+ * @throws {Error} - Throws an error if the fetch request fails.
+ */
 async function getVersionsByID(token, url, dataSource, database, collection, id) {
     const res = await fetch(`${url}/action/find`, {
         method: 'POST',
@@ -31,7 +43,7 @@ async function getVersionsByID(token, url, dataSource, database, collection, id)
 }
 
 /**
- * @helper
+ * @function getVersionsMongoDB
  * @async
  * @description Fetches a resource from the MongoDB database.
  * @param {string} id The id of the resource to be fetched.

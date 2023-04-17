@@ -19,7 +19,6 @@ which code block to display in the usage tab.
 @returns {JSX.Element} - The JSX element representing the usage tab with
 syntax highlighted code and copy icon.
 */
-
 export default function UsageTab({ use, exampleContent, id }) {
     const [usage, setUsage] = useState(<></>);
 

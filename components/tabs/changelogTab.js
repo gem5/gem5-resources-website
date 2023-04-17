@@ -17,7 +17,6 @@ import Image from "next/image";
 @param {string} props.github_url - The GitHub URL of the repository to fetch the CHANGELOG.md file from.
 @returns {JSX.Element} - The JSX element representing the ChangelogTab component.
 */
-
 export default function ChangelogTab({ github_url }) {
     const [readme, setReadme] = useState("");
     useEffect(() => {

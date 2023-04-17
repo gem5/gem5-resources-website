@@ -12,7 +12,6 @@ import parse from "html-react-parser";
  * @param {Object} props.resource - The resource object to display as raw content.
  * @returns {JSX.Element} - The JSX element representing the RawTab component.
  */
-
 export default function RawTab({ resource }) {
     const [raw, setRaw] = useState(<></>);
     useEffect(() => {

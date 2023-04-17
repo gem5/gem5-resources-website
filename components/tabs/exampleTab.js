@@ -16,7 +16,6 @@ import { Nav, OverlayTrigger, Tooltip } from "react-bootstrap";
 @param {boolean} example.tested - A boolean value indicating whether the example has been tested or not.
 @returns {JSX.Element} - The JSX element representing the ExampleTab component.
 */
-
 export default function ExampleTab({ exampleContent }) {
     const [examples, setExamples] = useState([]);
     useEffect(() => {

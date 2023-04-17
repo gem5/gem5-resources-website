@@ -5,6 +5,7 @@ import getResourceMongoDB from "./mongodb/getresource";
  * @wrapper
  * @async
  * @description Fetches a resource from the MongoDB database or JSON file.
+ * Defaults to first database if none.
  * @param {string} id The id of the resource to be fetched.
  * @returns {json} The resource in JSON format.
 */

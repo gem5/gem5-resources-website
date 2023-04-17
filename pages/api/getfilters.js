@@ -4,7 +4,7 @@ import getFiltersMongoDB from "./mongodb/getfilters";
 /**
  * @wrapper
  * @async
- * @description Gets the filters from the database.
+ * @description Gets the filters from every database.
  * @returns {json} A json object with the filters.
 */
 export async function getFilters() {
