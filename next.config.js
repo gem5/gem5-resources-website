@@ -20,7 +20,9 @@ module.exports = {
   assetPrefix: assetPrefix,
   basePath: basePath,
   images: {
-    unoptimized: true
+    unoptimized: true,
+    loader: 'akamai',
+    path: '',
   },
   env: {
     BASE_PATH: basePath,
