@@ -15,7 +15,7 @@ import { useRouter } from "next/router";
 const SearchBox = forwardRef((props, ref) => {
     const [search, setSearch] = useState("")
     const router = useRouter()
-    
+
     useEffect(() => {
         if (props.query) {
             setSearch(props.query)
@@ -50,7 +50,7 @@ const SearchBox = forwardRef((props, ref) => {
     return (
         <>
             <Form className={"search-form w-100 " + props.className} onSubmit={handleSubmit}>
-                <Form.Control type="text" placeholder="Search Resources" value={search} onChange={(e) => onChange(e)} className="main-text-regular"/>
+                <Form.Control type="search" name="search" placeholder="Search Resources" value={search} onChange={(e) => onChange(e)} className="main-text-regular" />
                 <Button type="submit" style={{ display: "none" }} id="submit" />
                 <Image
                     src={searchImage}

@@ -6,7 +6,7 @@ let isProd = process.env.NODE_ENV === 'production'
 // get path of the websie hosted on github pages from the environment variable
 // https://realm.mongodb.com/api/client/v2.0/app/data-ejhjf/graphql
 module.exports = {
-  assetPrefix: isProd ? '/gem5-resources-website/' : '',
+  assetPrefix: isProd ? '/gem5-resources-website/' : undefined,
   basePath: isProd ? '/gem5-resources-website' : '',
   images: {
     unoptimized: true,
