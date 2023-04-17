@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 /**
  * @component
  * @description A component that renders the metadata of a resource that includes
- *             the number of likes, views, downloads, author, description, license,
+ *             author, description, license,
  *            dependencies, and depend on this resource.
  * @param {Object} resource The resource object.
  * @param {string} className The class name of the component.

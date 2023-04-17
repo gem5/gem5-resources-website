@@ -11,8 +11,8 @@ import invalid from "/public/null.svg";
 import { useEffect, useState } from "react";
 /**
  * @component
- * @description A component that renders a search result which includes 
- * the resource's name, description, architecture, category and license.
+ * @description A component that renders a search result which includes
+ * the resource's name, database, description, architecture, category and license.
  *  @param {Object} resource The resource to be rendered.
  * @returns {JSX.Element} The JSX element to be rendered.
 */

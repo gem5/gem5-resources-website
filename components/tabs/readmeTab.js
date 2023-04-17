@@ -10,6 +10,18 @@ import remarkFrontmatter from "remark-frontmatter";
 import CopyIcon from "../copyIcon";
 import Image from "next/image";
 
+/**
+ * @component
+ * @description This component renders a tab container with a copy icon alongside the
+ * rendered markdown content from the README.md file in the provided GitHub repository URL.
+ * The markdown content is parsed and displayed using the ReactMarkdown library.
+ * The copy icon allows users to copy the code block content to clipboard.
+ * The component also handles cases where the README.md file is not found
+ * or the provided GitHub URL is invalid.
+ * @param {Object} props - The props object.
+ * @param {string} props.github_url - The GitHub repository URL.
+ * @returns {JSX.Element} - The JSX element representing the tab container and rendered markdown content.
+*/
 
 export default function ReadmeTab({ github_url }) {
     const [readme, setReadme] = useState("");

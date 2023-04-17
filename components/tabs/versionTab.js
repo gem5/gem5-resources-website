@@ -6,11 +6,15 @@ import styles from '/styles/versionpage.module.css'
 import getVersions from "@/pages/api/getVersions";
 
 /**
-    * @description This function creates a row with a version number and its corresponding link.
-    * @param {string} version - The version number to be displayed in the row.
-    * @param {string} url - The link associated with the version number.
-    * @returns {JSX.Element} The JSX element representing the row with the version number and its link.
-    */
+* @component
+* @description This component renders a version component that displays
+* the size of a file in different units (B, KB, MB, etc.).
+* It also includes icons for downloading, code and cross, which render differently depending on information.
+* @param {Object} props - The props object.
+* @param {number} props.version - The version number of the file.
+* @returns {JSX.Element} - The JSX element representing the version component.
+*/
+
 function VersionComponent({ version }) {
     function sizeof_fmt(num, suffix = 'B') {
         const units = ['', 'K', 'M', 'G', 'T', 'P', 'E', 'Z'];
@@ -95,14 +99,20 @@ function VersionComponent({ version }) {
     )
 }
 
+
 /**
  * @component
- * @description This component renders a table with versions and their respective links.
- * @param {object} props - The props object.
- * @param {object} props.versions - An object containing version numbers as keys and links as values.
- * @param {string} props.url - A base URL that will be used to replace a placeholder string in the link values.
- * @returns {JSX.Element} The JSX element representing the table of versions and links.
-*/
+ * @description This component renders a table of versions with relevant information
+ * such as version number, size, gem5 versions, and links.
+ * It retrieves the versions data from the provided database based on the given ID prop
+ * and renders VersionComponent for each version.
+ * If there are no versions available, an empty fragment is returned.
+ * @param {Object} props - The props object.
+ * @param {string} props.id - The ID prop used to retrieve versions data from the database.
+ * @param {Object} props.database - The database object used to fetch versions data.
+ * @returns {JSX.Element} - The JSX element representing the table of versions.
+ */
+
 export default function VersionTab({ id, database }) {
     const [versions, setVersions] = useState([])
 

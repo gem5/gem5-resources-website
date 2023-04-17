@@ -5,6 +5,14 @@ import CopyIcon from "../copyIcon";
 import { rehype } from "rehype";
 import parse from "html-react-parser";
 
+/**
+ * @component RawTab
+ * @description This component renders a tab container with a child element that displays the raw content of a resource object in a pre-formatted code block. It also includes a copy icon that allows the user to copy the content to the clipboard.
+ * @param {Object} props - The props object.
+ * @param {Object} props.resource - The resource object to display as raw content.
+ * @returns {JSX.Element} - The JSX element representing the RawTab component.
+ */
+
 export default function RawTab({ resource }) {
     const [raw, setRaw] = useState(<></>);
     useEffect(() => {

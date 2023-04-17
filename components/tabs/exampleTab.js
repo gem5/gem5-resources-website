@@ -6,6 +6,17 @@ import { rehype } from "rehype";
 import parse from "html-react-parser";
 import { Nav, OverlayTrigger, Tooltip } from "react-bootstrap";
 
+/**
+@component ExampleTab
+@description This component renders a tab container with pill-style navigation tabs, where each tab represents an example content. Each tab displays a copy icon alongside the rendered example content, and allows the user to copy the text content to the clipboard when the icon is clicked. It also displays a tooltip message when the example content has been successfully copied to the clipboard. The component receives an array of example content as a prop, and renders the example content as tab panes within the tab container.
+@param {Object} props - The props object.
+@param {Array} props.exampleContent - An array of example content objects, where each object should have the following properties:
+@param {string} example.url - The URL of the example content.
+@param {string} example.content - The text content of the example.
+@param {boolean} example.tested - A boolean value indicating whether the example has been tested or not.
+@returns {JSX.Element} - The JSX element representing the ExampleTab component.
+*/
+
 export default function ExampleTab({ exampleContent }) {
     const [examples, setExamples] = useState([]);
     useEffect(() => {

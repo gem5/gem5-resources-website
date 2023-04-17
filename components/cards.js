@@ -5,8 +5,10 @@ import Link from "next/link";
 
 /**
  * @component
- * @description This function returns a set of cards that display information and a button to link to the most useful resources for a beginner.
- * @returns {JSX.Element} JSX Element containing cards displaying information and a button to link to resources.
+ * @description This function returns a set of cards that display information
+ * and a button to link to the most useful resources for a beginner.
+ * @returns {JSX.Element} JSX Element containing cards displaying information
+ * and a button to link to resources.
  */
 export default function MyCards() {
   return (
