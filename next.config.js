@@ -9,10 +9,8 @@ module.exports = {
   assetPrefix: isProd ? '/gem5-resources-website/' : undefined,
   basePath: isProd ? '/gem5-resources-website' : '',
   images: {
-    unoptimized: true,
-    loader: 'imgix',
-    path: '',
-  },
+    unoptimized: true
+  },  
   env: {
     BASE_PATH: isProd ? '/gem5-resources-website' : '',
     PRIVATE_RESOURCES: {
