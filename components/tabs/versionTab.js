@@ -43,7 +43,7 @@ function VersionComponent({ version }) {
     return (
         <tr className={styles.versions_tr} key={version.resource_version}>
             <td className={`${styles.versions_td} main-text-regular`}>
-                <a href={'/resources/' + version.id + "?database=" + version.database + "&version=" + version.resource_version} className="interactDecoration">
+                <a href={process.env.BASE_PATH + '/resources/' + version.id + "?database=" + version.database + "&version=" + version.resource_version} className="interactDecoration">
                     {version.resource_version}
                 </a>
             </td>

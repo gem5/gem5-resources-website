@@ -76,7 +76,7 @@ export default function Resources() {
             qo["sort"] = sort;
             setQueryObject(qo);
         }
-    }, [query])
+    }, [query, sort])
 
     useEffect(() => {
         getFilters().then(filters => {

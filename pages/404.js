@@ -16,31 +16,19 @@ export default function Custom404() {
     const [error, setError] = useState(false)
     const [loading, setLoading] = useState(true)
     useEffect(() => {
-        async function fetchResource(id) {
-            setLoading(true)
-            getResource(id).then((resource) => {
-                if (resource.error) {
-                    setError(true)
-                    // change url to 404 without reloading the page
-                    router.push(`/404`)
-                }
-                else
-                    setError(false)
-                setLoading(false)
-            })
-        }
-        // check if path 
-        if (router.isReady && router.query !== undefined) {
+        if (router.isReady) {
             setLoading(true)
             setError(false)
-            const url = router.asPath.split("/")
-            if (url.length < 3 || url[1] !== "resources") {
+            const url = router.asPath.split("?")[0].split("/")
+            let i = 3
+            if (url.length < i || url[i - 2] !== "resources") {
                 setError(true)
                 setLoading(false)
+                router.push("/404")
                 return
             }
-            const id = url[2]
-            fetchResource(id);
+            setLoading(false)
+            return
         }
     }, [router.isReady])
 

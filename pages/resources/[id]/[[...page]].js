@@ -24,7 +24,6 @@ function Resource() {
             // if contains query string database, then it is a private resource
             let database = null
             if (router.query.database !== undefined) {
-                id = router.query.id
                 database = router.query.database
             }
             setLoading(true)
@@ -36,16 +35,19 @@ function Resource() {
             else {
                 resource = await getResource(id, database)
             }
+            console.log(resource)
             if (resource.error) {
-                router.push(`/404`)
+                // trigger replace current page with 404 page
+                // window.location.replace(process.env.BASE_PATH + "/404")
             }
             else
                 setResource(resource)
             setLoading(false)
         }
         if (router.isReady && router.query !== undefined) {
-            const url = router.asPath.split("/")
-            const id = url[2]
+            let i = 2
+            const url = router.asPath.split('?')[0].split("/")
+            const id = url[i]
             fetchResource(id);
         }
     }, [router.isReady])

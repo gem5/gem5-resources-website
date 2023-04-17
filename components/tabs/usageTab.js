@@ -58,7 +58,7 @@ export default function UsageTab({ use, exampleContent, id }) {
             string = string.substring(m.index + str.length);
         }
         setUsage(string);
-    }, [exampleContent, id]);
+    }, [exampleContent, id, use]);
 
     return (
         <Tab.Container defaultActiveKey="first">

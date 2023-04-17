@@ -8,6 +8,7 @@ import rehypeSlug from "rehype-slug";
 import rehypeRaw from "rehype-raw";
 import remarkFrontmatter from "remark-frontmatter";
 import CopyIcon from "../copyIcon";
+import Image from "next/image";
 
 
 export default function ReadmeTab({ github_url }) {
@@ -49,11 +50,12 @@ export default function ReadmeTab({ github_url }) {
                     ),
                     // add url to image
                     img: ({ node, ...props }) => (
-                        <img
+                        <Image
                             {...props}
                             src={`${github_url
                                 .replace("github.com", "raw.githubusercontent.com")
                                 .replace("tree/", "")}/${props.src}`}
+                            alt="Readme"
                         />
                     ),
                 }}
