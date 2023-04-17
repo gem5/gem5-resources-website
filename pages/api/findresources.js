@@ -46,7 +46,6 @@ export async function getResources(queryObject, currentPage, pageSize) {
       resources[0].sort((a, b) => a.score < b.score ? 1 : -1);
       break;
   }
-  console.log(resources[0]);
   return {
     resources: resources[0],
     total: resources[1],

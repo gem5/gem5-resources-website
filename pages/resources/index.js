@@ -79,20 +79,32 @@ export default function Resources() {
     }, [query])
 
     useEffect(() => {
-        const fetchFilters = async () => {
-            const filters = await getFilters();
-            setFilters(filters);
+        getFilters().then(filters => {
             let filterModified = {};
             for (let filter in filters) {
                 let filterObject = {};
                 filters[filter].forEach(filterOption => {
+                    filterObject[filterOption] = false;
+                }
+                );
+                filterModified[filter] = filterObject;
+            }
+            setFilters(filterModified);
+        })
+    }, [])
+
+    useEffect(() => {
+        const fetchFilters = async () => {
+            let filterModified = {};
+            for (let filter in filters) {
+                let filterObject = {};
+                for (let filterOption in filters[filter]) {
                     if (queryObject[filter] && queryObject[filter].includes(filterOption)) {
                         filterObject[filterOption] = true;
                     } else {
                         filterObject[filterOption] = false;
                     }
                 }
-                );
                 filterModified[filter] = filterObject;
             }
             setFilters(filterModified);
@@ -178,7 +190,7 @@ export default function Resources() {
         router.push({
             pathname: '/resources',
             query: { q: q, page: 1, sort: queryObject.sort, limit: numberOfItemsPerPage }
-        })
+        }, undefined, { shallow: true })
     }
 
     function onSearch(query) {
@@ -186,7 +198,7 @@ export default function Resources() {
         router.push({
             pathname: '/resources',
             query: { q: query, page: 1, sort: queryObject.sort, limit: numberOfItemsPerPage }
-        })
+        }, undefined, { shallow: true })
     }
 
     function onSortChange(e) {
@@ -194,7 +206,7 @@ export default function Resources() {
         router.push({
             pathname: '/resources',
             query: { q: query, page: currentPage, sort: e.target.value, limit: numberOfItemsPerPage }
-        })
+        }, undefined, { shallow: true })
     }
 
     function onPageChange(page) {
@@ -202,7 +214,7 @@ export default function Resources() {
         router.push({
             pathname: '/resources',
             query: { q: query, page: page, sort: queryObject.sort, limit: numberOfItemsPerPage }
-        })
+        }, undefined, { shallow: true })
     }
 
     return (
@@ -232,33 +244,33 @@ export default function Resources() {
                                     </span>
                                 </div>
                                 <Form.Select
-                                        //value 
-                                        className='w-auto primary main-text-semi'
-                                        value={numberOfItemsPerPage.toString()}
-                                        onChange={(value) => {
-                                            // if the page is more than the max page number, set the page to the max page number
-                                            if (currentPage > Math.ceil(total / parseInt(value.target.value))) {
-                                                setNumberOfItemsPerPage(parseInt(value.target.value));
-                                                setCurrentPage(Math.ceil(total / parseInt(value.target.value)))
-                                                router.push({
-                                                    pathname: '/resources',
-                                                    query: { q: query, page: Math.ceil(total / parseInt(value.target.value)), limit: parseInt(value.target.value) }
-                                                })
-                                            }
-                                            else {
-                                                setNumberOfItemsPerPage(parseInt(value.target.value));
-                                                router.push({
-                                                    pathname: '/resources',
-                                                    query: { q: query, page: currentPage, limit: parseInt(value.target.value) }
-                                                })
-                                            }
-                                        }}
-                                        style={{ cursor: 'pointer', height: 'fit-content', paddingRight: '1.75rem' }}
-                                    >
-                                        <option value='10'>10 per page</option>
-                                        <option value='25'>25 per page</option>
-                                        <option value='50'>50 per page</option>
-                                        <option value='100'>100 per page</option>
+                                    //value 
+                                    className='w-auto primary main-text-semi'
+                                    value={numberOfItemsPerPage.toString()}
+                                    onChange={(value) => {
+                                        // if the page is more than the max page number, set the page to the max page number
+                                        if (currentPage > Math.ceil(total / parseInt(value.target.value))) {
+                                            setNumberOfItemsPerPage(parseInt(value.target.value));
+                                            setCurrentPage(Math.ceil(total / parseInt(value.target.value)))
+                                            router.push({
+                                                pathname: '/resources',
+                                                query: { q: query, page: Math.ceil(total / parseInt(value.target.value)), limit: parseInt(value.target.value) }
+                                            })
+                                        }
+                                        else {
+                                            setNumberOfItemsPerPage(parseInt(value.target.value));
+                                            router.push({
+                                                pathname: '/resources',
+                                                query: { q: query, page: currentPage, limit: parseInt(value.target.value) }
+                                            })
+                                        }
+                                    }}
+                                    style={{ cursor: 'pointer', height: 'fit-content', paddingRight: '1.75rem' }}
+                                >
+                                    <option value='10'>10 per page</option>
+                                    <option value='25'>25 per page</option>
+                                    <option value='50'>50 per page</option>
+                                    <option value='100'>100 per page</option>
                                 </Form.Select>
                                 <div className='w-auto d-flex align-items-center'>
                                     {/*value-label*/}
