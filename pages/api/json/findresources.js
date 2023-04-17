@@ -116,17 +116,32 @@ export default async function getResourcesJSON(queryObject, currentPage, pageSiz
 
   // remove duplicate ids and keep the one with the highest ver_latest
   let tempResults = results;
+  results = [];
   for (let i = 0; i < tempResults.length; i++) {
+    let found = false;
+    for (let j = 0; j < results.length; j++) {
+      if (tempResults[i].id === results[j].id) {
+        found = true;
+        if (compareVersions(tempResults[i].resource_version, results[j].resource_version) > 0) {
+          results[j] = tempResults[i];
+        }
+      }
+    }
+    if (!found) {
+      results.push(tempResults[i]);
+    }
+  }
+  /* for (let i = 0; i < tempResults.length; i++) {
     for (let j = i + 1; j < tempResults.length; j++) {
       if (tempResults[i].id === tempResults[j].id) {
-        if (compareVersions(tempResults[i].ver_latest, tempResults[j].ver_latest) >= 0) {
+        if (compareVersions(tempResults[i].resource_version, tempResults[j].resource_version) >= 0) {
           results.splice(j, 1);
         } else {
           results.splice(i, 1);
         }
       }
     }
-  }
+  } */
 
   if (queryObject.sort) {
     switch (queryObject.sort) {

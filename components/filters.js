@@ -13,6 +13,7 @@ import Placeholder from 'react-bootstrap/Placeholder';
 export default function Filters({ filters, callback }) {
     const [filterState, setFilterState] = useState({});
     useEffect(() => {
+        console.log(filters);
         if (filters) {
             if (filters.database && Object.keys(filters.database).length === 1) {
                 delete filters.database;

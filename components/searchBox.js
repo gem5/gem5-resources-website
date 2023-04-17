@@ -51,15 +51,15 @@ const SearchBox = forwardRef((props, ref) => {
         <>
             <Form className={"search-form w-100 " + props.className} onSubmit={handleSubmit}>
                 <Form.Control type="search" name="search" placeholder="Search Resources" value={search} onChange={(e) => onChange(e)} className="main-text-regular" />
+                <div id="search-icon" className="d-flex align-items-center justify-content-center" onClick={() => document.getElementById("submit").click()}>
+                    <Image
+                        src={searchImage}
+                        alt="Search Icon"
+                        height="20"
+                        type="submit"
+                    />
+                </div>
                 <Button type="submit" style={{ display: "none" }} id="submit" />
-                <Image
-                    src={searchImage}
-                    alt="Search Icon"
-                    height="20"
-                    id="search-icon"
-                    type="submit"
-                    onClick={() => document.getElementById("submit").click()}
-                />
             </Form>
         </>
     )

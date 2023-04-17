@@ -78,6 +78,8 @@ export default function Resources() {
         }
     }, [query, sort])
 
+    const [databaseFilters, setDatabaseFilters] = useState({});
+
     useEffect(() => {
         getFilters().then(filters => {
             let filterModified = {};
@@ -89,16 +91,17 @@ export default function Resources() {
                 );
                 filterModified[filter] = filterObject;
             }
-            setFilters(filterModified);
+            setDatabaseFilters(filterModified);
         })
     }, [])
 
     useEffect(() => {
         const fetchFilters = async () => {
+            console.log(queryObject);
             let filterModified = {};
-            for (let filter in filters) {
+            for (let filter in databaseFilters) {
                 let filterObject = {};
-                for (let filterOption in filters[filter]) {
+                for (let filterOption in databaseFilters[filter]) {
                     if (queryObject[filter] && queryObject[filter].includes(filterOption)) {
                         filterObject[filterOption] = true;
                     } else {
@@ -116,10 +119,10 @@ export default function Resources() {
             setLoading(false);
         };
 
-        if (queryObject) {
+        if (queryObject && Object.keys(databaseFilters).length > 0) {
             fetchFilters();
         }
-    }, [queryObject, currentPage, numberOfItemsPerPage]);
+    }, [queryObject, currentPage, numberOfItemsPerPage, databaseFilters]);
 
     useEffect(() => {
         function pageNumbersOnResize() {

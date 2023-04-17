@@ -8,8 +8,19 @@
  */
 export default async function fetchResourcesJSON(database) {
   let url = process.env.PRIVATE_RESOURCES[database].url;
-  const res = await fetch(
-    url,
-  ).then((res) => res.json());
-  return res;
+  if (url.includes("http")) {
+    const res = await fetch(
+      url,
+    ).then((res) => res.json());
+    return res;
+  }
+  else {
+    try {
+      const path = process.env.BASE_PATH + '/' + url;
+      const json = await fetch(path).then((res) => res.json());
+      return json;
+    } catch (error) {
+      return [];
+    }
+  }
 }

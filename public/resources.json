@@ -1,0 +1,79 @@
+[
+    {
+        "category": "binary",
+        "id": "this-is-a-test-resource",
+        "description": "This is a test resource",
+        "architecture": "X86",
+        "size": 13816,
+        "tags": [
+            "asmtest",
+            "testing",
+            "riscv",
+            "testing"
+        ],
+        "is_zipped": false,
+        "md5sum": "4e70a98b6976969deffff91eed17fba1",
+        "source": "src/asmtest",
+        "url": "http://dist.gem5.org/dist/develop/test-progs/asmtest/bin/rv64mi-p-sbreak",
+        "code_examples": [],
+        "license": " BSD-3-Clause",
+        "author": [],
+        "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/asmtest",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "23.0"
+        ],
+        "example_usage": "get_resource(resource_name=\"rv64mi-p-sbreak\")"
+    },
+    {
+        "category": "binary",
+        "id": "this-is-a-test-resource",
+        "description": "This is a test resource but newer",
+        "architecture": "X86",
+        "size": 13816,
+        "tags": [
+            "asmtest",
+            "testing",
+            "riscv",
+            "testing",
+            "new"
+        ],
+        "is_zipped": false,
+        "md5sum": "4e70a98b6976969deffff91eed17fba1",
+        "source": "src/asmtest",
+        "url": "http://dist.gem5.org/dist/develop/test-progs/asmtest/bin/rv64mi-p-sbreak",
+        "code_examples": [],
+        "license": " BSD-3-Clause",
+        "author": [],
+        "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/asmtest",
+        "resource_version": "1.1.0",
+        "gem5_versions": [
+            "23.0"
+        ],
+        "example_usage": "get_resource(resource_name=\"rv64mi-p-sbreak\")"
+    },
+    {
+        "category": "binary",
+        "id": "this-is-a-test-resource",
+        "description": "This is a test resource but double newer",
+        "architecture": "X86",
+        "size": 13816,
+        "tags": [
+            "asmtest"
+        ],
+        "is_zipped": false,
+        "md5sum": "4e70a98b6976969deffff91eed17fba1",
+        "source": "src/asmtest",
+        "url": "http://dist.gem5.org/dist/develop/test-progs/asmtest/bin/rv64mi-p-sbreak",
+        "code_examples": [],
+        "license": " BSD-3-Clause",
+        "author": [],
+        "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/asmtest",
+        "resource_version": "2.0.0",
+        "gem5_versions": [
+            "23.0",
+            "23.1"
+        ],
+        "example_usage": "get_resource(resource_name=\"rv64mi-p-sbreak\")"
+    }
+]
