@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import SearchBox from "./searchBox";
 import { useRouter } from "next/router";
+
 /**
  * @component
  * @description This component returns the top navigation bar for the gem5 website.

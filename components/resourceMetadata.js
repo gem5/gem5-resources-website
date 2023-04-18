@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 /**
  * @component
  * @description A component that renders the metadata of a resource that includes
- *             the number of likes, views, downloads, author, description, license,
+ *             author, description, license,
  *            dependencies, and depend on this resource.
  * @param {Object} resource The resource object.
  * @param {string} className The class name of the component.
@@ -174,7 +174,7 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
                                             <div>
                                                 {key.charAt(0).toUpperCase() + key.slice(1)}
                                             </div>
-                                            <a href={process.env.BASE_PATH + '/resources/' + resource.resources[key]} style={{ display: 'block', paddingTop: '0.0625rem' }}>
+                                            <a href={process.env.BASE_PATH + '/resources/' + resource.resources[key] + `?database=${resource.database}`} style={{ display: 'block', paddingTop: '0.0625rem' }}>
                                                 {resource.resources[key]}
                                             </a>
                                         </div>
@@ -191,7 +191,7 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
                                     return (
                                         <span key={workload}>
                                             <a
-                                                href={process.env.BASE_PATH + '/resources/' + workload}
+                                                href={process.env.BASE_PATH + '/resources/' + workload + `?database=${resource.database}`}
                                             >
                                                 {workload}
                                             </a>

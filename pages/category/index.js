@@ -12,6 +12,19 @@ import remarkFrontmatter from 'remark-frontmatter';
 import CopyIcon from '@/components/copyIcon';
 import { useRouter } from "next/router";
 
+/**
+ * @function Category
+ * @description This function renders a category page that displays content based on the category provided in the URL hash.
+ * It fetches data from a JSON file and renders category cards with titles, descriptions, and buttons.
+ * @returns {JSX.Element} - The JSX element representing the category page.
+ * @props {Object} props - The props object.
+ * @props {string} props.children - The child element to copy the text from.
+ * @state {Array} categoryCards - The array of category cards data fetched from a JSON file.
+ * @state {string} category - The category provided in the URL hash.
+ * @state {string} content - The content of the selected category fetched from a Markdown file.
+ * @effects Fetches data from JSON and Markdown files, updates state variables, and renders components accordingly.
+ */
+
 export default function Category() {
     const [categoryCards, setCategoryCards] = useState([]);
     const [category, setCategory] = useState(null);
@@ -24,7 +37,6 @@ export default function Category() {
                 const content = (await import(`./${category}.md`)).default;
                 setContent(content);
             } catch (e) {
-                console.log(e);
                 router.replace('/404');
             }
         }
@@ -44,7 +56,6 @@ export default function Category() {
         fetch("https://raw.githubusercontent.com/Gem5Vision/json-to-mongodb/main/schema/test.json")
             .then(res => res.json())
             .then(data => {
-                console.log(data['properties']['category']['enum']);
                 const categoryCards = data['properties']['category']['enum'].map((category) => {
                     return {
                         cardTitle: category.charAt(0).toUpperCase() + category.substr(1).toLowerCase(),

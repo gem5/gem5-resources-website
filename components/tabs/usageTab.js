@@ -5,6 +5,20 @@ import CopyIcon from "../copyIcon";
 import { rehype } from "rehype";
 import parse from "html-react-parser";
 
+/**
+@component
+@description This component renders a usage tab with syntax highlighted code alongside the given child element,
+and allows copying the code to the clipboard when the copy icon is clicked.
+@param {Object} props - The props object.
+@param {string} props.use - The code to be displayed in the usage tab.
+If not provided, the code will be generated from the example content.
+@param {Array} props.exampleContent - An array of example content objects,
+where each object has a content property containing the code string.
+@param {string} props.id - The ID to be matched in the generated code to determine
+which code block to display in the usage tab.
+@returns {JSX.Element} - The JSX element representing the usage tab with
+syntax highlighted code and copy icon.
+*/
 export default function UsageTab({ use, exampleContent, id }) {
     const [usage, setUsage] = useState(<></>);
 
@@ -50,7 +64,6 @@ export default function UsageTab({ use, exampleContent, id }) {
                 return;
             }
             /* let keywords = id.split('-');
-            console.log(keywords);
             let nMatches = keywords.filter((keyword) => str.includes(keyword)).length;
             if (nMatches >= 2) {
               textToHtml(str);
@@ -59,7 +72,7 @@ export default function UsageTab({ use, exampleContent, id }) {
             string = string.substring(m.index + str.length);
         }
         setUsage(string);
-    }, [exampleContent, id]);
+    }, [exampleContent, id, use]);
 
     return (
         <Tab.Container defaultActiveKey="first">

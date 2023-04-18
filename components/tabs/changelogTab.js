@@ -8,7 +8,15 @@ import rehypeSlug from "rehype-slug";
 import rehypeRaw from "rehype-raw";
 import remarkFrontmatter from "remark-frontmatter";
 import CopyIcon from "../copyIcon";
+import Image from "next/image";
 
+/**
+@component ChangelogTab
+@description This component renders a tab container that displays a changelog from a GitHub repository. It fetches the CHANGELOG.md file from the provided GitHub URL, and renders it using ReactMarkdown. The component also includes a copy icon alongside code blocks, allowing users to copy the text content to the clipboard. Additionally, it replaces image URLs with the raw image URLs from the GitHub repository.
+@param {Object} props - The props object.
+@param {string} props.github_url - The GitHub URL of the repository to fetch the CHANGELOG.md file from.
+@returns {JSX.Element} - The JSX element representing the ChangelogTab component.
+*/
 export default function ChangelogTab({ github_url }) {
     const [readme, setReadme] = useState("");
     useEffect(() => {
@@ -24,6 +32,8 @@ export default function ChangelogTab({ github_url }) {
             setReadme(text);
         }
         if (!github_url) return;
+        if (!github_url.match(/github\.com\/[a-zA-Z0-9-_.]+\/[a-zA-Z0-9-_.]+/))
+            return setReadme("Invalid GitHub URL");
         getReadme();
     }, [github_url]);
 
@@ -45,11 +55,12 @@ export default function ChangelogTab({ github_url }) {
                     ),
                     // add url to image
                     img: ({ node, ...props }) => (
-                        <img
+                        <Image
                             {...props}
                             src={`${github_url
                                 .replace("github.com", "raw.githubusercontent.com")
                                 .replace("tree/", "")}/${props.src}`}
+                            alt="Changelog"
                         />
                     ),
                 }}

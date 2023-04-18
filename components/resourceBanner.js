@@ -77,6 +77,9 @@ export default function Banner({ resource, setShowMetadata }) {
             </div>
         </> :
             <>
+                <h2 className="main-text-title-bold text-muted">
+                    {resource.database ? `${resource.database} /` : 'gem5-resources /'}
+                </h2>
                 <CopyIcon>
                     <h2 className='text-muted pe-3 mb-3 page-title'>
                         {resource.id}
@@ -87,16 +90,18 @@ export default function Banner({ resource, setShowMetadata }) {
                     <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd" stroke='#0095AF'><path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z" /></svg>
                 </button>
 
-                <div className='d-flex align-items-center mb-2'>
-                    <h5 className='text-muted secondary-text-semi mb-0 me-1'>
-                        Category:
-                    </h5>
-                    {/* <div className={styles.dot}></div> */}
-                    <h5 className='mb-0' style={{ fontSize: '0px' }}>
-                        <Link href={`/category#${resource.category}`} className='primary secondary-text-semi'>
-                            {String(resource.category).charAt(0).toUpperCase() + String(resource.category).substring(1) ?? "Unknown"}
-                        </Link>
-                    </h5>
+                <div className='d-flex align-items-center gap-2 mb-2'>
+                    <div className='d-flex align-items-center'>
+                        <h5 className='text-muted secondary-text-semi mb-0 me-1'>
+                            Category:
+                        </h5>
+                        {/* <div className={styles.dot}></div> */}
+                        <h5 className='mb-0' style={{ fontSize: '0px' }}>
+                            <Link href={`/category#${resource.category}`} className='primary secondary-text-semi'>
+                                {String(resource.category).charAt(0).toUpperCase() + String(resource.category).substring(1) ?? "Unknown"}
+                            </Link>
+                        </h5>
+                    </div>
                 </div>
                 <div className='d-flex gap-4 mb-2 flex-wrap'>
                     <p className="d-flex flex-row align-items-center gap-1 mt-0 mb-0 main-text-semi">
@@ -113,14 +118,9 @@ export default function Banner({ resource, setShowMetadata }) {
                         <h6 style={{ lineHeight: 'inherit', margin: '0' }} className="main-text-semi">
                             VERSION
                         </h6>
-                        {
-                            resource.versions && resource.versions.length === 0 ? "None" :
-                                <Link className='text-black main-text-regular interactDecoration' href={'/resources?q=versions:' + (resource.versions && (resource.versions.length > 1 ? resource.versions[1].version : resource.versions[0].version))}>
-                                    {
-                                        resource.versions && (resource.versions.length > 1 ? resource.versions[1].version : resource.versions[0].version)
-                                    }
-                                </Link>
-                        }
+                        <Link className='text-black main-text-regular interactDecoration' href={'/resources?q=versions:' + (resource.versions && (resource.versions.length > 1 ? resource.versions[1].version : resource.versions[0].version))}>
+                            {resource.resource_version}
+                        </Link>
                     </div>
                     <div className='d-flex flex-row gap-1 align-items-center'>
                         <h6 style={{ lineHeight: 'inherit', margin: '0' }}>

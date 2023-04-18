@@ -14,7 +14,7 @@ import RawTab from "./tabs/rawTab";
 /**
  * @component
  * @description The tab component for the resource page. This component is responsible for rendering the tabs and their content.
- *            It also handles the routing for the tabs.
+ * It also handles the routing for the tabs.
  * @param {Object} resource The resource object.
  * @returns {JSX.Element} The JSX element to be rendered.
  */
@@ -59,12 +59,23 @@ export default function ResourceTab({ resource }) {
       "versions",
       "raw",
     ];
-    const page = router.asPath.split("/").slice(2);
-    if (page[1]) {
-      if (tabs.includes(page[1])) {
-        setSelectedTab(page[1]);
+    let page = router.query.page;
+    if (page) {
+      page = page[0]
+      if (tabs.includes(page)) {
+        setSelectedTab(page);
       } else {
-        router.push(`/resources/${resource.id}`, undefined, { shallow: true });
+        let query = router.query;
+        delete query.id;
+        delete query.page;
+        router.push(
+          {
+            pathname: `/resources/${resource.id}`,
+            // QUERY IS EVERYTHING EXCEPT ID
+            query: query,
+          }, undefined, {
+          shallow: true,
+        });
       }
     } else {
       setSelectedTab("readme");
@@ -72,15 +83,23 @@ export default function ResourceTab({ resource }) {
   }, [router, resource.id]);
 
   const handleSelect = (e) => {
+    setSelectedTab(e);
+    let query = router.query;
+    delete query.id;
+    delete query.page;
     if (e === "readme") {
-      setSelectedTab(e);
-      return router.replace(`/resources/${resource.id}`, undefined, {
+      return router.replace({
+        pathname: `/resources/${resource.id}`,
+        query: query,
+      }, undefined, {
         shallow: true,
       });
     }
-    setSelectedTab(e);
     // replace the tab in the url
-    router.replace(`/resources/${resource.id}/${e}`, undefined, {
+    router.replace({
+      pathname: `/resources/${resource.id}/${e}`,
+      query: query,
+    }, undefined, {
       shallow: true,
     });
   };
@@ -105,7 +124,7 @@ export default function ResourceTab({ resource }) {
         </Tab>
         <Tab eventKey="usage" title="Usage">
           <UsageTab
-            use={resource.usage}
+            use={resource.example_usage}
             exampleContent={exampleContent}
             id={resource.id}
           />
@@ -125,8 +144,8 @@ export default function ResourceTab({ resource }) {
             Versions of {resource.id}
           </h3>
           <VersionTab
-            versions={resource.versions}
-            url={resource.download_url}
+            id={resource.id}
+            database={resource.database}
           />
         </Tab>
         <Tab eventKey="raw" title="Raw">

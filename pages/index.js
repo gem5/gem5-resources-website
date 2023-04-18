@@ -47,7 +47,6 @@ export default function Home() {
     fetch("https://raw.githubusercontent.com/Gem5Vision/json-to-mongodb/main/schema/test.json")
       .then(res => res.json())
       .then(data => {
-        console.log(data['properties']['category']['enum']);
         const categoryCards = []
         for (let i = 0; i < 3; i++) {
           const category = data['properties']['category']['enum'][i]

@@ -3,14 +3,18 @@ import { useEffect, useState } from "react";
 import { Overlay, OverlayTrigger, Popover, Table } from "react-bootstrap"
 import CopyIcon from "../copyIcon";
 import styles from '/styles/versionpage.module.css'
+import getVersions from "@/pages/api/getVersions";
 
 /**
-    * @description This function creates a row with a version number and its corresponding link.
-    * @param {string} version - The version number to be displayed in the row.
-    * @param {string} link - The link associated with the version number.
-    * @returns {JSX.Element} The JSX element representing the row with the version number and its link.
-    */
-function VersionComponent(version, link, size) {
+* @component
+* @description This component renders a version component that displays
+* the size of a file in different units (B, KB, MB, etc.).
+* It also includes icons for downloading, code and cross, which render differently depending on information.
+* @param {Object} props - The props object.
+* @param {number} props.version - The version number of the file.
+* @returns {JSX.Element} - The JSX element representing the version component.
+*/
+function VersionComponent({ version }) {
     function sizeof_fmt(num, suffix = 'B') {
         const units = ['', 'K', 'M', 'G', 'T', 'P', 'E', 'Z'];
         let i = 0;
@@ -31,24 +35,30 @@ function VersionComponent(version, link, size) {
     const [downloadUrl, setDownloadUrl] = useState('')
 
     useEffect(() => {
-        if (!link) {
+        if (!version.url) {
             return setDownloadUrl('')
         }
         // link = url.replace('{url_base}', link)
         // link = link.replace('http://', 'https://')
-        setDownloadUrl(link)
-    }, [link])
+        setDownloadUrl(version.url)
+    }, [version])
 
     return (
-        <tr className={styles.versions_tr} key={version}>
+        <tr className={styles.versions_tr} key={version.resource_version}>
             <td className={`${styles.versions_td} main-text-regular`}>
-                {version}
+                <a href={process.env.BASE_PATH + '/resources/' + version.id + "?database=" + version.database + "&version=" + version.resource_version} className="interactDecoration">
+                    {version.resource_version}
+                </a>
             </td>
             <td className={`${styles.versions_td} main-text-regular`}>
-                {sizeof_fmt(size)}
+                {sizeof_fmt(version.size ?? 0)}
             </td>
+            <td className={`${styles.versions_td} main-text-regular`}>
+                {version.gem5_versions.sort().join(', ')}
+            </td>
+
             <td style={{ width: '24px', height: '24px' }} className={styles.versions_td}>
-                {link ?
+                {version.url ?
                     <Link href={downloadUrl} download target="_blank" className="interactDecoration">
                         {downloadSvg}
                     </Link>
@@ -59,7 +69,7 @@ function VersionComponent(version, link, size) {
                 }
             </td>
             <td style={{ width: '24px', height: '24px' }} className={styles.versions_td}>
-                {link ?
+                {version.url ?
                     <div className={styles.icon_wrapper_div}>
                         <OverlayTrigger trigger="click" placement="bottom" overlay={
                             <Popover id="popover-basic" >
@@ -88,15 +98,28 @@ function VersionComponent(version, link, size) {
     )
 }
 
+
 /**
  * @component
- * @description This component renders a table with versions and their respective links.
- * @param {object} props - The props object.
- * @param {object} props.versions - An object containing version numbers as keys and links as values.
- * @param {string} props.url - A base URL that will be used to replace a placeholder string in the link values.
- * @returns {JSX.Element} The JSX element representing the table of versions and links.
-*/
-export default function VersionTab({ versions, url }) {
+ * @description This component renders a table of versions with relevant information
+ * such as version number, size, gem5 versions, and links.
+ * It retrieves the versions data from the provided database based on the given ID prop
+ * and renders VersionComponent for each version.
+ * If there are no versions available, an empty fragment is returned.
+ * @param {Object} props - The props object.
+ * @param {string} props.id - The ID prop used to retrieve versions data from the database.
+ * @param {Object} props.database - The database object used to fetch versions data.
+ * @returns {JSX.Element} - The JSX element representing the table of versions.
+ */
+export default function VersionTab({ id, database }) {
+    const [versions, setVersions] = useState([])
+
+    useEffect(() => {
+        getVersions(id, database).then((data) => {
+            setVersions(data)
+        })
+    }, [id, database])
+
     return (
         versions.length === 0 ? <></> :
             <>
@@ -105,17 +128,16 @@ export default function VersionTab({ versions, url }) {
                         <tr>
                             <th>Version</th>
                             <th>Size</th>
+                            <th>gem5 Versions</th>
                             <th colSpan={3}>Links</th>
                         </tr>
                     </thead>
                     <tbody>
-
                         {
-                            versions && versions.map((version) => {
-                                return VersionComponent(version.version, version.url, version.size)
-                            })
+                            versions.map((v) => (
+                                <VersionComponent key={v.resource_version} version={v} />
+                            ))
                         }
-
                     </tbody>
                 </Table>
             </>

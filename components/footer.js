@@ -7,6 +7,7 @@ import CreatePR from "./createPR";
 /**
  * @component
  * @description This component returns a footer section containing three columns with links to various resources related to gem5.
+ * Along with that, it also creates a contributing to gem5 component below these columns.
  * @returns {JSX.Element} The JSX element representing the footer section.
  */
 export default function Footer() {
@@ -26,7 +27,7 @@ export default function Footer() {
     deleteCookie("_ga_2B1F9HP95Z");
 
     setResetConsent(true);
-  }   
+  }
 
   return (
     <>

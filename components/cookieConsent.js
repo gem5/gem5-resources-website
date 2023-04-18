@@ -4,6 +4,15 @@ import Image from "next/image";
 import cookie from "public/cookie.svg";
 import styles from '@/styles/cookieConsent.module.css';
 
+/**
+* @component
+* @description This component renders a cookie consent overlay with options to manage cookies. 
+* It uses localStorage API to store user preferences for different types of cookies.
+* @param {Object} props - The props object.
+* @param {boolean} props.showConsentOverlay - A boolean indicating whether the cookie consent overlay should be displayed.
+* @param {function} props.hasUpdated - A callback function to be called when the user updates their cookie preferences.
+* @returns {JSX.Element|null} - The JSX element representing the cookie consent overlay.
+*/
 export default function CookieConsent({ showConsentOverlay, hasUpdated }) {
     const [showOverlay, setShowOverlay] = useState(false);
     const [showModal, setShowModal] = useState(false);
@@ -61,6 +70,14 @@ export default function CookieConsent({ showConsentOverlay, hasUpdated }) {
     }
 }
 
+/**
+ * @component
+ * @description This component renders a cookie consent modal with options for required, preferences, and statistics cookies.
+ * Users can toggle their consent for each type of cookie, and their preferences are stored locally in the browser using the localStorage API.
+ * @param {Object} props - The props object.
+ * @param {Function} props.updateVisbility - The function to update the visibility of the modal.
+ * @returns {JSX.Element} - The JSX element representing the cookie consent modal.
+ */
 function CookieConsentModal({ updateVisbility }) {
     const [isToggled, setIsToggled] = useState([true, true, true]);
 
@@ -143,6 +160,20 @@ function CookieConsentModal({ updateVisbility }) {
     );
 }
 
+/**
+ * @component
+ * @description This component renders a toggle switch with an optional "setPermanentActive" prop that determines whether the switch is always active and disabled.
+ * It takes an "index" prop to identify the position of the switch in a list, an "isToggled" prop which is an array of boolean values representing the toggle state of each switch,
+ * and an "setIsToggled" prop which is a function to update the toggle state. When the switch is toggled, the "isToggled" prop is updated using the "setIsToggled" function.
+ * The component is styled with a CSS class "toggleSwitch" and includes an input element with a checkbox, and a span element as the slider.
+ * When "setPermanentActive" is true, the switch is checked and disabled with a not-allowed cursor style.
+ * @param {Object} props - The props object.
+ * @param {boolean} props.setPermanentActive - Determines whether the switch is always active and disabled. Default is false.
+ * @param {number} props.index - The index of the switch in a list.
+ * @param {boolean[]} props.isToggled - An array of boolean values representing the toggle state of each switch.
+ * @param {function} props.setIsToggled - A function to update the toggle state.
+ * @returns {JSX.Element} - The JSX element representing the toggle switch.
+ */
 function ToggleSwitch({ setPermanentActive, index, isToggled, setIsToggled }) {
     return (
         <label className={`${styles.toggleSwitch}`}>

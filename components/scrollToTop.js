@@ -1,5 +1,12 @@
 import { useState, useEffect } from "react";
 
+/**
+ * @component ScrollToTop
+ * @description This component renders a "scroll to top" button that appears when the user scrolls down the page.
+ * When clicked, it smoothly scrolls the page back to the top. The button's visibility is controlled based on
+ * the window's vertical scroll position, and it fades in and out based on its opacity style.
+ * @returns {JSX.Element} - The JSX element representing the "scroll to top" button.
+ */
 export default function ScrollToTop() {
   const [visible, setVisible] = useState(false);
   const pageYOffsetTrigger = 300;

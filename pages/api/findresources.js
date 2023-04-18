@@ -1,5 +1,6 @@
 import getResourcesMongoDB from "./mongodb/findresources";
 import getResourcesJSON from "./json/findresources";
+import compareVersions from "./compareVersions";
 
 /**
  * @wrapper
@@ -11,17 +12,43 @@ import getResourcesJSON from "./json/findresources";
  * @returns {json} The resources in JSON format.
  */
 export async function getResources(queryObject, currentPage, pageSize) {
-  let resources;
-  if (process.env.IS_MONGODB_ENABLED) {
-    resources = await getResourcesMongoDB(queryObject, currentPage, pageSize);
-  } else {
-    resources = await getResourcesJSON(queryObject, currentPage, pageSize);
+  let privateResources = process.env.PRIVATE_RESOURCES
+  let databases = queryObject.database;
+  let resources = [[], 0];
+  if (!databases) {
+    databases = Object.keys(privateResources);
   }
-  let total = resources[1];
-  resources = resources[0];
-  // }
+  let nPrivate = databases.length;
+  for (let resource in privateResources) {
+    if (databases.indexOf(resource) === -1) {
+      continue;
+    }
+    let privateResourceResults = [[], 0];
+    if (privateResources[resource].isMongo) {
+      privateResourceResults = await getResourcesMongoDB(queryObject, currentPage, Math.floor(pageSize / (nPrivate)), resource);
+    } else {
+      privateResourceResults = await getResourcesJSON(queryObject, currentPage, Math.floor(pageSize / (nPrivate)), resource);
+    }
+    resources[0] = resources[0].concat(privateResourceResults[0]);
+    resources[1] = resources[1] + privateResourceResults[1];
+  }
+  // sort the resources based on the query
+  switch (queryObject.sort) {
+    case "version":
+      resources[0].sort((a, b) => -compareVersions(a.ver_latest ?? "0.0", b.ver_latest ?? "0.0"));
+      break;
+    case "id_asc":
+      resources[0].sort((a, b) => a.id < b.id ? 1 : -1);
+      break;
+    case "id_desc":
+      resources[0].sort((a, b) => a.id < b.id ? -1 : 1);
+      break;
+    default:
+      resources[0].sort((a, b) => a.score < b.score ? 1 : -1);
+      break;
+  }
   return {
-    resources: resources,
-    total: total,
+    resources: resources[0],
+    total: resources[1],
   };
 }
