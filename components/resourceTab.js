@@ -3,7 +3,7 @@ import Tabs from "react-bootstrap/Tabs";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import VersionTab from "./tabs/versionTab";
-import { Placeholder } from "react-bootstrap";
+import { Nav, Placeholder } from "react-bootstrap";
 import ReadmeTab from "./tabs/readmeTab";
 import ChangelogTab from "./tabs/changelogTab";
 import UsageTab from "./tabs/usageTab";
@@ -23,7 +23,7 @@ export default function ResourceTab({ resource }) {
   const router = useRouter();
   const [selectedTab, setSelectedTab] = useState("readme");
   const [requiredTabs, setRequiredTabs] = useState([]);
-  const [addionalTabs, setAdditionalTabs] = useState([]);
+  const [optionalTabs, setOptionalTabs] = useState([]);
 
   const [exampleContent, setExampleContent] = useState([]);
   useEffect(() => {
@@ -50,36 +50,12 @@ export default function ResourceTab({ resource }) {
     fetchExampleContent();
   }, [resource.code_examples]);
 
-  const [tabs, setTabs] = useState([
-    "readme",
-    "changelog",
-    "usage",
-    "parameters",
-    "example",
-    "versions",
-    "raw",
-  ]);
-
   useEffect(() => {
     if (!router.isReady) return;
     let page = router.query.page;
     if (page) {
       page = page[0]
-      if (tabs.includes(page)) {
-        setSelectedTab(page);
-      } else {
-        let query = router.query;
-        delete query.id;
-        delete query.page;
-        router.push(
-          {
-            pathname: `/resources/${resource.id}`,
-            // QUERY IS EVERYTHING EXCEPT ID
-            query: query,
-          }, undefined, {
-          shallow: true,
-        });
-      }
+      setSelectedTab(page);
     } else {
       setSelectedTab("readme");
     }
@@ -90,9 +66,7 @@ export default function ResourceTab({ resource }) {
     getTabs(resource).then((fields) => {
       console.log(fields);
       setRequiredTabs(fields.required);
-      // append the names of the required tabs to the tabs array
-      setTabs([...fields.required.map((tab) => tab.name), ...tabs]);
-      setAdditionalTabs(fields.optional);
+      setOptionalTabs(fields.optional);
     });
   }, [resource]);
 
@@ -105,7 +79,6 @@ export default function ResourceTab({ resource }) {
         content = tab.content;
         break;
       case "array":
-        console.log(tab.content);
         content = tab.content.map((item, index) => {
           return (
             <Tab.Pane eventKey={`first-${index}`} key={index}>
@@ -131,17 +104,7 @@ export default function ResourceTab({ resource }) {
       default:
         content = null;
     }
-    // convert tab.name from simpoint_interval to Simpoint Interval
-    let name = tab.name
-      .split("_")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ");
-    console.log(content);
-    return (<Tab eventKey={tab.name} title={name} key={tab.name}>
-      <Tab.Container defaultActiveKey="first">
-        {content}
-      </Tab.Container>
-    </Tab>);
+    return content;
   }
 
   const handleSelect = (e) => {
@@ -211,8 +174,43 @@ export default function ResourceTab({ resource }) {
           />
         </Tab>
         {requiredTabs.map((tab) => {
-          return createTab(tab);
+          let content = createTab(tab);
+          if (!content) return null;
+          return (
+            <Tab eventKey={tab.name} title={tab.name.split("_").map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+              .join(" ")} key={tab.name}>
+              <Tab.Container defaultActiveKey="first">
+                {createTab(tab)}
+              </Tab.Container>
+            </Tab>
+          );
         })}
+        {optionalTabs.length > 0 ? (
+          <Tab eventKey="optional" title="Optional">
+            <Tab.Container defaultActiveKey="0">
+              <Nav variant="pills" className="flex-row">
+                {optionalTabs.map((tab, index) => {
+                  return (
+                    <Nav.Item key={index}>
+                      <Nav.Link eventKey={index}>
+                        {tab.name}
+                      </Nav.Link>
+                    </Nav.Item>
+                  );
+                })}
+              </Nav>
+              <Tab.Content>
+                {optionalTabs.map((tab, index) => {
+                  return (
+                    <Tab.Pane eventKey={index} key={index}>
+                      {createTab(tab)}
+                    </Tab.Pane>
+                  );
+                })}
+              </Tab.Content>
+            </Tab.Container>
+          </Tab>
+        ) : null}
         <Tab eventKey="raw" title="Raw">
           <RawTab resource={resource} />
         </Tab>

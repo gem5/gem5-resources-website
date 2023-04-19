@@ -97,7 +97,6 @@ export default function Resources() {
 
     useEffect(() => {
         const fetchFilters = async () => {
-            console.log(queryObject);
             let filterModified = {};
             for (let filter in databaseFilters) {
                 let filterObject = {};

@@ -46,7 +46,6 @@ function getRequiredFields(schema, category) {
 export default async function getTabs(res) {
     // create copy of resource
     let resource = JSON.parse(JSON.stringify(res));
-    console.log(resource);
     const category = resource.category;
     // schema is at https://raw.githubusercontent.com/Gem5Vision/json-to-mongodb/simentic-version/schema/test.json
     const schema = await fetch(process.env.SCHEMA_URL).then(res => res.json());
@@ -62,7 +61,6 @@ export default async function getTabs(res) {
             delete resource[field];
         }
     }
-    console.log(resource);
     let fields = getRequiredFields(schema, category);
     /* 
     convert into something like this:
@@ -84,8 +82,6 @@ export default async function getTabs(res) {
             field.content = resource[field.name];
         }
     }
-    console.log(fields[0]);
-    console.log(fields[1]);
     return {
         required: fields[0],
         optional: fields[1],
