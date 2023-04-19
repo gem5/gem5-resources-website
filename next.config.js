@@ -25,6 +25,7 @@ module.exports = {
   },
   env: {
     BASE_PATH: basePath,
+    SCHEMA_URL: "https://raw.githubusercontent.com/Gem5Vision/json-to-mongodb/simentic-version/schema/test.json",
     PRIVATE_RESOURCES: {
       "versions": {
         dataSource: "gem5-vision",

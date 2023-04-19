@@ -10,6 +10,7 @@ import UsageTab from "./tabs/usageTab";
 import ParametersTab from "./tabs/parametersTab";
 import ExampleTab from "./tabs/exampleTab";
 import RawTab from "./tabs/rawTab";
+import getTabs from "@/pages/api/getTabs";
 
 /**
  * @component
@@ -21,6 +22,8 @@ import RawTab from "./tabs/rawTab";
 export default function ResourceTab({ resource }) {
   const router = useRouter();
   const [selectedTab, setSelectedTab] = useState("readme");
+  const [requiredTabs, setRequiredTabs] = useState([]);
+  const [addionalTabs, setAdditionalTabs] = useState([]);
 
   const [exampleContent, setExampleContent] = useState([]);
   useEffect(() => {
@@ -47,18 +50,18 @@ export default function ResourceTab({ resource }) {
     fetchExampleContent();
   }, [resource.code_examples]);
 
+  const [tabs, setTabs] = useState([
+    "readme",
+    "changelog",
+    "usage",
+    "parameters",
+    "example",
+    "versions",
+    "raw",
+  ]);
+
   useEffect(() => {
     if (!router.isReady) return;
-
-    const tabs = [
-      "readme",
-      "changelog",
-      "usage",
-      "parameters",
-      "example",
-      "versions",
-      "raw",
-    ];
     let page = router.query.page;
     if (page) {
       page = page[0]
@@ -81,6 +84,65 @@ export default function ResourceTab({ resource }) {
       setSelectedTab("readme");
     }
   }, [router, resource.id]);
+
+  useEffect(() => {
+    if (Object.keys(resource).length === 0) return;
+    getTabs(resource).then((fields) => {
+      console.log(fields);
+      setRequiredTabs(fields.required);
+      // append the names of the required tabs to the tabs array
+      setTabs([...fields.required.map((tab) => tab.name), ...tabs]);
+      setAdditionalTabs(fields.optional);
+    });
+  }, [resource]);
+
+  function createTab(tab) {
+    if (!tab.content) return null;
+    let content = null;
+    switch (tab.schema.type) {
+      case "string":
+      case "integer":
+        content = tab.content;
+        break;
+      case "array":
+        console.log(tab.content);
+        content = tab.content.map((item, index) => {
+          return (
+            <Tab.Pane eventKey={`first-${index}`} key={index}>
+              {item}
+            </Tab.Pane>
+          );
+        });
+        break;
+      case "object":
+        content = Object.keys(tab.content).map((key, index) => {
+          return (
+            <div key={index}>
+              <div>
+                {key}
+              </div>
+              <div>
+                {tab.content[key]}
+              </div>
+            </div>
+          );
+        });
+        break;
+      default:
+        content = null;
+    }
+    // convert tab.name from simpoint_interval to Simpoint Interval
+    let name = tab.name
+      .split("_")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+    console.log(content);
+    return (<Tab eventKey={tab.name} title={name} key={tab.name}>
+      <Tab.Container defaultActiveKey="first">
+        {content}
+      </Tab.Container>
+    </Tab>);
+  }
 
   const handleSelect = (e) => {
     setSelectedTab(e);
@@ -148,6 +210,9 @@ export default function ResourceTab({ resource }) {
             database={resource.database}
           />
         </Tab>
+        {requiredTabs.map((tab) => {
+          return createTab(tab);
+        })}
         <Tab eventKey="raw" title="Raw">
           <RawTab resource={resource} />
         </Tab>
