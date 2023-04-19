@@ -55,23 +55,30 @@ export default async function getTabs(res) {
     delete resource.source;
     delete resource.database;
     delete resource.workloads;
-    // remove fields that are part of schema.properties
     for (let field in resource) {
         if (schema.properties[field]) {
             delete resource[field];
         }
     }
     let fields = getRequiredFields(schema, category);
-    /* 
-    convert into something like this:
-    [
-        {
-            name: "Readme",
-            type: "markdown",
-            content: "This is a readme",
-        },
-    ]
-    */
+    // remove duplicate fields
+    fields[0] = fields[0].filter((field, index, self) =>
+        index === self.findIndex((t) => (
+            t.name === field.name
+        ))
+    );
+    fields[1] = fields[1].filter((field, index, self) =>
+        index === self.findIndex((t) => (
+            t.name === field.name
+        ))
+    );
+    // remove fields that are not in resource
+    fields[0] = fields[0].filter((field) => (
+        field.name in resource
+    ));
+    fields[1] = fields[1].filter((field) => (
+        field.name in resource
+    ));
     for (let field of fields[0]) {
         if (resource[field.name]) {
             field.content = resource[field.name];
