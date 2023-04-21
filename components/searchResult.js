@@ -18,6 +18,14 @@ import { useEffect, useState } from "react";
  * @returns {JSX.Element} The JSX element to be rendered.
 */
 export default function SearchResult({ resource }) {
+    const [resourceLink, setResourceLink] = useState("");
+    useEffect(() => {
+        if (Object.keys(process.env.PRIVATE_RESOURCES).length <= 1) {
+            setResourceLink('/resources/' + resource.id + (resource.resource_version ? "?version=" + resource.resource_version : ""));
+        } else {
+            setResourceLink('/resources/' + resource.id + (resource.database ? "?database=" + resource.database : "") + (resource.resource_version ? "&version=" + resource.resource_version : ""));
+        }
+    }, [resource]);
     function getIcon(architecture) {
         switch (architecture) {
             case "X86":
@@ -39,7 +47,7 @@ export default function SearchResult({ resource }) {
 
     return (
         <div className="search-result">
-            <Link href={('/resources/' + resource.id) + (resource.database ? "?database=" + resource.database : "")} style={{ textDecoration: 'none', color: 'inherit' }}>
+            <Link href={resourceLink} style={{ textDecoration: 'none', color: 'inherit' }}>
                 <div className="search-result__title d-flex flex-row gap-2 align-items-center">
                     <h4 className="main-text-title-bold text-muted">
                         {resource.database ? `${resource.database} /` : 'gem5-resources /'}

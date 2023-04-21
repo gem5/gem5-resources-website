@@ -71,7 +71,7 @@ export default function Home() {
       <Container className='d-flex flex-column align-items-center justify-content-center home mt-5'>
         <Image
           src={logo}
-          alt="Gem5 Logo"
+          alt="gem5 Logo"
           height={250}
           className='gem5-logo'
           priority

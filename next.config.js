@@ -27,7 +27,7 @@ module.exports = {
     BASE_PATH: basePath,
     SCHEMA_URL: "https://raw.githubusercontent.com/Gem5Vision/json-to-mongodb/simentic-version/schema/test.json",
     PRIVATE_RESOURCES: {
-      "versions": {
+      "gem5-resources": {
         dataSource: "gem5-vision",
         database: "gem5-vision",
         collection: "versions_test",
@@ -36,30 +36,14 @@ module.exports = {
         apiKey: "pKkhRJGJaQ3NdJyDt69u4GPGQTDUIhHlx4a3lrKUNx2hxuc8uba8NrP3IVRvlzlo",
         isMongo: true,
       },
-      "atharav": {
+      "versions": {
         url: "https://raw.githubusercontent.com/Gem5Vision/json-to-mongodb/simentic-version/kiwi.json",
         isMongo: false,
       },
-      "sus": {
+      "local": {
         url: "resources.json",
         isMongo: false,
       },
-      /* "gem5-resources": {
-        dataSource: "gem5-vision",
-        database: "gem5-vision",
-        collection: "resources",
-        url: "https://data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1",
-        name: "data-ejhjf",
-        apiKey: "pKkhRJGJaQ3NdJyDt69u4GPGQTDUIhHlx4a3lrKUNx2hxuc8uba8NrP3IVRvlzlo",
-      },
-      "test": {
-        name: "data-ejhjf",
-        url: "https://data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1",
-        dataSource: "gem5-vision",
-        database: "gem5-vision",
-        collection: "resources_test",
-        apiKey: "pKkhRJGJaQ3NdJyDt69u4GPGQTDUIhHlx4a3lrKUNx2hxuc8uba8NrP3IVRvlzlo",
-      } */
     },
   },
   webpack: (config) => {

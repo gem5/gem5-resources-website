@@ -388,6 +388,10 @@ h3 {
   background-color: #00788d;
 }
 
+.filter-header>.accordion-button {
+  text-transform: none;
+}
+
 @media (max-width: 767px) {
   .cardStyle {
     width: 100%;
@@ -426,6 +430,7 @@ h3 {
     flex-wrap: wrap;
   }
 }
+
 
 @media (max-width: 768px) {
   .results-sortBy-row {

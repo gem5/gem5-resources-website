@@ -289,8 +289,8 @@ export default function Resources() {
                                     >
                                         <option value='relevance'>Relevance</option>
                                         <option value='version'>Version</option>
-                                        <option value='id_asc'>Name Ascending</option>
-                                        <option value='id_desc'>Name Descending</option>
+                                        <option value='id_asc'>Resource ID Ascending</option>
+                                        <option value='id_desc'>Resource ID Descending</option>
                                     </Form.Select>
                                 </div>
                             </Row>
