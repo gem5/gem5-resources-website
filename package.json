@@ -8,7 +8,7 @@
     "export": "next export",
     "start": "next start",
     "lint": "next lint",
-    "jsdoc": "jsdoc2md pages/api/*"
+    "test": "jest"
   },
   "dependencies": {
     "@next/font": "13.1.6",
