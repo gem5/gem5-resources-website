@@ -84,7 +84,7 @@ export default function Home() {
         <div className='cardsBlockContainer mt-5'>
           <h2 className='primary page-title'>Getting Started</h2>
           <p className='text-muted main-text-regular'>First time using gem5? These resources might help.</p>
-          <div className='cardsContainer'>
+          <div className='cardsContainer' aria-label="Getting Started Cards">
             {gettingStartedCards.map((card, index) => (
               <MyCards className="cardStyle" key={index} cardTitle={card.cardTitle} cardText={card.cardText} pathRef={card.pathRef} buttonText={card.buttonText} />
             ))}
@@ -96,7 +96,7 @@ export default function Home() {
         <div className='cardsBlockContainer mt-5 mb-5'>
           <h2 className='primary page-title'>Categories</h2>
           <p className='text-muted main-text-regular'>These are the "Categories" of Resources we use on this website.</p>
-          <div className='cardsContainer'>
+          <div className='cardsContainer' aria-label="Category Cards">
             {categoryCards.map((card, index) => (
               <MyCards className="cardStyle" key={index} cardTitle={card.cardTitle} cardText={card.cardText} pathRef={card.pathRef} buttonText={card.buttonText} />
             ))}
