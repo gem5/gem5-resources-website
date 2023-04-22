@@ -1,6 +1,6 @@
 import { render, screen, act, fireEvent } from '@testing-library/react';
 import Home from '@/pages/index.js';
-import schema from "./schema.json"
+import schema from "../schema.json"
 import { useRouter } from 'next/router';
 
 jest.mock('next/router', () => ({
