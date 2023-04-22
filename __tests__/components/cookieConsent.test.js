@@ -51,7 +51,6 @@ describe('Cookie Consent', () => {
         const inputs = screen.getAllByRole('checkbox');
         expect(inputs).toHaveLength(3);
         const requiredCookies = inputs[0];
-        console.log(requiredCookies);
         const preferencesCookies = inputs[1];
         const statisticsCookies = inputs[2];
         // check if they exist
