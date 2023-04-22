@@ -13,9 +13,10 @@ module.exports = {
       '!<rootDir>/coverage/**',
     ],
     moduleNameMapper: {
+
       // Handle CSS imports (with CSS modules)
       // https://jestjs.io/docs/webpack#mocking-css-modules
-      '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
+      '^.+\\.module\\.(css|sass|scss)$': "identity-obj-proxy",
 
       // Handle CSS imports (without CSS modules)
       '^.+\\.(css|sass|scss)$': '<rootDir>/__mocks__/styleMock.js',
@@ -36,6 +37,7 @@ module.exports = {
     // Add more setup options before each test is run
     setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
     testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/.next/'],
+    modulePaths: ['<rootDir>/node_modules'],
     testEnvironment: 'jsdom',
     transform: {
       // Use babel-jest to transpile tests with the next/babel preset
