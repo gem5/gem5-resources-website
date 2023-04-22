@@ -31,8 +31,14 @@ module.exports = {
       // Handle relative paths
       '^@/pages/(.*)$': '<rootDir>/pages/$1',
 
+      // Handle relative paths
+      '^@/pages/api/(.*)$': '<rootDir>/pages/api/$1',
+
+      // Handle relative paths
+      '^@/components/tabs/(.*)$': '<rootDir>/components/tabs/$1',
+
       // Handle public
-      '^@/public/(.*)$': '<rootDir>/public/$1'
+      '^@/public/(.*)$': '<rootDir>/public/$1',
     },
     // Add more setup options before each test is run
     setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
