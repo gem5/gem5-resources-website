@@ -1,7 +1,7 @@
 import { Form, Button } from "react-bootstrap";
 import { useEffect, useState, forwardRef, useImperativeHandle } from "react";
 import Image from "next/image";
-import searchImage from "public/search.png"
+import searchImage from "@/public/search.png"
 import { useRouter } from "next/router";
 
 /**
