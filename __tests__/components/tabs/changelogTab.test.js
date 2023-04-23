@@ -17,4 +17,10 @@ describe('ChangelogTab component', () => {
             render(<ChangelogTab github_url="https://github.com/gem5/gem5-resources/tree/develop/src/x86-ubuntu" />);
         });
     });
+
+    it('should render no valid GitHub URL with github_url', () => {
+        act(() => {
+            render(<ChangelogTab github_url="Atharav Solutions" />);
+        });
+    });
 });
