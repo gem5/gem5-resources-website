@@ -3,10 +3,6 @@ import Home from '@/pages/index.js';
 import schema from "../schema.json"
 import { useRouter } from 'next/router';
 
-jest.mock('next/router', () => ({
-  useRouter: jest.fn(),
-}));
-
 // Mock the fetch function
 global.fetch = jest.fn(() =>
   Promise.resolve({

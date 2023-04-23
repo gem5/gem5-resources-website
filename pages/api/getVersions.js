@@ -12,10 +12,15 @@ import getVersionsMongoDB from "./mongodb/getVersions";
  * @returns {Promise} - A Promise that resolves to the versions of the resource.
  */
 export default async function getVersions(id, database) {
-    if (process.env.PRIVATE_RESOURCES[database].isMongo) {
-        return await getVersionsMongoDB(id, database);
-    }
-    else {
-        return await getVersionsJSON(id, database);
+    try {
+        if (process.env.PRIVATE_RESOURCES[database].isMongo) {
+            return await getVersionsMongoDB(id, database);
+        }
+        else {
+            return await getVersionsJSON(id, database);
+        }
+    } catch (error) {
+        console.log(error);
+        return { error: "Resource not found" };
     }
 }

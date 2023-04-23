@@ -49,13 +49,17 @@ export default function SearchResult({ resource }) {
         <div className="search-result">
             <Link href={resourceLink} style={{ textDecoration: 'none', color: 'inherit' }}>
                 <div className="search-result__title d-flex flex-row gap-2 align-items-center">
-                    <h4 className="main-text-title-bold text-muted">
+                    <h4 className="main-text-title-bold text-muted" aria-label="Resource database">
                         {resource.database ? `${resource.database} /` : 'gem5-resources /'}
                     </h4>
-                    <h4 className="main-text-title-bold">{resource.id}</h4>
+                    <h4 className="main-text-title-bold" aria-label="Resource ID">
+                        {resource.id}
+                    </h4>
                 </div>
                 <div className="search-result__description">
-                    <p className="main-text-regular">{resource.description}</p>
+                    <p className="main-text-regular" aria-label="Resource description">
+                        {resource.description}
+                    </p>
                 </div>
                 <div className='d-flex gap-3 flex-wrap'>
                     <div className="d-flex gap-1 align-items-center">
@@ -65,12 +69,12 @@ export default function SearchResult({ resource }) {
                             width={20}
                             className="mb-3"
                         />
-                        <p>
+                        <p aria-label="Resource architecture">
                             {resource.architecture ?? "Unknown"}
                         </p>
                     </div>
                     <div className='d-flex flex-row gap-1'>
-                        <p className="text-capitalize font-weight-light main-text-regular">
+                        <p className="text-capitalize font-weight-light main-text-regular" aria-label="Resource category">
                             {resource.category}
                         </p>
                     </div>
@@ -78,14 +82,16 @@ export default function SearchResult({ resource }) {
                         <h6 style={{ lineHeight: 'inherit', margin: '0' }}>
                             v
                         </h6>
-                        {resource.resource_version}
+                        <span aria-label="Resource version">
+                            {resource.resource_version}
+                        </span>
                     </div>
-                    <div className='d-flex flex-row gap-1'>
+                    <div className='d-flex flex-row gap-1' aria-label="Resource tags">
                         {
                             resource.tags ? resource.tags.map((tag, index) => {
                                 return (
                                     <div key={index}>
-                                        <Badge bg='primary' >
+                                        <Badge bg='primary' aria-label={`Tag ${tag}`}>
                                             {tag.toUpperCase()}
                                         </Badge>
                                     </div>

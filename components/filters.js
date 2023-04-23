@@ -1,5 +1,4 @@
 import { Accordion, Form } from "react-bootstrap";
-// get filters from /pages/api/getfilters.js
 import { useState, useEffect } from "react";
 import Placeholder from 'react-bootstrap/Placeholder';
 
@@ -13,7 +12,6 @@ import Placeholder from 'react-bootstrap/Placeholder';
 export default function Filters({ filters, callback }) {
     const [filterState, setFilterState] = useState({});
     useEffect(() => {
-        console.log(filters);
         if (filters) {
             if (filters.database && Object.keys(filters.database).length === 1) {
                 delete filters.database;
