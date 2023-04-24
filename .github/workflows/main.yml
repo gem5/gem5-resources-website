@@ -25,7 +25,6 @@ jobs:
         uses: cypress-io/github-action@v5
         with:
           build: npm run build
-          start: npm start
           command: npm run e2e:headless
       - name: Export
         run: npm run export
