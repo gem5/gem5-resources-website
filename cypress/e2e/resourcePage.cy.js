@@ -1,8 +1,6 @@
 /// <reference types="cypress" />
 
-// http://localhost:3000/resources/x86-ubuntu-18.04-img?database=gem5-resources&version=1.0.0
-
-describe('gem5 resources home', () => {
+describe('resource Page', () => {
     let resource = {
         "_id": "6445d29ba58c70d63bbc3e7e",
         "category": "workload",
