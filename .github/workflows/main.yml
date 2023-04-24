@@ -1,9 +1,6 @@
 name: Deploy to Github Pages
 
-on:
-  push:
-    branches:
-      - static-website
+on: push
 permissions:
   contents: write
 
@@ -12,19 +9,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
 
-      - name: Setup Node
-        uses: actions/setup-node@v3
+      # - name: Setup Node
+      #   uses: actions/setup-node@v3
+      #   with:
+      #     node-version: "lts/*"
+      #     cache: "npm"
+      - name: Cypress run
+        uses: cypress-io/github-action@v5
         with:
-          node-version: "lts/*"
-          cache: "npm"
-
+          build: npm run build
+          start: npm start
       - name: Build
-        run: |
-          npm i
-          npm run build
-          npm run export
+        run: npm run export
       - name: Deploy
         # https://github.com/JamesIves/github-pages-deploy-action
         uses: JamesIves/github-pages-deploy-action@v4
