@@ -26,7 +26,7 @@ jobs:
         with:
           build: npm run build
           start: npm start
-          config: baseUrl=http://localhost:3000/gem5-resources-website
+          command: npm run e2e:headless
       - name: Export
         run: npm run export
       # - name: Deploy
