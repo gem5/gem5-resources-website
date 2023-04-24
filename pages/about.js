@@ -6,7 +6,7 @@ import rehypeHighlight from 'rehype-highlight'
 import rehypeSlug from 'rehype-slug'
 import rehypeRaw from 'rehype-raw'
 import remarkFrontmatter from 'remark-frontmatter';
-import about from './index.md'
+import about from './about.md'
 import { Container } from 'react-bootstrap';
 
 /**
