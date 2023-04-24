@@ -26,8 +26,8 @@ export default function Resources() {
     const [sort, setSort] = useState("relevance")
 
     const ref = useRef()
-    const [numberOfItemsPerPage, setNumberOfItemsPerPage] = useState(10);
-    const [currentPage, setCurrentPage] = useState(1);
+    const [numberOfItemsPerPage, setNumberOfItemsPerPage] = useState(null);
+    const [currentPage, setCurrentPage] = useState(null);
     const [pageCount, setPageCount] = useState(1);
     const [maxPageNumbersShown, setMaxPageNumbersShown] = useState(5);
     const [paginationSize, setPaginationSize] = useState('sm');
@@ -37,25 +37,44 @@ export default function Resources() {
     useEffect(() => {
         if (router.query) {
             if (router.query.page) {
-                setCurrentPage(parseInt(router.query.page))
+                let page = parseInt(router.query.page)
+                if (currentPage != page) {
+                    setCurrentPage(page)
+                }
+            } else {
+                setCurrentPage(1)
             }
             if (router.query.q != null) {
                 let q = router.query.q
                 q = decodeURIComponent(q)
                 q = q.replace(/\+/g, ' ')
-                setQuery(q)
+                if (query != q) {
+                    setQuery(q)
+                }
+            } else {
+                setQuery("")
             }
             if (router.query.limit) {
-                setNumberOfItemsPerPage(parseInt(router.query.limit))
+                let limit = parseInt(router.query.limit)
+                if (numberOfItemsPerPage != limit) {
+                    setNumberOfItemsPerPage(limit)
+                }
+            } else {
+                setNumberOfItemsPerPage(10)
             }
             if (router.query.sort) {
-                setSort(router.query.sort)
+                let sort = router.query.sort
+                if (sort != sort) {
+                    setSort(sort)
+                }
+            } else {
+                setSort("relevance")
             }
         }
     }, [router.query])
 
     useEffect(() => {
-        if (query != null) {
+        if (query != null && sort != null) {
             let qo = {};
             let queryArray = query.split(" ");
             queryArray.forEach(query => {
@@ -118,7 +137,7 @@ export default function Resources() {
             setLoading(false);
         };
 
-        if (queryObject && Object.keys(databaseFilters).length > 0) {
+        if (queryObject && Object.keys(databaseFilters).length > 0 && currentPage && numberOfItemsPerPage) {
             fetchFilters();
         }
     }, [queryObject, currentPage, numberOfItemsPerPage, databaseFilters]);
@@ -248,7 +267,7 @@ export default function Resources() {
                                 <Form.Select
                                     //value 
                                     className='w-auto primary main-text-semi'
-                                    value={numberOfItemsPerPage.toString()}
+                                    value={numberOfItemsPerPage?.toString()}
                                     onChange={(value) => {
                                         // if the page is more than the max page number, set the page to the max page number
                                         if (currentPage > Math.ceil(total / parseInt(value.target.value))) {

@@ -5,7 +5,6 @@ import { get } from "fetch-mock";
 const originalEnv = process.env;
 
 global.fetch = jest.fn((url) => {
-    console.log(url);
     if (url.includes("data.mongodb-api")) {
         return Promise.resolve({
             json: () => Promise.resolve({
