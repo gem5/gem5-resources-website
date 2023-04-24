@@ -63,9 +63,9 @@ export default function Resources() {
                 setNumberOfItemsPerPage(10)
             }
             if (router.query.sort) {
-                let sort = router.query.sort
-                if (sort != sort) {
-                    setSort(sort)
+                let sortQuery = router.query.sort
+                if (sortQuery != sort) {
+                    setSort(sortQuery)
                 }
             } else {
                 setSort("relevance")
