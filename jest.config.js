@@ -11,6 +11,7 @@ module.exports = {
     '!<rootDir>/.next/**',
     '!<rootDir>/*.config.js',
     '!<rootDir>/coverage/**',
+    '!<rootDir>/cypress/**',
   ],
   moduleNameMapper: {
 
