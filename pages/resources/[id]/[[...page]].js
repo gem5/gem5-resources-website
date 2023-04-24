@@ -29,7 +29,6 @@ function Resource() {
             setRequiredTabs(fields.required);
             setOptionalTabs(fields.optional);
             setMetaFields(fields.meta);
-            console.log(fields)
         });
     }, [resource]);
 

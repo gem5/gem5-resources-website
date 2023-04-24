@@ -166,7 +166,7 @@ export default function MetaData({ resource, className, metaFields, showMetadata
                     </Row>
                     <Row className="border-bottom">
                         <p className="text-muted main-text-regular">Properties</p>
-                        <p className="main-text-regular">
+                        <div className="main-text-regular">
                             {
                                 resource.resources ? Object.keys(resource.resources).map((key, index) => {
                                     return (
@@ -181,11 +181,11 @@ export default function MetaData({ resource, className, metaFields, showMetadata
                                     );
                                 }) : 'None'
                             }
-                        </p>
+                        </div>
                     </Row>
                     <Row className="border-bottom">
                         <p className="text-muted main-text-regular">Depend on this resource</p>
-                        <p className="main-text-regular">
+                        <div className="main-text-regular">
                             {
                                 (resource.workloads && resource.workloads.length > 0) ? resource.workloads.map((workload, index) => {
                                     return (
@@ -200,7 +200,7 @@ export default function MetaData({ resource, className, metaFields, showMetadata
                                     )
                                 }) : 'None'
                             }
-                        </p>
+                        </div>
                     </Row>
                     {
                         metaFields && metaFields.map((field, index) => {
@@ -209,9 +209,9 @@ export default function MetaData({ resource, className, metaFields, showMetadata
                             return (
                                 <Row key={index} className="border-bottom">
                                     <p className="text-capitalize text-muted main-text-regular">{field.name}</p>
-                                    <p className="main-text-regular">
+                                    <div className="main-text-regular">
                                         {content}
-                                    </p>
+                                    </div>
                                 </Row>
                             )
                         })

@@ -41,4 +41,45 @@ describe('Search page', () => {
             cy.wrap($el).find('a > .gap-3 > .align-items-center > p').should('contain.text', 'RISCV')
         })
     })
+
+    it('checks if sorting by version works', () => {
+        cy.get('.d-flex > .w-auto').select('version')
+        cy.wait(['@kiwi', '@resources', '@mongo'])
+        cy.url().should('include', 'sort=version')
+    })
+
+    it('checks if sorting by resource id works', () => {
+        cy.get('.d-flex > .w-auto').select('id_asc')
+        cy.wait(['@kiwi', '@resources', '@mongo'])
+        cy.url().should('include', 'sort=id_asc')
+        let ids = []
+        cy.get('.search-result').each(($el) => {
+            cy.wrap($el).find('a > .search-result__title > [aria-label="Resource ID"]').then(($el) => {
+                ids.push($el.text())
+            })
+        }).then(() => {
+            let sortedIds = [...ids].sort()
+            expect(ids).to.deep.equal(sortedIds)
+        })
+        cy.get('.d-flex > .w-auto').select('id_desc')
+        cy.wait(['@kiwi', '@resources', '@mongo'])
+        cy.url().should('include', 'sort=id_desc')
+        let idsDesc = []
+        cy.get('.search-result').each(($el) => {
+            cy.wrap($el).find('a > .search-result__title > [aria-label="Resource ID"]').then(($el) => {
+                idsDesc.push($el.text())
+            })
+        }).then(() => {
+            let sortedIds = [...idsDesc].sort().reverse()
+            expect(idsDesc).to.deep.equal(sortedIds)
+        })
+        cy.log(idsDesc)
+    })
+
+    it('checks if clicking on resource routing works', () => {
+        cy.get('.search-form').find('input').type('riscv-ubuntu-20.04-boot{enter}')
+        cy.wait(['@kiwi', '@resources', '@mongo'])
+        cy.get(':nth-child(1) > .search-result > a > .search-result__title > [aria-label="Resource ID"]').click()
+        cy.url().should('include', '/resources/riscv-ubuntu-20.04-boot')
+    })
 })

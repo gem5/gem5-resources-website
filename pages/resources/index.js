@@ -112,7 +112,9 @@ export default function Resources() {
             }
             setDatabaseFilters(filterModified);
         })
-    }, [])
+    }, []);
+
+
 
     useEffect(() => {
         const fetchFilters = async () => {
@@ -215,7 +217,6 @@ export default function Resources() {
     }
 
     function onSearch(query) {
-        setQuery(query)
         router.push({
             pathname: '/resources',
             query: { q: query, page: 1, sort: queryObject.sort, limit: numberOfItemsPerPage }
@@ -223,7 +224,6 @@ export default function Resources() {
     }
 
     function onSortChange(e) {
-        setQueryObject({ ...queryObject, sort: e.target.value })
         router.push({
             pathname: '/resources',
             query: { q: query, page: currentPage, sort: e.target.value, limit: numberOfItemsPerPage }
@@ -231,7 +231,6 @@ export default function Resources() {
     }
 
     function onPageChange(page) {
-        setCurrentPage(page)
         router.push({
             pathname: '/resources',
             query: { q: query, page: page, sort: queryObject.sort, limit: numberOfItemsPerPage }
