@@ -12,6 +12,7 @@ if (isGithubActions) {
 let isProd = process.env.NODE_ENV === 'production'
 // isProd = false;
 // isProd = true;
+
 if (!isProd) {
   assetPrefix = undefined;
   basePath = '';

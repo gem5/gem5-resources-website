@@ -24,10 +24,11 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
-          build: npm run build
           command: npm run e2e:headless
-      - name: Export
-        run: npm run export
+      - name: Build
+        run: |
+          npm run build
+          npm run export
       # - name: Deploy
       #   # https://github.com/JamesIves/github-pages-deploy-action
       #   uses: JamesIves/github-pages-deploy-action@v4
