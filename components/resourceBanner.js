@@ -133,7 +133,7 @@ export default function Banner({ resource, setShowMetadata }) {
                                         href={'/resources?q=tags:' + tag}
                                     >
                                         <Badge bg='primary' className='interactDecoration' aria-label={"Tag " + tag}>
-                                            {tag.toUpperCase()}
+                                            {tag}
                                         </Badge>
                                     </Link>
                                 )

@@ -1,0 +1,103 @@
+/// <reference types="cypress" />
+
+// http://localhost:3000/resources/x86-ubuntu-18.04-img?database=gem5-resources&version=1.0.0
+
+describe('gem5 resources home', () => {
+    let resource = {
+        "_id": "6445d29ba58c70d63bbc3e7e",
+        "category": "workload",
+        "id": "arm64-ubuntu-20.04-boot",
+        "description": "Meri Ek taang nakli hai, Mai hockey ka bohoth bada khiladi tha. Ek din Uday bhai ko meri kisi baat pe gussa aagaya aur mere he hockey se meri taang ke do tukde kar diye. Lekin dil ke bohot ache hai, Fauran mujhe hospital le gaye aur ye nakli taang lagwayi.",
+        "function": "set_kernel_disk_workload",
+        "resources": {
+            "kernel": "arm64-linux-kernel-5.4.49",
+            "disk_image": "arm64-ubuntu-20.04-img",
+            "bootloader": "arm64-bootloader-foundation"
+        },
+        "additional_params": {},
+        "architecture": "ARM",
+        "size": 0,
+        "tags": [
+            "test",
+            "taang"
+        ],
+        "code_examples": [
+            {
+                "example": "https://github.com/gem5/gem5/tree/develop/configs/example/gem5_library/arm-ubuntu-run.py",
+                "tested": true
+            }
+        ],
+        "license": "",
+        "author": [
+            "Ujwal",
+            "HarshilDB"
+        ],
+        "source_url": "",
+        "resource_version": "2.0.0",
+        "gem5_versions": [
+            "24.0",
+            "23.0"
+        ],
+        "example_usage": "Workload(\"arm64-ubuntu-20.04-boot\")",
+        "workloads": [],
+        "database": "gem5-resources"
+    }
+    beforeEach(() => {
+        cy.intercept('GET', 'https://raw.githubusercontent.com/Gem5Vision/json-to-mongodb/simentic-version/schema/test.json').as('getSchema')
+        cy.intercept('GET', 'https://raw.githubusercontent.com/Gem5Vision/json-to-mongodb/simentic-version/kiwi.json').as('kiwi')
+        cy.intercept('GET', '/resources.json').as('resources')
+        cy.intercept('POST', 'https://data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/aggregate').as('mongo')
+        cy.intercept('POST', "https://realm.mongodb.com/api/client/v2.0/app/data-ejhjf/auth/providers/api-key/login").as('login')
+        cy.intercept('POST', "https://data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/find").as('find')
+        cy.visit('/resources/arm64-ubuntu-20.04-boot')
+        // find by id+version, aggregate depended by, get schema, find by all versions by id 
+        cy.wait(['@find', '@mongo', '@getSchema', '@find'])
+        window.localStorage.setItem('CookieConsent', "{\"userPreference\":\"all\"}")
+    })
+
+    it('checks if resource header details are correct', () => {
+        cy.get('[style="font-size: 0px;"] > .primary').should('have.text', resource.category.charAt(0).toUpperCase() + resource.category.slice(1))
+        cy.get(':nth-child(2) > .text-black').should('have.text', resource.resource_version)
+        cy.get('.mt-0 > .text-black').should('have.text', resource.architecture)
+        cy.get('[style="position: relative; width: auto;"] > .text-muted').should('have.text', resource.id)
+        cy.get(':nth-child(1) > .main-text-title-bold').should('have.text', resource.database + ' /')
+        let tags = []
+        cy.get('.gap-4 > div.align-items-center span').each(($el) => {
+            tags.push($el.text())
+        })
+        cy.wrap(tags).should('deep.equal', resource.tags)
+    })
+
+    it('checks if resource metadata is correct', () => {
+        cy.get('.metadata_info__8irfG > :nth-child(3) > :nth-child(2)').should('have.text', resource.description)
+        cy.get('.metadata_info__8irfG > :nth-child(4) > :nth-child(2)').should('have.text', resource.license === "" ? "Unknown" : resource.license)
+    })
+
+    it('checks if tabs are correct', () => {
+        cy.get('ul[role=tablist] li').should('have.length', 7)
+        cy.get('ul[role=tablist] li').last().should('have.text', 'Raw')
+        cy.get('ul[role=tablist] li').last().click()
+        cy.url().should('include', '/raw')
+        cy.get('.tab-pane.active.show span>.copy-button>svg').eq(1).click()
+        let resourceString = JSON.stringify(resource, null, 4)
+        resourceString = resourceString.replace(/\n/g, "\r\n")
+        cy.assertValueCopiedToClipboard(resourceString)
+        cy.get('ul[role=tablist] li').first().should('have.text', 'Readme')
+        cy.get('ul[role=tablist] li').first().click()
+        cy.url().should('not.include', '/readme')
+    })
+
+    it.only('checks if changing version works', () => {
+        cy.get('ul[role=tablist] li').each(($el, index) => {
+            if ($el.text() === "Versions") {
+                cy.wrap($el).click()
+            }
+        })
+        cy.url().should('include', '/versions')
+        cy.get('.table .interactDecoration').last().click()
+        cy.url().should('include', 'version=1.0.0')
+        cy.wait(['@find', '@mongo', '@getSchema', '@find'])
+        cy.get(':nth-child(2) > .text-black').should('have.text', '1.0.0')
+        cy.get('.metadata_info__8irfG > :nth-child(3) > :nth-child(2)').should('not.have.text', resource.description)
+    })
+})
