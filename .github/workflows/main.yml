@@ -1,10 +1,10 @@
 name: Deploy to Github Pages
 
-# on:
-#   push:
-#     branches:
-#       - static-website
-on: [push]
+on:
+  push:
+    branches:
+      - static-website
+# on: [push]
 permissions:
   contents: write
 
