@@ -87,7 +87,7 @@ describe('gem5 resources home', () => {
         cy.url().should('not.include', '/readme')
     })
 
-    it.only('checks if changing version works', () => {
+    it('checks if changing version works', () => {
         cy.get('ul[role=tablist] li').each(($el, index) => {
             if ($el.text() === "Versions") {
                 cy.wrap($el).click()
