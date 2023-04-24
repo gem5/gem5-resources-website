@@ -20,7 +20,7 @@ describe('gem5 resources home', () => {
     })
     cy.log(id)
     cy.get('.cardsContainer').eq(0).children().eq(0).find('a').click()
-    cy.url().should('include', '/resources/')
+    cy.url().should('include', '/resources')
     cy.url().should('include', id)
   })
 
