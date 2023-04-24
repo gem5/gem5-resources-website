@@ -12,6 +12,7 @@ import compareVersions from "./compareVersions";
  * @returns {json} The resources in JSON format.
  */
 export async function getResources(queryObject, currentPage, pageSize) {
+  console.log(queryObject);
   let privateResources = process.env.PRIVATE_RESOURCES
   let databases = queryObject.database;
   let resources = [[], 0];
@@ -38,10 +39,10 @@ export async function getResources(queryObject, currentPage, pageSize) {
       resources[0].sort((a, b) => -compareVersions(a.ver_latest ?? "0.0", b.ver_latest ?? "0.0"));
       break;
     case "id_asc":
-      resources[0].sort((a, b) => a.id < b.id ? 1 : -1);
+      resources[0].sort((a, b) => a.id < b.id ? -1 : 1);
       break;
     case "id_desc":
-      resources[0].sort((a, b) => a.id < b.id ? -1 : 1);
+      resources[0].sort((a, b) => a.id < b.id ? 1 : -1);
       break;
     default:
       resources[0].sort((a, b) => a.score < b.score ? 1 : -1);
