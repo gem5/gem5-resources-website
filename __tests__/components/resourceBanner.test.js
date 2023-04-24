@@ -43,8 +43,8 @@ describe('Banner', () => {
             setShowMetadata={setShowMetadata}
         />);
         const tag1 = screen.getByLabelText('Tag tag1');
-        expect(tag1).toHaveTextContent('TAG1');
+        expect(tag1).toHaveTextContent('tag1');
         const tag2 = screen.getByLabelText('Tag tag2');
-        expect(tag2).toHaveTextContent('TAG2');
+        expect(tag2).toHaveTextContent('tag2');
     });
 });
