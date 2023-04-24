@@ -1,10 +1,10 @@
 name: Deploy to Github Pages
 
-# on:
-#   push:
-#     branches:
-#       - static-website
-on: [push]
+on:
+  push:
+    branches:
+      - static-website
+# on: [push]
 permissions:
   contents: write
 
@@ -24,17 +24,13 @@ jobs:
         run: |
           npm i
           npm run e2e:headless
-      # - name: Cypress run
-      #   uses: cypress-io/github-action@v5
-      #   with:
-      #     command: npm run e2e:headless
       - name: Build
         run: |
           npm run build
           npm run export
-      # - name: Deploy
-      #   # https://github.com/JamesIves/github-pages-deploy-action
-      #   uses: JamesIves/github-pages-deploy-action@v4
-      #   with:
-      #     branch: gh-pages
-      #     folder: out
+      - name: Deploy
+        # https://github.com/JamesIves/github-pages-deploy-action
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: out
