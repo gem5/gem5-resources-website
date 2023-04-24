@@ -9,6 +9,7 @@ module.exports = {
     '!**/node_modules/**',
     '!<rootDir>/out/**',
     '!<rootDir>/.next/**',
+    '!<rootDir>/.github/**',
     '!<rootDir>/*.config.js',
     '!<rootDir>/coverage/**',
     '!<rootDir>/cypress/**',

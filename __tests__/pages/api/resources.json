@@ -23,34 +23,6 @@
         "example_usage": "get_resource(resource_name=\"rv64mi-p-sbreak\")"
     },
     {
-        "category": "simpoint",
-        "id": "batman",
-        "description": "Simpoints for running the 'x86-print-this' resource with the parameters `\"print this\" 15000`. This is encapsulated in the 'x86-print-this-15000-with-simpoints' workload.",
-        "architecture": "X86",
-        "size": 10240,
-        "tags": [],
-        "is_zipped": false,
-        "md5sum": "3fcffe3956c8a95e3fb82e232e2b41fb",
-        "is_tar_archive": true,
-        "url": "http://dist.gem5.org/dist/develop/simpoints/x86-print-this-15000-simpoints-20221013.tar",
-        "simpoint_interval": 1000000,
-        "warmup_interval": 1000000,
-        "code_examples": [],
-        "license": "",
-        "author": [],
-        "source_url": "",
-        "resource_version": "1.0.0",
-        "gem5_versions": [
-            "23.0"
-        ],
-        "workload_name": "x86-print-this-15000-with-simpoints",
-        "example_usage": "get_resource(resource_name=\"x86-print-this-1500-simpoints\")",
-        "workloads": [
-            "x86-print-this-15000-with-simpoints",
-            "x86-print-this-15000-with-simpoints-and-checkpoint"
-        ]
-    },
-    {
         "category": "file",
         "id": "batman",
         "description": "Simpoints for running the 'x86-print-this' resource with the parameters `\"print this\" 15000`. This is encapsulated in the 'x86-print-this-15000-with-simpoints' workload.",
@@ -68,6 +40,34 @@
         "author": [],
         "source_url": "",
         "resource_version": "0.2.0",
+        "gem5_versions": [
+            "23.0"
+        ],
+        "workload_name": "x86-print-this-15000-with-simpoints",
+        "example_usage": "get_resource(resource_name=\"x86-print-this-1500-simpoints\")",
+        "workloads": [
+            "x86-print-this-15000-with-simpoints",
+            "x86-print-this-15000-with-simpoints-and-checkpoint"
+        ]
+    },
+    {
+        "category": "simpoint",
+        "id": "batman",
+        "description": "Simpoints for running the 'x86-print-this' resource with the parameters `\"print this\" 15000`. This is encapsulated in the 'x86-print-this-15000-with-simpoints' workload.",
+        "architecture": "X86",
+        "size": 10240,
+        "tags": [],
+        "is_zipped": false,
+        "md5sum": "3fcffe3956c8a95e3fb82e232e2b41fb",
+        "is_tar_archive": true,
+        "url": "http://dist.gem5.org/dist/develop/simpoints/x86-print-this-15000-simpoints-20221013.tar",
+        "simpoint_interval": 1000000,
+        "warmup_interval": 1000000,
+        "code_examples": [],
+        "license": "",
+        "author": [],
+        "source_url": "",
+        "resource_version": "1.0.0",
         "gem5_versions": [
             "23.0"
         ],
