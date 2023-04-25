@@ -6,8 +6,7 @@ import rehypeHighlight from 'rehype-highlight'
 import rehypeSlug from 'rehype-slug'
 import rehypeRaw from 'rehype-raw'
 import remarkFrontmatter from 'remark-frontmatter';
-import CopyIcon from '@/components/copyIcon';
-import help from './help.md'
+import help from './help.md';
 
 /**
  * @function Help
@@ -24,14 +23,6 @@ export default function Help() {
                 className='markdown-body mt-3'
                 rehypePlugins={[[rehypeHighlight, { ignoreMissing: true }], rehypeRaw, rehypeSlug]}
                 remarkPlugins={[remarkGfm, remarkToc, remarkFrontmatter]}
-                components={{
-                    pre: ({ node, ...props }) =>
-                        <CopyIcon>
-                            <pre {...props} >
-                                {props.children}
-                            </pre>
-                        </CopyIcon>,
-                }}
             >
                 {help}
             </ReactMarkdown>
