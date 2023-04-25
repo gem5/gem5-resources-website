@@ -31,8 +31,8 @@ describe('App', () => {
   it('should render the layout and component', () => {
     const Component = () => <div>Test Component</div>;
     const pageProps = { testProp: 'test' };
-    render(<App Component={Component} pageProps={pageProps} />);
-    // expect(getByText('Test Component')).toBeInTheDocument();
-    // expect(getByText('Layout Component')).toBeInTheDocument();
+    const { getByText } = render(<App Component={Component} pageProps={pageProps} />);
+    expect(getByText('Test Component')).toBeInTheDocument();
+    expect(getByText('gem5 Resources')).toBeInTheDocument();
   });
 });
