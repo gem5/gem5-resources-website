@@ -133,7 +133,6 @@ describe('getResource', () => {
 
     test("json: resource does not exist", async () => {
         let result = await getResource("harshilpatel");
-        console.log(result);
         expect(result).toEqual({ error: 'Resource not found' })
     });
 
