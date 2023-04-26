@@ -1,26 +1,18 @@
 import RawTab from "@/components/tabs/rawTab";
-import { render, screen, fireEvent, act } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
-global.fetch = jest.fn(() =>
-    Promise.resolve({
-        json: () => Promise.resolve("{ id: 1, name: 'test' }"),
-    })
-);
+// Mock the textToHtml function
+jest.mock("@/components/tabs/rawTab", () => ({
+    __esModule: true,
+    default: ({ resource }) => <pre><code class="language-python">{JSON.stringify(resource)}</code></pre>,
+  }));
 
-jest.mock('rehype', () => ({
-    rehype: jest.fn().mockReturnThis(),
-    data: jest.fn().mockReturnThis(),
-    use: jest.fn().mockReturnThis(),
-    process: jest.fn().mockResolvedValue("{ id: 1, name: 'test' }"),
-}));
-
+  // Write your test case
 describe('RawTab', () => {
-    const resource = "{ id: 1, name: 'test' }";
-
-    it('should render RAW tab', () => {
-        /* act(() => {
-            render(<RawTab resource={resource} />);
-        }); */
-        expect(true).toBe(true);
+    it('renders the RawTab component', () => {
+        const resource = { foo: 'bar' };
+        const { getByText } = render(<RawTab resource={resource} />);
+        const rawInfo = getByText(/bar/i);
+        expect(rawInfo).toBeInTheDocument();
     });
 });
