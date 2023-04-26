@@ -13,6 +13,9 @@ export async function getResource(id, database = null, version = null) {
     if (!database) {
         database = Object.keys(process.env.PRIVATE_RESOURCES)[0];
     }
+    if (!process.env.PRIVATE_RESOURCES[database]) {
+        return { error: 'Database not found' }
+    }
     let resource;
     if (process.env.PRIVATE_RESOURCES[database].isMongo) {
         resource = await getResourceMongoDB(id, database, version);
