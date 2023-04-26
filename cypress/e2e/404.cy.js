@@ -1,19 +1,22 @@
 /// <reference types="cypress" />
 
 describe('404 page routing', () => {
+    function waitFind() {
+        let resources = Object.keys(Cypress.env('PRIVATE_RESOURCES'))[0]
+        if (Cypress.env('PRIVATE_RESOURCES')[resources].isMongo) {
+            cy.wait(['@find'])
+        } else {
+            cy.waitJSON(Cypress.env('PRIVATE_RESOURCES')[resources].url.includes('http'))
+        }
+    }
     beforeEach(() => {
-        cy.intercept('GET', 'https://raw.githubusercontent.com/Gem5Vision/json-to-mongodb/simentic-version/schema/test.json').as('getSchema')
-        cy.intercept('GET', 'https://raw.githubusercontent.com/Gem5Vision/json-to-mongodb/simentic-version/kiwi.json').as('kiwi')
-        cy.intercept('GET', '/resources.json').as('resources')
-        cy.intercept('POST', 'https://data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/aggregate').as('mongo')
-        cy.intercept('POST', "https://realm.mongodb.com/api/client/v2.0/app/data-ejhjf/auth/providers/api-key/login").as('login')
-        cy.intercept('POST', "https://data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/find").as('find')
+        cy.interceptAll()
         window.localStorage.setItem('CookieConsent', "{\"userPreference\":\"all\"}")
     })
 
     it('checks invalid resource page routing', () => {
         cy.visit('/resources/invalid-resource')
-        cy.wait('@find')
+        waitFind()
         cy.url().should('include', '/404')
     })
 
@@ -24,7 +27,7 @@ describe('404 page routing', () => {
 
     it('checks invalid version page routing', () => {
         cy.visit('/resources/arm64-ubuntu-20.04-boot?version=invalid-version')
-        cy.wait('@find')
+        waitFind()
         cy.url().should('include', '/404')
     })
 

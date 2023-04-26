@@ -1,5 +1,5 @@
 const { defineConfig } = require("cypress");
-
+const config = require("./gem5.config.json")
 module.exports = defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
@@ -10,4 +10,9 @@ module.exports = defineConfig({
   },
   video: false,
   screenshot: false,
+  env: {
+    BASE_PATH: "",
+    SCHEMA_URL: config.schemaUrl,
+    PRIVATE_RESOURCES: config.resources,
+  },
 });

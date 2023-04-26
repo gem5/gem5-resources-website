@@ -30,7 +30,7 @@ export default async function getResourceJSON(id, database, version) {
     if (workloads.length === 0) {
         workloads = []
     }
-    let resource = results[0];
+    let resource;
     if (!version) {
         // go through the results and find most recent version
         for (let i = 0; i < results.length; i++) {
@@ -44,6 +44,9 @@ export default async function getResourceJSON(id, database, version) {
                 resource = results[i];
             }
         }
+    }
+    if (!resource) {
+        return { error: 'Resource not found' }
     }
     resource.workloads = workloads;
     resource.database = database;

@@ -41,15 +41,18 @@ describe('resource Page', () => {
         "database": "gem5-resources"
     }
     beforeEach(() => {
-        cy.intercept('GET', 'https://raw.githubusercontent.com/Gem5Vision/json-to-mongodb/simentic-version/schema/test.json').as('getSchema')
-        cy.intercept('GET', 'https://raw.githubusercontent.com/Gem5Vision/json-to-mongodb/simentic-version/kiwi.json').as('kiwi')
-        cy.intercept('GET', '/resources.json').as('resources')
-        cy.intercept('POST', 'https://data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/aggregate').as('mongo')
-        cy.intercept('POST', "https://realm.mongodb.com/api/client/v2.0/app/data-ejhjf/auth/providers/api-key/login").as('login')
-        cy.intercept('POST', "https://data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/find").as('find')
+        resource.database = Object.keys(Cypress.env('PRIVATE_RESOURCES'))[0]
+        cy.interceptAll()
         cy.visit('/resources/arm64-ubuntu-20.04-boot')
         // find by id+version, aggregate depended by, get schema, find by all versions by id 
-        cy.wait(['@find', '@mongo', '@getSchema', '@find'])
+        cy.waitFirst().then(isMongo => {
+            if (isMongo) {
+                cy.wait(['@find', '@getSchema', '@find'])
+            } else {
+                cy.wait(['@jsonLink', '@getSchema', '@jsonLink'])
+            }
+        })
+        // cy.wait(['@find', '@mongo', '@getSchema', '@find'])
         window.localStorage.setItem('CookieConsent', "{\"userPreference\":\"all\"}")
     })
 
@@ -94,7 +97,14 @@ describe('resource Page', () => {
         cy.url().should('include', '/versions')
         cy.get('.table .interactDecoration').last().click()
         cy.url().should('include', 'version=1.0.0')
-        cy.wait(['@find', '@mongo', '@getSchema', '@find'])
+        // cy.wait(['@find', '@mongo', '@getSchema', '@find'])
+        cy.waitFirst().then(isMongo => {
+            if (isMongo) {
+                cy.wait(['@find', '@getSchema', '@find'])
+            } else {
+                cy.wait(['@jsonLink', '@getSchema', '@jsonLink'])
+            }
+        })
         cy.get(':nth-child(2) > .text-black').should('have.text', '1.0.0')
         cy.get('.metadata_info__8irfG > :nth-child(3) > :nth-child(2)').should('not.have.text', resource.description)
     })

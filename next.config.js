@@ -1,4 +1,6 @@
 // This file is used to configure Next.js
+const config = require('./gem5.config.json');
+
 const isGithubActions = process.env.GITHUB_ACTIONS || false;
 let assetPrefix = undefined
 let basePath = ''
@@ -30,6 +32,11 @@ module.exports = {
   },
   env: {
     BASE_PATH: basePath,
+    SCHEMA_URL: config.schemaUrl,
+    PRIVATE_RESOURCES: config.resources,
+  },
+  /* env: {
+    BASE_PATH: basePath,
     SCHEMA_URL: "https://raw.githubusercontent.com/Gem5Vision/json-to-mongodb/simentic-version/schema/test.json",
     PRIVATE_RESOURCES: {
       "gem5-resources": {
@@ -50,7 +57,7 @@ module.exports = {
         isMongo: false,
       },
     },
-  },
+  }, */
   webpack: (config) => {
     config.module.rules.push({
       test: /\.md$/,

@@ -92,7 +92,7 @@ export default function SearchResult({ resource }) {
                                 return (
                                     <div key={index}>
                                         <Badge bg='primary' aria-label={`Tag ${tag}`}>
-                                            {tag.toUpperCase()}
+                                            {tag}
                                         </Badge>
                                     </div>
                                 )
