@@ -6,8 +6,9 @@ import rehypeHighlight from 'rehype-highlight'
 import rehypeSlug from 'rehype-slug'
 import rehypeRaw from 'rehype-raw'
 import remarkFrontmatter from 'remark-frontmatter';
-import about from './index.md'
+import about from './about.md'
 import { Container } from 'react-bootstrap';
+import Head from 'next/head';
 
 /**
  * @component
@@ -16,14 +17,19 @@ import { Container } from 'react-bootstrap';
 */
 function About() {
   return (
-    <Container className='mt-5'>
+    <>
+      <Head>
+        <title>About | gem5 Vision</title>
+      </Head>
+      <Container className='mt-5'>
         <ReactMarkdown
-        className='markdown-body mt-3 about-page'
-        rehypePlugins={[[rehypeHighlight, { ignoreMissing: true }], rehypeRaw, rehypeSlug]}
-        remarkPlugins={[remarkGfm, remarkToc, remarkFrontmatter]}>
+          className='markdown-body mt-3 about-page'
+          rehypePlugins={[[rehypeHighlight, { ignoreMissing: true }], rehypeRaw, rehypeSlug]}
+          remarkPlugins={[remarkGfm, remarkToc, remarkFrontmatter]}>
           {about}
         </ReactMarkdown>
-    </Container>
+      </Container>
+    </>
   );
 }
 

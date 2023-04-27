@@ -51,9 +51,6 @@ async function getVersionsByID(token, url, dataSource, database, collection, id)
 */
 export default async function getVersionsMongoDB(id, database = null) {
     if (!database) {
-        /* const token = await getToken();
-        const resource = await getResourceByID(token, process.env.MONGODB_MAIN.url, process.env.MONGODB_MAIN.dataSource, process.env.MONGODB_MAIN.database, process.env.MONGODB_MAIN.collection, id);
-        return resource; */
         database = Object.keys(process.env.PRIVATE_RESOURCES)[0];
     }
     const token = await getToken(database);

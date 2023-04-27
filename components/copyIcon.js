@@ -18,7 +18,8 @@ export default function CopyIcon(props) {
         // recursively generate string from element
         // if element is text, return it
         if (typeof element === 'string') {
-            return element
+            // retain newlines
+            return String(element)
         }
         // if element is an array, then it is a list of elements
         if (Array.isArray(element)) {
@@ -48,14 +49,14 @@ export default function CopyIcon(props) {
     return (
         <div style={{ position: "relative", width: "auto" }}>
             {props.children}
-            < span ref={setTarget} style={{
+            <span ref={setTarget} style={{
                 position: "absolute", right: 0, top: 0, cursor: "pointer", marginRight: "5px",
                 marginTop: "5px"
             }}>
-                <div className='copy-button' onClick={async () => copy(generateString(props.children.props.children))}>
+                <div className='copy-button' onClick={async () => copy(generateString(props.children.props.children))} aria-label="Copy to clipboard" role='button'>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18px" height="18px"><path d="M0 0h24v24H0z" fill="none" /><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" /></svg>
                 </div>
-            </span >
+            </span>
 
             <Overlay target={target} show={show} placement="right">
                 {(properties) => (

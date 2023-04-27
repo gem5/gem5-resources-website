@@ -3,13 +3,54 @@ import Tabs from "react-bootstrap/Tabs";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import VersionTab from "./tabs/versionTab";
-import { Placeholder } from "react-bootstrap";
+import { Nav, Placeholder } from "react-bootstrap";
 import ReadmeTab from "./tabs/readmeTab";
 import ChangelogTab from "./tabs/changelogTab";
 import UsageTab from "./tabs/usageTab";
 import ParametersTab from "./tabs/parametersTab";
 import ExampleTab from "./tabs/exampleTab";
 import RawTab from "./tabs/rawTab";
+
+export function createTab(tab) {
+  if (!"content" in tab) return null;
+  let content = null;
+  if (Array.isArray(tab.schema.type)) {
+    tab.schema.type = tab.schema.type[0]
+  }
+  switch (tab.schema.type) {
+    case "string":
+    case "integer":
+    case "boolean":
+      content = String(tab.content);
+      break;
+    case "array":
+      content = tab.content.map((item, index) => {
+        return (
+          <div key={index}>
+            {item}
+          </div>
+        );
+      });
+      break;
+    case "object":
+      content = Object.keys(tab.content).map((key, index) => {
+        return (
+          <div key={index}>
+            <div>
+              {key}
+            </div>
+            <div>
+              {tab.content[key]}
+            </div>
+          </div>
+        );
+      });
+      break;
+    default:
+      content = null;
+  }
+  return content;
+}
 
 /**
  * @component
@@ -18,7 +59,7 @@ import RawTab from "./tabs/rawTab";
  * @param {Object} resource The resource object.
  * @returns {JSX.Element} The JSX element to be rendered.
  */
-export default function ResourceTab({ resource }) {
+export default function ResourceTab({ resource, requiredTabs, optionalTabs }) {
   const router = useRouter();
   const [selectedTab, setSelectedTab] = useState("readme");
 
@@ -49,34 +90,10 @@ export default function ResourceTab({ resource }) {
 
   useEffect(() => {
     if (!router.isReady) return;
-
-    const tabs = [
-      "readme",
-      "changelog",
-      "usage",
-      "parameters",
-      "example",
-      "versions",
-      "raw",
-    ];
     let page = router.query.page;
     if (page) {
       page = page[0]
-      if (tabs.includes(page)) {
-        setSelectedTab(page);
-      } else {
-        let query = router.query;
-        delete query.id;
-        delete query.page;
-        router.push(
-          {
-            pathname: `/resources/${resource.id}`,
-            // QUERY IS EVERYTHING EXCEPT ID
-            query: query,
-          }, undefined, {
-          shallow: true,
-        });
-      }
+      setSelectedTab(page);
     } else {
       setSelectedTab("readme");
     }
@@ -148,6 +165,44 @@ export default function ResourceTab({ resource }) {
             database={resource.database}
           />
         </Tab>
+        {requiredTabs.map((tab) => {
+          let content = createTab(tab);
+          if (!content) return null;
+          return (
+            <Tab eventKey={tab.name} title={tab.name.split("_").map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+              .join(" ")} key={tab.name}>
+              <Tab.Container defaultActiveKey="first">
+                {content}
+              </Tab.Container>
+            </Tab>
+          );
+        })}
+        {optionalTabs.length > 0 ? (
+          <Tab eventKey="optional" title="Optional">
+            <Tab.Container defaultActiveKey="0">
+              <Nav variant="pills" className="flex-row">
+                {optionalTabs.map((tab, index) => {
+                  return (
+                    <Nav.Item key={index}>
+                      <Nav.Link eventKey={index}>
+                        {tab.name}
+                      </Nav.Link>
+                    </Nav.Item>
+                  );
+                })}
+              </Nav>
+              <Tab.Content>
+                {optionalTabs.map((tab, index) => {
+                  return (
+                    <Tab.Pane eventKey={index} key={index}>
+                      {createTab(tab)}
+                    </Tab.Pane>
+                  );
+                })}
+              </Tab.Content>
+            </Tab.Container>
+          </Tab>
+        ) : null}
         <Tab eventKey="raw" title="Raw">
           <RawTab resource={resource} />
         </Tab>

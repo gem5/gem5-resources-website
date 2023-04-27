@@ -2,8 +2,8 @@ import { Container } from "react-bootstrap"
 import MyCards from "@/components/myCards";
 import { useEffect, useState } from "react";
 import CategoryHeader from "@/components/categoryHeader";
-import { ReactMarkdown } from "react-markdown/lib/react-markdown";
-import rehypeHighlight from "rehype-highlight/lib";
+import ReactMarkdown from "react-markdown";
+import rehypeHighlight from "rehype-highlight";
 import remarkGfm from 'remark-gfm'
 import remarkToc from 'remark-toc'
 import rehypeSlug from 'rehype-slug'
@@ -11,6 +11,7 @@ import rehypeRaw from 'rehype-raw'
 import remarkFrontmatter from 'remark-frontmatter';
 import CopyIcon from '@/components/copyIcon';
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 /**
  * @function Category
@@ -69,36 +70,42 @@ export default function Category() {
     }, [])
 
     return (
-        category ?
-            <Container>
-                <CategoryHeader category={category} />
-                <ReactMarkdown
-                    className='markdown-body mt-3'
-                    rehypePlugins={[[rehypeHighlight, { ignoreMissing: true }], rehypeRaw, rehypeSlug]}
-                    remarkPlugins={[remarkGfm, remarkToc, remarkFrontmatter]}
-                    components={{
-                        pre: ({ node, ...props }) =>
-                            <CopyIcon>
-                                <pre {...props} >
-                                    {props.children}
-                                </pre>
-                            </CopyIcon>,
-                    }}
-                >
-                    {content}
-                </ReactMarkdown>
-            </Container>
-            :
-            <Container>
-                <div className='cardsBlockContainer mt-5 mb-5'>
-                    <h2 className='secondary page-title mb-3'>Categories</h2>
-                    <p className='text-muted main-text-regular'>These are the "Categories" of Resources we use on this website.</p>
-                    <div className='cardsContainer' style={{ justifyContent: 'center' }}>
-                        {categoryCards.map((card, index) => (
-                            <MyCards className="cardStyle" key={index} cardTitle={card.cardTitle} cardText={card.cardText} pathRef={card.pathRef} buttonText={card.buttonText} />
-                        ))}
+        <>
+            <Head>
+                <title>Categories | gem5 Resources</title>
+            </Head>
+            {category ?
+                <Container>
+                    <CategoryHeader category={category} />
+                    <ReactMarkdown
+                        className='markdown-body mt-3'
+                        rehypePlugins={[[rehypeHighlight, { ignoreMissing: true }], rehypeRaw, rehypeSlug]}
+                        remarkPlugins={[remarkGfm, remarkToc, remarkFrontmatter]}
+                        components={{
+                            pre: ({ node, ...props }) =>
+                                <CopyIcon>
+                                    <pre {...props} >
+                                        {props.children}
+                                    </pre>
+                                </CopyIcon>,
+                        }}
+                    >
+                        {content}
+                    </ReactMarkdown>
+                </Container>
+                :
+                <Container>
+                    <div className='cardsBlockContainer mt-5 mb-5'>
+                        <h2 className='secondary page-title mb-3'>Categories</h2>
+                        <p className='text-muted main-text-regular'>These are the "Categories" of Resources we use on this website.</p>
+                        <div className='cardsContainer' style={{ justifyContent: 'center' }}>
+                            {categoryCards.map((card, index) => (
+                                <MyCards className="cardStyle" key={index} cardTitle={card.cardTitle} cardText={card.cardText} pathRef={card.pathRef} buttonText={card.buttonText} />
+                            ))}
+                        </div>
                     </div>
-                </div>
-            </Container>
+                </Container>
+            }
+        </>
     );
 }

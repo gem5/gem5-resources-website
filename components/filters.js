@@ -1,5 +1,4 @@
 import { Accordion, Form } from "react-bootstrap";
-// get filters from /pages/api/getfilters.js
 import { useState, useEffect } from "react";
 import Placeholder from 'react-bootstrap/Placeholder';
 
@@ -13,7 +12,6 @@ import Placeholder from 'react-bootstrap/Placeholder';
 export default function Filters({ filters, callback }) {
     const [filterState, setFilterState] = useState({});
     useEffect(() => {
-        console.log(filters);
         if (filters) {
             if (filters.database && Object.keys(filters.database).length === 1) {
                 delete filters.database;
@@ -22,6 +20,15 @@ export default function Filters({ filters, callback }) {
         }
     }, [filters]);
 
+    function filterToCapitalize(filter) {
+        let filterModified = filter.replace("_", " ").split(" ");
+        if (filterModified.length > 1) {
+            for (let i = 1; i < filterModified.length; i++) {
+                filterModified[i] = filterModified[i].charAt(0).toUpperCase() + filterModified[i].slice(1);
+            }
+        }
+        return filterModified.join(" ");
+    }
 
     return (
         <>
@@ -62,7 +69,11 @@ export default function Filters({ filters, callback }) {
                         {
                             Object.keys(filterState).map((filter, index) => (
                                 <Accordion.Item eventKey={index} key={index}>
-                                    <Accordion.Header>{filter}</Accordion.Header>
+                                    <Accordion.Header
+                                        className={filter.includes("gem5") ? "filter-header" : ""}
+                                    >
+                                        {filter.includes("gem5") ? filterToCapitalize(filter) : filter}
+                                    </Accordion.Header>
                                     <Accordion.Body>
                                         {
                                             Object.keys(filterState[filter]).map((value, index) => (
@@ -71,7 +82,7 @@ export default function Filters({ filters, callback }) {
                                                     type="checkbox"
                                                     label={value}
                                                     id={value}
-                                                    className="text-capitalize main-text-regular"
+                                                    className="main-text-regular"
                                                     checked={filterState[filter][value]}
                                                     onChange={(e) => {
                                                         let filterModified = { ...filterState };

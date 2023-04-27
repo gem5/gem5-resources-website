@@ -26,8 +26,8 @@ export default function Resources() {
     const [sort, setSort] = useState("relevance")
 
     const ref = useRef()
-    const [numberOfItemsPerPage, setNumberOfItemsPerPage] = useState(10);
-    const [currentPage, setCurrentPage] = useState(1);
+    const [numberOfItemsPerPage, setNumberOfItemsPerPage] = useState(null);
+    const [currentPage, setCurrentPage] = useState(null);
     const [pageCount, setPageCount] = useState(1);
     const [maxPageNumbersShown, setMaxPageNumbersShown] = useState(5);
     const [paginationSize, setPaginationSize] = useState('sm');
@@ -37,25 +37,44 @@ export default function Resources() {
     useEffect(() => {
         if (router.query) {
             if (router.query.page) {
-                setCurrentPage(parseInt(router.query.page))
+                let page = parseInt(router.query.page)
+                if (currentPage != page) {
+                    setCurrentPage(page)
+                }
+            } else {
+                setCurrentPage(1)
             }
             if (router.query.q != null) {
                 let q = router.query.q
                 q = decodeURIComponent(q)
                 q = q.replace(/\+/g, ' ')
-                setQuery(q)
+                if (query != q) {
+                    setQuery(q)
+                }
+            } else {
+                setQuery("")
             }
             if (router.query.limit) {
-                setNumberOfItemsPerPage(parseInt(router.query.limit))
+                let limit = parseInt(router.query.limit)
+                if (numberOfItemsPerPage != limit) {
+                    setNumberOfItemsPerPage(limit)
+                }
+            } else {
+                setNumberOfItemsPerPage(10)
             }
             if (router.query.sort) {
-                setSort(router.query.sort)
+                let sortQuery = router.query.sort
+                if (sortQuery != sort) {
+                    setSort(sortQuery)
+                }
+            } else {
+                setSort("relevance")
             }
         }
     }, [router.query])
 
     useEffect(() => {
-        if (query != null) {
+        if (query != null && sort != null) {
             let qo = {};
             let queryArray = query.split(" ");
             queryArray.forEach(query => {
@@ -93,11 +112,12 @@ export default function Resources() {
             }
             setDatabaseFilters(filterModified);
         })
-    }, [])
+    }, []);
+
+
 
     useEffect(() => {
         const fetchFilters = async () => {
-            console.log(queryObject);
             let filterModified = {};
             for (let filter in databaseFilters) {
                 let filterObject = {};
@@ -119,7 +139,7 @@ export default function Resources() {
             setLoading(false);
         };
 
-        if (queryObject && Object.keys(databaseFilters).length > 0) {
+        if (queryObject && Object.keys(databaseFilters).length > 0 && currentPage && numberOfItemsPerPage) {
             fetchFilters();
         }
     }, [queryObject, currentPage, numberOfItemsPerPage, databaseFilters]);
@@ -197,7 +217,6 @@ export default function Resources() {
     }
 
     function onSearch(query) {
-        setQuery(query)
         router.push({
             pathname: '/resources',
             query: { q: query, page: 1, sort: queryObject.sort, limit: numberOfItemsPerPage }
@@ -205,7 +224,6 @@ export default function Resources() {
     }
 
     function onSortChange(e) {
-        setQueryObject({ ...queryObject, sort: e.target.value })
         router.push({
             pathname: '/resources',
             query: { q: query, page: currentPage, sort: e.target.value, limit: numberOfItemsPerPage }
@@ -213,7 +231,6 @@ export default function Resources() {
     }
 
     function onPageChange(page) {
-        setCurrentPage(page)
         router.push({
             pathname: '/resources',
             query: { q: query, page: page, sort: queryObject.sort, limit: numberOfItemsPerPage }
@@ -248,8 +265,8 @@ export default function Resources() {
                                 </div>
                                 <Form.Select
                                     //value 
-                                    className='w-auto primary main-text-semi'
-                                    value={numberOfItemsPerPage.toString()}
+                                    className='w-auto primary border-0 main-text-semi'
+                                    value={numberOfItemsPerPage?.toString()}
                                     onChange={(value) => {
                                         // if the page is more than the max page number, set the page to the max page number
                                         if (currentPage > Math.ceil(total / parseInt(value.target.value))) {
@@ -275,25 +292,24 @@ export default function Resources() {
                                     <option value='50'>50 per page</option>
                                     <option value='100'>100 per page</option>
                                 </Form.Select>
-                                <div className='w-auto d-flex align-items-center'>
-                                    {/*value-label*/}
-                                    <span className='text-uppercase me-2 text-muted main-text-bold'>
+                                <Form.Group className='w-auto d-flex align-items-center justify-content-center'>
+                                    <Form.Label className='text-uppercase me-2 text-muted main-text-bold m-0' htmlFor="sort">
                                         Sort by
-                                    </span>
+                                    </Form.Label>
                                     <Form.Select
-                                        //value
+                                        name='sort'
                                         className='w-auto primary text-uppercase border-0 main-text-semi'
-                                        aria-label="Default select example"
+                                        aria-label="Sort Resources"
                                         value={sort}
                                         onChange={onSortChange}
                                         style={{ paddingLeft: '0.50rem', cursor: 'pointer' }}
                                     >
                                         <option value='relevance'>Relevance</option>
                                         <option value='version'>Version</option>
-                                        <option value='id_asc'>Name Ascending</option>
-                                        <option value='id_desc'>Name Descending</option>
+                                        <option value='id_asc'>Resource ID Ascending</option>
+                                        <option value='id_desc'>Resource ID Descending</option>
                                     </Form.Select>
-                                </div>
+                                </Form.Group>
                             </Row>
                             <Row className='mt-2'>
                                 {

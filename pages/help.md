@@ -43,7 +43,7 @@ These are all the sorting options available:
   - Data when the resource was published
 - Version
   - Newest to oldest version introduced in ([dev, 22.1] > [dev, 22.1, 22.0])
-- Name Ascending
+- Resource ID Ascending
   - Dictionary order A->Z
-- Name Descending
+- Resource ID Descending
   - Disctionary order Z->A

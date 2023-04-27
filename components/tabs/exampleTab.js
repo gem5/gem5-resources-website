@@ -65,6 +65,7 @@ export default function ExampleTab({ exampleContent }) {
                                                 fill="currentColor"
                                                 className="bi bi-patch-check"
                                                 viewBox="0 0 16 16"
+                                                aria-label="Tested Check"
                                             >
                                                 <path
                                                     fillRule="evenodd"

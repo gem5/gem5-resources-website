@@ -1,7 +1,7 @@
 import { Form, Button } from "react-bootstrap";
 import { useEffect, useState, forwardRef, useImperativeHandle } from "react";
 import Image from "next/image";
-import searchImage from "public/search.png"
+import searchImage from "@/public/search.png"
 import { useRouter } from "next/router";
 
 /**
@@ -59,7 +59,9 @@ const SearchBox = forwardRef((props, ref) => {
                         type="submit"
                     />
                 </div>
-                <Button type="submit" style={{ display: "none" }} id="submit" />
+                <Button type="submit" style={{ display: "none" }} id="submit" role="button" >
+                    Search
+                </Button>
             </Form>
         </>
     )

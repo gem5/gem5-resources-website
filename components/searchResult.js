@@ -18,6 +18,14 @@ import { useEffect, useState } from "react";
  * @returns {JSX.Element} The JSX element to be rendered.
 */
 export default function SearchResult({ resource }) {
+    const [resourceLink, setResourceLink] = useState("");
+    useEffect(() => {
+        if (Object.keys(process.env.PRIVATE_RESOURCES).length <= 1) {
+            setResourceLink('/resources/' + resource.id + (resource.resource_version ? "?version=" + resource.resource_version : ""));
+        } else {
+            setResourceLink('/resources/' + resource.id + (resource.database ? "?database=" + resource.database : "") + (resource.resource_version ? "&version=" + resource.resource_version : ""));
+        }
+    }, [resource]);
     function getIcon(architecture) {
         switch (architecture) {
             case "X86":
@@ -39,15 +47,19 @@ export default function SearchResult({ resource }) {
 
     return (
         <div className="search-result">
-            <Link href={('/resources/' + resource.id) + (resource.database ? "?database=" + resource.database : "")} style={{ textDecoration: 'none', color: 'inherit' }}>
+            <Link href={resourceLink} style={{ textDecoration: 'none', color: 'inherit' }}>
                 <div className="search-result__title d-flex flex-row gap-2 align-items-center">
-                    <h4 className="main-text-title-bold text-muted">
+                    <h4 className="main-text-title-bold text-muted" aria-label="Resource database">
                         {resource.database ? `${resource.database} /` : 'gem5-resources /'}
                     </h4>
-                    <h4 className="main-text-title-bold">{resource.id}</h4>
+                    <h4 className="main-text-title-bold" aria-label="Resource ID">
+                        {resource.id}
+                    </h4>
                 </div>
                 <div className="search-result__description">
-                    <p className="main-text-regular">{resource.description}</p>
+                    <p className="main-text-regular" aria-label="Resource description">
+                        {resource.description}
+                    </p>
                 </div>
                 <div className='d-flex gap-3 flex-wrap'>
                     <div className="d-flex gap-1 align-items-center">
@@ -57,12 +69,12 @@ export default function SearchResult({ resource }) {
                             width={20}
                             className="mb-3"
                         />
-                        <p>
+                        <p aria-label="Resource architecture">
                             {resource.architecture ?? "Unknown"}
                         </p>
                     </div>
                     <div className='d-flex flex-row gap-1'>
-                        <p className="text-capitalize font-weight-light main-text-regular">
+                        <p className="text-capitalize font-weight-light main-text-regular" aria-label="Resource category">
                             {resource.category}
                         </p>
                     </div>
@@ -70,15 +82,17 @@ export default function SearchResult({ resource }) {
                         <h6 style={{ lineHeight: 'inherit', margin: '0' }}>
                             v
                         </h6>
-                        {resource.resource_version}
+                        <span aria-label="Resource version">
+                            {resource.resource_version}
+                        </span>
                     </div>
-                    <div className='d-flex flex-row gap-1'>
+                    <div className='d-flex flex-row gap-1' aria-label="Resource tags" role="list">
                         {
                             resource.tags ? resource.tags.map((tag, index) => {
                                 return (
-                                    <div key={index}>
-                                        <Badge bg='primary' >
-                                            {tag.toUpperCase()}
+                                    <div key={index} role="listitem">
+                                        <Badge bg='primary' aria-label={`Tag ${tag}`}>
+                                            {tag}
                                         </Badge>
                                     </div>
                                 )

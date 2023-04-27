@@ -113,7 +113,38 @@ export default async function getResourcesJSON(queryObject, currentPage, pageSiz
     }
     resource.ver_latest = aVersion;
   });
-
+  for (let filter in queryObject) {
+    if (filter === "tags") {
+      results = results.filter((resource) => {
+        for (let tag in queryObject[filter]) {
+          if (!resource.tags) return false;
+          if (resource.tags.includes(queryObject[filter][tag])) {
+            return true;
+          }
+        }
+        return false;
+      });
+    } else if (filter === "gem5_versions") {
+      results = results.filter((resource) => {
+        for (let version in queryObject[filter]) {
+          // check if the version exists in the resource
+          for (let gem5Version in resource.gem5_versions) {
+            if (
+              resource.gem5_versions[gem5Version] ===
+              queryObject[filter][version]
+            ) {
+              return true;
+            }
+          }
+        }
+        return false;
+      });
+    } else if (filter === "architecture" || filter === "category") {
+      results = results.filter((resource) =>
+        queryObject[filter].includes(String(resource[filter]))
+      );
+    }
+  }
   // remove duplicate ids and keep the one with the highest ver_latest
   let tempResults = results;
   results = [];
@@ -161,38 +192,6 @@ export default async function getResourcesJSON(queryObject, currentPage, pageSiz
     }
   } else {
     results = results.sort((a, b) => b.totalMatches - a.totalMatches);
-  }
-  for (let filter in queryObject) {
-    if (filter === "tags") {
-      results = results.filter((resource) => {
-        for (let tag in queryObject[filter]) {
-          if (!resource.tags) return false;
-          if (resource.tags.includes(queryObject[filter][tag])) {
-            return true;
-          }
-        }
-        return false;
-      });
-    } else if (filter === "gem5_versions") {
-      results = results.filter((resource) => {
-        for (let version in queryObject[filter]) {
-          // check if the version exists in the resource
-          for (let gem5Version in resource.gem5_versions) {
-            if (
-              resource.gem5_versions[gem5Version] ===
-              queryObject[filter][version]
-            ) {
-              return true;
-            }
-          }
-        }
-        return false;
-      });
-    } else if (filter === "architecture" || filter === "category") {
-      results = results.filter((resource) =>
-        queryObject[filter].includes(String(resource[filter]))
-      );
-    }
   }
   const total = results.length;
   results = results.slice((currentPage - 1) * pageSize, currentPage * pageSize);

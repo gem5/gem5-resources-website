@@ -6,6 +6,7 @@ import { getResource } from '../../api/getresource'
 import ResourceTab from '@/components/resourceTab'
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import getTabs from '@/pages/api/getTabs'
 
 /**
  * @component
@@ -17,7 +18,19 @@ function Resource() {
     const [loading, setLoading] = useState(true)
     const [showMetadata, setShowMetadata] = useState(false)
     const [isTablet, setIsTablet] = useState(false)
+    const [requiredTabs, setRequiredTabs] = useState([]);
+    const [optionalTabs, setOptionalTabs] = useState([]);
+    const [metaFields, setMetaFields] = useState([]);
     const router = useRouter()
+
+    useEffect(() => {
+        if (Object.keys(resource).length === 0) return;
+        getTabs(resource).then((fields) => {
+            setRequiredTabs(fields.required);
+            setOptionalTabs(fields.optional);
+            setMetaFields(fields.meta);
+        });
+    }, [resource]);
 
     useEffect(() => {
         async function fetchResource(id) {
@@ -71,8 +84,8 @@ function Resource() {
                         <Banner resource={resource ?? {}} setShowMetadata={setShowMetadata} />
                     </Row>
                     <Row>
-                        <ResourceTab resource={resource ?? {}} />
-                        <MetaData resource={resource ?? {}} className='ms-5' />
+                        <ResourceTab resource={resource ?? {}} requiredTabs={requiredTabs} optionalTabs={optionalTabs} />
+                        <MetaData resource={resource ?? {}} className='ms-5' metaFields={metaFields} />
                     </Row>
                 </Container>
             }

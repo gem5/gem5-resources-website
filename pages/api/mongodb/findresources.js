@@ -335,10 +335,10 @@ function getPipeline(queryObject, currentPage, pageSize) {
   if (queryObject.query.trim() !== "") {
     pipeline.push(...getSearchPipeline(queryObject));
   }
-  // getting latest resource version for each resource and removing the rest
-  pipeline.push(...getLatestVersionPipeline());
   // adding the filters to the pipeline
   pipeline.push(...getFilterPipeline(queryObject));
+  // getting latest resource version for each resource and removing the rest
+  pipeline.push(...getLatestVersionPipeline());
   // adding the sorting to the pipeline
   pipeline.push(...getSortPipeline(queryObject));
   // adding the pagination to the pipeline

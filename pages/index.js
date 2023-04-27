@@ -71,7 +71,7 @@ export default function Home() {
       <Container className='d-flex flex-column align-items-center justify-content-center home mt-5'>
         <Image
           src={logo}
-          alt="Gem5 Logo"
+          alt="gem5 Logo"
           height={250}
           className='gem5-logo'
           priority
@@ -84,25 +84,25 @@ export default function Home() {
         <div className='cardsBlockContainer mt-5'>
           <h2 className='primary page-title'>Getting Started</h2>
           <p className='text-muted main-text-regular'>First time using gem5? These resources might help.</p>
-          <div className='cardsContainer'>
+          <div className='cardsContainer' aria-label="Getting Started Cards">
             {gettingStartedCards.map((card, index) => (
               <MyCards className="cardStyle" key={index} cardTitle={card.cardTitle} cardText={card.cardText} pathRef={card.pathRef} buttonText={card.buttonText} />
             ))}
           </div>
-          <Link href="/resources/?q=" passHref={true} style={{ alignSelf: 'flex-end' }} className="mt-3">
-            <Button variant="outline-primary" className="main-text-regular">View All</Button>
+          <Link href="/resources/?q=" passHref={true} legacyBehavior={true}>
+            <Button variant="outline-primary" style={{ alignSelf: 'flex-end' }} className="mt-3 main-text-regular">View All</Button>
           </Link>
         </div>
         <div className='cardsBlockContainer mt-5 mb-5'>
           <h2 className='primary page-title'>Categories</h2>
           <p className='text-muted main-text-regular'>These are the "Categories" of Resources we use on this website.</p>
-          <div className='cardsContainer'>
+          <div className='cardsContainer' aria-label="Category Cards">
             {categoryCards.map((card, index) => (
               <MyCards className="cardStyle" key={index} cardTitle={card.cardTitle} cardText={card.cardText} pathRef={card.pathRef} buttonText={card.buttonText} />
             ))}
           </div>
-          <Link href="/category" passHref={true} style={{ alignSelf: 'flex-end' }} className="mt-3">
-            <Button variant="outline-primary" className="main-text-regular">View All</Button>
+          <Link href="/category" passHref={true} legacyBehavior={true}>
+            <Button variant="outline-primary" style={{ alignSelf: 'flex-end' }} className="mt-3 main-text-regular">View All</Button>
           </Link>
         </div>
       </Container>

@@ -2,7 +2,8 @@ import Link from "next/link";
 import { Container, Row, Col, Placeholder } from "react-bootstrap";
 import styles from '/styles/metadata.module.css'
 import { useEffect, useState } from 'react';
-import { useRouter } from "next/router";
+import { createTab } from "./resourceTab";
+
 /**
  * @component
  * @description A component that renders the metadata of a resource that includes
@@ -12,9 +13,8 @@ import { useRouter } from "next/router";
  * @param {string} className The class name of the component.
  * @returns {JSX.Element} The JSX element to be rendered.
 */
-export default function MetaData({ resource, className, showMetadata, setShowMetadata }) {
+export default function MetaData({ resource, className, metaFields, showMetadata, setShowMetadata }) {
     const [currentStyle, setCurrentStyle] = useState(styles.info)
-    const router = useRouter()
 
     useEffect(() => {
         showMetadata ? setCurrentStyle(styles.active) : setCurrentStyle(styles.info)
@@ -166,7 +166,7 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
                     </Row>
                     <Row className="border-bottom">
                         <p className="text-muted main-text-regular">Properties</p>
-                        <p className="main-text-regular">
+                        <div className="main-text-regular">
                             {
                                 resource.resources ? Object.keys(resource.resources).map((key, index) => {
                                     return (
@@ -181,11 +181,11 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
                                     );
                                 }) : 'None'
                             }
-                        </p>
+                        </div>
                     </Row>
                     <Row className="border-bottom">
                         <p className="text-muted main-text-regular">Depend on this resource</p>
-                        <p className="main-text-regular">
+                        <div className="main-text-regular">
                             {
                                 (resource.workloads && resource.workloads.length > 0) ? resource.workloads.map((workload, index) => {
                                     return (
@@ -200,8 +200,22 @@ export default function MetaData({ resource, className, showMetadata, setShowMet
                                     )
                                 }) : 'None'
                             }
-                        </p>
+                        </div>
                     </Row>
+                    {
+                        metaFields && metaFields.map((field, index) => {
+                            const content = createTab(field)
+                            if (content == null) return null
+                            return (
+                                <Row key={index} className="border-bottom">
+                                    <p className="text-capitalize text-muted main-text-regular">{field.name}</p>
+                                    <div className="main-text-regular">
+                                        {content}
+                                    </div>
+                                </Row>
+                            )
+                        })
+                    }
                 </Container >
             </>
     )
