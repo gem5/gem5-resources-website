@@ -30,3 +30,15 @@ jest.mock("remark-frontmatter", () => () => {
 
 jest.mock("rehype", () => () => {
 })
+
+jest.mock('rehype', () => ({
+    rehype: jest.fn().mockReturnValue({
+        rehype: jest.fn().mockReturnThis(),
+        data: jest.fn().mockReturnThis(),
+        use: jest.fn().mockReturnThis(),
+        process: jest.fn((text) => {
+            console.log(text);
+            return Promise.resolve(text);
+        }),
+    })
+}));

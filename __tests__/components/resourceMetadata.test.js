@@ -21,23 +21,48 @@ describe('MetaData component', () => {
         expect(dependLabel).toBeInTheDocument();
     });
 
-    //   it('should show metadata when `showMetadata` prop is true', () => {
-    //     render(<MetaData showMetadata={true} />);
+    it('should show metadata when resource provided', () => {
+        let resource = {
+            "category": "simpoint",
+            "id": "batman",
+            "architecture": "X86",
+            "tags": [],
+            "author": [
+                "Ujwal",
+            ],
+            "resource_version": "1.0.0",
+            "database": "db1"
+        }
+        render(<MetaData resource={resource} />);
+        expect(screen.getByText(/Ujwal/i)).toBeInTheDocument();
+    });
 
-    //     const backButton = screen.getByRole('button');
-    //     expect(backButton).toBeInTheDocument();
-
-    //     const metadataTitle = screen.getByText('Metadata');
-    //     expect(metadataTitle).toBeInTheDocument();
-    //   });
-
-    //   it('should call `setShowMetadata` function when back button is clicked', () => {
-    //     const setShowMetadata = jest.fn();
-    //     render(<MetaData showMetadata={true} setShowMetadata={setShowMetadata} />);
-
-    //     const backButton = screen.getByRole('button');
-    //     userEvent.click(backButton);
-
-    //     expect(setShowMetadata).toHaveBeenCalledWith(false);
-    //   });
+    it('should show metadata when resource provided', () => {
+        let resource = {
+            "category": "simpoint",
+            "id": "batman",
+            "architecture": "X86",
+            "tags": [],
+            "author": [
+                "Ujwal",
+            ],
+            "source_url": "https://www.gem5.org",
+            "resource_version": "1.0.0",
+            "database": "db1",
+            "license": "MIT",
+            "workloads": [
+                "workload1",
+                "workload2"
+            ],
+        }
+        render(<MetaData resource={resource} metaFields={[{
+            "name": "source_url",
+            "schema": {
+                "type": "string",
+            },
+            "content": "Source URL",
+        }]} />);
+        expect(screen.getByText(/Repository/i)).toBeInTheDocument();
+        expect(screen.getByText(/MIT/i)).toBeInTheDocument();
+    });
 });

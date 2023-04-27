@@ -32,6 +32,7 @@ export default async function getResourceJSON(id, database, version) {
     }
     let resource;
     if (!version) {
+        resource = results[0];
         // go through the results and find most recent version
         for (let i = 0; i < results.length; i++) {
             if (results[i].resource_version > resource.resource_version) {

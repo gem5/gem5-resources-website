@@ -1,18 +1,12 @@
 import RawTab from "@/components/tabs/rawTab";
-import { render } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 
-// Mock the textToHtml function
-jest.mock("@/components/tabs/rawTab", () => ({
-    __esModule: true,
-    default: ({ resource }) => <pre><code class="language-python">{JSON.stringify(resource)}</code></pre>,
-  }));
-
-  // Write your test case
 describe('RawTab', () => {
-    it('renders the RawTab component', () => {
+    it('renders the RawTab component', async () => {
         const resource = { foo: 'bar' };
-        const { getByText } = render(<RawTab resource={resource} />);
-        const rawInfo = getByText(/bar/i);
-        expect(rawInfo).toBeInTheDocument();
+        act(() => {
+            render(<RawTab resource={resource} />);
+        });
+        await waitFor(() => expect(screen.getByText(/foo/i)).toBeInTheDocument());
     });
 });
