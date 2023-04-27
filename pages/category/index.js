@@ -2,8 +2,8 @@ import { Container } from "react-bootstrap"
 import MyCards from "@/components/myCards";
 import { useEffect, useState } from "react";
 import CategoryHeader from "@/components/categoryHeader";
-import { ReactMarkdown } from "react-markdown/lib/react-markdown";
-import rehypeHighlight from "rehype-highlight/lib";
+import ReactMarkdown from "react-markdown";
+import rehypeHighlight from "rehype-highlight";
 import remarkGfm from 'remark-gfm'
 import remarkToc from 'remark-toc'
 import rehypeSlug from 'rehype-slug'
