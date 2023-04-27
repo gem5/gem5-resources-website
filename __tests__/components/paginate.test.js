@@ -24,7 +24,7 @@ describe('Paginate', () => {
             setCurrentPage={setCurrentPage}
             paginationSize='sm'
         />)
-        const pagination = screen.getByRole('navigation');
+        const pagination = screen.getByRole('list');
         expect(pagination).toBeInTheDocument();
         // get all the li elements
         // they should be 9, 2 for the first and last page buttons, 2 for the previous and next page buttons,

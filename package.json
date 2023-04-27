@@ -14,7 +14,6 @@
     "e2e:headless": "start-server-and-test dev http://localhost:3000 \"cypress run --e2e\""
   },
   "dependencies": {
-    "@next/font": "13.3.0",
     "bootstrap": "^5.2.3",
     "eslint": "8.34.0",
     "eslint-config-next": "13.3.0",

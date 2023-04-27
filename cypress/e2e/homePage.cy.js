@@ -25,13 +25,13 @@ describe('gem5 resources home', () => {
   })
 
   it('checks if routing to get all resources works', () => {
-    cy.get('.cardsBlockContainer').eq(0).find('button').click()
+    cy.get(':nth-child(5) > .mt-3').click()
     cy.url().should('include', '/resources')
     cy.url().should('include', '?q=')
   })
 
   it('checks if routing to get all categories works', () => {
-    cy.get('.cardsBlockContainer').eq(1).find('button').click()
+    cy.get('.cardsBlockContainer.mb-5 > .mt-3').click()
     cy.url().should('include', '/category')
   })
 
