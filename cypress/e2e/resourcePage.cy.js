@@ -81,7 +81,7 @@ describe('resource Page', () => {
         cy.url().should('include', '/raw')
         cy.get('.tab-pane.active.show span>.copy-button>svg').eq(1).click()
         let resourceString = JSON.stringify(resource, null, 4)
-        resourceString = resourceString.replace(/\n/g, "\r\n")
+        // resourceString = resourceString.replace(/\n/g, "\r\n")
         cy.assertValueCopiedToClipboard(resourceString)
         cy.get('ul[role=tablist] li').first().should('have.text', 'Readme')
         cy.get('ul[role=tablist] li').first().click()
