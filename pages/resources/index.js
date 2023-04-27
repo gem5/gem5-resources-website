@@ -265,7 +265,7 @@ export default function Resources() {
                                 </div>
                                 <Form.Select
                                     //value 
-                                    className='w-auto primary main-text-semi'
+                                    className='w-auto primary border-0 main-text-semi'
                                     value={numberOfItemsPerPage?.toString()}
                                     onChange={(value) => {
                                         // if the page is more than the max page number, set the page to the max page number
@@ -292,15 +292,14 @@ export default function Resources() {
                                     <option value='50'>50 per page</option>
                                     <option value='100'>100 per page</option>
                                 </Form.Select>
-                                <div className='w-auto d-flex align-items-center'>
-                                    {/*value-label*/}
-                                    <span className='text-uppercase me-2 text-muted main-text-bold'>
+                                <Form.Group className='w-auto d-flex align-items-center justify-content-center'>
+                                    <Form.Label className='text-uppercase me-2 text-muted main-text-bold m-0' htmlFor="sort">
                                         Sort by
-                                    </span>
+                                    </Form.Label>
                                     <Form.Select
-                                        //value
+                                        name='sort'
                                         className='w-auto primary text-uppercase border-0 main-text-semi'
-                                        aria-label="Default select example"
+                                        aria-label="Sort Resources"
                                         value={sort}
                                         onChange={onSortChange}
                                         style={{ paddingLeft: '0.50rem', cursor: 'pointer' }}
@@ -310,7 +309,7 @@ export default function Resources() {
                                         <option value='id_asc'>Resource ID Ascending</option>
                                         <option value='id_desc'>Resource ID Descending</option>
                                     </Form.Select>
-                                </div>
+                                </Form.Group>
                             </Row>
                             <Row className='mt-2'>
                                 {

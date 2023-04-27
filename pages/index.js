@@ -89,8 +89,8 @@ export default function Home() {
               <MyCards className="cardStyle" key={index} cardTitle={card.cardTitle} cardText={card.cardText} pathRef={card.pathRef} buttonText={card.buttonText} />
             ))}
           </div>
-          <Link href="/resources/?q=" passHref={true} style={{ alignSelf: 'flex-end' }} className="mt-3">
-            <Button variant="outline-primary" className="main-text-regular">View All</Button>
+          <Link href="/resources/?q=" passHref={true} legacyBehavior={true}>
+            <Button variant="outline-primary" style={{ alignSelf: 'flex-end' }} className="mt-3 main-text-regular">View All</Button>
           </Link>
         </div>
         <div className='cardsBlockContainer mt-5 mb-5'>
@@ -101,8 +101,8 @@ export default function Home() {
               <MyCards className="cardStyle" key={index} cardTitle={card.cardTitle} cardText={card.cardText} pathRef={card.pathRef} buttonText={card.buttonText} />
             ))}
           </div>
-          <Link href="/category" passHref={true} style={{ alignSelf: 'flex-end' }} className="mt-3">
-            <Button variant="outline-primary" className="main-text-regular">View All</Button>
+          <Link href="/category" passHref={true} legacyBehavior={true}>
+            <Button variant="outline-primary" style={{ alignSelf: 'flex-end' }} className="mt-3 main-text-regular">View All</Button>
           </Link>
         </div>
       </Container>

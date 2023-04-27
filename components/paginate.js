@@ -30,7 +30,7 @@ export default function Paginate({ pageCount, currentPage, maxPageNumbersShown, 
     }
 
     return (
-        <Pagination className={`${styles.pagination} justify-content-center gap-1 mt-3`} size={paginationSize} role='navigation'>
+        <Pagination className={`${styles.pagination} justify-content-center gap-1 mt-3`} size={paginationSize} role='list'>
             <Pagination.First onClick={() => { setCurrentPage(1) }} disabled={currentPage === 1} />
             <Pagination.Prev onClick={() => { setCurrentPage(currentPage - 1) }} disabled={currentPage === 1} />
             {Array.from({ length: endPage - startPage + 1 }).map((_, index) => {

@@ -86,11 +86,11 @@ export default function SearchResult({ resource }) {
                             {resource.resource_version}
                         </span>
                     </div>
-                    <div className='d-flex flex-row gap-1' aria-label="Resource tags">
+                    <div className='d-flex flex-row gap-1' aria-label="Resource tags" role="list">
                         {
                             resource.tags ? resource.tags.map((tag, index) => {
                                 return (
-                                    <div key={index}>
+                                    <div key={index} role="listitem">
                                         <Badge bg='primary' aria-label={`Tag ${tag}`}>
                                             {tag}
                                         </Badge>

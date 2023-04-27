@@ -59,7 +59,9 @@ const SearchBox = forwardRef((props, ref) => {
                         type="submit"
                     />
                 </div>
-                <Button type="submit" style={{ display: "none" }} id="submit" />
+                <Button type="submit" style={{ display: "none" }} id="submit" role="button" >
+                    Search
+                </Button>
             </Form>
         </>
     )

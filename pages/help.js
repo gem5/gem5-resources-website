@@ -7,6 +7,7 @@ import rehypeSlug from 'rehype-slug'
 import rehypeRaw from 'rehype-raw'
 import remarkFrontmatter from 'remark-frontmatter';
 import help from './help.md';
+import Head from "next/head";
 
 /**
  * @function Help
@@ -18,14 +19,19 @@ import help from './help.md';
  */
 export default function Help() {
     return (
-        <Container>
-            <ReactMarkdown
-                className='markdown-body mt-3'
-                rehypePlugins={[[rehypeHighlight, { ignoreMissing: true }], rehypeRaw, rehypeSlug]}
-                remarkPlugins={[remarkGfm, remarkToc, remarkFrontmatter]}
-            >
-                {help}
-            </ReactMarkdown>
-        </Container>
+        <>
+            <Head>
+                <title>Help | gem5 Vision</title>
+            </Head>
+            <Container>
+                <ReactMarkdown
+                    className='markdown-body mt-3'
+                    rehypePlugins={[[rehypeHighlight, { ignoreMissing: true }], rehypeRaw, rehypeSlug]}
+                    remarkPlugins={[remarkGfm, remarkToc, remarkFrontmatter]}
+                >
+                    {help}
+                </ReactMarkdown>
+            </Container>
+        </>
     )
 }
