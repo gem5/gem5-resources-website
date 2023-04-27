@@ -1,6 +1,6 @@
 import { Container, Navbar, Nav, Offcanvas } from "react-bootstrap";
 import Image from "next/image";
-import logo from "public/gem5ColorLong.gif";
+import logo from "public/gem5ColorLong.png";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import SearchBox from "./searchBox";
