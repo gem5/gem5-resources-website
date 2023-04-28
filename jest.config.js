@@ -13,6 +13,7 @@ module.exports = {
     '!<rootDir>/*.config.js',
     '!<rootDir>/coverage/**',
     '!<rootDir>/cypress/**',
+    '!<rootDir>/pages/_document.js'
   ],
   moduleNameMapper: {
 
@@ -32,6 +33,10 @@ module.exports = {
 
     // Handle relative paths
     '^@/pages/(.*)$': '<rootDir>/pages/$1',
+
+    '^@/pages/resources/[id]/(.*)$': '<rootDir>/pages/resources/[id]/$1',
+
+    '^@/pages/resources/(.*)$': '<rootDir>/pages/resources/$1',
 
     // Handle relative paths
     '^@/pages/api/(.*)$': '<rootDir>/pages/api/$1',

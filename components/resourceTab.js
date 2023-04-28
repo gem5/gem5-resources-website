@@ -7,7 +7,6 @@ import { Nav, Placeholder } from "react-bootstrap";
 import ReadmeTab from "./tabs/readmeTab";
 import ChangelogTab from "./tabs/changelogTab";
 import UsageTab from "./tabs/usageTab";
-import ParametersTab from "./tabs/parametersTab";
 import ExampleTab from "./tabs/exampleTab";
 import RawTab from "./tabs/rawTab";
 
@@ -154,11 +153,6 @@ export default function ResourceTab({ resource, requiredTabs, optionalTabs }) {
             id={resource.id}
           />
         </Tab>
-        {resource.arguments ? (
-          <Tab eventKey="parameters" title="Parameters">
-            <ParametersTab params={resource.arguments} />
-          </Tab>
-        ) : null}
         {exampleContent.length > 0 ? (
           <Tab eventKey="example" title="Example">
             <ExampleTab exampleContent={exampleContent} />
