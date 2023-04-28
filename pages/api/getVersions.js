@@ -20,7 +20,6 @@ export default async function getVersions(id, database) {
             return await getVersionsJSON(id, database);
         }
     } catch (error) {
-        console.log(error);
         return { error: "Resource not found" };
     }
 }
