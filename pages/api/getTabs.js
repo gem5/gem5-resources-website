@@ -4,7 +4,7 @@
 // create a recursive function to get all required fields
 function getRequiredFields(schema, category) {
     let requiredFields = [];
-    let optionalFields = [];
+    let additionalInfoFields = [];
     if (schema.definitions[category]) {
         const categorySchema = schema.definitions[category];
         if (categorySchema.allOf) {
@@ -13,7 +13,7 @@ function getRequiredFields(schema, category) {
                     const refCategory = ref.$ref.replace("#/definitions/", "");
                     let fields = getRequiredFields(schema, refCategory);
                     requiredFields = requiredFields.concat(fields[0]);
-                    optionalFields = optionalFields.concat(fields[1]);
+                    additionalInfoFields = additionalInfoFields.concat(fields[1]);
                 }
             }
         }
@@ -32,7 +32,7 @@ function getRequiredFields(schema, category) {
             for (let field in categorySchema.properties) {
                 // if (field === "category") continue;
                 if (!categorySchema.required || !categorySchema.required.includes(field)) {
-                    optionalFields.push({
+                    additionalInfoFields.push({
                         name: field,
                         schema: categorySchema.properties[field],
                     });
@@ -40,7 +40,7 @@ function getRequiredFields(schema, category) {
             }
         }
     }
-    return [requiredFields, optionalFields];
+    return [requiredFields, additionalInfoFields];
 }
 
 export default async function getTabs(res) {
@@ -62,7 +62,7 @@ export default async function getTabs(res) {
         }
     } */
     let fields = getRequiredFields(schema, category);
-    // push the optional and required fields from schema.properties
+    // push the additionalInfo and required fields from schema.properties
     for (let field in schema.properties) {
         if (schema.properties[field].required) {
             fields[0].push({
@@ -107,14 +107,14 @@ export default async function getTabs(res) {
     if (tabs[category]) {
         let allFields = [...fields[0], ...fields[1]];
         let requiredFields = [];
-        let optionalFields = [];
+        let additionalInfoFields = [];
         let metaFields = [];
         for (let f of allFields) {
             if (tabs[category]["tab"].includes(f.name)) {
                 requiredFields.push(f);
             }
-            if (tabs[category]["optional"].includes(f.name)) {
-                optionalFields.push(f);
+            if (tabs[category]["additionalInfo"].includes(f.name)) {
+                additionalInfoFields.push(f);
             }
             if (tabs[category]["metadata"].includes(f.name)) {
                 metaFields.push(f);
@@ -122,12 +122,12 @@ export default async function getTabs(res) {
         }
         return {
             required: requiredFields,
-            optional: optionalFields,
+            additionalInfo: additionalInfoFields,
             meta: metaFields,
         }
     }
     for (let f in schema.properties) {
-        // delete them from required and optional
+        // delete them from required and additionalInfo
         fields[0] = fields[0].filter((field) => (
             field.name !== f
         ));
@@ -137,7 +137,7 @@ export default async function getTabs(res) {
     }
     return {
         required: fields[0],
-        optional: fields[1],
+        additionalInfo: fields[1],
         meta: [],
     }
 }

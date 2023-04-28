@@ -19,7 +19,7 @@ function Resource() {
     const [showMetadata, setShowMetadata] = useState(false)
     const [isTablet, setIsTablet] = useState(false)
     const [requiredTabs, setRequiredTabs] = useState([]);
-    const [optionalTabs, setOptionalTabs] = useState([]);
+    const [additionalInfoTabs, setAdditionalInfoTabs] = useState([]);
     const [metaFields, setMetaFields] = useState([]);
     const router = useRouter()
 
@@ -27,7 +27,7 @@ function Resource() {
         if (Object.keys(resource).length === 0) return;
         getTabs(resource).then((fields) => {
             setRequiredTabs(fields.required);
-            setOptionalTabs(fields.optional);
+            setAdditionalInfoTabs(fields.additionalInfo);
             setMetaFields(fields.meta);
         });
     }, [resource]);
@@ -95,7 +95,7 @@ function Resource() {
                         <Banner resource={resource ?? {}} setShowMetadata={setShowMetadata} />
                     </Row>
                     <Row>
-                        <ResourceTab resource={resource ?? {}} requiredTabs={requiredTabs} optionalTabs={optionalTabs} />
+                        <ResourceTab resource={resource ?? {}} requiredTabs={requiredTabs} additionalInfoTabs={additionalInfoTabs} />
                         <MetaData resource={resource ?? {}} className='ms-5' metaFields={metaFields} />
                     </Row>
                 </Container>

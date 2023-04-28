@@ -58,7 +58,7 @@ export function createTab(tab) {
  * @param {Object} resource The resource object.
  * @returns {JSX.Element} The JSX element to be rendered.
  */
-export default function ResourceTab({ resource, requiredTabs, optionalTabs }) {
+export default function ResourceTab({ resource, requiredTabs, additionalInfoTabs }) {
   const router = useRouter();
   const [selectedTab, setSelectedTab] = useState("readme");
 
@@ -179,11 +179,11 @@ export default function ResourceTab({ resource, requiredTabs, optionalTabs }) {
             </Tab>
           );
         })}
-        {optionalTabs.length > 0 ? (
-          <Tab eventKey="optional" title="Optional">
+        {additionalInfoTabs.length > 0 ? (
+          <Tab eventKey="additionalInfo" title="Additional Info">
             <Tab.Container defaultActiveKey="0">
               <Nav variant="pills" className="flex-row">
-                {optionalTabs.map((tab, index) => {
+                {additionalInfoTabs.map((tab, index) => {
                   return (
                     <Nav.Item key={index}>
                       <Nav.Link eventKey={index}>
@@ -194,7 +194,7 @@ export default function ResourceTab({ resource, requiredTabs, optionalTabs }) {
                 })}
               </Nav>
               <Tab.Content>
-                {optionalTabs.map((tab, index) => {
+                {additionalInfoTabs.map((tab, index) => {
                   return (
                     <Tab.Pane eventKey={index} key={index}>
                       {createTab(tab)}

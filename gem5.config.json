@@ -19,7 +19,7 @@
                 "is_zipped",
                 "url"
             ],
-            "optional": [
+            "additionalInfo": [
                 "category",
                 "license"
             ],
@@ -31,7 +31,7 @@
         },
         "workload": {
             "tab": [],
-            "optional": [
+            "additionalInfo": [
                 "id"
             ],
             "metadata": [

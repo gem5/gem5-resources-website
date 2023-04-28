@@ -75,7 +75,7 @@ describe("getTabs", () => {
                     "content": ["asmtest"]
                 }
             ],
-            "optional": [
+            "additionalInfo": [
                 {
                     "name": "category",
                     "schema": {
@@ -175,7 +175,7 @@ describe("getTabs", () => {
                     "content": 1000000
                 }
             ],
-            "optional": [
+            "additionalInfo": [
                 {
                     "name": "workload_name",
                     "schema": {
