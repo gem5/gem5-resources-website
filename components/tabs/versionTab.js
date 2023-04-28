@@ -122,7 +122,6 @@ export default function VersionTab({ id, database }) {
 
     useEffect(() => {
         getVersions(id, database).then((data) => {
-            console.log(data)
             setVersions(data)
         })
     }, [id, database])

@@ -55,17 +55,14 @@ function Resource() {
                     setVersion(value)
                 }
             })
-            console.log(id, database, version)
         }
     }, [router.isReady])
 
     useEffect(() => {
         async function fetchResource() {
-            console.log(id, database, version)
             setLoading(true)
             let resource;
             resource = await getResource(id, database, version)
-            console.log(resource)
             if (resource.error) {
                 window.location.replace(process.env.BASE_PATH + "/404")
             } else {
