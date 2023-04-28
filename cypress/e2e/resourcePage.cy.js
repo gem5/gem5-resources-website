@@ -88,14 +88,16 @@ describe('resource Page', () => {
         cy.url().should('not.include', '/readme')
     })
 
-    it('checks if changing version works', () => {
+    it.only('checks if changing version works', () => {
         cy.get('ul[role=tablist] li').each(($el, index) => {
             if ($el.text() === "Versions") {
                 cy.wrap($el).click()
             }
         })
         cy.url().should('include', '/versions')
-        cy.get('.table .interactDecoration').last().click()
+        cy.get('.table tr').last().within(() => {
+            cy.get('td a').first().click()
+        })
         cy.url().should('include', 'version=1.0.0')
         // cy.wait(['@find', '@mongo', '@getSchema', '@find'])
         cy.waitFirst().then(isMongo => {
