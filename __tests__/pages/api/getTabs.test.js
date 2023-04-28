@@ -21,7 +21,7 @@ describe("getTabs", () => {
                     isMongo: false,
                 }
             },
-            TABS: config.tabs,
+            TABS: config.ui.tabs,
         };
     });
 
