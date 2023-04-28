@@ -1,14 +1,34 @@
 import getTabs from "@/pages/api/getTabs";
 import schema from "../../schema.json";
-
+import config from "../../../gem5.config.json"
 // Mock the fetch function
 global.fetch = jest.fn(() =>
     Promise.resolve({
         json: () => Promise.resolve(schema),
     })
 );
+const originalEnv = process.env;
 
 describe("getTabs", () => {
+    beforeEach(() => {
+        jest.resetModules();
+        process.env = {
+            ...originalEnv,
+            BASE_PATH: '',
+            PRIVATE_RESOURCES: {
+                "db1": {
+                    url: "resources.json",
+                    isMongo: false,
+                }
+            },
+            TABS: config.tabs,
+        };
+    });
+
+    afterEach(() => {
+        process.env = originalEnv;
+    });
+
     test("binary tabs", async () => {
         let resource = {
             "category": "binary",
