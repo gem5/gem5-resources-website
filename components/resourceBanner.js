@@ -114,7 +114,7 @@ export default function Banner({ resource, setShowMetadata }) {
                             {resource.architecture ?? "NONE"}
                         </Link>
                     </p>
-                    <div className='d-flex flex-row gap-1 align-items-center' aria-label="Resource Version">
+                    <div className='d-flex flex-row gap-1 align-items-center'>
                         <h6 style={{ lineHeight: 'inherit', margin: '0' }} className="main-text-semi">
                             VERSION
                         </h6>
