@@ -36,7 +36,7 @@ function VersionComponent({ version }) {
             return setDownloadUrl('')
         }
         // link = url.replace('{url_base}', link)
-        // link = link.replace('http://', 'https://')
+        version.url = version.url.replace('http://', 'https://')
         setDownloadUrl(version.url)
     }, [version])
 
@@ -65,7 +65,7 @@ function VersionComponent({ version }) {
 
             <td style={{ width: '24px', height: '24px' }} className={styles.versions_td}>
                 {version.url ?
-                    <Link href={downloadUrl} download target="_blank" className="interactDecoration">
+                    <Link href={downloadUrl} target="_blank" rel="noopener noreferrer" download className="interactDecoration">
                         {downloadSvg}
                     </Link>
                     :
