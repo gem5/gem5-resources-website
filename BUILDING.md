@@ -20,24 +20,25 @@ The `deployment` job runs on the `ubuntu-latest` operating system.
 
 1. `Checkout`: This step uses the `actions/checkout` action to checkout the code from the repository.
 2. `Setup Node`: This step uses the `actions/setup-node` action to set up Node.js with the specified LTS (Long-Term Support) version and npm cache.
-3. `Build`: This step performs the following actions:
+3. `Install Node Modules`: This step installs the node modules used in this codebase through `npm ci`.
+4. `Jest`: This step uses Jest.js to run unit test suites on the codebase.
+5. `Cypress run`: This step runs the End-to-End test suite on Cypress.
+6. `Build`: This step performs the following actions:
 
-    - Installs dependencies using `npm i`.
     - Runs the build script using `npm run build`.
     - Exports the build using `npm run export`.
 
-4. `Deploy`: This step uses the `JamesIves/github-pages-deploy-action` action to deploy the built website to GitHub Pages. It specifies the `./out` directory as the publish directory, which is the directory where the built website is exported.
-Secrets
+7. `Deploy`: This step uses the `JamesIves/github-pages-deploy-action` action to deploy the built website to GitHub Pages. It specifies the `./out` directory as the publish directory, which is the directory where the built website is exported. The website is exported to the `gh-pages` branch.
 
 ## Database Configuration
 
-The following environment variables are used in the main configuration file (`next.config.js`):
+The following extra environment variables are used in the main configuration file (`next.config.js`) and are added through `gem5.config.json`:
 
-### `BASE_PATH`
+### `schemaUrl`
 
-Description: The base path for the application.
+Description: The Raw GitHub URL of where the gem5 Resources Schema lies.
 
-### `PRIVATE_RESOURCES`
+### `resources`
 
 This is an object containing multiple key-value pairs representing different configurations for private resources used in the application.
 
@@ -53,5 +54,5 @@ In case of a **MongoDB** database, every object must contain the following prope
 
 In case of a **JSON** database, every object must contain the following properties:
 
-- `url`: The Raw GitHub URL of the JSON data.
+- `url`: The Raw GitHub URL of the JSON data, or the local path, with root directory being the `public` directory of this codebase.
 - `isMongo`: A boolean value indicating whether the data source is MongoDB or not, set to false.
