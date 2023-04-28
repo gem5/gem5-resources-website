@@ -32,37 +32,48 @@ function Resource() {
         });
     }, [resource]);
 
+    const [id, setId] = useState(null);
+    const [database, setDatabase] = useState(null);
+    const [version, setVersion] = useState(null);
+
     useEffect(() => {
-        async function fetchResource(id) {
-            // if contains query string database, then it is a private resource
-            let database = null
-            if (router.query.database !== undefined) {
-                database = router.query.database
+        if (router.isReady) {
+            const url = router.asPath.split('?')[0].split('/')
+            if (url.includes("resources")) {
+                setId(url[url.indexOf("resources") + 1])
             }
-            setLoading(true)
-            let resource;
-            if (router.query.version !== undefined) {
-                // let resource = await getResource(id, database, "1.0.0")
-                resource = await getResource(id, database, router.query.version)
+            let params = []
+            if (router.asPath.includes('?')) {
+                params = router.asPath.split('?')[1].split('&')
             }
-            else {
-                resource = await getResource(id, database)
-            }
-            if (resource.error) {
-                // trigger replace current page with 404 page
-                window.location.replace(process.env.BASE_PATH + "/404")
-            }
-            else
-                setResource(resource)
-            setLoading(false)
-        }
-        if (router.isReady && router.query !== undefined) {
-            let i = 2
-            const url = router.asPath.split('?')[0].split("/")
-            const id = url[i]
-            fetchResource(id);
+            params.forEach(param => {
+                const [key, value] = param.split('=')
+                if (key === 'database') {
+                    setDatabase(value)
+                }
+                else if (key === 'version') {
+                    setVersion(value)
+                }
+            })
         }
     }, [router.isReady])
+
+    useEffect(() => {
+        async function fetchResource() {
+            setLoading(true)
+            let resource;
+            resource = await getResource(id, database, version)
+            if (resource.error) {
+                window.location.replace(process.env.BASE_PATH + "/404")
+            } else {
+                setResource(resource)
+            }
+            setLoading(false)
+        }
+        if (id !== null) {
+            fetchResource();
+        }
+    }, [id, database, version])
 
     useEffect(() => {
         function onTabletResize() { window.innerWidth <= 768 ? setIsTablet(true) : setIsTablet(false); }

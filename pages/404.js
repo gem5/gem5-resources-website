@@ -20,8 +20,7 @@ export default function Custom404() {
             setLoading(true)
             setError(false)
             const url = router.asPath.split("?")[0].split("/")
-            let i = 3
-            if (url.length < i || url[i - 2] !== "resources") {
+            if (!url.includes("resources")) {
                 setError(true)
                 setLoading(false)
                 router.push("/404")

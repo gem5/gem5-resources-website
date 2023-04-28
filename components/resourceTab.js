@@ -97,7 +97,7 @@ export default function ResourceTab({ resource, requiredTabs, optionalTabs }) {
     } else {
       setSelectedTab("readme");
     }
-  }, [router, resource.id]);
+  }, [router.isReady]);
 
   const handleSelect = (e) => {
     setSelectedTab(e);
@@ -107,7 +107,11 @@ export default function ResourceTab({ resource, requiredTabs, optionalTabs }) {
     if (e === "readme") {
       return router.replace({
         pathname: `/resources/${resource.id}`,
-        query: query,
+        query: {
+          ...query,
+          database: resource.database,
+          version: resource.resource_version,
+        }
       }, undefined, {
         shallow: true,
       });
@@ -115,7 +119,11 @@ export default function ResourceTab({ resource, requiredTabs, optionalTabs }) {
     // replace the tab in the url
     router.replace({
       pathname: `/resources/${resource.id}/${e}`,
-      query: query,
+      query: {
+        ...query,
+        database: resource.database,
+        version: resource.resource_version,
+      }
     }, undefined, {
       shallow: true,
     });
