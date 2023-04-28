@@ -175,7 +175,5 @@ describe("Resource-specific component", () => {
         });
         // check if replace is called 
         await waitFor(() => expect(replace).toHaveBeenCalledWith("/404"));
-        // await waitFor(() => expect(window.location.pathname).toEqual("/404"));
-
     });
 });
