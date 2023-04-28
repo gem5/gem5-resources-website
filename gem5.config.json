@@ -15,16 +15,54 @@
     },
     "ui": {
         "tabs": {
+            "simpoint": {
+                "tab": [],
+                "additionalInfo": [
+                    "simpoint_interval",
+                    "simpoint_list",
+                    "weight_list",
+                    "warmup_interval",
+                    "workload_name"
+                ],
+                "metadata": []
+            },
+            "workload": {
+                "tab": [],
+                "additionalInfo": [],
+                "metadata": [
+                    "function",
+                    "resource_directory"
+                ]
+            },
             "binary": {
                 "tab": [
-                    "tags",
-                    "source",
-                    "is_zipped",
-                    "url"
+                    "arguments"
                 ],
+                "additionalInfo": [],
+                "metadata": []
+            },
+            "diskimage": {
+                "tab": [],
+                "additionalInfo": [],
+                "metadata": [
+                    "root_partition"
+                ]
+            },
+            "kernel": {
+                "tab": [
+                    "arguments"
+                ],
+                "additionalInfo": [],
+                "metadata": []
+            },
+            "simpoint-directory": {
+                "tab": [],
                 "additionalInfo": [
-                    "category",
-                    "license"
+                    "simpoint_interval",
+                    "simpoint_list",
+                    "weight_list",
+                    "warmup_interval",
+                    "workload_name"
                 ],
                 "metadata": [
                     "id",
@@ -32,13 +70,11 @@
                     "tags"
                 ]
             },
-            "workload": {
+            "looppoint-json": {
                 "tab": [],
-                "additionalInfo": [
-                    "id"
-                ],
+                "additionalInfo": [],
                 "metadata": [
-                    "resources"
+                    "region_id"
                 ]
             }
         }

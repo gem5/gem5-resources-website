@@ -55,72 +55,9 @@ describe("getTabs", () => {
         }
         let result = await getTabs(resource);
         let expected = {
-            "required": [
-                {
-                    "name": "source",
-                    "schema": {
-                        "type": "string",
-                        "description": "The source of the file", "default": ""
-                    },
-                    "content": "src/asmtest"
-                },
-                {
-                    "name": "tags",
-                    "schema": {
-                        "type": "array",
-                        "items": { "type": "string" },
-                        "description": "Tags for the resource",
-                        "default": []
-                    },
-                    "content": ["asmtest"]
-                }
-            ],
-            "additionalInfo": [
-                {
-                    "name": "category",
-                    "schema": {
-                        "type": "string",
-                        "default": "file"
-                    }, "content": "binary"
-                },
-                {
-                    "name": "license",
-                    "schema": {
-                        "type": "string",
-                        "description": "The license for the resource",
-                        "default": ""
-                    },
-                    "content": " BSD-3-Clause"
-                }
-            ],
-            "meta": [
-                {
-                    "name": "description",
-                    "schema": {
-                        "type": "string",
-                        "description": "A description of the resource",
-                        "default": ""
-                    },
-                    "content": "This is a test resource but double newer"
-                },
-                {
-                    "name": "id",
-                    "schema": {
-                        "type": "string",
-                        "description": "The unique identifier for the resource", "default": ""
-                    }, "content": "this-is-a-test-resource"
-                },
-                {
-                    "name": "tags",
-                    "schema": {
-                        "type": "array",
-                        "items": { "type": "string" },
-                        "description": "Tags for the resource",
-                        "default": []
-                    },
-                    "content": ["asmtest"]
-                }
-            ]
+            "required": [],
+            "additionalInfo": [],
+            "meta": []
         }
         expect(result).toEqual(expected);
     });
@@ -155,7 +92,8 @@ describe("getTabs", () => {
             ]
         }
         let expected = {
-            "required": [
+            "required": [],
+            "additionalInfo": [
                 {
                     "name": "simpoint_interval",
                     "schema": {
@@ -173,9 +111,7 @@ describe("getTabs", () => {
                         "default": 0
                     },
                     "content": 1000000
-                }
-            ],
-            "additionalInfo": [
+                },
                 {
                     "name": "workload_name",
                     "schema": {
