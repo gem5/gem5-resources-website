@@ -10,5 +10,33 @@
             "apiKey": "pKkhRJGJaQ3NdJyDt69u4GPGQTDUIhHlx4a3lrKUNx2hxuc8uba8NrP3IVRvlzlo",
             "isMongo": true
         }
+    },
+    "tabs": {
+        "binary": {
+            "tab": [
+                "tags",
+                "source",
+                "is_zipped",
+                "url"
+            ],
+            "optional": [
+                "category",
+                "license"
+            ],
+            "metadata": [
+                "id",
+                "description",
+                "tags"
+            ]
+        },
+        "workload": {
+            "tab": [],
+            "optional": [
+                "id"
+            ],
+            "metadata": [
+                "resources"
+            ]
+        }
     }
 }

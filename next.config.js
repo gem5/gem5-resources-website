@@ -34,6 +34,7 @@ module.exports = {
     BASE_PATH: basePath,
     SCHEMA_URL: config.schemaUrl,
     PRIVATE_RESOURCES: config.resources,
+    TABS: config.tabs,
   },
   /* env: {
     BASE_PATH: basePath,

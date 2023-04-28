@@ -23,32 +23,6 @@ export default function MetaData({ resource, className, metaFields, showMetadata
     return (
         Object.keys(resource).length === 0 ?
             <Container className={currentStyle + ' ' + className}>
-                {/* <Row className="border-bottom">
-                    <Col className="border-end">
-                        <div>
-                            <Placeholder as="h5" animation="glow" style={{ width: '40px' }}>
-                                <Placeholder xs={12} />
-                            </Placeholder>
-                            <p className="text-muted main-text-regular">LIKES</p>
-                        </div>
-                    </Col>
-                    <Col className="border-end">
-                        <div>
-                            <Placeholder as="h5" animation="glow" style={{ width: '40px' }}>
-                                <Placeholder xs={12} />
-                            </Placeholder>
-                            <p className="text-muted main-text-regular">VIEWS</p>
-                        </div>
-                    </Col>
-                    <Col>
-                        <div>
-                            <Placeholder as="h5" animation="glow" style={{ width: '40px' }}>
-                                <Placeholder xs={12} />
-                            </Placeholder>
-                            <p className="text-muted main-text-regular">DOWNLOADS</p>
-                        </div>
-                    </Col>
-                </Row> */}
                 <Row className="border-bottom">
                     <p className="text-muted main-text-regular">Author</p>
                     <Placeholder as="h4" animation="glow">
@@ -95,32 +69,6 @@ export default function MetaData({ resource, className, metaFields, showMetadata
                             <h2 className="primary">Metadata</h2>
                         </Col>
                     </Row>
-                    {/* <Row className="border-bottom">
-                        <Col className="border-end">
-                            <div>
-                                <h5 className="primary secondary-text-bold">
-                                    {Math.floor(Math.random() * 100)}
-                                </h5>
-                                <p className="text-muted main-text-regular">LIKES</p>
-                            </div>
-                        </Col>
-                        <Col className="border-end">
-                            <div>
-                                <h5 className="primary secondary-text-bold">
-                                    {Math.floor(Math.random() * 10000)}
-                                </h5>
-                                <p className="text-muted main-text-regular">VIEWS</p>
-                            </div>
-                        </Col>
-                        <Col>
-                            <div>
-                                <h5 className="primary secondary-text-bold">
-                                    {Math.floor(Math.random() * 100)}
-                                </h5>
-                                <p className="text-muted main-text-regular">DOWNLOADS</p>
-                            </div>
-                        </Col>
-                    </Row> */}
                     <Row className="border-bottom">
                         <p className="text-muted main-text-regular">Author</p>
                         <h4 className="primary main-text-title-bold">

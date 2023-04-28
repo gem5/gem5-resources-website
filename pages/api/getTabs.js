@@ -1,4 +1,3 @@
-import tabs from "./tabs.json"
 // each category is a definition in the schema
 // each category has a list of required fields
 // category can inherit from other categories provided by $ref in allOf
@@ -45,6 +44,7 @@ function getRequiredFields(schema, category) {
 }
 
 export default async function getTabs(res) {
+    const tabs = process.env.TABS;
     let resource = JSON.parse(JSON.stringify(res));
     const category = resource.category;
     // create copy of resource

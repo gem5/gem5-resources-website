@@ -114,13 +114,13 @@ export default function Banner({ resource, setShowMetadata }) {
                             {resource.architecture ?? "NONE"}
                         </Link>
                     </p>
-                    <div className='d-flex flex-row gap-1'>
+                    <div className='d-flex flex-row gap-1 align-items-center' aria-label="Resource Version">
                         <h6 style={{ lineHeight: 'inherit', margin: '0' }} className="main-text-semi">
                             VERSION
                         </h6>
-                        <Link className='text-black main-text-regular interactDecoration' href={'/resources?q=versions:' + (resource.versions && (resource.versions.length > 1 ? resource.versions[1].version : resource.versions[0].version))} aria-label="Resource Version">
+                        <h6 className='text-black main-text-regular m-0' aria-label="Resource Version">
                             {resource.resource_version}
-                        </Link>
+                        </h6>
                     </div>
                     <div className='d-flex flex-row gap-1 align-items-center' aria-label="Resource Tags">
                         <h6 style={{ lineHeight: 'inherit', margin: '0' }}>
