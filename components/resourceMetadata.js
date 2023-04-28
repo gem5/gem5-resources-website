@@ -112,44 +112,51 @@ export default function MetaData({ resource, className, metaFields, showMetadata
                             }
                         </p>
                     </Row>
-                    <Row className="border-bottom">
-                        <p className="text-muted main-text-regular">Properties</p>
-                        <div className="main-text-regular">
-                            {
-                                resource.resources ? Object.keys(resource.resources).map((key, index) => {
-                                    return (
-                                        <div key={key}>
-                                            <div>
-                                                {key.charAt(0).toUpperCase() + key.slice(1)}
+                    {
+                        resource.resources ?
+                            <Row className="border-bottom">
+                                <p className="text-muted main-text-regular">Properties</p>
+                                <div className="main-text-regular">
+                                    {Object.keys(resource.resources).map((key, index) => {
+                                        return (
+                                            <div key={key}>
+                                                <div>
+                                                    {key.charAt(0).toUpperCase() + key.slice(1)}
+                                                </div>
+                                                <a href={process.env.BASE_PATH + '/resources/' + resource.resources[key] + `?database=${resource.database}`} style={{ display: 'block', paddingTop: '0.0625rem' }}>
+                                                    {resource.resources[key]}
+                                                </a>
                                             </div>
-                                            <a href={process.env.BASE_PATH + '/resources/' + resource.resources[key] + `?database=${resource.database}`} style={{ display: 'block', paddingTop: '0.0625rem' }}>
-                                                {resource.resources[key]}
-                                            </a>
-                                        </div>
-                                    );
-                                }) : 'None'
-                            }
-                        </div>
-                    </Row>
-                    <Row className="border-bottom">
-                        <p className="text-muted main-text-regular">Depend on this resource</p>
-                        <div className="main-text-regular">
-                            {
-                                (resource.workloads && resource.workloads.length > 0) ? resource.workloads.map((workload, index) => {
-                                    return (
-                                        <span key={workload}>
-                                            <a
-                                                href={process.env.BASE_PATH + '/resources/' + workload + `?database=${resource.database}`}
-                                            >
-                                                {workload}
-                                            </a>
-                                            {index != resource.workloads.length - 1 ? ', ' : ''}
-                                        </span>
-                                    )
-                                }) : 'None'
-                            }
-                        </div>
-                    </Row>
+                                        );
+                                    })
+                                    }
+                                </div>
+                            </Row>
+                            : null
+                    }
+                    {
+                        (resource.workloads && resource.workloads.length > 0) ?
+                            <Row className="border-bottom">
+                                <p className="text-muted main-text-regular">Depend on this resource</p>
+                                <div className="main-text-regular">
+                                    {
+                                        resource.workloads.map((workload, index) => {
+                                            return (
+                                                <span key={workload}>
+                                                    <a
+                                                        href={process.env.BASE_PATH + '/resources/' + workload + `?database=${resource.database}`}
+                                                    >
+                                                        {workload}
+                                                    </a>
+                                                    {index != resource.workloads.length - 1 ? ', ' : ''}
+                                                </span>
+                                            )
+                                        })
+                                    }
+                                </div>
+                            </Row>
+                            : null
+                    }
                     {
                         metaFields && metaFields.map((field, index) => {
                             const content = createTab(field)
