@@ -32,9 +32,9 @@ module.exports = {
   },
   env: {
     BASE_PATH: basePath,
-    SCHEMA_URL: config.schemaUrl,
-    PRIVATE_RESOURCES: config.resources,
-    TABS: config.tabs,
+    SCHEMA_URL: config.config.schemaUrl,
+    PRIVATE_RESOURCES: config.config.resources,
+    TABS: config.ui.tabs,
   },
   /* env: {
     BASE_PATH: basePath,
