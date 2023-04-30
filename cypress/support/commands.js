@@ -33,7 +33,7 @@ Cypress.Commands.add('assertValueCopiedToClipboard', value => {
 })
 
 Cypress.Commands.add('interceptAll', () => {
-    cy.intercept('GET', 'https://raw.githubusercontent.com/Gem5Vision/json-to-mongodb/simentic-version/schema/test.json').as('getSchema')
+    cy.intercept('GET', Cypress.env('SCHEMA_URL')).as('getSchema')
     cy.intercept('GET', /https.*json$/).as('jsonLink')
     cy.intercept('GET', /^\/\w*\.json$/).as('jsonLocal')
     cy.intercept('POST', "https://data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/find").as('find')

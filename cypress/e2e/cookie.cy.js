@@ -2,7 +2,7 @@
 
 describe('Cookie prompt', () => {
     beforeEach(() => {
-        cy.intercept('GET', 'https://raw.githubusercontent.com/Gem5Vision/json-to-mongodb/main/schema/test.json').as('getSchema')
+        cy.intercept('GET', Cypress.env('SCHEMA_URL')).as('getSchema')
         cy.visit('localhost:3000')
         cy.wait('@getSchema')
         cy.clearCookies()

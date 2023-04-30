@@ -1,6 +1,6 @@
 {
     "config": {
-        "schemaUrl": "https://raw.githubusercontent.com/Gem5Vision/json-to-mongodb/simentic-version/schema/test.json",
+        "schemaUrl": "https://raw.githubusercontent.com/Gem5Vision/json-to-mongodb/main/schema/schema.json",
         "resources": {
             "gem5-resources": {
                 "dataSource": "gem5-vision",

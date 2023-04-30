@@ -54,7 +54,7 @@ export default function Category() {
     }, [router])
 
     useEffect(() => {
-        fetch("https://raw.githubusercontent.com/Gem5Vision/json-to-mongodb/main/schema/test.json")
+        fetch(process.env.SCHEMA_URL)
             .then(res => res.json())
             .then(data => {
                 const categoryCards = data['properties']['category']['enum'].map((category) => {

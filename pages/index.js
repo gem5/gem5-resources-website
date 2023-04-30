@@ -44,7 +44,7 @@ export default function Home() {
   const [categoryCards, setCategoryCards] = useState([]);
 
   useEffect(() => {
-    fetch("https://raw.githubusercontent.com/Gem5Vision/json-to-mongodb/main/schema/test.json")
+    fetch(process.env.SCHEMA_URL)
       .then(res => res.json())
       .then(data => {
         const categoryCards = []
