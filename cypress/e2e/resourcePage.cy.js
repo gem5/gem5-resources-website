@@ -82,6 +82,9 @@ describe('resource Page', () => {
         cy.get('ul[role=tablist] li').last().click()
         cy.url().should('include', '/raw')
         cy.get('.tab-pane.active.show span>.copy-button>svg').eq(1).click()
+        resource = JSON.parse(JSON.stringify(resource))
+        delete resource._id
+        delete resource.database
         let resourceString = JSON.stringify(resource, null, 4)
         // resourceString = resourceString.replace(/\n/g, "\r\n")
         cy.assertValueCopiedToClipboard(resourceString)
