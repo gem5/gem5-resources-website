@@ -3,23 +3,19 @@ import config from "../../gem5.config.json"
 
 describe('resource Page', () => {
     let resource = {
-        "_id": "6445d29ba58c70d63bbc3e7e",
+        "_id": "60f6f1a3b3c9a5c6a0f3e7a6",
         "category": "workload",
         "id": "arm64-ubuntu-20.04-boot",
-        "description": "Meri Ek taang nakli hai, Mai hockey ka bohoth bada khiladi tha. Ek din Uday bhai ko meri kisi baat pe gussa aagaya aur mere he hockey se meri taang ke do tukde kar diye. Lekin dil ke bohot ache hai, Fauran mujhe hospital le gaye aur ye nakli taang lagwayi.",
+        "description": "A full boot of Ubuntu 20.04 with Linux 5.4.49 for ARM64. It runs an `m5 exit` command when the boot is completed unless the readfile is specified. If specified the readfile will be executed after booting.",
         "function": "set_kernel_disk_workload",
         "resources": {
             "kernel": "arm64-linux-kernel-5.4.49",
             "disk_image": "arm64-ubuntu-20.04-img",
             "bootloader": "arm64-bootloader-foundation"
         },
-        "additional_params": {},
         "architecture": "ARM",
         "size": 0,
-        "tags": [
-            "test",
-            "taang"
-        ],
+        "tags": [],
         "code_examples": [
             {
                 "example": "https://github.com/gem5/gem5/tree/develop/configs/example/gem5_library/arm-ubuntu-run.py",
@@ -27,19 +23,14 @@ describe('resource Page', () => {
             }
         ],
         "license": "",
-        "author": [
-            "Ujwal",
-            "HarshilDB"
-        ],
+        "author": [],
         "source_url": "",
-        "resource_version": "2.0.0",
+        "resource_version": "1.0.0",
         "gem5_versions": [
-            "24.0",
             "23.0"
         ],
         "example_usage": "Workload(\"arm64-ubuntu-20.04-boot\")",
-        "workloads": [],
-        "database": "gem5-resources"
+        "database": "public"
     }
     beforeEach(() => {
         resource.database = Object.keys(Cypress.env('PRIVATE_RESOURCES'))[0]
