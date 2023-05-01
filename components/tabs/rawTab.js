@@ -26,6 +26,7 @@ export default function RawTab({ resource }) {
         resource = JSON.parse(JSON.stringify(resource));
         delete resource.database
         delete resource._id
+        delete resource.workloads
         textToHtml(JSON.stringify(resource, null, 4));
     }, [resource]);
     return (
