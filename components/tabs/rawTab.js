@@ -23,6 +23,9 @@ export default function RawTab({ resource }) {
                 .process(text);
             setRaw(parse(text.toString()));
         }
+        resource = JSON.parse(JSON.stringify(resource));
+        delete resource.database
+        delete resource._id
         textToHtml(JSON.stringify(resource, null, 4));
     }, [resource]);
     return (
