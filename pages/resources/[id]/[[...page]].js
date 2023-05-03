@@ -37,14 +37,14 @@ function Resource() {
     const [version, setVersion] = useState(null);
 
     useEffect(() => {
-        if (router.isReady) {
-            const url = router.asPath.split('?')[0].split('/')
+        if (router.isReady && (id === null || database === null || version === null)) {
+            const url = router.asPath.split('#')[0].split('?')[0].split('/')
             if (url.includes("resources")) {
                 setId(url[url.indexOf("resources") + 1])
             }
             let params = []
             if (router.asPath.includes('?')) {
-                params = router.asPath.split('?')[1].split('&')
+                params = router.asPath.split('#')[0].split('?')[1].split('&')
             }
             params.forEach(param => {
                 const [key, value] = param.split('=')

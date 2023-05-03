@@ -91,7 +91,6 @@ export default function ResourceTab({ resource, requiredTabs, additionalInfoTabs
     if (!router.isReady) return;
     let page = router.query.page;
     if (page) {
-      page = page[0]
       setSelectedTab(page);
     } else {
       setSelectedTab("readme");
@@ -104,28 +103,9 @@ export default function ResourceTab({ resource, requiredTabs, additionalInfoTabs
     delete query.id;
     delete query.page;
     if (e === "readme") {
-      return router.replace({
-        pathname: `/resources/${resource.id}`,
-        query: {
-          ...query,
-          database: resource.database,
-          version: resource.resource_version,
-        }
-      }, undefined, {
-        shallow: true,
-      });
+      return history.replaceState(null, null, `/resources/${resource.id}?database=${resource.database}&version=${resource.resource_version}`);
     }
-    // replace the tab in the url
-    router.replace({
-      pathname: `/resources/${resource.id}/${e}`,
-      query: {
-        ...query,
-        database: resource.database,
-        version: resource.resource_version,
-      }
-    }, undefined, {
-      shallow: true,
-    });
+    history.replaceState(null, null, `/resources/${resource.id}/${e}?database=${resource.database}&version=${resource.resource_version}`);
   };
 
   return Object.keys(resource).length === 0 ? (
