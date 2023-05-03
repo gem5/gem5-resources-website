@@ -103,9 +103,9 @@ export default function ResourceTab({ resource, requiredTabs, additionalInfoTabs
     delete query.id;
     delete query.page;
     if (e === "readme") {
-      return history.replaceState(null, null, `/resources/${resource.id}?database=${resource.database}&version=${resource.resource_version}`);
+      return history.replaceState(null, null, `${process.env.BASE_PATH}/resources/${resource.id}?database=${resource.database}&version=${resource.resource_version}`);
     }
-    history.replaceState(null, null, `/resources/${resource.id}/${e}?database=${resource.database}&version=${resource.resource_version}`);
+    history.replaceState(null, null, `${process.env.BASE_PATH}/resources/${resource.id}/${e}?database=${resource.database}&version=${resource.resource_version}`);
   };
 
   return Object.keys(resource).length === 0 ? (
