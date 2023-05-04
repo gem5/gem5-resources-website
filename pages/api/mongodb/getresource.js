@@ -58,6 +58,11 @@ async function getResourceByID(token, url, dataSource, database, collection, id,
             "collection": collection,
             "pipeline": [
                 {
+                    "$match": {
+                        "category": "workload"
+                    }
+                },
+                {
                     "$addFields": {
                         "resources": {
                             "$objectToArray": "$resources"
