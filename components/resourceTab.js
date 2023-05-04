@@ -88,14 +88,16 @@ export default function ResourceTab({ resource, requiredTabs, additionalInfoTabs
   }, [resource.code_examples]);
 
   useEffect(() => {
-    if (!router.isReady) return;
-    let page = router.query.page;
-    if (page) {
+    if (!router.isReady || !resource.id) return;
+
+    let url = router.asPath.split('#')[0].split('?')[0].split('/')
+    page = url[url.length - 1];
+    if (page && page !== resource.id) {
       setSelectedTab(page);
     } else {
       setSelectedTab("readme");
     }
-  }, [router.isReady]);
+  }, [router.isReady, resource.id]);
 
   const handleSelect = (e) => {
     setSelectedTab(e);
