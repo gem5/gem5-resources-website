@@ -91,7 +91,7 @@ export default function ResourceTab({ resource, requiredTabs, additionalInfoTabs
     if (!router.isReady || !resource.id) return;
 
     let url = router.asPath.split('#')[0].split('?')[0].split('/')
-    page = url[url.length - 1];
+    let page = url[url.length - 1];
     if (page && page !== resource.id) {
       setSelectedTab(page);
     } else {
