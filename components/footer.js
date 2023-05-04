@@ -60,7 +60,7 @@ export default function Footer() {
             <Button as='a' onClick={resetCookies} className="btn-variant-none" variant="none">Reset Cookies</Button>
           </Col>
         </Row>
-        <Row>
+        <Row className="w-100">
           <CreatePR />
         </Row>
       </div>
