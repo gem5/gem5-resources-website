@@ -200,7 +200,16 @@ export default function Resources() {
                 }
             }
         }
-        let searchQuery = ref.current.getSearchQuery().split(' ').filter((word) => !word.includes(':'));
+        let searchQuery = ref.current.getSearchQuery().split(' ').filter((word) => {
+            if (word.includes(':')) {
+                let split = word.split(':');
+                if (split[0] === 'tags') {
+                    return true;
+                }
+                return false;
+            }
+            return false;
+        });
         searchQuery = searchQuery.join(' ');
         if (searchQuery) {
             q += searchQuery;
