@@ -101,6 +101,7 @@ describe("getTabs", () => {
                         "description": "The interval between simpoints",
                         "default": 0
                     },
+                    "displayName": "Simpoint Interval",
                     "content": 1000000
                 },
                 {
@@ -110,6 +111,7 @@ describe("getTabs", () => {
                         "description": "The warmup interval",
                         "default": 0
                     },
+                    "displayName": "Warmup Interval",
                     "content": 1000000
                 },
                 {
@@ -119,6 +121,7 @@ describe("getTabs", () => {
                         "description": "The name of the workload",
                         "default": ""
                     },
+                    "displayName": "Workload Name",
                     "content": "x86-print-this-15000-with-simpoints"
                 }
             ],
