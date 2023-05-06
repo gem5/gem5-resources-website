@@ -10,11 +10,12 @@ async function getAccessToken(url, key) {
             "key": key
         })
     }).catch(err => console.log(err));
-    // Extract access token from response
     let tokenJson = await token.json();
-    let accessToken = tokenJson['access_token'];
-    // Log success/failure and return access token
-    return accessToken;
+    return {
+        accessToken: tokenJson['access_token'],
+        expires: Date.now() + 30 * 60 * 1000,
+        refreshToken: tokenJson['refresh_token']
+    }
 }
 
 /**
@@ -35,12 +36,12 @@ export default async function getToken(key = null) {
     } else {
         token = {};
     }
-    if (token && token[key]) {
-        return token[key];
+    if (token && token[key] && token[key].expires >= Date.now()) {
+        return token[key].accessToken;
     }
     else {
         token[key] = await getAccessToken(`https://realm.mongodb.com/api/client/v2.0/app/${privateENV.name}/auth/providers/api-key/login`, privateENV.apiKey);
         sessionStorage.setItem('token', JSON.stringify(token));
-        return token[key];
+        return token[key].accessToken;
     }
 }
