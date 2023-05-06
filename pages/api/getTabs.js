@@ -47,8 +47,6 @@ export default async function getTabs(res) {
     const tabs = process.env.TABS;
     let resource = JSON.parse(JSON.stringify(res));
     const category = resource.category;
-    // create copy of resource
-    // schema is at https://raw.githubusercontent.com/Gem5Vision/json-to-mongodb/simentic-version/schema/test.json
     const schema = await fetch(process.env.SCHEMA_URL).then(res => res.json());
     // delete _id
     /* delete resource._id;
@@ -110,14 +108,20 @@ export default async function getTabs(res) {
         let additionalInfoFields = [];
         let metaFields = [];
         for (let f of allFields) {
-            if (tabs[category]["tab"].includes(f.name)) {
-                requiredFields.push(f);
+            if (Object.keys(tabs[category]["tab"]).includes(f.name)) {
+                let field = JSON.parse(JSON.stringify(f));
+                Object.assign(field, tabs[category]["tab"][field.name]);
+                requiredFields.push(field);
             }
-            if (tabs[category]["additionalInfo"].includes(f.name)) {
-                additionalInfoFields.push(f);
+            if (Object.keys(tabs[category]["additionalInfo"]).includes(f.name)) {
+                let field = JSON.parse(JSON.stringify(f));
+                Object.assign(field, tabs[category]["additionalInfo"][field.name]);
+                additionalInfoFields.push(field);
             }
-            if (tabs[category]["metadata"].includes(f.name)) {
-                metaFields.push(f);
+            if (Object.keys(tabs[category]["metadata"]).includes(f.name)) {
+                let field = JSON.parse(JSON.stringify(f));
+                Object.assign(field, tabs[category]["metadata"][field.name]);
+                metaFields.push(field);
             }
         }
         return {

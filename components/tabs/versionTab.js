@@ -129,7 +129,7 @@ export default function VersionTab({ id, database }) {
     return (
         versions.length === 0 ? <></> :
             <>
-                <Table>
+                <Table hover responsive>
                     <thead>
                         <tr>
                             <th>Version</th>

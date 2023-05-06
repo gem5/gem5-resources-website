@@ -3,7 +3,7 @@ import Tabs from "react-bootstrap/Tabs";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import VersionTab from "./tabs/versionTab";
-import { Nav, Placeholder } from "react-bootstrap";
+import { Nav, Placeholder, Table } from "react-bootstrap";
 import ReadmeTab from "./tabs/readmeTab";
 import ChangelogTab from "./tabs/changelogTab";
 import UsageTab from "./tabs/usageTab";
@@ -141,9 +141,9 @@ export default function ResourceTab({ resource, requiredTabs, additionalInfoTabs
           </Tab>
         ) : null}
         <Tab eventKey="versions" title="Versions">
-          <h3 className="font-weight-light versions-table-title">
+          {/* <h3 className="font-weight-light versions-table-title">
             Versions of {resource.id}
-          </h3>
+          </h3> */}
           <VersionTab
             id={resource.id}
             database={resource.database}
@@ -153,8 +153,8 @@ export default function ResourceTab({ resource, requiredTabs, additionalInfoTabs
           let content = createTab(tab);
           if (!content) return null;
           return (
-            <Tab eventKey={tab.name} title={tab.name.split("_").map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-              .join(" ")} key={tab.name}>
+            <Tab eventKey={tab.name} title={tab.displayName ?? tab.name}
+              key={tab.name}>
               <Tab.Container defaultActiveKey="first">
                 {content}
               </Tab.Container>
@@ -164,26 +164,24 @@ export default function ResourceTab({ resource, requiredTabs, additionalInfoTabs
         {additionalInfoTabs.length > 0 ? (
           <Tab eventKey="additionalInfo" title="Additional Info">
             <Tab.Container defaultActiveKey="0">
-              <Nav variant="pills" className="flex-row">
-                {additionalInfoTabs.map((tab, index) => {
-                  return (
-                    <Nav.Item key={index}>
-                      <Nav.Link eventKey={index}>
-                        {tab.name}
-                      </Nav.Link>
-                    </Nav.Item>
-                  );
-                })}
-              </Nav>
-              <Tab.Content>
-                {additionalInfoTabs.map((tab, index) => {
-                  return (
-                    <Tab.Pane eventKey={index} key={index}>
-                      {createTab(tab)}
-                    </Tab.Pane>
-                  );
-                })}
-              </Tab.Content>
+              <Table bordered hover responsive>
+                <thead>
+                  <tr>
+                    <th>Field</th>
+                    <th>Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {additionalInfoTabs.map((tab, index) => {
+                    return (
+                      <tr key={index}>
+                        <td>{tab.displayName ?? tab.name}</td>
+                        <td>{createTab(tab)}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </Table>
             </Tab.Container>
           </Tab>
         ) : null}

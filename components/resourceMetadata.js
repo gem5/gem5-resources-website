@@ -163,7 +163,7 @@ export default function MetaData({ resource, className, metaFields, showMetadata
                             if (content == null) return null
                             return (
                                 <Row key={index} className="border-bottom">
-                                    <p className="text-capitalize text-muted main-text-regular">{field.name}</p>
+                                    <p className="text-muted main-text-regular">{field.displayName ?? field.name}</p>
                                     <div className="main-text-regular">
                                         {content}
                                     </div>

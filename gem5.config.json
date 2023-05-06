@@ -16,66 +16,95 @@
     "ui": {
         "tabs": {
             "simpoint": {
-                "tab": [],
-                "additionalInfo": [
-                    "simpoint_interval",
-                    "simpoint_list",
-                    "weight_list",
-                    "warmup_interval",
-                    "workload_name"
-                ],
-                "metadata": []
-            },
-            "workload": {
-                "tab": [],
-                "additionalInfo": [],
-                "metadata": [
-                    "function",
-                    "resource_directory"
-                ]
-            },
-            "binary": {
-                "tab": [
-                    "arguments"
-                ],
-                "additionalInfo": [],
-                "metadata": []
-            },
-            "diskimage": {
-                "tab": [],
-                "additionalInfo": [],
-                "metadata": [
-                    "root_partition"
-                ]
-            },
-            "kernel": {
-                "tab": [
-                    "arguments"
-                ],
-                "additionalInfo": [],
-                "metadata": []
+                "tab": {},
+                "additionalInfo": {
+                    "simpoint_interval": {
+                        "displayName": "Simpoint Interval"
+                    },
+                    "simpoint_list": {
+                        "displayName": "Simpoint List"
+                    },
+                    "weight_list": {
+                        "displayName": "Weight List"
+                    },
+                    "warmup_interval": {
+                        "displayName": "Warmup Interval"
+                    },
+                    "workload_name": {
+                        "displayName": "Workload Name"
+                    }
+                },
+                "metadata": {}
             },
             "simpoint-directory": {
-                "tab": [],
-                "additionalInfo": [
-                    "simpoint_interval",
-                    "simpoint_list",
-                    "weight_list",
-                    "warmup_interval",
-                    "workload_name"
-                ],
-                "metadata": [
-                    "id",
-                    "description",
-                    "tags"
-                ]
+                "tab": {},
+                "additionalInfo": {
+                    "simpoint_interval": {
+                        "displayName": "Simpoint Interval",
+                        "testse": "stets"
+                    },
+                    "simpoint_list": {
+                        "displayName": "Simpoint List"
+                    },
+                    "weight_list": {
+                        "displayName": "Weight List"
+                    },
+                    "warmup_interval": {
+                        "displayName": "Warmup Interval"
+                    },
+                    "workload_name": {
+                        "displayName": "Workload Name"
+                    }
+                },
+                "metadata": {}
+            },
+            "workload": {
+                "tab": {},
+                "additionalInfo": {},
+                "metadata": {
+                    "function": {
+                        "displayName": "Function"
+                    },
+                    "resource_directory": {
+                        "displayName": "Resource Directory"
+                    }
+                }
+            },
+            "binary": {
+                "tab": {
+                    "arguments": {
+                        "displayName": "Arguments"
+                    }
+                },
+                "additionalInfo": {},
+                "metadata": {}
+            },
+            "diskimage": {
+                "tab": {},
+                "additionalInfo": {},
+                "metadata": {
+                    "root_partition": {
+                        "displayName": "Root Partition"
+                    }
+                }
+            },
+            "kernel": {
+                "tab": {
+                    "arguments": {
+                        "displayName": "Arguments"
+                    }
+                },
+                "additionalInfo": {},
+                "metadata": {}
             },
             "looppoint-json": {
-                "tab": [],
-                "additionalInfo": [],
-                "metadata": [
-                    "region_id"
-                ]
+                "tab": {},
+                "additionalInfo": {},
+                "metadata": {
+                    "region_id": {
+                        "displayName": "Region ID"
+                    }
+                }
             }
         }
     }
