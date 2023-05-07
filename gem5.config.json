@@ -40,8 +40,7 @@
                 "tab": {},
                 "additionalInfo": {
                     "simpoint_interval": {
-                        "displayName": "Simpoint Interval",
-                        "testse": "stets"
+                        "displayName": "Simpoint Interval"
                     },
                     "simpoint_list": {
                         "displayName": "Simpoint List"
@@ -99,12 +98,12 @@
             },
             "looppoint-json": {
                 "tab": {},
-                "additionalInfo": {},
-                "metadata": {
+                "additionalInfo": {
                     "region_id": {
                         "displayName": "Region ID"
                     }
-                }
+                },
+                "metadata": {}
             }
         }
     }
