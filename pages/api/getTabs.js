@@ -2,7 +2,7 @@
 // each category has a list of required fields
 // category can inherit from other categories provided by $ref in allOf
 // create a recursive function to get all required fields
-function getRequiredFields(schema, category) {
+function getFields(schema, category) {
     let requiredFields = [];
     let additionalInfoFields = [];
     if (schema.definitions[category]) {
@@ -11,7 +11,7 @@ function getRequiredFields(schema, category) {
             for (let ref of categorySchema.allOf) {
                 if (ref.$ref) {
                     const refCategory = ref.$ref.replace("#/definitions/", "");
-                    let fields = getRequiredFields(schema, refCategory);
+                    let fields = getFields(schema, refCategory);
                     requiredFields = requiredFields.concat(fields[0]);
                     additionalInfoFields = additionalInfoFields.concat(fields[1]);
                 }
@@ -48,19 +48,7 @@ export default async function getTabs(res) {
     let resource = JSON.parse(JSON.stringify(res));
     const category = resource.category;
     const schema = await fetch(process.env.SCHEMA_URL).then(res => res.json());
-    // delete _id
-    /* delete resource._id;
-    delete resource.architecture;
-    delete resource.source;
-    delete resource.database;
-    delete resource.workloads;
-    for (let field in resource) {
-        if (schema.properties[field]) {
-            delete resource[field];
-        }
-    } */
-    let fields = getRequiredFields(schema, category);
-    // push the additionalInfo and required fields from schema.properties
+    let fields = getFields(schema, category);
     for (let field in schema.properties) {
         if (schema.properties[field].required) {
             fields[0].push({
@@ -101,6 +89,30 @@ export default async function getTabs(res) {
         if (field.name in resource) {
             field.content = resource[field.name];
         }
+    }
+    if (resource.additional_params) {
+        Object.keys(resource.additional_params).forEach((key) => {
+            let type = "string";
+            // get type of resource.additional_params[key]
+            if (typeof resource.additional_params[key] === "number") {
+                type = "integer";
+            } else if (typeof resource.additional_params[key] === "boolean") {
+                type = "boolean";
+            }
+            else if (typeof resource.additional_params[key] === "object") {
+                type = "object";
+            }
+            else if (typeof resource.additional_params[key] === "array") {
+                type = "array";
+            }
+            fields[1].push({
+                name: key,
+                schema: {
+                    type: "string",
+                },
+                content: resource.additional_params[key],
+            });
+        });
     }
     if (tabs[category]) {
         let allFields = [...fields[0], ...fields[1]];

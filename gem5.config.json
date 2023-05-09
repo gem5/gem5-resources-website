@@ -59,7 +59,14 @@
             },
             "workload": {
                 "tab": {},
-                "additionalInfo": {},
+                "additionalInfo": {
+                    "arguments": {
+                        "displayName": "Arguments"
+                    },
+                    "region_id": {
+                        "displayName": "Region ID"
+                    }
+                },
                 "metadata": {
                     "function": {
                         "displayName": "Function"
