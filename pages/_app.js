@@ -36,13 +36,19 @@ export default function App({ Component, pageProps }) {
   }, [])
 
   const [isLoading, setIsLoading] = useState(false); //To prevent hydration faliure w/ modal 
-  const [consentExists, setConsentExists] = useState({cachedConsent: false, userPreference: null});
+  const [consentExists, setConsentExists] = useState({ cachedConsent: false, userPreference: null });
   const [showConsentOverlay, setShowConsentOverlay] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
     const storedConsent = JSON.parse(localStorage.getItem("CookieConsent"));
-    storedConsent ? setConsentExists({cachedConsent: true, userPreference: storedConsent.userPreference}) : setShowConsentOverlay(true);
+    storedConsent ? setConsentExists({ cachedConsent: true, userPreference: storedConsent.userPreference }) : setShowConsentOverlay(true);
+  }, [])
+
+  useEffect(() => {
+    window.addEventListener("popstate", function () {
+      window.location = location.href;
+    });
   }, [])
 
   return (
