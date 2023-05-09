@@ -13,6 +13,7 @@ describe('resource Page', () => {
             "disk_image": "arm64-ubuntu-20.04-img",
             "bootloader": "arm64-bootloader-foundation"
         },
+        "additional_params": {},
         "architecture": "ARM",
         "size": 0,
         "tags": [],
