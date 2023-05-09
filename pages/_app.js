@@ -47,7 +47,10 @@ export default function App({ Component, pageProps }) {
 
   useEffect(() => {
     window.addEventListener("popstate", function () {
-      window.location = location.href;
+      // only if in the form of resources/[id]
+      if (window.location.pathname.includes("resources/")) {
+        window.location = location.href;
+      }
     });
   }, [])
 
