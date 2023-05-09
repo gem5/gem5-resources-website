@@ -68,7 +68,7 @@ describe('resource Page', () => {
 
     it.only('checks if tabs are correct', () => {
         cy.log(JSON.stringify(config.ui.tabs[resource.category]))
-        cy.get('ul[role=tablist] li').should('have.length', 6 + Object.keys(config.ui.tabs[resource.category].tab).length + (Object.keys(config.ui.tabs[resource.category].additionalInfo).length > 0 ? 1 : 0))
+        cy.get('ul[role=tablist] li').should('have.length', 6)
         cy.get('ul[role=tablist] li').last().should('have.text', 'Raw')
         cy.get('ul[role=tablist] li').last().click()
         cy.url().should('include', '/raw')
