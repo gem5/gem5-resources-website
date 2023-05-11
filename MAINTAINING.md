@@ -1,14 +1,34 @@
 # How to Maintain gem5 Resources Website
 
-## Database Configuration
+This document describes how to maintain the gem5 Resources website.
+# Table of Contents
+
+- [How to Maintain gem5 Resources Website](#how-to-maintain-gem5-resources-website)
+- [Table of Contents](#table-of-contents)
+- [Database Configuration](#database-configuration)
+  - [`schemaUrl`](#schemaurl)
+  - [`resources`](#resources)
+- [Adding a New Category](#adding-a-new-category)
+- [Adding a New Page](#adding-a-new-page)
+- [Configuring the Tabs](#configuring-the-tabs)
+- [Editing Information on the Help page or About page](#editing-information-on-the-help-page-or-about-page)
+- [Testing Configurations](#testing-configurations)
+  - [jest.config.js](#jestconfigjs)
+    - [Configuration Details](#configuration-details)
+    - [Running Jest](#running-jest)
+  - [cypress.config.js](#cypressconfigjs)
+    - [Configuration Details](#configuration-details-1)
+    - [Running Cypress](#running-cypress)
+
+# Database Configuration
 
 The following extra environment variables are used in the main configuration file (`next.config.js`) and are added through `gem5.config.json`:
 
-### `schemaUrl`
+## `schemaUrl`
 
 Description: The Raw GitHub URL of where the gem5 Resources Schema lies.
 
-### `resources`
+## `resources`
 
 This is an object containing multiple key-value pairs representing different configurations for private resources used in the application.
 
@@ -27,7 +47,7 @@ In case of a **JSON** database, every object must contain the following properti
 - `url`: The Raw GitHub URL of the JSON data, or the local path, with root directory being the `public` directory of this codebase.
 - `isMongo`: A boolean value indicating whether the data source is MongoDB or not, set to false.
 
-## Adding a New Category
+# Adding a New Category
 
 1. If you want to add a new category, make sure it is added as a definition to the gem5 Resources Schema.
 
@@ -37,7 +57,7 @@ In case of a **JSON** database, every object must contain the following properti
 
 NOTE: A category shows up as a filter option only if there is at least one resource that has that category.
 
-## Adding a New Page
+# Adding a New Page
 
 Each page is a JavaScript file in the `pages` directory. The name of the file is the URL of the page. For example, `pages/index.js` is the home page, and `pages/about.js` is the about page. The `pages/api` directory is used for API routes that are used by the application.
 
@@ -71,7 +91,7 @@ While the links present in the bottom footer are defined in the `components/foot
 </Link>
 ```
 
-## Configuring the Tabs
+# Configuring the Tabs
 
 The configurations for the tabs are stored in the `tabs` object in the `gem5.config.json` file. To define the set of tabs for a particular category of resources, add the category name as a key to the `tabs` object. Each key in the `tabs` object has three types of tabs:
 
@@ -111,13 +131,18 @@ In the above file, `function` would be rendered as a separate tab in the Resourc
 
 If the configuration for a particular category is not specified, by default, the required tabs from the schema are shown as tabs while the optional tabs are shown as additional info.
 
-## Testing Configurations
 
-### jest.config.js
+# Editing Information on the Help page or About page
+
+To edit the information shown on the Help page or the About page, navigate to `pages/`. Edit the corresponding .md file, `help.md` for the Help page and `about.md` for the About page. Redeploy the website.
+
+# Testing Configurations
+
+## jest.config.js
 
 This repository contains the configuration file `jest.config.js` for running tests with Jest. The configuration file specifies various settings and options for Jest to customize the testing environment.
 
-#### Configuration Details
+### Configuration Details
 
 - `collectCoverage`: When set to `true`, enables code coverage collection during test runs.
 - `coverageProvider`: Specifies the coverage provider to use. In this case, it is set to '`v8`', which offers good speed and generates a relatively good coverage report when using Node.js 14.x.
@@ -135,7 +160,7 @@ Please note that the `jest.config.js` file should be placed in the root director
 
 Feel free to modify these settings according to your project's requirements. For more information, refer to the [Jest documentation](https://jestjs.io/docs/configuration).
 
-#### Running Jest
+### Running Jest
 
 To install:
 
@@ -149,9 +174,9 @@ To run:
 npm test
 ```
 
-### cypress.config.js
+## cypress.config.js
 
-#### Configuration Details
+### Configuration Details
 
 This repository contains the configuration file `cypress.config.js` for Cypress, a JavaScript end-to-end testing framework. The configuration file specifies various settings and options for running Cypress tests.
 
@@ -173,7 +198,7 @@ Please make sure to have the `gem5.config.json` file in the same directory as th
 
 You can modify these settings based on your specific requirements. For more information about Cypress configuration, refer to the [Cypress documentation](https://docs.cypress.io/guides/references/configuration).
 
-#### Running Cypress
+### Running Cypress
 
 To install:
 

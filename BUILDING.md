@@ -1,5 +1,18 @@
 # Building the Website
-## Running it Locally
+
+This document describes how to build and deploy the gem5 Vision website. It is built using [Next.js](https://nextjs.org/), a React framework for building static and server-side rendered websites.
+# Table of Contents
+- [Building the Website](#building-the-website)
+- [Table of Contents](#table-of-contents)
+- [Running it Locally](#running-it-locally)
+- [Building a Static Version](#building-a-static-version)
+- [Automatic Deployment](#automatic-deployment)
+  - [Using GitHub Pages](#using-github-pages)
+  - [GitHub Action to Deploy to Github Pages](#github-action-to-deploy-to-github-pages)
+    - [Workflow Configuration](#workflow-configuration)
+    - [Job: deployment](#job-deployment)
+
+# Running it Locally
 
 Firstly, you need to install the dependencies:
 
@@ -23,7 +36,7 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Building a Static Version
+# Building a Static Version
 
 To build a static version of the website, run the following command:
 
