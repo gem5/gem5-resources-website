@@ -19,7 +19,7 @@ export default function Footer() {
 
   function resetCookies() {
     gtag('consent', 'update', {
-        'analytics_storage': 'denied'
+      'analytics_storage': 'denied'
     });
 
     localStorage.removeItem("CookieConsent");
@@ -30,27 +30,29 @@ export default function Footer() {
   }
 
   return (
-    <>
+    <footer>
       <CookieConsent showConsentOverlay={resetConsent} hasUpdated={setResetConsent} />
       <div className="d-flex flex-column justify-content-center align-items-center bg-light mt-5">
         <Row className="h-100 w-75">
-          <Col className="text-center primary d-flex flex-column h-100 pt-2 pb-2 gap-1 footer-col">
+          <Col className="text-center primary d-flex flex-column h-100 pt-2 pb-2 gap-1 footer-col align-items-center">
             <span className="text-muted main-text-regular">gem5 Resources</span>
             <Link href="/about" className="main-text-regular">About</Link>
             <Link href="https://www.gem5.org/publications/">Publications</Link>
             <Link href="https://www.gem5.org/contributing/">Contributing</Link>
             <Link href="https://www.gem5.org/governance/">Governance</Link>
           </Col>
-          <Col className="text-center primary d-flex flex-column h-100 pt-2 pb-2 gap-1 footer-col">
+          <Col className="text-center primary d-flex flex-column h-100 pt-2 pb-2 gap-1 footer-col align-items-center">
             <span className="text-muted main-text-regular">Docs</span>
             <Link href="https://www.gem5.org/documentation/">
               Documentation
             </Link>
             <Link href="https://gem5.googlesource.com/public/gem5">Source</Link>
           </Col>
-          <Col className="text-center primary d-flex flex-column h-100 pt-2 pb-2 gap-1 footer-col">
+          <Col className="text-center primary d-flex flex-column h-100 pt-2 pb-2 gap-1 footer-col align-items-center">
             <span className="text-muted main-text-regular">Help</span>
-            <Link href="https://www.gem5.org/search/">Search</Link>
+            <Link href="https://www.gem5.org/search/">
+              Search
+            </Link>
             <Link href="https://www.gem5.org/mailing_lists/">
               Mailing Lists
             </Link>
@@ -64,6 +66,6 @@ export default function Footer() {
           <CreatePR />
         </Row>
       </div>
-    </>
+    </footer>
   );
 }
