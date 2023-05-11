@@ -1,4 +1,52 @@
-# Building and Deploying gem5 Vision
+# Building the Website
+## Running it Locally
+
+Firstly, you need to install the dependencies:
+
+```bash
+npm install
+# or
+yarn
+# or
+pnpm install
+```
+
+Next, run the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## Building a Static Version
+
+To build a static version of the website, run the following command:
+
+```bash
+npm run build
+```
+
+Once the build is complete, you can export the static version of the website using the following command:
+
+```bash
+npm run export
+```
+
+The static version of the website will be exported to the `out` directory.
+
+To serve the static version of the website, you can use any static server. For example, you can use the `serve` package:
+
+```bash
+npm install -g serve
+serve out
+```
+
+# Automatic Deployment
 
 ## Using GitHub Pages
 
@@ -6,11 +54,11 @@ Go to the "Pages" section of GitHub Settings. If deploying to a custom domain, a
 
 ## GitHub Action to Deploy to Github Pages
 
-Our GitHub Actions workflow in `.github/workflows/main.yml` automatically deploys a static website to GitHub Pages when changes are pushed to the "static-website" branch. It utilizes the ["JamesIves/github-pages-deploy-action"](https://github.com/marketplace/actions/deploy-to-github-pages) action to perform the deployment
+Our GitHub Actions workflow in `.github/workflows/main.yml` automatically deploys a static website to GitHub Pages when changes are pushed to the "main" branch. It utilizes the [JamesIves/github-pages-deploy-action](https://github.com/marketplace/actions/deploy-to-github-pages) action to perform the deployment
 
 ### Workflow Configuration
 
-The workflow is triggered on the push event, specifically for the static-website branch, and also allows for manual triggering using the workflow_dispatch event.
+The workflow is triggered on the push event, specifically for the main branch, and also allows for manual triggering using the workflow_dispatch event.
 
 ### Job: deployment
 
@@ -29,30 +77,3 @@ The `deployment` job runs on the `ubuntu-latest` operating system.
     - Exports the build using `npm run export`.
 
 7. `Deploy`: This step uses the `JamesIves/github-pages-deploy-action` action to deploy the built website to GitHub Pages. It specifies the `./out` directory as the publish directory, which is the directory where the built website is exported. The website is exported to the `gh-pages` branch.
-
-## Database Configuration
-
-The following extra environment variables are used in the main configuration file (`next.config.js`) and are added through `gem5.config.json`:
-
-### `schemaUrl`
-
-Description: The Raw GitHub URL of where the gem5 Resources Schema lies.
-
-### `resources`
-
-This is an object containing multiple key-value pairs representing different configurations for private resources used in the application.
-
-In case of a **MongoDB** database, every object must contain the following properties:
-
-- `dataSource`: The data source name.
-- `database`: The database name.
-- `collection`: The collection name.
-- `url`: The URL of the MongoDB API endpoint.
-- `name`: The name of the data source.
-- `apiKey`: The API key for accessing the MongoDB data (read-only).
-- `isMongo`: A boolean value indicating whether the data source is MongoDB or not, set to true.
-
-In case of a **JSON** database, every object must contain the following properties:
-
-- `url`: The Raw GitHub URL of the JSON data, or the local path, with root directory being the `public` directory of this codebase.
-- `isMongo`: A boolean value indicating whether the data source is MongoDB or not, set to false.
