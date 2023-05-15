@@ -74,7 +74,7 @@ export default function SearchResult({ resource }) {
                         </p>
                     </div>
                     <div className='d-flex flex-row gap-1'>
-                        <p className="text-capitalize font-weight-light main-text-regular" aria-label="Resource category">
+                        <p className="font-weight-light main-text-regular" aria-label="Resource category">
                             {resource.category}
                         </p>
                     </div>

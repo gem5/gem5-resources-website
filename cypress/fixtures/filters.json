@@ -5,7 +5,7 @@
             "category": [
                 "workload",
                 "simpoint",
-                "diskimage",
+                "disk_image",
                 "binary",
                 "checkpoint",
                 "bootloader",

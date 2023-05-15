@@ -377,7 +377,7 @@
         "function": "set_kernel_disk_workload",
         "resources": {
             "kernel": "x86-linux-kernel-5.4.49",
-            "diskimage": "x86-ubuntu-18.04-img"
+            "disk_image": "x86-ubuntu-18.04-img"
         },
         "additional_params": {},
         "architecture": "X86",
@@ -409,7 +409,7 @@
         "function": "set_kernel_disk_workload",
         "resources": {
             "kernel": "riscv-bootloader-vmlinux-5.10",
-            "diskimage": "riscv-ubuntu-20.04-img"
+            "disk_image": "riscv-ubuntu-20.04-img"
         },
         "additional_params": {},
         "architecture": "RISCV",
@@ -441,7 +441,7 @@
         "function": "set_kernel_disk_workload",
         "resources": {
             "kernel": "arm64-linux-kernel-5.4.49",
-            "diskimage": "arm64-ubuntu-20.04-img",
+            "disk_image": "arm64-ubuntu-20.04-img",
             "bootloader": "arm64-bootloader-foundation"
         },
         "additional_params": {},
@@ -1034,7 +1034,7 @@
         "example_usage": "get_resource(resource_name=\"riscv-hello-example-checkpoint-v23\")"
     },
     {
-        "category": "diskimage",
+        "category": "disk_image",
         "id": "riscv-disk-img",
         "description": "A simple RISCV disk image based on busybox.",
         "architecture": "RISCV",
@@ -1065,7 +1065,7 @@
         "example_usage": "get_resource(resource_name=\"riscv-disk-img\")"
     },
     {
-        "category": "diskimage",
+        "category": "disk_image",
         "id": "riscv-lupio-busybox-img",
         "description": "A RISCV disk image, based on busybox, to be used with the LupvBoard. Should be used with the 'riscv-lupio-linux-kernel' kernel resource.",
         "architecture": "RISCV",
@@ -1208,7 +1208,7 @@
         "example_usage": "get_resource(resource_name=\"x86-matrix-multiply-omp\")"
     },
     {
-        "category": "diskimage",
+        "category": "disk_image",
         "id": "x86-parsec",
         "description": "A disk image containing the PARSEC benchmark suite, compiled to X86, built on top of Ubuntu 18.04.",
         "architecture": "X86",
@@ -1241,7 +1241,7 @@
         "example_usage": "get_resource(resource_name=\"x86-parsec\")"
     },
     {
-        "category": "diskimage",
+        "category": "disk_image",
         "id": "x86-gapbs",
         "description": "A disk image containing the GAPBS benchmark suite, compiled to X86, built on top of Ubuntu 18.04.",
         "architecture": "X86",
@@ -1274,7 +1274,7 @@
         "example_usage": "get_resource(resource_name=\"x86-gapbs\")"
     },
     {
-        "category": "diskimage",
+        "category": "disk_image",
         "id": "x86-npb",
         "description": "A disk image containing the NAS Parallel benchmark (NPB) suite, compiled to X86, built on top of Ubuntu 18.04.",
         "architecture": "X86",
@@ -1307,7 +1307,7 @@
         "example_usage": "get_resource(resource_name=\"x86-npb\")"
     },
     {
-        "category": "diskimage",
+        "category": "disk_image",
         "id": "x86-gpu-fs-img",
         "description": "An Ubuntu 18.04 disk image with ROCm 4.2 installed. This can be used to run GPU full-system simulations.",
         "architecture": "X86",
@@ -1334,7 +1334,7 @@
         "example_usage": "get_resource(resource_name=\"x86-gpu-fs-img\")"
     },
     {
-        "category": "diskimage",
+        "category": "disk_image",
         "id": "x86-ubuntu-18.04-img",
         "description": "A disk image containing Ubuntu 18.04 for x86. This image will run an `m5 readfile` instruction after booting. If no script file is specified an `m5 exit` instruction will be executed.",
         "architecture": "X86",
@@ -1361,7 +1361,7 @@
         "example_usage": "get_resource(resource_name=\"x86-ubuntu-18.04-img\")"
     },
     {
-        "category": "diskimage",
+        "category": "disk_image",
         "id": "riscv-ubuntu-20.04-img",
         "description": "A disk image containing Ubuntu 20.04 for RISCV which will run an `m5 readfile` instruction after booting. If no script file is specified an `m5 exit` instruction will be exected",
         "architecture": "RISCV",
@@ -1388,7 +1388,7 @@
         "example_usage": "get_resource(resource_name=\"riscv-ubuntu-20.04-img\")"
     },
     {
-        "category": "diskimage",
+        "category": "disk_image",
         "id": "arm64-ubuntu-18.04-img",
         "description": "A disk image containing Ubuntu 18.04 for arm64.",
         "architecture": "ARM",
@@ -1409,7 +1409,7 @@
         "example_usage": "get_resource(resource_name=\"arm64-ubuntu-18.04-img\")"
     },
     {
-        "category": "diskimage",
+        "category": "disk_image",
         "id": "arm64-ubuntu-20.04-img",
         "description": "A disk image containing Ubuntu 20.04 for ARM which will run an `m5 readfile` instruction after booting. If no script file is specified an `m5 exit` instruction will be executed.",
         "architecture": "ARM",

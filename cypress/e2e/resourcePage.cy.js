@@ -10,7 +10,7 @@ describe('resource Page', () => {
         "function": "set_kernel_disk_workload",
         "resources": {
             "kernel": "arm64-linux-kernel-5.4.49",
-            "diskimage": "arm64-ubuntu-20.04-img",
+            "disk_image": "arm64-ubuntu-20.04-img",
             "bootloader": "arm64-bootloader-foundation"
         },
         "additional_params": {},

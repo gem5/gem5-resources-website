@@ -93,17 +93,22 @@ export default async function getTabs(res) {
     if (resource.additional_params) {
         Object.keys(resource.additional_params).forEach((key) => {
             let type = "string";
-            // get type of resource.additional_params[key]
-            if (typeof resource.additional_params[key] === "number") {
-                type = "integer";
-            } else if (typeof resource.additional_params[key] === "boolean") {
-                type = "boolean";
-            }
-            else if (typeof resource.additional_params[key] === "object") {
-                type = "object";
-            }
-            else if (typeof resource.additional_params[key] === "array") {
-                type = "array";
+            switch (typeof resource.additional_params[key]) {
+                case "number":
+                    type = "integer";
+                    break;
+                case "boolean":
+                    type = "boolean";
+                    break;
+                case "object":
+                    type = "object";
+                    break;
+                case "array":
+                    type = "array";
+                    break;
+                default:
+                    type = "string";
+                    break;
             }
             fields[1].push({
                 name: key,

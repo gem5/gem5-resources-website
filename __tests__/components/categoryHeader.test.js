@@ -9,7 +9,7 @@ describe('Category Header', () => {
     });
 
     it('should render the disk-image header', () => {
-        render(<CategoryHeader category="diskimage" />);
+        render(<CategoryHeader category="disk_image" />);
         const header = screen.getByText('Diskimage');
         expect(header).toBeInTheDocument();
     });

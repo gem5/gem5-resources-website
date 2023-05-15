@@ -8,7 +8,7 @@
             "function": "set_kernel_disk_workload",
             "resources": {
                 "kernel": "riscv-bootloader-vmlinux-5.10",
-                "diskimage": "riscv-ubuntu-20.04-img"
+                "disk_image": "riscv-ubuntu-20.04-img"
             },
             "additional_params": {},
             "architecture": "RISCV",
@@ -50,7 +50,7 @@
             "function": "set_kernel_disk_workload",
             "resources": {
                 "kernel": "arm64-linux-kernel-5.4.49",
-                "diskimage": "arm64-ubuntu-20.04-img",
+                "disk_image": "arm64-ubuntu-20.04-img",
                 "bootloader": "arm64-bootloader-foundation"
             },
             "additional_params": {},
@@ -83,7 +83,7 @@
         },
         {
             "_id": "645f1fecb15ff384ae9f81a2",
-            "category": "diskimage",
+            "category": "disk_image",
             "id": "riscv-ubuntu-20.04-img",
             "description": "A disk image containing Ubuntu 20.04 for RISCV which will run an `m5 readfile` instruction after booting. If no script file is specified an `m5 exit` instruction will be exected",
             "architecture": "RISCV",
@@ -126,7 +126,7 @@
             "function": "set_kernel_disk_workload",
             "resources": {
                 "kernel": "x86-linux-kernel-5.4.49",
-                "diskimage": "x86-ubuntu-18.04-img"
+                "disk_image": "x86-ubuntu-18.04-img"
             },
             "additional_params": {},
             "architecture": "X86",
@@ -162,7 +162,7 @@
         },
         {
             "_id": "645f1fecb15ff384ae9f81a4",
-            "category": "diskimage",
+            "category": "disk_image",
             "id": "arm64-ubuntu-20.04-img",
             "description": "A disk image containing Ubuntu 20.04 for ARM which will run an `m5 readfile` instruction after booting. If no script file is specified an `m5 exit` instruction will be executed.",
             "architecture": "ARM",
@@ -282,7 +282,7 @@
         },
         {
             "_id": "645f1fecb15ff384ae9f81a1",
-            "category": "diskimage",
+            "category": "disk_image",
             "id": "x86-ubuntu-18.04-img",
             "description": "A disk image containing Ubuntu 18.04 for x86. This image will run an `m5 readfile` instruction after booting. If no script file is specified an `m5 exit` instruction will be executed.",
             "architecture": "X86",
@@ -319,7 +319,7 @@
         },
         {
             "_id": "645f1fecb15ff384ae9f81a3",
-            "category": "diskimage",
+            "category": "disk_image",
             "id": "arm64-ubuntu-18.04-img",
             "description": "A disk image containing Ubuntu 18.04 for arm64.",
             "architecture": "ARM",
@@ -350,7 +350,7 @@
         },
         {
             "_id": "645f1fecb15ff384ae9f8196",
-            "category": "diskimage",
+            "category": "disk_image",
             "id": "riscv-disk-img",
             "description": "A simple RISCV disk image based on busybox.",
             "architecture": "RISCV",

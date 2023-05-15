@@ -19,14 +19,14 @@ describe('Search page', () => {
 
     it('checks if category filter works', () => {
         cy.get(':nth-child(1) > .accordion-header > .accordion-button').click()
-        cy.get('#diskimage').click()
+        cy.get('#disk_image').click()
         cy.waitAuto()
         // cy.wait(['@kiwi', '@resources', '@mongo'])
         // check if each search result has the category
         cy.get('.search-result').each(($el) => {
-            cy.wrap($el).find('a > .gap-3 > :nth-child(2) > .text-capitalize').should('contain.text', 'diskimage')
+            cy.wrap($el).find('a > .gap-3 > :nth-child(2) > .text-capitalize').should('contain.text', 'disk_image')
         })
-        cy.get('.search-form').find('input').should('have.value', 'category:diskimage ')
+        cy.get('.search-form').find('input').should('have.value', 'category:disk_image ')
     })
 
     it('checks if filter query changes the checkbox', () => {
