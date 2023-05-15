@@ -98,7 +98,7 @@ export default function Banner({ resource, setShowMetadata }) {
                         {/* <div className={styles.dot}></div> */}
                         <h5 className='mb-0' style={{ fontSize: '0px' }}>
                             <Link href={`/category#${resource.category}`} className='primary secondary-text-semi' aria-label="Resource Category">
-                                {String(resource.category).charAt(0).toUpperCase() + String(resource.category).substring(1) ?? "Unknown"}
+                                {resource.category ?? "Unknown"}
                             </Link>
                         </h5>
                     </div>

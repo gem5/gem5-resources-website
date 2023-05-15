@@ -23,7 +23,7 @@ describe('Banner', () => {
         const database = screen.getByLabelText('Database Name');
         expect(database).toHaveTextContent('local /');
         const category = screen.getByLabelText('Resource Category');
-        expect(category).toHaveTextContent('Simpoint');
+        expect(category).toHaveTextContent('simpoint');
         const id = screen.getByLabelText('Resource ID');
         expect(id).toHaveTextContent('batman');
         const version = screen.getByLabelText('Resource Version');

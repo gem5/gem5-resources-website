@@ -21,7 +21,7 @@ describe('Category component', () => {
             const categoryTitle = screen.getByText('Categories');
             expect(categoryTitle).toBeInTheDocument();
             let cards = screen.queryAllByLabelText('card');
-            expect(cards).toHaveLength(15);
+            expect(cards).toHaveLength(14);
         });
     });
 

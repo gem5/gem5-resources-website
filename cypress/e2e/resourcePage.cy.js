@@ -53,7 +53,7 @@ describe('resource Page', () => {
     })
 
     it('checks if resource header details are correct', () => {
-        cy.get('[style="font-size: 0px;"] > .primary').should('have.text', resource.category.charAt(0).toUpperCase() + resource.category.slice(1))
+        cy.get('[style="font-size: 0px;"] > .primary').should('have.text', resource.category)
         cy.get(':nth-child(2) > .text-black').should('have.text', resource.resource_version)
         cy.get('.mt-0 > .text-black').should('have.text', resource.architecture)
         cy.get('[style="position: relative; width: auto;"] > .text-muted').should('have.text', resource.id)
@@ -81,7 +81,7 @@ describe('resource Page', () => {
         delete resource._id
         delete resource.database
         let resourceString = JSON.stringify(resource, null, 4)
-        // resourceString = resourceString.replace(/\n/g, "\r\n")
+        resourceString = resourceString.replace(/\n/g, "\r\n")
         cy.assertValueCopiedToClipboard(resourceString)
         cy.get('ul[role=tablist] li').first().should('have.text', 'Readme')
         cy.get('ul[role=tablist] li').first().click()

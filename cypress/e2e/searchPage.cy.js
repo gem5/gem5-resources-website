@@ -24,7 +24,7 @@ describe('Search page', () => {
         // cy.wait(['@kiwi', '@resources', '@mongo'])
         // check if each search result has the category
         cy.get('.search-result').each(($el) => {
-            cy.wrap($el).find('a > .gap-3 > :nth-child(2) > .text-capitalize').should('contain.text', 'disk_image')
+            cy.wrap($el).find('a > .gap-3 > :nth-child(2)').should('contain.text', 'disk_image')
         })
         cy.get('.search-form').find('input').should('have.value', 'category:disk_image ')
     })
