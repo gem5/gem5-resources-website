@@ -81,7 +81,7 @@ describe('resource Page', () => {
         delete resource._id
         delete resource.database
         let resourceString = JSON.stringify(resource, null, 4)
-        resourceString = resourceString.replace(/\n/g, "\r\n")
+        // resourceString = resourceString.replace(/\n/g, "\r\n")
         cy.assertValueCopiedToClipboard(resourceString)
         cy.get('ul[role=tablist] li').first().should('have.text', 'Readme')
         cy.get('ul[role=tablist] li').first().click()
