@@ -2,7 +2,7 @@
 
 describe('gem5 resources home', () => {
   beforeEach(() => {
-    cy.intercept('GET', Cypress.env('SCHEMA_URL')).as('getSchema')
+    cy.interceptAll()
     cy.visit('localhost:3000')
     cy.wait('@getSchema')
   })

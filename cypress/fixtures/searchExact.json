@@ -1,0 +1,393 @@
+{
+    "documents": [
+        {
+            "_id": "645f1fecb15ff384ae9f817b",
+            "category": "workload",
+            "id": "riscv-ubuntu-20.04-boot",
+            "description": "A full boot of Ubuntu 20.04 with Linux 5.10 for RISCV. It runs an `m5 exit` command when the boot is completed unless the readfile is specified. If specified the readfile will be executed after booting.",
+            "function": "set_kernel_disk_workload",
+            "resources": {
+                "kernel": "riscv-bootloader-vmlinux-5.10",
+                "diskimage": "riscv-ubuntu-20.04-img"
+            },
+            "additional_params": {},
+            "architecture": "RISCV",
+            "size": 0,
+            "tags": [],
+            "code_examples": [
+                {
+                    "example": "https://github.com/gem5/gem5/tree/develop/configs/example/gem5_library/riscv-ubuntu-run.py",
+                    "tested": true
+                },
+                {
+                    "example": "https://github.com/gem5/gem5/tree/develop/configs/example/gem5_library/riscvmatched-fs.py",
+                    "tested": true
+                }
+            ],
+            "license": "",
+            "author": [],
+            "source_url": "",
+            "resource_version": "1.0.0",
+            "gem5_versions": [
+                "23.0"
+            ],
+            "example_usage": "Workload(\"riscv-ubuntu-20.04-boot\")",
+            "score": 91.02800750732422,
+            "resource_version_parts": [
+                1,
+                0,
+                0
+            ],
+            "latest_version": "1.0.0",
+            "ver_latest": "23.0",
+            "totalCount": 905
+        },
+        {
+            "_id": "645f1fecb15ff384ae9f817c",
+            "category": "workload",
+            "id": "arm64-ubuntu-20.04-boot",
+            "description": "A full boot of Ubuntu 20.04 with Linux 5.4.49 for ARM64. It runs an `m5 exit` command when the boot is completed unless the readfile is specified. If specified the readfile will be executed after booting.",
+            "function": "set_kernel_disk_workload",
+            "resources": {
+                "kernel": "arm64-linux-kernel-5.4.49",
+                "diskimage": "arm64-ubuntu-20.04-img",
+                "bootloader": "arm64-bootloader-foundation"
+            },
+            "additional_params": {},
+            "architecture": "ARM",
+            "size": 0,
+            "tags": [],
+            "code_examples": [
+                {
+                    "example": "https://github.com/gem5/gem5/tree/develop/configs/example/gem5_library/arm-ubuntu-run.py",
+                    "tested": true
+                }
+            ],
+            "license": "",
+            "author": [],
+            "source_url": "",
+            "resource_version": "1.0.0",
+            "gem5_versions": [
+                "23.0"
+            ],
+            "example_usage": "Workload(\"arm64-ubuntu-20.04-boot\")",
+            "score": 71.11503601074219,
+            "resource_version_parts": [
+                1,
+                0,
+                0
+            ],
+            "latest_version": "1.0.0",
+            "ver_latest": "23.0",
+            "totalCount": 905
+        },
+        {
+            "_id": "645f1fecb15ff384ae9f81a2",
+            "category": "diskimage",
+            "id": "riscv-ubuntu-20.04-img",
+            "description": "A disk image containing Ubuntu 20.04 for RISCV which will run an `m5 readfile` instruction after booting. If no script file is specified an `m5 exit` instruction will be exected",
+            "architecture": "RISCV",
+            "size": 1554457465,
+            "tags": [
+                "riscv",
+                "fullsystem"
+            ],
+            "is_zipped": true,
+            "md5sum": "e9ea10a3c606d26e2fa2f8ce5d1a8758",
+            "source": "src/riscv-ubuntu",
+            "url": "http://dist.gem5.org/dist/develop/images/riscv/ubuntu-20-04/riscv-ubuntu-20221118.img.gz",
+            "root_partition": "1",
+            "code_examples": [],
+            "license": "",
+            "author": [
+                "Hoa Nguyen"
+            ],
+            "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/riscv-ubuntu",
+            "resource_version": "1.0.0",
+            "gem5_versions": [
+                "23.0"
+            ],
+            "example_usage": "get_resource(resource_name=\"riscv-ubuntu-20.04-img\")",
+            "score": 66.66720581054688,
+            "resource_version_parts": [
+                1,
+                0,
+                0
+            ],
+            "latest_version": "1.0.0",
+            "ver_latest": "23.0",
+            "totalCount": 905
+        },
+        {
+            "_id": "645f1fecb15ff384ae9f817a",
+            "category": "workload",
+            "id": "x86-ubuntu-18.04-boot",
+            "description": "A full boot of Ubuntu 18.04 with Linux 5.4.49 for X86. It runs an `m5 exit` command when the boot is completed unless the readfile is specified. If specified the readfile will be executed after booting.",
+            "function": "set_kernel_disk_workload",
+            "resources": {
+                "kernel": "x86-linux-kernel-5.4.49",
+                "diskimage": "x86-ubuntu-18.04-img"
+            },
+            "additional_params": {},
+            "architecture": "X86",
+            "size": 0,
+            "tags": [],
+            "code_examples": [
+                {
+                    "example": "https://github.com/gem5/gem5/tree/develop/configs/example/gem5_library/x86-ubuntu-run-with-kvm.py",
+                    "tested": true
+                },
+                {
+                    "example": "https://github.com/gem5/gem5/tree/develop/configs/example/gem5_library/x86-ubuntu-run.py",
+                    "tested": true
+                }
+            ],
+            "license": "",
+            "author": [],
+            "source_url": "",
+            "resource_version": "1.0.0",
+            "gem5_versions": [
+                "23.0"
+            ],
+            "example_usage": "Workload(\"x86-ubuntu-18.04-boot\")",
+            "score": 47.92127227783203,
+            "resource_version_parts": [
+                1,
+                0,
+                0
+            ],
+            "latest_version": "1.0.0",
+            "ver_latest": "23.0",
+            "totalCount": 905
+        },
+        {
+            "_id": "645f1fecb15ff384ae9f81a4",
+            "category": "diskimage",
+            "id": "arm64-ubuntu-20.04-img",
+            "description": "A disk image containing Ubuntu 20.04 for ARM which will run an `m5 readfile` instruction after booting. If no script file is specified an `m5 exit` instruction will be executed.",
+            "architecture": "ARM",
+            "size": 590736455,
+            "tags": [],
+            "is_zipped": true,
+            "md5sum": "56cb88c9351bb9b0e65cfe689a205eab",
+            "source": "src/arm-ubuntu",
+            "url": "http://dist.gem5.org/dist/develop/images/arm/ubuntu-20-04/arm64-ubuntu-20220727.img.gz",
+            "root_partition": "1",
+            "code_examples": [],
+            "license": "",
+            "author": [],
+            "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/arm-ubuntu",
+            "resource_version": "1.0.0",
+            "gem5_versions": [
+                "23.0"
+            ],
+            "example_usage": "get_resource(resource_name=\"arm64-ubuntu-20.04-img\")",
+            "score": 46.735530853271484,
+            "resource_version_parts": [
+                1,
+                0,
+                0
+            ],
+            "latest_version": "1.0.0",
+            "ver_latest": "23.0",
+            "totalCount": 905
+        },
+        {
+            "_id": "645f1fecb15ff384ae9f81a5",
+            "category": "binary",
+            "id": "riscv-boot-exit-nodisk",
+            "description": "A simple RISCV bootloader with Linux kernel 5.10. The early userspace includes busybox and the m5 binary.",
+            "architecture": "RISCV",
+            "size": 21849792,
+            "tags": [
+                "riscv",
+                "fullsystem",
+                "nodisk"
+            ],
+            "is_zipped": false,
+            "md5sum": "8ec185abc97e42b4ab1f0a30fc720e09",
+            "source": "src/riscv-boot-exit-nodisk",
+            "url": "http://dist.gem5.org/dist/develop/misc/riscv/bbl-busybox-boot-exit",
+            "code_examples": [
+                {
+                    "example": "https://github.com/gem5/gem5/tree/develop/configs/example/sst/riscv_fs.py",
+                    "tested": false
+                }
+            ],
+            "license": "",
+            "author": [
+                "Hoa Nguyen"
+            ],
+            "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/riscv-boot-exit-nodisk",
+            "resource_version": "1.0.0",
+            "gem5_versions": [
+                "23.0"
+            ],
+            "example_usage": "get_resource(resource_name=\"riscv-boot-exit-nodisk\")",
+            "score": 44.30861282348633,
+            "resource_version_parts": [
+                1,
+                0,
+                0
+            ],
+            "latest_version": "1.0.0",
+            "ver_latest": "23.0",
+            "totalCount": 905
+        },
+        {
+            "_id": "645f1fecb15ff384ae9f81bc",
+            "category": "binary",
+            "id": "riscv-hello",
+            "description": "A 'Hello World!' binary, compiled to RISCV.",
+            "architecture": "RISCV",
+            "size": 4674040,
+            "tags": [
+                "hello"
+            ],
+            "is_zipped": false,
+            "md5sum": "6d9494d22b90d817e826b0d762fda973",
+            "source": "src/simple",
+            "url": "http://dist.gem5.org/dist/develop/test-progs/hello/bin/riscv/linux/hello-20220728",
+            "code_examples": [
+                {
+                    "example": "https://github.com/gem5/gem5/tree/develop/configs/example/gem5_library/checkpoints/riscv-hello-restore-checkpoint.py",
+                    "tested": true
+                },
+                {
+                    "example": "https://github.com/gem5/gem5/tree/develop/configs/example/gem5_library/checkpoints/riscv-hello-save-checkpoint.py",
+                    "tested": true
+                },
+                {
+                    "example": "https://github.com/gem5/gem5/tree/develop/configs/example/gem5_library/riscvmatched-hello.py",
+                    "tested": true
+                }
+            ],
+            "license": "",
+            "author": [],
+            "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/simple",
+            "resource_version": "1.0.0",
+            "gem5_versions": [
+                "23.0"
+            ],
+            "example_usage": "get_resource(resource_name=\"riscv-hello\")",
+            "score": 25.872556686401367,
+            "resource_version_parts": [
+                1,
+                0,
+                0
+            ],
+            "latest_version": "1.0.0",
+            "ver_latest": "23.0",
+            "totalCount": 905
+        },
+        {
+            "_id": "645f1fecb15ff384ae9f81a1",
+            "category": "diskimage",
+            "id": "x86-ubuntu-18.04-img",
+            "description": "A disk image containing Ubuntu 18.04 for x86. This image will run an `m5 readfile` instruction after booting. If no script file is specified an `m5 exit` instruction will be executed.",
+            "architecture": "X86",
+            "size": 688119691,
+            "tags": [
+                "x86",
+                "fullsystem"
+            ],
+            "is_zipped": true,
+            "md5sum": "90e363abf0ddf22eefa2c7c5c9391c49",
+            "source": "src/x86-ubuntu",
+            "url": "http://dist.gem5.org/dist/develop/images/x86/ubuntu-18-04/x86-ubuntu.img.gz",
+            "root_partition": "1",
+            "code_examples": [],
+            "license": "",
+            "author": [
+                "Ayaz Akram"
+            ],
+            "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/x86-ubuntu",
+            "resource_version": "1.0.0",
+            "gem5_versions": [
+                "23.0"
+            ],
+            "example_usage": "get_resource(resource_name=\"x86-ubuntu-18.04-img\")",
+            "score": 23.541759490966797,
+            "resource_version_parts": [
+                1,
+                0,
+                0
+            ],
+            "latest_version": "1.0.0",
+            "ver_latest": "23.0",
+            "totalCount": 905
+        },
+        {
+            "_id": "645f1fecb15ff384ae9f81a3",
+            "category": "diskimage",
+            "id": "arm64-ubuntu-18.04-img",
+            "description": "A disk image containing Ubuntu 18.04 for arm64.",
+            "architecture": "ARM",
+            "size": 27176964,
+            "tags": [],
+            "is_zipped": true,
+            "md5sum": "ec7d0156366743fa7b93cbfcea82925c",
+            "url": "http://dist.gem5.org/dist/develop/images/arm/ubuntu-18-04/arm64-ubuntu-20220425.img.gz",
+            "root_partition": "1",
+            "code_examples": [],
+            "license": "",
+            "author": [],
+            "source_url": "",
+            "resource_version": "1.0.0",
+            "gem5_versions": [
+                "23.0"
+            ],
+            "example_usage": "get_resource(resource_name=\"arm64-ubuntu-18.04-img\")",
+            "score": 23.541759490966797,
+            "resource_version_parts": [
+                1,
+                0,
+                0
+            ],
+            "latest_version": "1.0.0",
+            "ver_latest": "23.0",
+            "totalCount": 905
+        },
+        {
+            "_id": "645f1fecb15ff384ae9f8196",
+            "category": "diskimage",
+            "id": "riscv-disk-img",
+            "description": "A simple RISCV disk image based on busybox.",
+            "architecture": "RISCV",
+            "size": 11162360,
+            "tags": [
+                "fullsystem",
+                "riscv"
+            ],
+            "is_zipped": true,
+            "md5sum": "d6126db9f6bed7774518ae25aa35f153",
+            "source": "src/riscv-fs",
+            "url": "http://dist.gem5.org/dist/develop/images/riscv/busybox/riscv-disk.img.gz",
+            "code_examples": [
+                {
+                    "example": "https://github.com/gem5/gem5/tree/develop/configs/example/gem5_library/riscv-fs.py",
+                    "tested": false
+                }
+            ],
+            "license": "",
+            "author": [
+                "Ayaz Akram"
+            ],
+            "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/riscv-fs",
+            "resource_version": "1.0.0",
+            "gem5_versions": [
+                "23.0"
+            ],
+            "example_usage": "get_resource(resource_name=\"riscv-disk-img\")",
+            "score": 22.52297019958496,
+            "resource_version_parts": [
+                1,
+                0,
+                0
+            ],
+            "latest_version": "1.0.0",
+            "ver_latest": "23.0",
+            "totalCount": 905
+        }
+    ]
+}

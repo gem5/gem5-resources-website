@@ -1,0 +1,381 @@
+{
+    "documents": [
+        {
+            "_id": "645f1fecb15ff384ae9f819e",
+            "category": "diskimage",
+            "id": "x86-gapbs",
+            "description": "A disk image containing the GAPBS benchmark suite, compiled to X86, built on top of Ubuntu 18.04.",
+            "architecture": "X86",
+            "size": 1020006144,
+            "tags": [
+                "benchmark",
+                "x86",
+                "fullsystem"
+            ],
+            "is_zipped": true,
+            "md5sum": "c9217a88eff20e5547be87368a1499c1",
+            "source": "src/gapbs",
+            "url": "http://dist.gem5.org/dist/develop/images/x86/ubuntu-18-04/gapbs.img.gz",
+            "root_partition": "1",
+            "code_examples": [
+                {
+                    "example": "https://github.com/gem5/gem5/tree/develop/configs/example/gem5_library/x86-gapbs-benchmarks.py",
+                    "tested": true
+                }
+            ],
+            "license": " BSD-3-Clause",
+            "author": [
+                "Marjan Fariborz"
+            ],
+            "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/gapbs",
+            "resource_version": "1.0.0",
+            "gem5_versions": [
+                "23.0"
+            ],
+            "example_usage": "get_resource(resource_name=\"x86-gapbs\")",
+            "resource_version_parts": [
+                1,
+                0,
+                0
+            ],
+            "latest_version": "1.0.0",
+            "ver_latest": "23.0",
+            "totalCount": 10
+        },
+        {
+            "_id": "645f1fecb15ff384ae9f81a3",
+            "category": "diskimage",
+            "id": "arm64-ubuntu-18.04-img",
+            "description": "A disk image containing Ubuntu 18.04 for arm64.",
+            "architecture": "ARM",
+            "size": 27176964,
+            "tags": [],
+            "is_zipped": true,
+            "md5sum": "ec7d0156366743fa7b93cbfcea82925c",
+            "url": "http://dist.gem5.org/dist/develop/images/arm/ubuntu-18-04/arm64-ubuntu-20220425.img.gz",
+            "root_partition": "1",
+            "code_examples": [],
+            "license": "",
+            "author": [],
+            "source_url": "",
+            "resource_version": "1.0.0",
+            "gem5_versions": [
+                "23.0"
+            ],
+            "example_usage": "get_resource(resource_name=\"arm64-ubuntu-18.04-img\")",
+            "resource_version_parts": [
+                1,
+                0,
+                0
+            ],
+            "latest_version": "1.0.0",
+            "ver_latest": "23.0",
+            "totalCount": 10
+        },
+        {
+            "_id": "645f1fecb15ff384ae9f81a0",
+            "category": "diskimage",
+            "id": "x86-gpu-fs-img",
+            "description": "An Ubuntu 18.04 disk image with ROCm 4.2 installed. This can be used to run GPU full-system simulations.",
+            "architecture": "X86",
+            "size": 3281501727,
+            "tags": [
+                "x86",
+                "fullsystem"
+            ],
+            "is_zipped": true,
+            "md5sum": "a9aa1159fa11a61e78db8afaddd89bb3",
+            "source": "src/gpu-fs",
+            "url": "http://dist.gem5.org/dist/develop/images/x86/ubuntu-18-04/x86-gpu-fs-20220512.img.gz",
+            "root_partition": "1",
+            "code_examples": [],
+            "license": " BSD-3-Clause",
+            "author": [
+                "Matthew Poremba"
+            ],
+            "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/gpu-fs",
+            "resource_version": "1.0.0",
+            "gem5_versions": [
+                "23.0"
+            ],
+            "example_usage": "get_resource(resource_name=\"x86-gpu-fs-img\")",
+            "resource_version_parts": [
+                1,
+                0,
+                0
+            ],
+            "latest_version": "1.0.0",
+            "ver_latest": "23.0",
+            "totalCount": 10
+        },
+        {
+            "_id": "645f1fecb15ff384ae9f819d",
+            "category": "diskimage",
+            "id": "x86-parsec",
+            "description": "A disk image containing the PARSEC benchmark suite, compiled to X86, built on top of Ubuntu 18.04.",
+            "architecture": "X86",
+            "size": 8084838113,
+            "tags": [
+                "benchmark",
+                "x86",
+                "fullsystem"
+            ],
+            "is_zipped": true,
+            "md5sum": "19131e62c5b10f137948ec5975391477",
+            "source": "src/parsec",
+            "url": "http://dist.gem5.org/dist/develop/images/x86/ubuntu-18-04/parsec.img.gz",
+            "root_partition": "1",
+            "code_examples": [
+                {
+                    "example": "https://github.com/gem5/gem5/tree/develop/configs/example/gem5_library/x86-parsec-benchmarks.py",
+                    "tested": true
+                }
+            ],
+            "license": " BSD-3-Clause",
+            "author": [
+                "Mahyar Samani"
+            ],
+            "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/parsec",
+            "resource_version": "1.0.0",
+            "gem5_versions": [
+                "23.0"
+            ],
+            "example_usage": "get_resource(resource_name=\"x86-parsec\")",
+            "resource_version_parts": [
+                1,
+                0,
+                0
+            ],
+            "latest_version": "1.0.0",
+            "ver_latest": "23.0",
+            "totalCount": 10
+        },
+        {
+            "_id": "645f1fecb15ff384ae9f819f",
+            "category": "diskimage",
+            "id": "x86-npb",
+            "description": "A disk image containing the NAS Parallel benchmark (NPB) suite, compiled to X86, built on top of Ubuntu 18.04.",
+            "architecture": "X86",
+            "size": 789786106,
+            "tags": [
+                "benchmark",
+                "x86",
+                "fullsystem"
+            ],
+            "is_zipped": true,
+            "md5sum": "68073181c1ecca2347ad18c3577e0cd9",
+            "source": "src/npb",
+            "url": "http://dist.gem5.org/dist/develop/images/x86/ubuntu-18-04/npb.img.gz",
+            "root_partition": "1",
+            "code_examples": [
+                {
+                    "example": "https://github.com/gem5/gem5/tree/develop/configs/example/gem5_library/x86-npb-benchmarks.py",
+                    "tested": true
+                }
+            ],
+            "license": " BSD-3-Clause",
+            "author": [
+                "Ayaz Akram"
+            ],
+            "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/npb",
+            "resource_version": "1.0.0",
+            "gem5_versions": [
+                "23.0"
+            ],
+            "example_usage": "get_resource(resource_name=\"x86-npb\")",
+            "resource_version_parts": [
+                1,
+                0,
+                0
+            ],
+            "latest_version": "1.0.0",
+            "ver_latest": "23.0",
+            "totalCount": 10
+        },
+        {
+            "_id": "645f1fecb15ff384ae9f81a1",
+            "category": "diskimage",
+            "id": "x86-ubuntu-18.04-img",
+            "description": "A disk image containing Ubuntu 18.04 for x86. This image will run an `m5 readfile` instruction after booting. If no script file is specified an `m5 exit` instruction will be executed.",
+            "architecture": "X86",
+            "size": 688119691,
+            "tags": [
+                "x86",
+                "fullsystem"
+            ],
+            "is_zipped": true,
+            "md5sum": "90e363abf0ddf22eefa2c7c5c9391c49",
+            "source": "src/x86-ubuntu",
+            "url": "http://dist.gem5.org/dist/develop/images/x86/ubuntu-18-04/x86-ubuntu.img.gz",
+            "root_partition": "1",
+            "code_examples": [],
+            "license": "",
+            "author": [
+                "Ayaz Akram"
+            ],
+            "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/x86-ubuntu",
+            "resource_version": "1.0.0",
+            "gem5_versions": [
+                "23.0"
+            ],
+            "example_usage": "get_resource(resource_name=\"x86-ubuntu-18.04-img\")",
+            "resource_version_parts": [
+                1,
+                0,
+                0
+            ],
+            "latest_version": "1.0.0",
+            "ver_latest": "23.0",
+            "totalCount": 10
+        },
+        {
+            "_id": "645f1fecb15ff384ae9f81a2",
+            "category": "diskimage",
+            "id": "riscv-ubuntu-20.04-img",
+            "description": "A disk image containing Ubuntu 20.04 for RISCV which will run an `m5 readfile` instruction after booting. If no script file is specified an `m5 exit` instruction will be exected",
+            "architecture": "RISCV",
+            "size": 1554457465,
+            "tags": [
+                "riscv",
+                "fullsystem"
+            ],
+            "is_zipped": true,
+            "md5sum": "e9ea10a3c606d26e2fa2f8ce5d1a8758",
+            "source": "src/riscv-ubuntu",
+            "url": "http://dist.gem5.org/dist/develop/images/riscv/ubuntu-20-04/riscv-ubuntu-20221118.img.gz",
+            "root_partition": "1",
+            "code_examples": [],
+            "license": "",
+            "author": [
+                "Hoa Nguyen"
+            ],
+            "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/riscv-ubuntu",
+            "resource_version": "1.0.0",
+            "gem5_versions": [
+                "23.0"
+            ],
+            "example_usage": "get_resource(resource_name=\"riscv-ubuntu-20.04-img\")",
+            "resource_version_parts": [
+                1,
+                0,
+                0
+            ],
+            "latest_version": "1.0.0",
+            "ver_latest": "23.0",
+            "totalCount": 10
+        },
+        {
+            "_id": "645f1fecb15ff384ae9f81a4",
+            "category": "diskimage",
+            "id": "arm64-ubuntu-20.04-img",
+            "description": "A disk image containing Ubuntu 20.04 for ARM which will run an `m5 readfile` instruction after booting. If no script file is specified an `m5 exit` instruction will be executed.",
+            "architecture": "ARM",
+            "size": 590736455,
+            "tags": [],
+            "is_zipped": true,
+            "md5sum": "56cb88c9351bb9b0e65cfe689a205eab",
+            "source": "src/arm-ubuntu",
+            "url": "http://dist.gem5.org/dist/develop/images/arm/ubuntu-20-04/arm64-ubuntu-20220727.img.gz",
+            "root_partition": "1",
+            "code_examples": [],
+            "license": "",
+            "author": [],
+            "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/arm-ubuntu",
+            "resource_version": "1.0.0",
+            "gem5_versions": [
+                "23.0"
+            ],
+            "example_usage": "get_resource(resource_name=\"arm64-ubuntu-20.04-img\")",
+            "resource_version_parts": [
+                1,
+                0,
+                0
+            ],
+            "latest_version": "1.0.0",
+            "ver_latest": "23.0",
+            "totalCount": 10
+        },
+        {
+            "_id": "645f1fecb15ff384ae9f8197",
+            "category": "diskimage",
+            "id": "riscv-lupio-busybox-img",
+            "description": "A RISCV disk image, based on busybox, to be used with the LupvBoard. Should be used with the 'riscv-lupio-linux-kernel' kernel resource.",
+            "architecture": "RISCV",
+            "size": 972947,
+            "tags": [
+                "lupio",
+                "riscv",
+                "fullsystem"
+            ],
+            "is_zipped": true,
+            "md5sum": "e5bee8a31f45f4803f87c0d781553ccc",
+            "source": "src/lupv",
+            "url": "http://dist.gem5.org/dist/develop/images/riscv/busybox/riscv-lupio-busybox.img.gz",
+            "root_partition": "1",
+            "code_examples": [
+                {
+                    "example": "https://github.com/gem5/gem5/tree/develop/configs/example/lupv/run_lupv.py",
+                    "tested": true
+                }
+            ],
+            "license": "",
+            "author": [
+                "Joël Porquet-Lupine"
+            ],
+            "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/lupv",
+            "resource_version": "1.0.0",
+            "gem5_versions": [
+                "23.0"
+            ],
+            "example_usage": "get_resource(resource_name=\"riscv-lupio-busybox-img\")",
+            "resource_version_parts": [
+                1,
+                0,
+                0
+            ],
+            "latest_version": "1.0.0",
+            "ver_latest": "23.0",
+            "totalCount": 10
+        },
+        {
+            "_id": "645f1fecb15ff384ae9f8196",
+            "category": "diskimage",
+            "id": "riscv-disk-img",
+            "description": "A simple RISCV disk image based on busybox.",
+            "architecture": "RISCV",
+            "size": 11162360,
+            "tags": [
+                "fullsystem",
+                "riscv"
+            ],
+            "is_zipped": true,
+            "md5sum": "d6126db9f6bed7774518ae25aa35f153",
+            "source": "src/riscv-fs",
+            "url": "http://dist.gem5.org/dist/develop/images/riscv/busybox/riscv-disk.img.gz",
+            "code_examples": [
+                {
+                    "example": "https://github.com/gem5/gem5/tree/develop/configs/example/gem5_library/riscv-fs.py",
+                    "tested": false
+                }
+            ],
+            "license": "",
+            "author": [
+                "Ayaz Akram"
+            ],
+            "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/riscv-fs",
+            "resource_version": "1.0.0",
+            "gem5_versions": [
+                "23.0"
+            ],
+            "example_usage": "get_resource(resource_name=\"riscv-disk-img\")",
+            "resource_version_parts": [
+                1,
+                0,
+                0
+            ],
+            "latest_version": "1.0.0",
+            "ver_latest": "23.0",
+            "totalCount": 10
+        }
+    ]
+}

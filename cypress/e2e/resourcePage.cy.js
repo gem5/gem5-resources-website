@@ -16,7 +16,10 @@ describe('resource Page', () => {
         "additional_params": {},
         "architecture": "ARM",
         "size": 0,
-        "tags": [],
+        "tags": [
+            "arm",
+            "arm64"
+        ],
         "code_examples": [
             {
                 "example": "https://github.com/gem5/gem5/tree/develop/configs/example/gem5_library/arm-ubuntu-run.py",
@@ -67,7 +70,7 @@ describe('resource Page', () => {
         cy.get('.metadata_info__8irfG > :nth-child(4) > :nth-child(2)').should('have.text', resource.license === "" ? "Unknown" : resource.license)
     })
 
-    it.only('checks if tabs are correct', () => {
+    it('checks if tabs are correct', () => {
         cy.log(JSON.stringify(config.ui.tabs[resource.category]))
         cy.get('ul[role=tablist] li').should('have.length', 6)
         cy.get('ul[role=tablist] li').last().should('have.text', 'Raw')
@@ -95,7 +98,7 @@ describe('resource Page', () => {
         cy.get('.table tr').last().within(() => {
             cy.get('td a').first().click()
         })
-        cy.url().should('include', 'version=1.0.0')
+        cy.url().should('include', 'version=0.1.0')
         // cy.wait(['@find', '@mongo', '@getSchema', '@find'])
         cy.waitFirst().then(isMongo => {
             if (isMongo) {
@@ -104,7 +107,7 @@ describe('resource Page', () => {
                 cy.wait(['@jsonLink', '@getSchema', '@jsonLink'])
             }
         })
-        cy.get(':nth-child(2) > .text-black').should('have.text', '1.0.0')
+        cy.get(':nth-child(2) > .text-black').should('have.text', '0.1.0')
         cy.get('.metadata_info__8irfG > :nth-child(3) > :nth-child(2)').should('not.have.text', resource.description)
     })
 })

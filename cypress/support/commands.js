@@ -33,12 +33,94 @@ Cypress.Commands.add('assertValueCopiedToClipboard', value => {
 })
 
 Cypress.Commands.add('interceptAll', () => {
-    cy.intercept('GET', Cypress.env('SCHEMA_URL')).as('getSchema')
+    cy.intercept('GET', Cypress.env('SCHEMA_URL'), (req) => {
+        console.log(req)
+        req.reply({
+            fixture: 'schema.json'
+        })
+    }).as('getSchema')
     cy.intercept('GET', /https.*json$/).as('jsonLink')
     cy.intercept('GET', /^\/\w*\.json$/).as('jsonLocal')
-    cy.intercept('POST', "https://data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/find").as('find')
-    cy.intercept('POST', 'https://data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/aggregate').as('mongo')
-    cy.intercept('POST', "https://realm.mongodb.com/api/client/v2.0/app/data-ejhjf/auth/providers/api-key/login").as('login')
+    cy.intercept('POST', "https://data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/find", (req) => {
+        if (req.body.filter.id === 'arm64-ubuntu-20.04-boot') {
+            if (req.body.filter.resource_version) {
+                if (req.body.filter.resource_version === '0.1.0') {
+                    req.reply({
+                        fixture: 'getResource2.json'
+                    })
+                } else {
+                    req.reply({
+                        documents: [],
+                    })
+                }
+            } else {
+                req.reply({
+                    fixture: 'getResource.json'
+                })
+            }
+        } else {
+            req.reply({
+                documents: [],
+            })
+        }
+    }).as('find')
+    cy.intercept('POST', 'https://data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/aggregate', (req) => {
+        console.log(req.body.pipeline)
+        if (req.body.pipeline.length === 5) {
+            req.reply({
+                documents: [],
+            })
+        }
+        else if (req.body.pipeline.length === 2) {
+            req.reply({
+                fixture: 'filters.json'
+            })
+        }
+        else if (req.body.pipeline.length === 9) {
+            console.log(req.body.pipeline[8].$limit)
+            if (req.body.pipeline[8].$limit === 25) {
+                req.reply({
+                    fixture: 'search25.json'
+                })
+            }
+            else {
+                req.reply({
+                    fixture: 'searchExact.json'
+                })
+            }
+        }
+        else if (req.body.pipeline.length === 10) {
+            console.log(req.body.pipeline[0].$match.$and[0])
+            // check if key is "category" 
+            if (req.body.pipeline[0].$match.$and[0].category) {
+                req.reply({
+                    fixture: 'searchDiskimage.json'
+                })
+            } else if (req.body.pipeline[0].$match.$and[0].architecture) {
+                req.reply({
+                    fixture: 'searchArchitecture.json'
+                })
+            }
+        }
+        else if (req.body.pipeline.length === 11) {
+            req.reply({
+                fixture: 'searchExact.json'
+            })
+        }
+        else if (req.body.pipeline.length === 14) {
+            req.reply({
+                fixture: 'searchTags.json'
+            })
+        }
+        else {
+            req.reply({
+                documents: [],
+            })
+        }
+    }).as('mongo')
+    cy.intercept('POST', "https://realm.mongodb.com/api/client/v2.0/app/data-ejhjf/auth/providers/api-key/login", {
+        fixture: 'login.json'
+    }).as('login')
 })
 
 Cypress.Commands.add('waitFirst', () => {

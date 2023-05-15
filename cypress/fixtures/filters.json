@@ -1,0 +1,28 @@
+{
+    "documents": [
+        {
+            "_id": null,
+            "category": [
+                "workload",
+                "simpoint",
+                "diskimage",
+                "binary",
+                "checkpoint",
+                "bootloader",
+                "resource",
+                "kernel"
+            ],
+            "architecture": [
+                "X86",
+                "ARM",
+                "MIPS",
+                "RISCV",
+                "POWER",
+                "SPARC"
+            ],
+            "gem5_versions": [
+                "23.0"
+            ]
+        }
+    ]
+}

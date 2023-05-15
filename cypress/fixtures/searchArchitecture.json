@@ -1,0 +1,344 @@
+{
+    "documents": [
+        {
+            "_id": "645f1fecb15ff384ae9f8313",
+            "category": "binary",
+            "id": "rv32ui-v-srl",
+            "description": "A RISCV binary used to test a specific RISCV instruction.",
+            "architecture": "RISCV",
+            "size": 23584,
+            "tags": [
+                "asmtest",
+                "testing",
+                "riscv"
+            ],
+            "is_zipped": false,
+            "md5sum": "10679bb1441cf84f023e223c2d2caef8",
+            "source": "src/asmtest",
+            "url": "http://dist.gem5.org/dist/develop/test-progs/asmtest/bin/rv32ui-v-srl",
+            "code_examples": [],
+            "license": " BSD-3-Clause",
+            "author": [],
+            "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/asmtest",
+            "resource_version": "1.0.0",
+            "gem5_versions": [
+                "23.0"
+            ],
+            "example_usage": "get_resource(resource_name=\"rv32ui-v-srl\")",
+            "resource_version_parts": [
+                1,
+                0,
+                0
+            ],
+            "latest_version": "1.0.0",
+            "ver_latest": "23.0",
+            "totalCount": 900
+        },
+        {
+            "_id": "645f1fecb15ff384ae9f83f1",
+            "category": "binary",
+            "id": "rv64ub-ps-roriw",
+            "description": "A RISCV binary used to test a specific RISCV instruction.",
+            "architecture": "RISCV",
+            "size": 10040,
+            "tags": [
+                "asmtest",
+                "testing",
+                "riscv"
+            ],
+            "is_zipped": false,
+            "md5sum": "250a8498f3aea2b7dda36f31851c301e",
+            "source": "src/asmtest",
+            "url": "http://dist.gem5.org/dist/develop/test-progs/asmtest/bin/rv64ub-ps-roriw",
+            "code_examples": [],
+            "license": " BSD-3-Clause",
+            "author": [],
+            "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/asmtest",
+            "resource_version": "1.0.0",
+            "gem5_versions": [
+                "23.0"
+            ],
+            "example_usage": "get_resource(resource_name=\"rv64ub-ps-roriw\")",
+            "resource_version_parts": [
+                1,
+                0,
+                0
+            ],
+            "latest_version": "1.0.0",
+            "ver_latest": "23.0",
+            "totalCount": 900
+        },
+        {
+            "_id": "645f1fecb15ff384ae9f8405",
+            "category": "binary",
+            "id": "rv64ub-v-bexti",
+            "description": "A RISCV binary used to test a specific RISCV instruction.",
+            "architecture": "RISCV",
+            "size": 20296,
+            "tags": [
+                "asmtest",
+                "testing",
+                "riscv"
+            ],
+            "is_zipped": false,
+            "md5sum": "b0cd1976fcc49635ff0780d875aba1af",
+            "source": "src/asmtest",
+            "url": "http://dist.gem5.org/dist/develop/test-progs/asmtest/bin/rv64ub-v-bexti",
+            "code_examples": [],
+            "license": " BSD-3-Clause",
+            "author": [],
+            "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/asmtest",
+            "resource_version": "1.0.0",
+            "gem5_versions": [
+                "23.0"
+            ],
+            "example_usage": "get_resource(resource_name=\"rv64ub-v-bexti\")",
+            "resource_version_parts": [
+                1,
+                0,
+                0
+            ],
+            "latest_version": "1.0.0",
+            "ver_latest": "23.0",
+            "totalCount": 900
+        },
+        {
+            "_id": "645f1fecb15ff384ae9f8221",
+            "category": "binary",
+            "id": "rv32ub-ps-binvi",
+            "description": "A RISCV binary used to test a specific RISCV instruction.",
+            "architecture": "RISCV",
+            "size": 9560,
+            "tags": [
+                "asmtest",
+                "testing",
+                "riscv"
+            ],
+            "is_zipped": false,
+            "md5sum": "49ce72025be7c4ecdc400f4393acff8a",
+            "source": "src/asmtest",
+            "url": "http://dist.gem5.org/dist/develop/test-progs/asmtest/bin/rv32ub-ps-binvi",
+            "code_examples": [],
+            "license": " BSD-3-Clause",
+            "author": [],
+            "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/asmtest",
+            "resource_version": "1.0.0",
+            "gem5_versions": [
+                "23.0"
+            ],
+            "example_usage": "get_resource(resource_name=\"rv32ub-ps-binvi\")",
+            "resource_version_parts": [
+                1,
+                0,
+                0
+            ],
+            "latest_version": "1.0.0",
+            "ver_latest": "23.0",
+            "totalCount": 900
+        },
+        {
+            "_id": "645f1fecb15ff384ae9f843f",
+            "category": "binary",
+            "id": "rv64ud-ps-fmadd",
+            "description": "A RISCV binary used to test a specific RISCV instruction.",
+            "architecture": "RISCV",
+            "size": 14560,
+            "tags": [
+                "asmtest",
+                "testing",
+                "riscv"
+            ],
+            "is_zipped": false,
+            "md5sum": "e9115964a206447456a7a9509f6d349d",
+            "source": "src/asmtest",
+            "url": "http://dist.gem5.org/dist/develop/test-progs/asmtest/bin/rv64ud-ps-fmadd",
+            "code_examples": [],
+            "license": " BSD-3-Clause",
+            "author": [],
+            "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/asmtest",
+            "resource_version": "1.0.0",
+            "gem5_versions": [
+                "23.0"
+            ],
+            "example_usage": "get_resource(resource_name=\"rv64ud-ps-fmadd\")",
+            "resource_version_parts": [
+                1,
+                0,
+                0
+            ],
+            "latest_version": "1.0.0",
+            "ver_latest": "23.0",
+            "totalCount": 900
+        },
+        {
+            "_id": "645f1fecb15ff384ae9f83bd",
+            "category": "binary",
+            "id": "rv64ub-p-max",
+            "description": "A RISCV binary used to test a specific RISCV instruction.",
+            "architecture": "RISCV",
+            "size": 14944,
+            "tags": [
+                "asmtest",
+                "testing",
+                "riscv"
+            ],
+            "is_zipped": false,
+            "md5sum": "f7031e5ce6c2f3b6b696159df10fde5e",
+            "source": "src/asmtest",
+            "url": "http://dist.gem5.org/dist/develop/test-progs/asmtest/bin/rv64ub-p-max",
+            "code_examples": [],
+            "license": " BSD-3-Clause",
+            "author": [],
+            "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/asmtest",
+            "resource_version": "1.0.0",
+            "gem5_versions": [
+                "23.0"
+            ],
+            "example_usage": "get_resource(resource_name=\"rv64ub-p-max\")",
+            "resource_version_parts": [
+                1,
+                0,
+                0
+            ],
+            "latest_version": "1.0.0",
+            "ver_latest": "23.0",
+            "totalCount": 900
+        },
+        {
+            "_id": "645f1fecb15ff384ae9f8355",
+            "category": "binary",
+            "id": "rv64mi-p-illegal",
+            "description": "A RISCV binary used to test a specific RISCV instruction.",
+            "architecture": "RISCV",
+            "size": 14328,
+            "tags": [
+                "asmtest",
+                "testing",
+                "riscv"
+            ],
+            "is_zipped": false,
+            "md5sum": "f514fd1af930495047ef30e7df800198",
+            "source": "src/asmtest",
+            "url": "http://dist.gem5.org/dist/develop/test-progs/asmtest/bin/rv64mi-p-illegal",
+            "code_examples": [],
+            "license": " BSD-3-Clause",
+            "author": [],
+            "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/asmtest",
+            "resource_version": "1.0.0",
+            "gem5_versions": [
+                "23.0"
+            ],
+            "example_usage": "get_resource(resource_name=\"rv64mi-p-illegal\")",
+            "resource_version_parts": [
+                1,
+                0,
+                0
+            ],
+            "latest_version": "1.0.0",
+            "ver_latest": "23.0",
+            "totalCount": 900
+        },
+        {
+            "_id": "645f1fecb15ff384ae9f835f",
+            "category": "binary",
+            "id": "rv64samt-ps-sysfutex_d",
+            "description": "A RISCV binary used to test a specific RISCV instruction.",
+            "architecture": "RISCV",
+            "size": 13856,
+            "tags": [
+                "asmtest",
+                "testing",
+                "riscv"
+            ],
+            "is_zipped": false,
+            "md5sum": "04f2a1302b2fd78704fa8788461fb454",
+            "source": "src/asmtest",
+            "url": "http://dist.gem5.org/dist/develop/test-progs/asmtest/bin/rv64samt-ps-sysfutex_d",
+            "code_examples": [],
+            "license": " BSD-3-Clause",
+            "author": [],
+            "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/asmtest",
+            "resource_version": "1.0.0",
+            "gem5_versions": [
+                "23.0"
+            ],
+            "example_usage": "get_resource(resource_name=\"rv64samt-ps-sysfutex_d\")",
+            "resource_version_parts": [
+                1,
+                0,
+                0
+            ],
+            "latest_version": "1.0.0",
+            "ver_latest": "23.0",
+            "totalCount": 900
+        },
+        {
+            "_id": "645f1fecb15ff384ae9f8264",
+            "category": "binary",
+            "id": "rv32uc-v-rvc",
+            "description": "A RISCV binary used to test a specific RISCV instruction.",
+            "architecture": "RISCV",
+            "size": 35548,
+            "tags": [
+                "asmtest",
+                "testing",
+                "riscv"
+            ],
+            "is_zipped": false,
+            "md5sum": "3bd10174f24943d300ad2b3229cc0729",
+            "source": "src/asmtest",
+            "url": "http://dist.gem5.org/dist/develop/test-progs/asmtest/bin/rv32uc-v-rvc",
+            "code_examples": [],
+            "license": " BSD-3-Clause",
+            "author": [],
+            "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/asmtest",
+            "resource_version": "1.0.0",
+            "gem5_versions": [
+                "23.0"
+            ],
+            "example_usage": "get_resource(resource_name=\"rv32uc-v-rvc\")",
+            "resource_version_parts": [
+                1,
+                0,
+                0
+            ],
+            "latest_version": "1.0.0",
+            "ver_latest": "23.0",
+            "totalCount": 900
+        },
+        {
+            "_id": "645f1fecb15ff384ae9f828b",
+            "category": "binary",
+            "id": "rv32uf-p-ldst",
+            "description": "A RISCV binary used to test a specific RISCV instruction.",
+            "architecture": "RISCV",
+            "size": 13436,
+            "tags": [
+                "asmtest",
+                "testing",
+                "riscv"
+            ],
+            "is_zipped": false,
+            "md5sum": "b9cabe0fb09b41ba3e194fb0245c7e1a",
+            "source": "src/asmtest",
+            "url": "http://dist.gem5.org/dist/develop/test-progs/asmtest/bin/rv32uf-p-ldst",
+            "code_examples": [],
+            "license": " BSD-3-Clause",
+            "author": [],
+            "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/asmtest",
+            "resource_version": "1.0.0",
+            "gem5_versions": [
+                "23.0"
+            ],
+            "example_usage": "get_resource(resource_name=\"rv32uf-p-ldst\")",
+            "resource_version_parts": [
+                1,
+                0,
+                0
+            ],
+            "latest_version": "1.0.0",
+            "ver_latest": "23.0",
+            "totalCount": 900
+        }
+    ]
+}
