@@ -33,7 +33,7 @@ module.exports = {
   env: {
     BASE_PATH: basePath,
     SCHEMA_URL: config.config.schemaUrl,
-    PRIVATE_RESOURCES: config.config.resources,
+    PRIVATE_RESOURCES: config.config.sources,
     TABS: config.ui.tabs,
   },
   /* env: {
