@@ -64,7 +64,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>gem5 resources</title>
+        <title>gem5 Resources</title>
         <meta name="description" content="Find the resource you need" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>

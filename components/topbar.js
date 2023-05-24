@@ -43,7 +43,7 @@ export default function Topbar() {
                     >
                         <Offcanvas.Header closeButton>
                             <Offcanvas.Title id={`offcanvasNavbarLabel-expand-sm`}>
-                                Gem5 Resources
+                                gem5 Resources
                             </Offcanvas.Title>
                         </Offcanvas.Header>
                         <Offcanvas.Body>
