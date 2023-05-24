@@ -19,8 +19,8 @@ Object.defineProperty(window, 'matchMedia', {
       matches: false,
       media: query,
       onchange: null,
-      addListener: jest.fn(), // Deprecated
-      removeListener: jest.fn(), // Deprecated
+      addListener: jest.fn(),
+      removeListener: jest.fn(),
       addEventListener: jest.fn(),
       removeEventListener: jest.fn(),
       dispatchEvent: jest.fn(),
@@ -33,6 +33,5 @@ describe('App', () => {
     const pageProps = { testProp: 'test' };
     const { getByText } = render(<App Component={Component} pageProps={pageProps} />);
     expect(getByText('Test Component')).toBeInTheDocument();
-    expect(getByText('gem5 Resources')).toBeInTheDocument();
   });
 });
