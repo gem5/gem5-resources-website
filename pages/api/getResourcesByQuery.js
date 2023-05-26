@@ -1,5 +1,5 @@
-import getResourcesMongoDB from "./mongodb/findresources";
-import getResourcesJSON from "./json/findresources";
+import getResourcesByQueryMongoDB from "./mongodb/getResourcesByQuery";
+import getResourcesByQueryJSON from "./json/getResourcesByQuery";
 import compareVersions from "./compareVersions";
 
 /**
@@ -11,7 +11,7 @@ import compareVersions from "./compareVersions";
  * @param {int} pageSize The size of the page.
  * @returns {json} The resources in JSON format.
  */
-export async function getResources(queryObject, currentPage, pageSize) {
+export async function getResourcesByQuery(queryObject, currentPage, pageSize) {
   let privateResources = process.env.SOURCES;
   let databases = queryObject.database;
   let resources = [[], 0];
@@ -26,9 +26,9 @@ export async function getResources(queryObject, currentPage, pageSize) {
     }
     let privateResourceResults = [[], 0];
     if (privateResources[resource].isMongo) {
-      privateResourceResults = await getResourcesMongoDB(queryObject, currentPage, nPerPage, resource);
+      privateResourceResults = await getResourcesByQueryMongoDB(queryObject, currentPage, nPerPage, resource);
     } else {
-      privateResourceResults = await getResourcesJSON(queryObject, currentPage, nPerPage, resource);
+      privateResourceResults = await getResourcesByQueryJSON(queryObject, currentPage, nPerPage, resource);
     }
     resources[0] = resources[0].concat(privateResourceResults[0]);
     resources[1] = resources[1] + privateResourceResults[1];

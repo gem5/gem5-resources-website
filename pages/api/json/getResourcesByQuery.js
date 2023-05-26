@@ -1,4 +1,4 @@
-import fetchResourcesJSON from "./resources";
+import getAllResourcesJSON from "./getAllResources";
 import compareVersions from "../compareVersions";
 
 /**
@@ -54,8 +54,8 @@ function damerauLevenshteinDistance(a, b) {
  * @param {string} database - The name of the JSON database.
  * @returns {Array} - An array containing two elements: an array of filtered and sorted resources, and the total number of resources.
  */
-export default async function getResourcesJSON(queryObject, currentPage, pageSize, database) {
-  const resources = await fetchResourcesJSON(database);
+export default async function getResourcesByQueryJSON(queryObject, currentPage, pageSize, database) {
+  const resources = await getAllResourcesJSON(database);
   const query = queryObject.query.trim();
   const keywords = query.split(" ");
   let results = resources.filter((resource) => {

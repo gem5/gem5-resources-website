@@ -92,13 +92,13 @@ async function getResourceByID(token, url, dataSource, database, collection, id,
 }
 
 /**
- * @function getResourceMongoDB
+ * @function getResourceByIDMongoDB
  * @async
  * @description Fetches a resource from the MongoDB database.
  * @param {string} id The id of the resource to be fetched.
  * @returns {json} The resource in JSON format.
 */
-export default async function getResourceMongoDB(id, database = null, version = null) {
+export default async function getResourceByIDMongoDB(id, database = null, version = null) {
     const token = await getToken(database);
     let privateResources = process.env.SOURCES[database];
     const resource = await getResourceByID(token, privateResources.url, privateResources.dataSource, privateResources.database, privateResources.collection, id, version);

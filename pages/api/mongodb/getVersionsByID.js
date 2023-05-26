@@ -43,13 +43,13 @@ async function getVersionsByID(token, url, dataSource, database, collection, id)
 }
 
 /**
- * @function getVersionsMongoDB
+ * @function getVersionsByIDMongoDB
  * @async
  * @description Fetches a resource from the MongoDB database.
  * @param {string} id The id of the resource to be fetched.
  * @returns {json} The resource in JSON format.
 */
-export default async function getVersionsMongoDB(id, database = null) {
+export default async function getVersionsByIDMongoDB(id, database = null) {
     if (!database) {
         database = Object.keys(process.env.SOURCES)[0];
     }

@@ -1,7 +1,7 @@
-import fetchResourcesJSON from "./resources";
+import getAllResourcesJSON from "./getAllResources";
 
 /**
- * @function getResourceJSON
+ * @function getResourceByIDJSON
  * @async
  * @description This function retrieves a resource from a JSON database based on the provided ID, database name, and version.
  * It also retrieves associated workloads that reference the resource, and returns an object containing the resource and its metadata.
@@ -11,8 +11,8 @@ import fetchResourcesJSON from "./resources";
  * @returns {Object} - An object containing the retrieved resource and its metadata, including associated workloads and database name.
  * If the resource is not found, an error message is returned.
  */
-export default async function getResourceJSON(id, database, version) {
-    const resources = await fetchResourcesJSON(database);
+export default async function getResourceByIDJSON(id, database, version) {
+    const resources = await getAllResourcesJSON(database);
     // filter json file to find the resources that contain the query in their id
     let results = resources.filter(resource => resource.id === id);
     if (results.length === 0) {

@@ -1,5 +1,5 @@
-import getFiltersJSON from "./json/getfilters";
-import getFiltersMongoDB from "./mongodb/getfilters";
+import getFiltersJSON from "./json/getFilters";
+import getFiltersMongoDB from "./mongodb/getFilters";
 
 /**
  * @wrapper

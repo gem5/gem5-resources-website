@@ -1,12 +1,12 @@
 /**
- * @function fetchResourcesJSON
+ * @function getAllResourcesJSON
  * @async
  * @description This function fetches and retrieves a JSON file from a specified URL based on the provided database name.
  * The retrieved JSON data represents resources.
  * @param {string} database - The name of the database to fetch the resources from.
  * @returns {Promise<Object>} - A Promise that resolves to the fetched JSON data representing resources.
  */
-export default async function fetchResourcesJSON(database) {
+export default async function getAllResourcesJSON(database) {
   let url = process.env.SOURCES[database].url;
   if (url.includes("http")) {
     const res = await fetch(

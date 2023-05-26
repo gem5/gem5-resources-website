@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Button, Container } from "react-bootstrap";
-import { getResource } from "./api/getresource";
+import { getResourceByID } from "./api/getResourceByID";
 import Resource from "./resources/[id]/[[...page]]";
 
 /**

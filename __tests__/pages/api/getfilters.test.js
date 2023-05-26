@@ -1,4 +1,4 @@
-import { getFilters } from "@/pages/api/getfilters";
+import { getFilters } from "@/pages/api/getFilters";
 import resources from "./resources.json"
 import { get } from "fetch-mock";
 

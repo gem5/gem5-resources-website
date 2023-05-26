@@ -1,4 +1,4 @@
-import { getResource } from "@/pages/api/getresource";
+import { getResourceByID } from "@/pages/api/getResourceByID";
 import resources from "./resources.json"
 
 const originalEnv = process.env;
@@ -76,7 +76,7 @@ describe('getResource', () => {
     });
 
     test("json: getbyID", async () => {
-        let result = await getResource("batman");
+        let result = await getResourceByID("batman");
         expect(result).toEqual({
             category: 'simpoint',
             id: 'batman',
@@ -104,7 +104,7 @@ describe('getResource', () => {
     });
 
     test("json: getbyID and specific version", async () => {
-        let result = await getResource("batman", null, "1.0.0");
+        let result = await getResourceByID("batman", null, "1.0.0");
         expect(result).toEqual({
             category: 'simpoint',
             id: 'batman',
@@ -132,7 +132,7 @@ describe('getResource', () => {
     });
 
     test("json: resource does not exist", async () => {
-        let result = await getResource("harshilpatel");
+        let result = await getResourceByID("harshilpatel");
         expect(result).toEqual({ error: 'Resource not found' })
     });
 
@@ -147,7 +147,7 @@ describe('getResource', () => {
                 }
             }
         };
-        let result = await getResource("batman");
+        let result = await getResourceByID("batman");
         expect(result).toEqual({
             category: 'simpoint',
             id: 'batman',
@@ -190,7 +190,7 @@ describe('getResource', () => {
                 }
             }
         };
-        let result = await getResource("batman");
+        let result = await getResourceByID("batman");
         expect(result).toEqual({
             category: 'simpoint',
             id: 'batman',

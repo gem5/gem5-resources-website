@@ -1,5 +1,5 @@
-import getResourceJSON from "./json/getresource";
-import getResourceMongoDB from "./mongodb/getresource";
+import getResourceByIDJSON from "./json/getResourceByID";
+import getResourceByIDMongoDB from "./mongodb/getResourceByID";
 
 /**
  * @wrapper
@@ -9,7 +9,7 @@ import getResourceMongoDB from "./mongodb/getresource";
  * @param {string} id The id of the resource to be fetched.
  * @returns {json} The resource in JSON format.
 */
-export async function getResource(id, database = null, version = null) {
+export async function getResourceByID(id, database = null, version = null) {
     if (!database) {
         database = Object.keys(process.env.SOURCES)[0];
     }
@@ -18,9 +18,9 @@ export async function getResource(id, database = null, version = null) {
     }
     let resource;
     if (process.env.SOURCES[database].isMongo) {
-        resource = await getResourceMongoDB(id, database, version);
+        resource = await getResourceByIDMongoDB(id, database, version);
     } else {
-        resource = await getResourceJSON(id, database, version);
+        resource = await getResourceByIDJSON(id, database, version);
     }
     return resource;
 }

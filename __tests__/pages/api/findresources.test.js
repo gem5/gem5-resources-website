@@ -1,4 +1,4 @@
-import { getResources } from "@/pages/api/findresources";
+import { getResourcesByQuery } from "@/pages/api/getResourcesByQuery";
 import resources from "./resources.json"
 
 const originalEnv = process.env;
@@ -53,7 +53,7 @@ describe('findResources', () => {
     });
 
     test("json filters #1 (no query)", async () => {
-        let result = await getResources({ query: "", sort: "relevance" }, 1, 10);
+        let result = await getResourcesByQuery({ query: "", sort: "relevance" }, 1, 10);
         expect(result).toEqual({
             resources: [
                 {
@@ -112,7 +112,7 @@ describe('findResources', () => {
     });
 
     test("json filters #2 (no matching results)", async () => {
-        let result = await getResources({ category: ["benchmark"], architecture: ["ARM"], gem5_versions: ["23.0"], database: ["db1"], query: "", sort: "relevance", tags: ["asmtest"] }, 1, 10);
+        let result = await getResourcesByQuery({ category: ["benchmark"], architecture: ["ARM"], gem5_versions: ["23.0"], database: ["db1"], query: "", sort: "relevance", tags: ["asmtest"] }, 1, 10);
         expect(result).toEqual({
             "resources": [],
             "total": 0,
@@ -130,7 +130,7 @@ describe('findResources', () => {
                 }
             }
         };
-        let result = await getResources({ category: ["benchmark"], architecture: ["ARM"], gem5_versions: ["23.0"], database: ["db1"], query: "", sort: "relevance", tags: ["asmtest"] }, 1, 10);
+        let result = await getResourcesByQuery({ category: ["benchmark"], architecture: ["ARM"], gem5_versions: ["23.0"], database: ["db1"], query: "", sort: "relevance", tags: ["asmtest"] }, 1, 10);
         expect(result).toEqual({
             "resources": [],
             "total": 0,
@@ -153,7 +153,7 @@ describe('findResources', () => {
                 }
             }
         };
-        let result = await getResources({ category: ["benchmark"], architecture: ["ARM"], gem5_versions: ["23.0"], database: ["db1"], query: "test", sort: "relevance", tags: ["asmtest"] }, 1, 10);
+        let result = await getResourcesByQuery({ category: ["benchmark"], architecture: ["ARM"], gem5_versions: ["23.0"], database: ["db1"], query: "test", sort: "relevance", tags: ["asmtest"] }, 1, 10);
         expect(result).toEqual({
             "resources": [],
             "total": 0,
@@ -176,7 +176,7 @@ describe('findResources', () => {
                 }
             }
         };
-        let result = await getResources({ category: ["benchmark"], architecture: ["ARM"], gem5_versions: ["23.0"], database: ["db1"], query: "", sort: "relevance", tags: ["asmtest"] }, 1, 10);
+        let result = await getResourcesByQuery({ category: ["benchmark"], architecture: ["ARM"], gem5_versions: ["23.0"], database: ["db1"], query: "", sort: "relevance", tags: ["asmtest"] }, 1, 10);
         expect(result).toEqual({
             "resources": [],
             "total": 0,
@@ -184,7 +184,7 @@ describe('findResources', () => {
     });
 
     test("json filters #3 (matching query)", async () => {
-        let result = await getResources({ query: "batman", sort: "relevance" }, 1, 10);
+        let result = await getResourcesByQuery({ query: "batman", sort: "relevance" }, 1, 10);
         expect(result).toEqual({
             resources: [
                 {
@@ -221,7 +221,7 @@ describe('findResources', () => {
 
 
     test("json filters #4 (different sorts)", async () => {
-        let result = await getResources({ query: "", sort: "version" }, 1, 10);
+        let result = await getResourcesByQuery({ query: "", sort: "version" }, 1, 10);
         expect(result).toEqual({
             resources: [
                 {
@@ -278,7 +278,7 @@ describe('findResources', () => {
             total: 2
         });
 
-        result = await getResources({ query: "", sort: "id_desc" }, 1, 10);
+        result = await getResourcesByQuery({ query: "", sort: "id_desc" }, 1, 10);
         expect(result).toEqual({
             resources: [
                 {
@@ -335,7 +335,7 @@ describe('findResources', () => {
             total: 2
         });
 
-        result = await getResources({ query: "", sort: "id_asc" }, 1, 10);
+        result = await getResourcesByQuery({ query: "", sort: "id_asc" }, 1, 10);
         expect(result).toEqual({
             resources: [
                 {
@@ -394,7 +394,7 @@ describe('findResources', () => {
     });
 
     test("json filters #5 (fuzzy search)", async () => {
-        let result = await getResources({ query: "batmn", sort: "relevance" }, 1, 10);
+        let result = await getResourcesByQuery({ query: "batmn", sort: "relevance" }, 1, 10);
         expect(result).toEqual({
             resources: [
                 {
@@ -430,7 +430,7 @@ describe('findResources', () => {
     });
 
     test("json filters #5 (reverse search)", async () => {
-        let result = await getResources({ query: "x86-print-this-15000-with-simpoints", sort: "relevance" }, 1, 10);
+        let result = await getResourcesByQuery({ query: "x86-print-this-15000-with-simpoints", sort: "relevance" }, 1, 10);
         expect(result).toEqual({
             resources: [
                 {
@@ -466,7 +466,7 @@ describe('findResources', () => {
     });
 
     test("json filters #6 (search by tag)", async () => {
-        let result = await getResources({ query: "", sort: "relevance", tags: ["asmtest"] }, 1, 10);
+        let result = await getResourcesByQuery({ query: "", sort: "relevance", tags: ["asmtest"] }, 1, 10);
         expect(result).toEqual({
             resources: [
                 {
@@ -498,7 +498,7 @@ describe('findResources', () => {
     });
 
     test("json filters #7 (search by gem5_versions and no sort)", async () => {
-        let result = await getResources({ query: "", gem5_versions: ["23.1"] }, 1, 10);
+        let result = await getResourcesByQuery({ query: "", gem5_versions: ["23.1"] }, 1, 10);
         expect(result).toEqual({
             resources: [
                 {

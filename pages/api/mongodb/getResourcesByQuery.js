@@ -402,14 +402,14 @@ async function getSearchResults(
 
 
 /**
- * @function getResourcesMongoDB
+ * @function getResourcesByQueryMongoDB
  * @async
  * @description Fetches the resources based on the query object from the MongoDB database.
  * @param {json} queryObject The query object.
  * @param {json} filters The filters object.
  * @returns {JSX.Element} The JSX element to be rendered.
  */
-export default async function getResourcesMongoDB(queryObject, currentPage, pageSize, database) {
+export default async function getResourcesByQueryMongoDB(queryObject, currentPage, pageSize, database) {
   let privateResources = process.env.SOURCES;
   let privateResource = privateResources[database];
   let privateAccessToken = await getToken(database);

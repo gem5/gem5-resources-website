@@ -1,8 +1,8 @@
-import getVersionsJSON from "./json/getVersions";
-import getVersionsMongoDB from "./mongodb/getVersions";
+import getVersionsByIDJSON from "./json/getVersionsByID";
+import getVersionsByIDMongoDB from "./mongodb/getVersionsByID";
 
 /**
- * @function getVersions
+ * @function getVersionsByID
  * @description This function retrieves versions of a resource with the given ID from the specified database.
  * The type of database is determined by the value of `isMongo` property in the `SOURCES` environment variable.
  * If `isMongo` is `true`, it calls the `getVersionsMongoDB` function to fetch versions from a MongoDB database.
@@ -11,13 +11,13 @@ import getVersionsMongoDB from "./mongodb/getVersions";
  * @param {string} database - The name of the database to fetch versions from.
  * @returns {Promise} - A Promise that resolves to the versions of the resource.
  */
-export default async function getVersions(id, database) {
+export default async function getVersionsByID(id, database) {
     try {
         if (process.env.SOURCES[database].isMongo) {
-            return await getVersionsMongoDB(id, database);
+            return await getVersionsByIDMongoDB(id, database);
         }
         else {
-            return await getVersionsJSON(id, database);
+            return await getVersionsByIDJSON(id, database);
         }
     } catch (error) {
         return { error: "Resource not found" };

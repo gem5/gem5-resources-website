@@ -1,10 +1,10 @@
 import Head from 'next/head'
 import { Col, Form, Row, Spinner } from 'react-bootstrap'
-import { getResources } from '../api/findresources'
+import { getResourcesByQuery } from '../api/getResourcesByQuery'
 import SearchBox from '@/components/searchBox'
 import SearchResult from '@/components/searchResult'
 import Filters from '@/components/filters'
-import { getFilters } from "../api/getfilters";
+import { getFilters } from "../api/getFilters";
 import { useRouter } from 'next/router'
 import { useState, useEffect, useRef } from "react";
 import Paginate from '@/components/paginate'
@@ -132,7 +132,7 @@ export default function Resources() {
             }
             setFilters(filterModified);
             setLoading(true);
-            const res = await getResources(queryObject, currentPage, numberOfItemsPerPage);
+            const res = await getResourcesByQuery(queryObject, currentPage, numberOfItemsPerPage);
             setResources(res.resources);
             setTotal(res.total);
             setPageCount(Math.ceil(res.total / numberOfItemsPerPage));

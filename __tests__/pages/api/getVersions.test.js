@@ -1,4 +1,4 @@
-import getVersions from "@/pages/api/getVersions";
+import getVersionsByID from "@/pages/api/getVersionsByID";
 import resources from "./resources.json"
 const originalEnv = process.env;
 
@@ -61,12 +61,12 @@ describe("getVersions", () => {
     });
 
     test("resource not found", async () => {
-        let result = await getVersions("", "");
+        let result = await getVersionsByID("", "");
         expect(result).toEqual({ "error": "Resource not found" });
     });
 
     test("resource found", async () => {
-        let result = await getVersions("this-is-a-test-resource", "db1");
+        let result = await getVersionsByID("this-is-a-test-resource", "db1");
         expect(result).toEqual([{
             "category": "binary",
             "id": "this-is-a-test-resource",
@@ -108,7 +108,7 @@ describe("getVersions", () => {
                 },
             }
         };
-        let result = await getVersions("batman", "db1");
+        let result = await getVersionsByID("batman", "db1");
         expect(result).toEqual([{
             "category": "simpoint",
             "id": "batman",

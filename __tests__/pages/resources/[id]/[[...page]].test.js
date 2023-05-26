@@ -133,7 +133,7 @@ describe("Resource-specific component", () => {
     });
 
     test("renders the 404 page if error resource", async () => {
-        jest.mock('../../../../pages/api/getresource', () => ({
+        jest.mock('../../../../pages/api/getResourceByID', () => ({
             getResource: jest.fn(() => Promise.resolve({
                 category: 'simpoint',
                 id: 'batman',
@@ -165,7 +165,7 @@ describe("Resource-specific component", () => {
     });
 
     test("renders the 404 page if error resource", async () => {
-        jest.mock('../../../../pages/api/getresource', () => ({
+        jest.mock('../../../../pages/api/getResourceByID', () => ({
             getResource: jest.fn(() => Promise.resolve({
                 error: "Resource not found"
             }))

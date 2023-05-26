@@ -1,8 +1,8 @@
-import fetchResourcesJSON from "./resources";
+import getAllResourcesJSON from "./getAllResources";
 import compareVersions from "../compareVersions";
 
 /**
- * @function getVersionsJSON
+ * @function getVersionsByIDJSON
  * @async
  * @description This function retrieves an array of resource objects with different versions from a JSON database based on the provided ID and database name.
  * The retrieved resources are sorted by their resource version in descending order.
@@ -11,8 +11,8 @@ import compareVersions from "../compareVersions";
  * @returns {Array<Object>} - An array of resource objects, each representing a different version of the resource, sorted by resource version in descending order.
  * If the resource is not found, an error message is returned.
  */
-export default async function getVersionsJSON(id, database) {
-    const resources = await fetchResourcesJSON(database);
+export default async function getVersionsByIDJSON(id, database) {
+    const resources = await getAllResourcesJSON(database);
     // filter json file to find the resources that contain the query in their id
     let results = resources.filter(resource => resource.id === id);
     if (results.length === 0) {

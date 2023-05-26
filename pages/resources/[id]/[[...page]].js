@@ -2,7 +2,7 @@ import MetaData from '@/components/resourceMetadata'
 import Banner from '@/components/resourceBanner'
 import Head from 'next/head'
 import { Row, Col, Container } from 'react-bootstrap'
-import { getResource } from '../../api/getresource'
+import { getResourceByID } from '../../api/getResourceByID'
 import ResourceTab from '@/components/resourceTab'
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -62,7 +62,7 @@ function Resource() {
         async function fetchResource() {
             setLoading(true)
             let resource;
-            resource = await getResource(id, database, version)
+            resource = await getResourceByID(id, database, version)
             if (resource.error) {
                 window.location.replace(process.env.BASE_PATH + "/404")
             } else {

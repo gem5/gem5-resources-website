@@ -1,4 +1,4 @@
-import fetchResourcesJSON from "./resources";
+import getAllResourcesJSON from "./getAllResources";
 
 /**
  * @helper
@@ -7,7 +7,7 @@ import fetchResourcesJSON from "./resources";
  * @returns {json} A json object with the filters.
 */
 export default async function getFiltersJSON(database) {
-    const resources = await fetchResourcesJSON(database);
+    const resources = await getAllResourcesJSON(database);
     // get unique categories from resources
     let categories = [...new Set(resources.map(resource => resource.category))];
     let architectures = [...new Set(resources.map(resource => resource.architecture))];

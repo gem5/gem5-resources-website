@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Overlay, OverlayTrigger, Popover, Table } from "react-bootstrap"
 import CopyIcon from "../copyIcon";
 import styles from '/styles/versionpage.module.css'
-import getVersions from "@/pages/api/getVersions";
+import getVersionsByID from "@/pages/api/getVersionsByID";
 
 /**
 * @component
@@ -121,7 +121,7 @@ export default function VersionTab({ id, database }) {
     const [versions, setVersions] = useState([])
 
     useEffect(() => {
-        getVersions(id, database).then((data) => {
+        getVersionsByID(id, database).then((data) => {
             setVersions(data)
         })
     }, [id, database])
