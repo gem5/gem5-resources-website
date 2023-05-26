@@ -4,7 +4,7 @@ This is the source code for the gem5 Resources website. It is built using [Next.
 
 # Table of Contents
 
-- [gem5 Vision Website](#gem5-vision-website)
+- [gem5 Resources Website](#gem5-resources-website)
 - [Table of Contents](#table-of-contents)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
