@@ -19,7 +19,7 @@ function About() {
   return (
     <>
       <Head>
-        <title>About | gem5 Vision</title>
+        <title>About | gem5 Resources</title>
       </Head>
       <Container className='mt-5'>
         <ReactMarkdown

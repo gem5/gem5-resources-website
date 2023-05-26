@@ -21,7 +21,7 @@ export default function Help() {
     return (
         <>
             <Head>
-                <title>Help | gem5 Vision</title>
+                <title>Help | gem5 Resources</title>
             </Head>
             <Container>
                 <ReactMarkdown

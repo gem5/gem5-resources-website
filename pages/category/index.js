@@ -75,24 +75,29 @@ export default function Category() {
                 <title>Categories | gem5 Resources</title>
             </Head>
             {category ?
-                <Container>
-                    <CategoryHeader category={category} />
-                    <ReactMarkdown
-                        className='markdown-body mt-3'
-                        rehypePlugins={[[rehypeHighlight, { ignoreMissing: true }], rehypeRaw, rehypeSlug]}
-                        remarkPlugins={[remarkGfm, remarkToc, remarkFrontmatter]}
-                        components={{
-                            pre: ({ node, ...props }) =>
-                                <CopyIcon>
-                                    <pre {...props} >
-                                        {props.children}
-                                    </pre>
-                                </CopyIcon>,
-                        }}
-                    >
-                        {content}
-                    </ReactMarkdown>
-                </Container>
+                <>
+                    <Head>
+                        <title>{category.charAt(0).toUpperCase() + category.substr(1).toLowerCase()} | gem5 Resources</title>
+                    </Head>
+                    <Container>
+                        <CategoryHeader category={category} />
+                        <ReactMarkdown
+                            className='markdown-body mt-3'
+                            rehypePlugins={[[rehypeHighlight, { ignoreMissing: true }], rehypeRaw, rehypeSlug]}
+                            remarkPlugins={[remarkGfm, remarkToc, remarkFrontmatter]}
+                            components={{
+                                pre: ({ node, ...props }) =>
+                                    <CopyIcon>
+                                        <pre {...props} >
+                                            {props.children}
+                                        </pre>
+                                    </CopyIcon>,
+                            }}
+                        >
+                            {content}
+                        </ReactMarkdown>
+                    </Container>
+                </>
                 :
                 <Container>
                     <div className='cardsBlockContainer mt-5 mb-5'>
