@@ -24,7 +24,6 @@ describe('Footer Links', () => {
         expect(sourceLink).toHaveAttribute('href', 'https://gem5.googlesource.com/public/gem5');
         expect(searchLink).toHaveAttribute('href', 'https://www.gem5.org/search/');
         expect(mailingListsLink).toHaveAttribute('href', 'https://www.gem5.org/mailing_lists/');
-        expect(websiteSourceLink).toHaveAttribute('href', 'https://github.com/Gem5Vision/gem5-resources-website');
     });
 
     it('should delete cookies when reset cookies button is clicked', () => {

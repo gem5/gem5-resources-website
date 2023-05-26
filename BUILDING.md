@@ -1,6 +1,6 @@
 # Building the Website
 
-This document describes how to build and deploy the gem5 Vision website. It is built using [Next.js](https://nextjs.org/), a React framework for building static and server-side rendered websites.
+This document describes how to build and deploy the gem5 Resources website. It is built using [Next.js](https://nextjs.org/), a React framework for building static and server-side rendered websites.
 # Table of Contents
 - [Building the Website](#building-the-website)
 - [Table of Contents](#table-of-contents)

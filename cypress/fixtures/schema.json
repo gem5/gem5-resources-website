@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
-    "title": "gem5 Vision Database Schema",
+    "title": "gem5 Resources Database Schema",
     "description": "A schema that indicates how gem5-resources data is stored, and is also used to validate the data being entered into the database.",
     "type": "object",
     "properties": {

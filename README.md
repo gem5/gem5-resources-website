@@ -51,7 +51,7 @@ This is the source code for the gem5 Resources website. It is built using [Next.
 
 The project is structured as follows:
 
-- `gem5.config.js`: Contains the configuration for the gem5 Vision website including the databases and the tabs.
+- `gem5.config.js`: Contains the configuration for the gem5 Resources website including the databases and the tabs.
 - `components`: Contains React components used throughout the website.
   - `components/tabs`: Contains the tabs used in the Resource page.
 - `pages`: Contains the pages of the website. Each page is a React component.
@@ -80,16 +80,16 @@ If you find any bugs or have any suggestions, please open an issue or a pull req
 
 # License
 
-The gem5 Vision website is licensed under the [LICENSE.md](LICENSE.md).
+The gem5 Resources website is licensed under the [LICENSE.md](LICENSE.md).
 
 # Acknowledgements
 
-The gem5 Vision website is built using the following open source projects:
+The gem5 Resources website is built using the following open source projects:
 
 - [Next.js](https://nextjs.org/)
 - [React](https://reactjs.org/)
   
-The gem5 Vision website is inspired by the following websites:
+The gem5 Resources website is inspired by the following websites:
 
 - [gem5.org](https://gem5.org/)
 - [pub.dev](https://pub.dev/)
