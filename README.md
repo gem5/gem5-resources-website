@@ -103,4 +103,4 @@ All logos and trademarks are property of their respective owners.
 - [Harshil Patel](https://github.com/harshil2107)
 - [Arslan Ali](https://github.com/aarsli)
 
-Special thanks to [Jason Lowe-Power](https://github.com/jlowepower) and [Bobby R. Bruce](https://github.com/BobbyRBruce) for their guidance and support.
+Special thanks to [Jason Lowe-Power](https://github.com/powerjg) and [Bobby R. Bruce](https://github.com/BobbyRBruce) for their guidance and support.
