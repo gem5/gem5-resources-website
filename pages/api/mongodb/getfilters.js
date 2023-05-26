@@ -59,7 +59,7 @@ async function getFilters(accessToken, url, dataSource, database, collection) {
  * @returns {json} A json object with the filters.
 */
 export default async function getFiltersMongoDB(database) {
-    let privateResources = process.env.PRIVATE_RESOURCES
+    let privateResources = process.env.SOURCES;
     let privateResource = privateResources[database];
     let privateAccessToken = await getToken(database);
     let privateFilters = await getFilters(privateAccessToken, privateResource.url, privateResource.dataSource, privateResource.database, privateResource.collection);

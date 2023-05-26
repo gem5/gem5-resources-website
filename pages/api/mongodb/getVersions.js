@@ -51,10 +51,10 @@ async function getVersionsByID(token, url, dataSource, database, collection, id)
 */
 export default async function getVersionsMongoDB(id, database = null) {
     if (!database) {
-        database = Object.keys(process.env.PRIVATE_RESOURCES)[0];
+        database = Object.keys(process.env.SOURCES)[0];
     }
     const token = await getToken(database);
-    let privateResources = process.env.PRIVATE_RESOURCES[database];
+    let privateResources = process.env.SOURCES[database];
     const resource = await getVersionsByID(token, privateResources.url, privateResources.dataSource, privateResources.database, privateResources.collection, id);
     resource.forEach(res => {
         res['database'] = database;

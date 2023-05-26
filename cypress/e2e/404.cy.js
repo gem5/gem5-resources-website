@@ -2,11 +2,11 @@
 
 describe('404 page routing', () => {
     function waitFind() {
-        let resources = Object.keys(Cypress.env('PRIVATE_RESOURCES'))[0]
-        if (Cypress.env('PRIVATE_RESOURCES')[resources].isMongo) {
+        let resources = Object.keys(Cypress.env('SOURCES'))[0]
+        if (Cypress.env('SOURCES')[resources].isMongo) {
             cy.wait(['@find'])
         } else {
-            cy.waitJSON(Cypress.env('PRIVATE_RESOURCES')[resources].url.includes('http'))
+            cy.waitJSON(Cypress.env('SOURCES')[resources].url.includes('http'))
         }
     }
     beforeEach(() => {

@@ -37,7 +37,7 @@ describe('resource Page', () => {
         "database": "public"
     }
     beforeEach(() => {
-        resource.database = Object.keys(Cypress.env('PRIVATE_RESOURCES'))[0]
+        resource.database = Object.keys(Cypress.env('SOURCES'))[0]
         cy.interceptAll()
         cy.visit('/resources/arm64-ubuntu-20.04-boot')
         // find by id+version, aggregate depended by, get schema, find by all versions by id 

@@ -3,7 +3,7 @@ import SearchResult from '@/components/searchResult';
 
 describe('Search Result', () => {
     beforeEach(() => {
-        process.env.PRIVATE_RESOURCES = {
+        process.env.SOURCES = {
             "db1": {
                 url: "resources.json",
                 isMongo: false,

@@ -100,7 +100,7 @@ async function getResourceByID(token, url, dataSource, database, collection, id,
 */
 export default async function getResourceMongoDB(id, database = null, version = null) {
     const token = await getToken(database);
-    let privateResources = process.env.PRIVATE_RESOURCES[database];
+    let privateResources = process.env.SOURCES[database];
     const resource = await getResourceByID(token, privateResources.url, privateResources.dataSource, privateResources.database, privateResources.collection, id, version);
     resource['database'] = database;
     return resource;

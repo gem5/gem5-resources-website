@@ -11,13 +11,13 @@ import getResourceMongoDB from "./mongodb/getresource";
 */
 export async function getResource(id, database = null, version = null) {
     if (!database) {
-        database = Object.keys(process.env.PRIVATE_RESOURCES)[0];
+        database = Object.keys(process.env.SOURCES)[0];
     }
-    if (!process.env.PRIVATE_RESOURCES[database]) {
+    if (!process.env.SOURCES[database]) {
         return { error: 'Database not found' }
     }
     let resource;
-    if (process.env.PRIVATE_RESOURCES[database].isMongo) {
+    if (process.env.SOURCES[database].isMongo) {
         resource = await getResourceMongoDB(id, database, version);
     } else {
         resource = await getResourceJSON(id, database, version);

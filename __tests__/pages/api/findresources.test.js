@@ -39,7 +39,7 @@ describe('findResources', () => {
         process.env = {
             ...originalEnv,
             BASE_PATH: '',
-            PRIVATE_RESOURCES: {
+            SOURCES: {
                 "db1": {
                     url: "resources.json",
                     isMongo: false,
@@ -123,7 +123,7 @@ describe('findResources', () => {
         process.env = {
             ...originalEnv,
             BASE_PATH: '',
-            PRIVATE_RESOURCES: {
+            SOURCES: {
                 "db1": {
                     url: "https://raw.githubusercontent.com/Gem5Vision/resources.json",
                     isMongo: false,
@@ -141,7 +141,7 @@ describe('findResources', () => {
         process.env = {
             ...originalEnv,
             BASE_PATH: '',
-            PRIVATE_RESOURCES: {
+            SOURCES: {
                 "db1": {
                     dataSource: "gem5-vision",
                     database: "gem5-vision",
@@ -164,7 +164,7 @@ describe('findResources', () => {
         process.env = {
             ...originalEnv,
             BASE_PATH: '',
-            PRIVATE_RESOURCES: {
+            SOURCES: {
                 "db1": {
                     dataSource: "gem5-vision",
                     database: "gem5-vision",

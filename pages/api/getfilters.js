@@ -13,7 +13,7 @@ export async function getFilters() {
         "architecture": [],
         "gem5_versions": [],
     };
-    let privateResources = process.env.PRIVATE_RESOURCES
+    let privateResources = process.env.SOURCES;
     for (let resource in privateResources) {
         let privateResource = privateResources[resource];
         let privateFilters;
@@ -42,8 +42,8 @@ export async function getFilters() {
     filters['architecture'].sort();
     filters['gem5_versions'].sort().reverse();
 
-    // get all keys from process.env.PRIVATE_RESOURCES
-    let keys = Object.keys(process.env.PRIVATE_RESOURCES);
+    // get all keys from process.env.SOURCES
+    let keys = Object.keys(process.env.SOURCES);
     if (keys.length > 0) {
         filters['database'] = keys;
     }

@@ -20,7 +20,7 @@ import { useEffect, useState } from "react";
 export default function SearchResult({ resource }) {
     const [resourceLink, setResourceLink] = useState("");
     useEffect(() => {
-        if (Object.keys(process.env.PRIVATE_RESOURCES).length <= 1) {
+        if (Object.keys(process.env.SOURCES).length <= 1) {
             setResourceLink('/resources/' + resource.id + (resource.resource_version ? "?version=" + resource.resource_version : ""));
         } else {
             setResourceLink('/resources/' + resource.id + (resource.database ? "?database=" + resource.database : "") + (resource.resource_version ? "&version=" + resource.resource_version : ""));

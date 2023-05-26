@@ -410,7 +410,7 @@ async function getSearchResults(
  * @returns {JSX.Element} The JSX element to be rendered.
  */
 export default async function getResourcesMongoDB(queryObject, currentPage, pageSize, database) {
-  let privateResources = process.env.PRIVATE_RESOURCES
+  let privateResources = process.env.SOURCES;
   let privateResource = privateResources[database];
   let privateAccessToken = await getToken(database);
   let privateResourceResults = await getSearchResults(privateAccessToken,

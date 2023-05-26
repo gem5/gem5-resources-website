@@ -191,7 +191,7 @@ The configuration file is exporting a Cypress configuration object defined using
 - `env`: Defines environment variables to be set for the Cypress tests.
     - `BASE_PATH`: Specifies the base path for the application. It is currently set to an empty string.
     - `SCHEMA_URL`: Uses the `config.schemaUrl` value from the `gem5.config.json` file.
-    - `PRIVATE_RESOURCES`: Uses the `config.resources` value from the gem5.config.json file.
+    - `SOURCES`: Uses the `config.resources` value from the gem5.config.json file.
     - `TABS`: Uses the `ui.tabs` value from the `gem5.config.json` file.
 
 Please make sure to have the `gem5.config.json` file in the same directory as the `cypress.config.js` file for the config variable to be properly imported.

@@ -7,7 +7,7 @@
  * @returns {Promise<Object>} - A Promise that resolves to the fetched JSON data representing resources.
  */
 export default async function fetchResourcesJSON(database) {
-  let url = process.env.PRIVATE_RESOURCES[database].url;
+  let url = process.env.SOURCES[database].url;
   if (url.includes("http")) {
     const res = await fetch(
       url,

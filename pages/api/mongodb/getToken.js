@@ -27,9 +27,9 @@ async function getAccessToken(url, key) {
 export default async function getToken(key = null) {
     // Send API key to Realm API to retrieve access token
     if (!key) {
-        key = Object.keys(process.env.PRIVATE_RESOURCES)[0];
+        key = Object.keys(process.env.SOURCES)[0];
     }
-    let privateENV = process.env.PRIVATE_RESOURCES[key];
+    let privateENV = process.env.SOURCES[key];
     let token = sessionStorage.getItem('token');
     if (token) {
         token = JSON.parse(token);

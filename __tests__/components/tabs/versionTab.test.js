@@ -49,7 +49,7 @@ describe('VersionTab', () => {
         process.env = {
             ...originalEnv,
             BASE_PATH: '',
-            PRIVATE_RESOURCES: {
+            SOURCES: {
                 "db1": {
                     url: "resources.json",
                     isMongo: false,

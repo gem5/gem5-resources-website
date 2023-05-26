@@ -12,7 +12,7 @@ import compareVersions from "./compareVersions";
  * @returns {json} The resources in JSON format.
  */
 export async function getResources(queryObject, currentPage, pageSize) {
-  let privateResources = process.env.PRIVATE_RESOURCES
+  let privateResources = process.env.SOURCES;
   let databases = queryObject.database;
   let resources = [[], 0];
   if (!databases) {

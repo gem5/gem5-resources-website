@@ -12,16 +12,12 @@ if (isGithubActions) {
   basePath = `/${repo}`
 }
 let isProd = process.env.NODE_ENV === 'production'
-// isProd = false;
-// isProd = true;
 
 if (!isProd) {
   assetPrefix = undefined;
   basePath = '';
 }
 
-// get path of the websie hosted on github pages from the environment variable
-// https://realm.mongodb.com/api/client/v2.0/app/data-ejhjf/graphql
 module.exports = {
   assetPrefix: assetPrefix,
   basePath: basePath,
@@ -33,7 +29,7 @@ module.exports = {
   env: {
     BASE_PATH: basePath,
     SCHEMA_URL: config.config.schemaUrl,
-    PRIVATE_RESOURCES: config.config.sources,
+    SOURCES: config.config.sources,
     TABS: config.ui.tabs,
   },
   webpack: (config) => {

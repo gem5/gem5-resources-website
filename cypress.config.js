@@ -14,7 +14,7 @@ module.exports = defineConfig({
   env: {
     BASE_PATH: "",
     SCHEMA_URL: config.config.schemaUrl,
-    PRIVATE_RESOURCES: config.config.sources,
+    SOURCES: config.config.sources,
     TABS: config.ui.tabs,
   },
 });

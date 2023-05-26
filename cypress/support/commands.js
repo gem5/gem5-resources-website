@@ -124,13 +124,13 @@ Cypress.Commands.add('interceptAll', () => {
 })
 
 Cypress.Commands.add('waitFirst', () => {
-    const resource = Object.keys(Cypress.env('PRIVATE_RESOURCES'))[0]
-    if (Cypress.env('PRIVATE_RESOURCES')[resource].isMongo) {
+    const resource = Object.keys(Cypress.env('SOURCES'))[0]
+    if (Cypress.env('SOURCES')[resource].isMongo) {
         cy.wait(['@mongo'])
     } else {
-        cy.waitJSON(Cypress.env('PRIVATE_RESOURCES')[resource].url.includes('http'))
+        cy.waitJSON(Cypress.env('SOURCES')[resource].url.includes('http'))
     }
-    return cy.wrap(Cypress.env('PRIVATE_RESOURCES')[resource].isMongo)
+    return cy.wrap(Cypress.env('SOURCES')[resource].isMongo)
 })
 
 Cypress.Commands.add('waitAll', value => {
@@ -150,7 +150,7 @@ Cypress.Commands.add('waitJSON', (isUrl) => {
 })
 
 Cypress.Commands.add('waitAuto', () => {
-    const resources = Cypress.env('PRIVATE_RESOURCES')
+    const resources = Cypress.env('SOURCES')
     Object.keys(resources).forEach((i) => {
         if (resources[i].isMongo) {
             cy.wait(['@mongo'])
