@@ -19,7 +19,7 @@ describe('ScrollToTop component', () => {
       it('scrolls to the top when button is clicked', () => {
         window.scrollTo = jest.fn();
         const { getByRole } = render(<ScrollToTop />);
-        const button = getByRole('button');
+        const button = getByRole('button',{hidden: true});
         fireEvent.click(button);
         expect(window.scrollTo).toHaveBeenCalledWith({
           top: 0,
