@@ -3,10 +3,8 @@
 describe('Category Page', () => {
     let schema = {}
     beforeEach(() => {
-        // cy.intercept('GET', Cypress.env('SCHEMA_URL')).as('getSchema')
         cy.interceptAll()
         cy.visit('/category')
-        cy.wait('@getSchema')
         window.localStorage.setItem('CookieConsent', "{\"userPreference\":\"all\"}")
         // load schema from __tests__/schema.json
         cy.fixture('schema.json').then((data) => {

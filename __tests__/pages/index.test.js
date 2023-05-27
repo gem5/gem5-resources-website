@@ -2,24 +2,38 @@ import { render, screen, act, fireEvent } from '@testing-library/react';
 import Home from '@/pages/index.js';
 import schema from "../schema.json"
 import { useRouter } from 'next/router';
-
-// Mock the fetch function
-global.fetch = jest.fn(() =>
-  Promise.resolve({
-    json: () => Promise.resolve(schema),
-  })
-);
+import config from "../../gem5.config.json"
 
 const push = jest.fn();
+const originalEnv = process.env;
 
 describe('Home component', () => {
   beforeEach(async () => {
+    jest.resetModules();
+    process.env = {
+      ...originalEnv,
+      BASE_PATH: '',
+      SOURCES: {
+        "db1": {
+          url: "resources.json",
+          isMongo: false,
+        }
+      },
+      TABS: config.ui.tabs,
+      SCHEMA: schema,
+    };
+
     useRouter.mockReturnValue({
       push
     });
+
     await act(() => {
       render(<Home />);
     });
+  });
+
+  afterEach(() => {
+    process.env = originalEnv;
   });
 
   test('renders the logo', () => {

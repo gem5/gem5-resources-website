@@ -1,6 +1,7 @@
 import Resources from "@/pages/resources";
 import { render, screen, act, fireEvent } from "@testing-library/react";
 import resources from "../../../public/resources.json";
+import schema from "../../schema.json";
 
 global.fetch = jest.fn((url) => {
     if (url.includes("data.mongodb-api")) {
@@ -66,7 +67,8 @@ describe("Resources component", () => {
                     url: "resources.json",
                     isMongo: false,
                 }
-            }
+            },
+            SCHEMA: schema,
         };
     });
 

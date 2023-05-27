@@ -33,12 +33,6 @@ Cypress.Commands.add('assertValueCopiedToClipboard', value => {
 })
 
 Cypress.Commands.add('interceptAll', () => {
-    cy.intercept('GET', Cypress.env('SCHEMA_URL'), (req) => {
-        console.log(req)
-        req.reply({
-            fixture: 'schema.json'
-        })
-    }).as('getSchema')
     cy.intercept('GET', /https.*json$/).as('jsonLink')
     cy.intercept('GET', /^\/\w*\.json$/).as('jsonLocal')
     cy.intercept('POST', "https://data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/find", (req) => {

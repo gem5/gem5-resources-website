@@ -43,12 +43,11 @@ describe('resource Page', () => {
         // find by id+version, aggregate depended by, get schema, find by all versions by id 
         cy.waitFirst().then(isMongo => {
             if (isMongo) {
-                cy.wait(['@find', '@getSchema', '@find'])
+                cy.wait(['@find', '@find'])
             } else {
-                cy.wait(['@jsonLink', '@getSchema', '@jsonLink'])
+                cy.wait(['@jsonLink', '@jsonLink'])
             }
         })
-        // cy.wait(['@find', '@mongo', '@getSchema', '@find'])
         window.localStorage.setItem('CookieConsent', "{\"userPreference\":\"all\"}")
     })
 
@@ -99,12 +98,11 @@ describe('resource Page', () => {
             cy.get('td a').first().click()
         })
         cy.url().should('include', 'version=0.1.0')
-        // cy.wait(['@find', '@mongo', '@getSchema', '@find'])
         cy.waitFirst().then(isMongo => {
             if (isMongo) {
-                cy.wait(['@find', '@getSchema', '@find'])
+                cy.wait(['@find', '@find'])
             } else {
-                cy.wait(['@jsonLink', '@getSchema', '@jsonLink'])
+                cy.wait(['@jsonLink', '@jsonLink'])
             }
         })
         cy.get(':nth-child(2) > .text-black').should('have.text', '0.1.0')

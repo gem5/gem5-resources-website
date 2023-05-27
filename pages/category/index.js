@@ -54,19 +54,16 @@ export default function Category() {
     }, [router])
 
     useEffect(() => {
-        fetch(process.env.SCHEMA_URL)
-            .then(res => res.json())
-            .then(data => {
-                const categoryCards = data['properties']['category']['enum'].map((category) => {
-                    return {
-                        cardTitle: category.charAt(0).toUpperCase() + category.substr(1).toLowerCase(),
-                        cardText: data['definitions'][category]['description'],
-                        pathRef: `/category#${category}`,
-                        buttonText: "Learn More"
-                    }
-                })
-                setCategoryCards(categoryCards);
-            })
+        const schema = process.env.SCHEMA;
+        const categoryCards = schema['properties']['category']['enum'].map((category) => {
+            return {
+                cardTitle: category.charAt(0).toUpperCase() + category.substr(1).toLowerCase(),
+                cardText: schema['definitions'][category]['description'],
+                pathRef: `/category#${category}`,
+                buttonText: "Learn More"
+            }
+        })
+        setCategoryCards(categoryCards);
     }, [])
 
     return (

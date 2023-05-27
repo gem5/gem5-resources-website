@@ -44,21 +44,18 @@ export default function Home() {
   const [categoryCards, setCategoryCards] = useState([]);
 
   useEffect(() => {
-    fetch(process.env.SCHEMA_URL)
-      .then(res => res.json())
-      .then(data => {
-        const categoryCards = []
-        for (let i = 0; i < 3; i++) {
-          const category = data['properties']['category']['enum'][i]
-          categoryCards.push({
-            cardTitle: category.charAt(0).toUpperCase() + category.substr(1).toLowerCase(),
-            cardText: data['definitions'][category]['description'],
-            pathRef: `/category#${category}`,
-            buttonText: "Learn More"
-          })
-        }
-        setCategoryCards(categoryCards);
+    const schema = process.env.SCHEMA
+    const categoryCards = []
+    for (let i = 0; i < 3; i++) {
+      const category = schema['properties']['category']['enum'][i]
+      categoryCards.push({
+        cardTitle: category.charAt(0).toUpperCase() + category.substr(1).toLowerCase(),
+        cardText: schema['definitions'][category]['description'],
+        pathRef: `/category#${category}`,
+        buttonText: "Learn More"
       })
+    }
+    setCategoryCards(categoryCards);
   }, [])
 
   return (

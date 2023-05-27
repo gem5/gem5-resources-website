@@ -1,12 +1,7 @@
 import getTabs from "@/pages/api/getTabs";
 import schema from "../../schema.json";
 import config from "../../../gem5.config.json"
-// Mock the fetch function
-global.fetch = jest.fn(() =>
-    Promise.resolve({
-        json: () => Promise.resolve(schema),
-    })
-);
+
 const originalEnv = process.env;
 
 describe("getTabs", () => {
@@ -22,6 +17,7 @@ describe("getTabs", () => {
                 }
             },
             TABS: config.ui.tabs,
+            SCHEMA: schema,
         };
     });
 

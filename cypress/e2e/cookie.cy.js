@@ -2,9 +2,7 @@
 
 describe('Cookie prompt', () => {
     beforeEach(() => {
-        cy.intercept('GET', Cypress.env('SCHEMA_URL')).as('getSchema')
         cy.visit('localhost:3000')
-        cy.wait('@getSchema')
         cy.clearCookies()
         cy.clearLocalStorage()
     })

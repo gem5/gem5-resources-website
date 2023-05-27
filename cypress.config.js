@@ -1,5 +1,6 @@
 const { defineConfig } = require("cypress");
 const config = require("./gem5.config.json")
+const schema = require("./cypress/fixtures/schema.json")
 
 module.exports = defineConfig({
   e2e: {
@@ -13,8 +14,8 @@ module.exports = defineConfig({
   screenshot: false,
   env: {
     BASE_PATH: "",
-    SCHEMA_URL: config.config.schemaUrl,
     SOURCES: config.config.sources,
     TABS: config.ui.tabs,
+    SCHEMA: schema,
   },
 });

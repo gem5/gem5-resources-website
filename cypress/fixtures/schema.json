@@ -1,14 +1,14 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
-    "title": "gem5 Resources Database Schema",
-    "description": "A schema that indicates how gem5-resources data is stored, and is also used to validate the data being entered into the database.",
+    "title": "gem5 Resources Schema",
+    "description": "A schema that indicates how gem5 Resources data is stored, and is also used to validate the data being entered into the database.",
     "type": "object",
     "properties": {
         "category": {
             "type": "string",
             "enum": [
                 "workload",
-                "disk_image",
+                "disk-image",
                 "binary",
                 "kernel",
                 "checkpoint",
@@ -149,7 +149,7 @@
     ],
     "oneOf": [
         {
-            "$ref": "#/definitions/disk_image"
+            "$ref": "#/definitions/disk-image"
         },
         {
             "$ref": "#/definitions/binary"
@@ -339,12 +339,12 @@
                 }
             ]
         },
-        "disk_image": {
+        "disk-image": {
             "description": "A file that contains an exact copy of the data stored on a storage device.",
             "properties": {
                 "category": {
                     "type": "string",
-                    "const": "disk_image"
+                    "const": "disk-image"
                 },
                 "root_partition": {
                     "type": "string",

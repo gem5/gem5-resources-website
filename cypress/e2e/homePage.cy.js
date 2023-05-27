@@ -4,7 +4,6 @@ describe('gem5 resources home', () => {
   beforeEach(() => {
     cy.interceptAll()
     cy.visit('localhost:3000')
-    cy.wait('@getSchema')
   })
 
   it('checks if 3 categories and getting started being displayed', () => {

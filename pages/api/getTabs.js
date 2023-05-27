@@ -47,7 +47,7 @@ export default async function getTabs(res) {
     const tabs = process.env.TABS;
     let resource = JSON.parse(JSON.stringify(res));
     const category = resource.category;
-    const schema = await fetch(process.env.SCHEMA_URL).then(res => res.json());
+    const schema = process.env.SCHEMA;
     let fields = getFields(schema, category);
     for (let field in schema.properties) {
         if (schema.properties[field].required) {

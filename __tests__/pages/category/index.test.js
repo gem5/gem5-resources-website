@@ -1,18 +1,35 @@
 import Category from "@/pages/category";
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
-import schema from "../../schema.json"
-// Mock the fetch function
-global.fetch = jest.fn(() =>
-    Promise.resolve({
-        json: () => Promise.resolve(schema),
-    })
-);
+import schema from "../../schema.json";
+import config from "../../../gem5.config.json"
+
+const originalEnv = process.env;
 
 jest.mock('../../../pages/category/workload.md', () =>
     Promise.resolve("This is test workload")
 );
 
 describe('Category component', () => {
+    beforeEach(() => {
+        jest.resetModules();
+        process.env = {
+            ...originalEnv,
+            BASE_PATH: '',
+            SOURCES: {
+                "db1": {
+                    url: "resources.json",
+                    isMongo: false,
+                }
+            },
+            TABS: config.ui.tabs,
+            SCHEMA: schema,
+        };
+    });
+
+    afterEach(() => {
+        process.env = originalEnv;
+    });
+
     it('renders without crashing', async () => {
         act(() => {
             render(<Category />);
