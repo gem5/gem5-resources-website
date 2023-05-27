@@ -29,10 +29,10 @@ export default function ScrollToTop() {
   }, []);
 
   return (
-    <div className="scrollToTop" style={ visible ? {opacity: '1'} : {opacity: '0'} }>
+    <div className="scrollToTop" style={{ opacity: visible ? '1' : 0 , visibility: visible ? 'visible' : 'hidden' }}>
       <Button onClick={scrollBehavior} className="scrollToTopBtn" aria-label="Scroll to Top Button">
         <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M18 15l-6-6-6 6"/>
+          <path d="M18 15l-6-6-6 6" />
         </svg>
       </Button>
     </div>
