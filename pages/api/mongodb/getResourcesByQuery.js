@@ -392,6 +392,11 @@ async function getSearchResults(
     }),
   }).catch((err) => console.log(err));
   resources = await res.json();
+  // check if status is not 200
+  if (res.status !== 200) {
+    console.log("Error: " + res.status);
+    return [[], 0];
+  }
   return [
     resources["documents"],
     resources["documents"].length > 0

@@ -40,7 +40,11 @@ export default async function getToken(key = null) {
         return token[key].accessToken;
     }
     else {
-        token[key] = await getAccessToken(`https://realm.mongodb.com/api/client/v2.0/app/${privateENV.name}/auth/providers/api-key/login`, privateENV.apiKey);
+        token[key] = await getAccessToken(privateENV.authUrl, privateENV.apiKey);
+        if (!token[key].accessToken) {
+            console.log('Error: Could not retrieve access token.');
+            return;
+        }
         sessionStorage.setItem('token', JSON.stringify(token));
         return token[key].accessToken;
     }

@@ -42,6 +42,13 @@ async function getFilters(accessToken, url, dataSource, database, collection) {
         })
     }).catch(err => console.log(err));
     let filters = await res.json();
+    if (filters['status'] != 200 || filters['documents'].length == 0) {
+        return {
+            "category": [],
+            "architecture": [],
+            "gem5_versions": []
+        }
+    }
     filters['documents'][0]['architecture'] = filters['documents'][0]['architecture'].filter(architecture => architecture != null);
     delete filters['documents'][0]['_id'];
 

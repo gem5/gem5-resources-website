@@ -39,7 +39,7 @@ async function getResourceByID(token, url, dataSource, database, collection, id,
         })
     }).catch(err => console.log(err));
     let resource = await res.json();
-    if (resource['documents'] === null || resource['documents'].length === 0) {
+    if (resource['status'] !== 200 || resource['documents'] === null || resource['documents'].length === 0) {
         return { error: 'Resource not found' }
     }
 
