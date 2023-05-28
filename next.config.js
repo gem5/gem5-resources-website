@@ -1,6 +1,5 @@
 // This file is used to configure Next.js
 const config = require('./gem5.config.json');
-const schema = require('./gem5-resources-schema.json');
 
 const isGithubActions = process.env.GITHUB_ACTIONS || false;
 let assetPrefix = undefined
@@ -31,7 +30,6 @@ module.exports = {
     BASE_PATH: basePath,
     SOURCES: config.config.sources,
     TABS: config.ui.tabs,
-    SCHEMA: schema,
   },
   webpack: (config) => {
     config.module.rules.push({

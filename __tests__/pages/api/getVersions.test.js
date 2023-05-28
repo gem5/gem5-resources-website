@@ -1,10 +1,12 @@
 import getVersionsByID from "@/pages/api/getVersionsByID";
 import resources from "./resources.json"
+
 const originalEnv = process.env;
 
 global.fetch = jest.fn((url) => {
     if (url.includes("data.mongodb-api")) {
         return Promise.resolve({
+            status: 200,
             json: () => Promise.resolve({
                 'documents': [
                     {
@@ -16,18 +18,21 @@ global.fetch = jest.fn((url) => {
                         "database": "db1"
                     }
                 ]
-            }),
+            }
+            ),
         })
     }
 
     if (url.includes("resources.json")) {
         return Promise.resolve({
+            status: 200,
             json: () => Promise.resolve(resources),
         })
     }
 
     if (url.includes("realm.mongodb.com")) {
         return Promise.resolve({
+            status: 200,
             json: () => Promise.resolve({
                 "access_token": ""
             }),
@@ -35,6 +40,7 @@ global.fetch = jest.fn((url) => {
     }
 
     return Promise.resolve({
+        status: 200,
         json: () => Promise.resolve({
             "error": "Resource not found"
         }),
@@ -102,7 +108,7 @@ describe("getVersions", () => {
                     database: "gem5-vision",
                     collection: "versions_test",
                     url: "https://data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1",
-                    name: "data-ejhjf",
+                    authUrl: "https://realm.mongodb.com/api/client/v2.0/app/data-ejhjf/auth/providers/api-key/login",
                     apiKey: "pKkhRJGJaQ3NdJyDt69u4GPGQTDUIhHlx4a3lrKUNx2hxuc8uba8NrP3IVRvlzlo",
                     isMongo: true,
                 },

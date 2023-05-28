@@ -34,7 +34,8 @@ async function getVersionsByID(token, url, dataSource, database, collection, id)
         })
     }).catch(err => console.log(err));
     let resource = await res.json();
-    if (resource['documents'] === null) {
+    console.log(res.status);
+    if (res.status != 200 || resource['documents'] === null) {
         return { error: 'Resource not found' }
     }
     resource = resource['documents'].sort((a, b) => -compareVersions(a.resource_version, b.resource_version));

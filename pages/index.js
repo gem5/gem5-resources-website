@@ -7,6 +7,7 @@ import { useRouter } from 'next/router'
 import MyCards from '@/components/myCards'
 import Link from "next/link";
 import { useEffect, useState } from 'react'
+import gem5Schema from "@/public/gem5-resources-schema.json"
 
 /**
  * @component
@@ -44,13 +45,12 @@ export default function Home() {
   const [categoryCards, setCategoryCards] = useState([]);
 
   useEffect(() => {
-    const schema = process.env.SCHEMA
     const categoryCards = []
     for (let i = 0; i < 3; i++) {
-      const category = schema['properties']['category']['enum'][i]
+      const category = gem5Schema['properties']['category']['enum'][i]
       categoryCards.push({
         cardTitle: category.charAt(0).toUpperCase() + category.substr(1).toLowerCase(),
-        cardText: schema['definitions'][category]['description'],
+        cardText: gem5Schema['definitions'][category]['description'],
         pathRef: `/category#${category}`,
         buttonText: "Learn More"
       })

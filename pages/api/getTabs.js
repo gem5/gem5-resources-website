@@ -1,3 +1,5 @@
+import gem5Schema from "@/public/gem5-resources-schema.json"
+
 // each category is a definition in the schema
 // each category has a list of required fields
 // category can inherit from other categories provided by $ref in allOf
@@ -47,18 +49,17 @@ export default async function getTabs(res) {
     const tabs = process.env.TABS;
     let resource = JSON.parse(JSON.stringify(res));
     const category = resource.category;
-    const schema = process.env.SCHEMA;
-    let fields = getFields(schema, category);
-    for (let field in schema.properties) {
-        if (schema.properties[field].required) {
+    let fields = getFields(gem5Schema, category);
+    for (let field in gem5Schema.properties) {
+        if (gem5Schema.properties[field].required) {
             fields[0].push({
                 name: field,
-                schema: schema.properties[field],
+                schema: gem5Schema.properties[field],
             });
         } else {
             fields[1].push({
                 name: field,
-                schema: schema.properties[field],
+                schema: gem5Schema.properties[field],
             });
         }
     }
@@ -147,7 +148,7 @@ export default async function getTabs(res) {
             meta: metaFields,
         }
     }
-    for (let f in schema.properties) {
+    for (let f in gem5Schema.properties) {
         // delete them from required and additionalInfo
         fields[0] = fields[0].filter((field) => (
             field.name !== f

@@ -147,7 +147,7 @@ describe('findResources', () => {
                     database: "gem5-vision",
                     collection: "resources",
                     url: "https://data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1",
-                    name: "data-ejhjf",
+                    authUrl: "https://realm.mongodb.com/api/client/v2.0/app/data-ejhjf/auth/providers/api-key/login",
                     apiKey: "pKkhRJGJaQ3NdJyDt69u4GPGQTDUIhHlx4a3lrKUNx2hxuc8uba8NrP3IVRvlzlo",
                     isMongo: true,
                 }
@@ -170,7 +170,7 @@ describe('findResources', () => {
                     database: "gem5-vision",
                     collection: "resources",
                     url: "https://data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1",
-                    name: "data-ejhjf",
+                    authUrl: "https://realm.mongodb.com/api/client/v2.0/app/data-ejhjf/auth/providers/api-key/login",
                     apiKey: "pKkhRJGJaQ3NdJyDt69u4GPGQTDUIhHlx4a3lrKUNx2hxuc8uba8NrP3IVRvlzlo",
                     isMongo: true,
                 }

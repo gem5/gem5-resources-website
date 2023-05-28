@@ -42,7 +42,7 @@ async function getFilters(accessToken, url, dataSource, database, collection) {
         })
     }).catch(err => console.log(err));
     let filters = await res.json();
-    if (filters['status'] != 200 || filters['documents'].length == 0) {
+    if (res.status != 200 || filters['documents'].length == 0) {
         return {
             "category": [],
             "architecture": [],

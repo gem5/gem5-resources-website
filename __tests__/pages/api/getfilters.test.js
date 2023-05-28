@@ -1,12 +1,12 @@
 import { getFilters } from "@/pages/api/getFilters";
 import resources from "./resources.json"
-import { get } from "fetch-mock";
 
 const originalEnv = process.env;
 
 global.fetch = jest.fn((url) => {
     if (url.includes("data.mongodb-api")) {
         return Promise.resolve({
+            status: 200,
             json: () => Promise.resolve({
                 'documents': [
                     {
@@ -25,12 +25,14 @@ global.fetch = jest.fn((url) => {
 
     if (url.includes("resources.json")) {
         return Promise.resolve({
+            status: 200,
             json: () => Promise.resolve(resources),
         })
     }
 
     if (url.includes("realm.mongodb.com")) {
         return Promise.resolve({
+            status: 200,
             json: () => Promise.resolve({
                 "access_token": ""
             }),
@@ -38,6 +40,7 @@ global.fetch = jest.fn((url) => {
     }
 
     return Promise.resolve({
+        status: 200,
         json: () => Promise.resolve({
             "error": "Resource not found"
         }),
@@ -83,7 +86,7 @@ describe('getFilters', () => {
                     database: "gem5-vision",
                     collection: "versions_test",
                     url: "https://data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1",
-                    name: "data-ejhjf",
+                    authUrl: "https://realm.mongodb.com/api/client/v2.0/app/data-ejhjf/auth/providers/api-key/login",
                     apiKey: "pKkhRJGJaQ3NdJyDt69u4GPGQTDUIhHlx4a3lrKUNx2hxuc8uba8NrP3IVRvlzlo",
                     isMongo: true,
                 },
@@ -91,7 +94,7 @@ describe('getFilters', () => {
         };
         let result = await getFilters();
         expect(result).toEqual({
-            architecture: ["ARM","X86"],
+            architecture: ["ARM", "X86"],
             category: ["file", "simpoint"],
             gem5_versions: ["22.0"],
             database: ["db1"],

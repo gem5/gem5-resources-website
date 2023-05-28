@@ -12,6 +12,7 @@ import remarkFrontmatter from 'remark-frontmatter';
 import CopyIcon from '@/components/copyIcon';
 import { useRouter } from "next/router";
 import Head from "next/head";
+import gem5Schema from "@/public/gem5-resources-schema.json"
 
 /**
  * @function Category
@@ -54,11 +55,10 @@ export default function Category() {
     }, [router])
 
     useEffect(() => {
-        const schema = process.env.SCHEMA;
-        const categoryCards = schema['properties']['category']['enum'].map((category) => {
+        const categoryCards = gem5Schema['properties']['category']['enum'].map((category) => {
             return {
                 cardTitle: category.charAt(0).toUpperCase() + category.substr(1).toLowerCase(),
-                cardText: schema['definitions'][category]['description'],
+                cardText: gem5Schema['definitions'][category]['description'],
                 pathRef: `/category#${category}`,
                 buttonText: "Learn More"
             }
