@@ -36,7 +36,8 @@ export default function ReadmeTab({ github_url }) {
             const text = await res.text();
             setReadme(text);
         }
-        if (!github_url) return;
+        if (!github_url)
+            return setReadme("No GitHub Source for this resource");
         // check if the url is a valid github url
         if (!github_url.match(/github\.com\/[a-zA-Z0-9-_.]+\/[a-zA-Z0-9-_.]+/))
             return setReadme("Invalid GitHub URL");

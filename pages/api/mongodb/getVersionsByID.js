@@ -34,7 +34,6 @@ async function getVersionsByID(token, url, dataSource, database, collection, id)
         })
     }).catch(err => console.log(err));
     let resource = await res.json();
-    console.log(res.status);
     if (res.status != 200 || resource['documents'] === null) {
         return { error: 'Resource not found' }
     }
