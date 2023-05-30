@@ -2,7 +2,7 @@
 
 ## Query Expressions
 
-`gem5 Vision` supports the following query expressions:
+`gem5 Resources` supports the following query expressions:
 
 - `category:<category_name>`: Searches for Resources filtered by the categories present [here](https://gem5vision.github.io/gem5-resources-website/category).
 - `architecture:<architecture_name>`: Searches for Resources filtered by the architectures supported by gem5.
