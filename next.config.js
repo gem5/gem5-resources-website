@@ -8,7 +8,6 @@ let basePath = ''
 if (isGithubActions) {
   const repo = process.env.GITHUB_REPOSITORY.replace(/.*?\//, '')
 
-  assetPrefix = `/${repo}/`
   basePath = `/${repo}`
 }
 let isProd = process.env.NODE_ENV === 'production'
