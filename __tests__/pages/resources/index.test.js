@@ -1,6 +1,6 @@
 import Resources from "@/pages/resources";
 import { render, screen, act, fireEvent } from "@testing-library/react";
-import resources from "../../../public/resources-test.json";
+import resources from "../../../__mocks__/resources-test.json";
 import schema from "../../schema.json";
 
 global.fetch = jest.fn((url) => {
@@ -64,7 +64,7 @@ describe("Resources component", () => {
             BASE_PATH: '',
             SOURCES: {
                 "db1": {
-                    url: "resources-test.json",
+                    url: "__mocks__/resources-test.json",
                     isMongo: false,
                 }
             },
