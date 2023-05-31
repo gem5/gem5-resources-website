@@ -77,7 +77,7 @@
     },
     {
         "category": "simpoint",
-        "id": "batman",
+        "id": "test",
         "description": "Simpoints for running the 'x86-print-this' resource with the parameters `\"print this\" 15000`. This is encapsulated in the 'x86-print-this-15000-with-simpoints' workload.",
         "architecture": "X86",
         "size": 10240,

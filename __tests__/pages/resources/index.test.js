@@ -1,6 +1,6 @@
 import Resources from "@/pages/resources";
 import { render, screen, act, fireEvent } from "@testing-library/react";
-import resources from "../../../public/resources.json";
+import resources from "../../../public/resources-test.json";
 import schema from "../../schema.json";
 
 global.fetch = jest.fn((url) => {
@@ -10,7 +10,7 @@ global.fetch = jest.fn((url) => {
                 'documents': [
                     {
                         "category": ["simpoint", "file"],
-                        "id": "batman",
+                        "id": "test",
                         "architecture": ["X86", "ARM", null],
                         "tags": [],
                         "resource_version": "1.0.0",
@@ -22,7 +22,7 @@ global.fetch = jest.fn((url) => {
         })
     }
 
-    if (url.includes("resources.json")) {
+    if (url.includes("resources-test.json")) {
         return Promise.resolve({
             json: () => Promise.resolve(resources),
         })
@@ -64,7 +64,7 @@ describe("Resources component", () => {
             BASE_PATH: '',
             SOURCES: {
                 "db1": {
-                    url: "resources.json",
+                    url: "resources-test.json",
                     isMongo: false,
                 }
             },
@@ -80,7 +80,7 @@ describe("Resources component", () => {
         await act(async () => {
             render(<Resources />);
         });
-        const search = screen.getByText("batman");
+        const search = screen.getByText("test");
         expect(search).toBeInTheDocument();
     });
 });

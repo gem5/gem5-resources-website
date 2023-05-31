@@ -1,6 +1,6 @@
 import VersionTab from "@/components/tabs/versionTab";
 import { act, render, screen, waitFor, within } from '@testing-library/react';
-import resources from "../../../public/resources.json"
+import resources from "../../../public/resources-test.json"
 
 global.fetch = jest.fn((url) => {
     if (url.includes("data.mongodb-api")) {
@@ -20,7 +20,7 @@ global.fetch = jest.fn((url) => {
         })
     }
 
-    if (url.includes("resources.json")) {
+    if (url.includes("resources-test.json")) {
         return Promise.resolve({
             json: () => Promise.resolve(resources),
         })
@@ -51,7 +51,7 @@ describe('VersionTab', () => {
             BASE_PATH: '',
             SOURCES: {
                 "db1": {
-                    url: "resources.json",
+                    url: "resources-test.json",
                     isMongo: false,
                 }
             }
