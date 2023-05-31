@@ -1,6 +1,6 @@
 import VersionTab from "@/components/tabs/versionTab";
 import { act, render, screen, waitFor, within } from '@testing-library/react';
-import resources from "../../../public/resources-test.json"
+import resources from "../../../__mocks__/resources-test.json";
 
 global.fetch = jest.fn((url) => {
     if (url.includes("data.mongodb-api")) {
@@ -51,7 +51,7 @@ describe('VersionTab', () => {
             BASE_PATH: '',
             SOURCES: {
                 "db1": {
-                    url: "resources-test.json",
+                    url: "__mocks__/resources-test.json",
                     isMongo: false,
                 }
             }

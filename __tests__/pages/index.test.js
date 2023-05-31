@@ -15,7 +15,7 @@ describe('Home component', () => {
       BASE_PATH: '',
       SOURCES: {
         "db1": {
-          url: "resources.json",
+          url: "__mocks__/resources-test.json",
           isMongo: false,
         }
       },
