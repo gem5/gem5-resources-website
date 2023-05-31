@@ -10,7 +10,7 @@ global.fetch = jest.fn((url) => {
                 'documents': [
                     {
                         "category": ["simpoint", "file"],
-                        "id": "batman",
+                        "id": "test",
                         "architecture": ["X86", "ARM", null],
                         "tags": [],
                         "resource_version": "1.0.0",
@@ -80,7 +80,7 @@ describe("Resources component", () => {
         await act(async () => {
             render(<Resources />);
         });
-        const search = screen.getByText("batman");
+        const search = screen.getByText("test");
         expect(search).toBeInTheDocument();
     });
 });
