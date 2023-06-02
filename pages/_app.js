@@ -1,10 +1,14 @@
-import '@/styles/globals.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '@/styles/github.min.css'
+import '@/styles/github-markdown.min.css'
+import 'nprogress/nprogress.css'
 import Layout from '@/components/layout'
 import Router from 'next/router'
 import { useState, useEffect } from 'react'
 import NProgress from 'nprogress';
 import Script from 'next/script';
 import CookieConsent from '@/components/cookieConsent'
+import '@/styles/globals.css'
 
 NProgress.configure({ showSpinner: false });
 
@@ -56,7 +60,7 @@ export default function App({ Component, pageProps }) {
 
   return (
     <>
-      <Script strategy="afterInteractive" src="https://www.googletagmanager.com/gtag/js?id=G-2B1F9HP95Z" />
+      <Script strategy="afterInteractive" src="https://www.googletagmanager.com/gtag/js?id=G-HFMCVHE0QX" />
       <Script
         id='google-analytics'
         strategy="afterInteractive"
@@ -68,7 +72,7 @@ export default function App({ Component, pageProps }) {
             'analytics_storage': 'denied'
           })
           gtag('js', new Date());
-          gtag('config', 'G-2B1F9HP95Z')`,
+          gtag('config', 'G-HFMCVHE0QX')`,
         }}
       />
       <Layout>

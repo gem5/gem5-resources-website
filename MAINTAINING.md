@@ -8,10 +8,13 @@ This document describes how to maintain the gem5 Resources website.
 - [Database Configuration](#database-configuration)
   - [`schemaUrl`](#schemaurl)
   - [`resources`](#resources)
+- [Hosting on a Different Domain](#hosting-on-a-different-domain)
 - [Adding a New Category](#adding-a-new-category)
 - [Adding a New Page](#adding-a-new-page)
 - [Configuring the Tabs](#configuring-the-tabs)
 - [Editing Information on the Help page or About page](#editing-information-on-the-help-page-or-about-page)
+- [Changing CSS](#changing-css)
+- [Adding a JSON file as a Static Page](#adding-a-json-file-as-a-static-page)
 - [Testing Configurations](#testing-configurations)
   - [jest.config.js](#jestconfigjs)
     - [Configuration Details](#configuration-details)
@@ -46,6 +49,11 @@ In case of a **JSON** database, every object must contain the following properti
 
 - `url`: The Raw GitHub URL of the JSON data, or the local path, with root directory being the `public` directory of this codebase.
 - `isMongo`: A boolean value indicating whether the data source is MongoDB or not, set to false.
+
+# Hosting on a Different Domain
+
+In order to host the website on a different domain, firstly you need to add a CNAME file to the `public` directory with the domain name as the content of the file. For example, if you want to host the website on `https://resources.gem5.org`, you need to add a file named `CNAME` to the `public` directory with the content `resources.gem5.org`.
+Next, in order to load the static assets correctly, you need to change the `assetPrefix` and `basePath` properties in the `next.config.js` file. For example, if you want to host the website on `https://resources.gem5.org`, you need to change the `assetPrefix` and `basePath` properties to `undefined` and `/` respectively. If you want to host the website on `https://resources.gem5.org/gem5-resources`, you need to change the `assetPrefix` and `basePath` properties to `/gem5-resources/` and `/gem5-resources` respectively.
 
 # Adding a New Category
 
@@ -135,6 +143,14 @@ If the configuration for a particular category is not specified, by default, the
 # Editing Information on the Help page or About page
 
 To edit the information shown on the Help page or the About page, navigate to `pages/`. Edit the corresponding .md file, `help.md` for the Help page and `about.md` for the About page. Redeploy the website.
+
+# Changing CSS
+
+To edit the CSS of a particular component, navigate to the source code of the compenent, located in the `components/` directory. Find the class name of the CSS you want to edit. You can either change the CSS in the source file itself or navigate to `styles/` and change it there, under `globals.css`.
+
+# Adding a JSON file as a Static Page
+
+Upload the JSON file under `public/`. It should then be viewable at `https://resources.gem5.org/[YOUR_FILE_NAME]`.
 
 # Testing Configurations
 
