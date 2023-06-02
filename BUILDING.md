@@ -9,8 +9,14 @@ This document describes how to build and deploy the gem5 Resources website. It i
 - [Automatic Deployment](#automatic-deployment)
   - [Using GitHub Pages](#using-github-pages)
   - [GitHub Action to Deploy to Github Pages](#github-action-to-deploy-to-github-pages)
-    - [Workflow Configuration](#workflow-configuration)
-    - [Job: deployment](#job-deployment)
+    - [Workflow Triggers](#workflow-triggers)
+    - [Permissions](#permissions)
+    - [Jobs](#jobs)
+      - [Build Job](#build-job)
+      - [Steps](#steps)
+      - [Deployment Job](#deployment-job)
+      - [Steps](#steps-1)
+      - [Note](#note)
 
 # Running it Locally
 
@@ -63,30 +69,56 @@ serve out
 
 ## Using GitHub Pages
 
-Go to the "Pages" section of GitHub Settings. If deploying to a custom domain, add that information here.
+Go to the "Pages" section of GitHub Settings. If deploying to a custom domain, add that information here. 
+
+In order to host the website on a different domain, firstly you need to add a CNAME file to the `public` directory with the domain name as the content of the file. For example, if you want to host the website on `https://resources.gem5.org`, you need to add a file named `CNAME` to the `public` directory with the content `resources.gem5.org`.
+Next, in order to load the static assets correctly, you need to change the `assetPrefix` and `basePath` properties in the `next.config.js` file. For example, if you want to host the website on `https://resources.gem5.org`, you need to change the `assetPrefix` and `basePath` properties to `undefined` and `/` respectively. If you want to host the website on `https://resources.gem5.org/gem5-resources`, you need to change the `assetPrefix` and `basePath` properties to `/gem5-resources/` and `/gem5-resources` respectively.
 
 ## GitHub Action to Deploy to Github Pages
 
-Our GitHub Actions workflow in `.github/workflows/main.yml` automatically deploys a static website to GitHub Pages when changes are pushed to the "main" branch. It utilizes the [JamesIves/github-pages-deploy-action](https://github.com/marketplace/actions/deploy-to-github-pages) action to perform the deployment
+Our GitHub Actions workflow in `.github/workflows/main.yml` automatically deploys a static website to GitHub Pages when changes are pushed to the "main" branch. It includes a build job to build the Next.js project and run tests, and a deployment job to deploy the built project to GitHub Pages.
 
-### Workflow Configuration
+### Workflow Triggers
 
-The workflow is triggered on the push event, specifically for the main branch, and also allows for manual triggering using the workflow_dispatch event.
+The workflow is triggered in the following cases:
 
-### Job: deployment
+- **Push**: The workflow will be triggered when a push occurs on the `main` branch.
+- **Manual Dispatch**: The workflow can also be manually triggered using the workflow dispatch event.
 
-The `deployment` job runs on the `ubuntu-latest` operating system.
+### Permissions
 
-**Steps**:
+The workflow requires the following permissions:
 
-1. `Checkout`: This step uses the `actions/checkout` action to checkout the code from the repository.
-2. `Setup Node`: This step uses the `actions/setup-node` action to set up Node.js with the specified LTS (Long-Term Support) version and npm cache.
-3. `Install Node Modules`: This step installs the node modules used in this codebase through `npm ci`.
-4. `Jest`: This step uses Jest.js to run unit test suites on the codebase.
-5. `Cypress run`: This step runs the End-to-End test suite on Cypress.
-6. `Build`: This step performs the following actions:
+- **Contents**: Read access to repository contents.
+- **Pages**: Write access to GitHub Pages.
+- **ID Token**: Write access to GitHub ID token.
 
-    - Runs the build script using `npm run build`.
-    - Exports the build using `npm run export`.
+### Jobs
 
-7. `Deploy`: This step uses the `JamesIves/github-pages-deploy-action` action to deploy the built website to GitHub Pages. It specifies the `./out` directory as the publish directory, which is the directory where the built website is exported. The website is exported to the `gh-pages` branch.
+#### Build Job
+
+The build job is responsible for building the Next.js project, running tests, and generating static HTML files for export.
+
+#### Steps
+
+1. **Checkout**: Checks out the repository code using the `actions/checkout@v3` action.
+2. **Setup Node**: Sets up the Node.js environment using the `actions/setup-node@v3` action. It specifies the Node.js version (`18.16.0`) and caches the `npm` directory.
+3. **Restore Cache**: Restores the cache to speed up subsequent builds. It caches the `.next/cache` directory and generates a new cache whenever packages or source files change.
+4. **Install Dependencies**: Installs the project dependencies using `npm ci`.
+5. **Run Jest Unittests**: Executes the unit tests using `npm run test:ci`.
+6. **Run Cypress e2e Tests**: Runs the end-to-end tests using `npm run e2e:headless`.
+7. **Build with Next.js**: Builds the Next.js project using `npm run build`.
+8. **Static HTML Export with Next.js**: Generates static HTML files for export using `npm run export`.
+9. **Upload Artifact**: Uploads the built project to be used in the deployment job. It uses the `actions/upload-pages-artifact@v1` action to upload the `./out` directory.
+
+#### Deployment Job
+
+The deployment job is responsible for deploying the built Next.js project to GitHub Pages.
+
+#### Steps
+
+1. **Deploy to GitHub Pages**: Deploys the project to GitHub Pages using the `actions/deploy-pages@v2` action. It deploys to the `github-pages` environment and sets the deployment URL based on the output of the previous build job.
+
+#### Note
+
+Make sure to configure your repository's settings to enable GitHub Pages and choose the branch and folder to serve as the source for the deployed site.
