@@ -8,6 +8,12 @@ if (basePath === "") {
   assetPrefix = basePath + '/'
 }
 
+let isProd = process.env.NODE_ENV === 'production'
+if (!isProd) {
+  basePath = ""
+  assetPrefix = ""
+}
+
 module.exports = {
   assetPrefix: assetPrefix,
   basePath: basePath,
