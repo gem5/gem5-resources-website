@@ -1,7 +1,7 @@
 // This file is used to configure Next.js
 const config = require('./gem5.config.json');
 
-basePath = "/gem5-resources-website";
+basePath = "";
 if (basePath === "") {
   assetPrefix = ""
 } else {
