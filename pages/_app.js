@@ -1,4 +1,4 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
+import '@/styles/bootstrap.min.css';
 import '@/styles/github.min.css'
 import '@/styles/github-markdown.min.css'
 import 'nprogress/nprogress.css'
@@ -8,6 +8,7 @@ import { useState, useEffect } from 'react'
 import NProgress from 'nprogress';
 import Script from 'next/script';
 import CookieConsent from '@/components/cookieConsent'
+import '@/styles/fonts.css'
 import '@/styles/globals.css'
 
 NProgress.configure({ showSpinner: false });
