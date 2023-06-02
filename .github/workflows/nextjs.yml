@@ -46,9 +46,9 @@ jobs:
       - name: Run Cypress e2e tests
         run: npm run e2e:headless
       - name: Build with Next.js
-        run: npm next build
+        run: npm run build
       - name: Static HTML export with Next.js
-        run: npm next export
+        run: npm run export
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
