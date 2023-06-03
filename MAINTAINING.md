@@ -154,6 +154,14 @@ Upload the JSON file under `public/`. It should then be viewable at `https://res
 
 # Testing Configurations
 
+All of the tests are run before deployment as well as before merging a pull request. The `tests.yml` file in the `.github/workflows/` directory contains the configuration for running the tests. These are the steps that are run:
+
+1. Checkout the repository
+2. Install Node.js `v18.16.0`
+3. Install dependencies
+4. Run the jest unit tests
+5. Run the Cypress integration tests
+
 ## jest.config.js
 
 This repository contains the configuration file `jest.config.js` for running tests with Jest. The configuration file specifies various settings and options for Jest to customize the testing environment.
