@@ -208,7 +208,7 @@ export default function Resources() {
                 }
                 return false;
             }
-            return false;
+            return true;
         });
         searchQuery = searchQuery.join(' ');
         if (searchQuery) {

@@ -1,8 +1,18 @@
 // This file is used to configure Next.js
 const config = require('./gem5.config.json');
 
-assetPrefix = undefined;
-basePath = '';
+basePath = "";
+if (basePath === "") {
+  assetPrefix = ""
+} else {
+  assetPrefix = basePath + '/'
+}
+
+let isProd = process.env.NODE_ENV === 'production'
+if (!isProd) {
+  basePath = ""
+  assetPrefix = ""
+}
 
 module.exports = {
   assetPrefix: assetPrefix,

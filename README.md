@@ -51,19 +51,22 @@ This is the source code for the gem5 Resources website. It is built using [Next.
 
 The project is structured as follows:
 
-- `gem5.config.js`: Contains the configuration for the gem5 Resources website including the databases and the tabs.
+- `gem5.config.js`: Contains the configuration for the gem5 Resources website including the databases and the tabs. This is config that you would use to make changes to the JSON or MongoDB source information and the location of rendering of resource information for a particular category.
 - `components`: Contains React components used throughout the website.
   - `components/tabs`: Contains the tabs used in the Resource page.
 - `pages`: Contains the pages of the website. Each page is a React component.
   - `pages/api`: Contains the API routes of the website.
   - `pages/category`: Contains the .md documentation of what every category under gem5 Resources is.
-- `public`: Contains static assets such as images, fonts, and favicons.
+- `public`: Contains static assets such as images, fonts, and favicons. Also contains the gem5 Resources Schema and other JSON files of previous versions of gem5.
 - `styles`: Contains global stylesheets and CSS modules.
 - `__tests__`: Contains the jest unit tests for the website.
 - `__mocks__`: Contains the jest mocks for the website.
 - `cypress`: Contains the cypress integration tests for the website.
-- `next.config.js`: Contains the configuration for the Next.js server.
+- `next.config.js`: Contains the configuration for the Next.js server. Includes information on build directories, environment variables and the domain of the website.
 - `docs`: Contains the documentation files for the website.
+- `jest.config.js`: Contains the setup configuration for Jest.js, a unit test framework for JavaScript.
+- `jest.setup.js`: Additional setup for mocking libraries like react-markdown in Jest.js.
+- `cypress.config.js`: Contains the setup configuration for Cypress, an E2E test framework for JavaScript. Tests how various components of the website interact with each other.
 
 
 ## Maintaining the Website
