@@ -56,7 +56,7 @@ export default function Footer() {
             <Link href="https://www.gem5.org/mailing_lists/">
               Mailing Lists
             </Link>
-            <Link href="https://github.com/Gem5Vision/gem5-resources-website">
+            <Link href="https://github.com/gem5/gem5-resources-website">
               Website Source
             </Link>
             <Button as='a' onClick={resetCookies} className="btn-variant-none" variant="none">Reset Cookies</Button>
