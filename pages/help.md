@@ -6,7 +6,7 @@
 
 - `category:<category_name>`: Searches for Resources filtered by the categories present [here](https://resources.gem5.org/category).
 - `architecture:<architecture_name>`: Searches for Resources filtered by the architectures supported by gem5.
-- `gme5_versions:<version_name>`: Searches for Resources that are supported in the particular version of gem5.
+- `gem5_versions:<version_name>`: Searches for Resources that are supported in the particular version of gem5.
 - `tags:<tag_name>`: Searches for Resources that have the searched tag.
 
 Additionally, these query expressions can be piped. The logic for piping is explained in [filters](#filters).
