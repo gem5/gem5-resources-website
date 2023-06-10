@@ -4,9 +4,9 @@
 
 `gem5 Resources` supports the following query expressions:
 
-- `category:<category_name>`: Searches for Resources filtered by the categories present [here](https://gem5vision.github.io/gem5-resources-website/category).
+- `category:<category_name>`: Searches for Resources filtered by the categories present [here](https://resources.gem5.org/category).
 - `architecture:<architecture_name>`: Searches for Resources filtered by the architectures supported by gem5.
-- `versions:<version_name>`: Searches for Resources that are supported in the particular version of gem5.
+- `gme5_versions:<version_name>`: Searches for Resources that are supported in the particular version of gem5.
 - `tags:<tag_name>`: Searches for Resources that have the searched tag.
 
 Additionally, these query expressions can be piped. The logic for piping is explained in [filters](#filters).
@@ -46,4 +46,4 @@ These are all the sorting options available:
 - Resource ID Ascending
   - Dictionary order A->Z
 - Resource ID Descending
-  - Disctionary order Z->A
+  - Dictionary order Z->A
