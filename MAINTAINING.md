@@ -154,7 +154,7 @@ Upload the JSON file under `public/`. It should then be viewable at `https://res
 
 # Searching Resources
 
-In case searching does not work on the website (i.e., putting in a query does not work but filtering works), you need to update the search index. To do this, go to the MongoDB Atlas dashboard and click on the `Search` tab. Then click on the `Create Index` button. In the `Create Index` dialog box, select `Visual Editor` first. Then, select the database and collection you wish to create a search index for, along with a name for it. Then, create the index and the website should be able to search again.
+In case searching does not work on the website (i.e., putting in a query does not work but filtering works), you need to update the search index. To do this, go to the MongoDB Atlas dashboard and click on the `Search` tab. If an index does not exist, then click on the `Create Index` button. In the `Create Index` dialog box, select `Visual Editor` first. Then, select the database and collection you wish to create a search index for. Leave the name as "default". Then, create the index and the website should be able to search again.
 
 # Testing Configurations
 
