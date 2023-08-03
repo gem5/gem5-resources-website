@@ -15,6 +15,7 @@ This document describes how to maintain the gem5 Resources website.
 - [Editing Information on the Help page or About page](#editing-information-on-the-help-page-or-about-page)
 - [Changing CSS](#changing-css)
 - [Adding a JSON file as a Static Page](#adding-a-json-file-as-a-static-page)
+- [Searching Resources](#searching-resources)
 - [Testing Configurations](#testing-configurations)
   - [jest.config.js](#jestconfigjs)
     - [Configuration Details](#configuration-details)
@@ -139,7 +140,6 @@ In the above file, `function` would be rendered as a separate tab in the Resourc
 
 If the configuration for a particular category is not specified, by default, the required tabs from the schema are shown as tabs while the optional tabs are shown as additional info.
 
-
 # Editing Information on the Help page or About page
 
 To edit the information shown on the Help page or the About page, navigate to `pages/`. Edit the corresponding .md file, `help.md` for the Help page and `about.md` for the About page. Redeploy the website.
@@ -151,6 +151,10 @@ To edit the CSS of a particular component, navigate to the source code of the co
 # Adding a JSON file as a Static Page
 
 Upload the JSON file under `public/`. It should then be viewable at `https://resources.gem5.org/[YOUR_FILE_NAME]`.
+
+# Searching Resources
+
+In case searching does not work on the website (i.e., putting in a query does not work but filtering works), you need to update the search index. To do this, go to the MongoDB Atlas dashboard and click on the `Search` tab. If an index does not exist, then click on the `Create Index` button. In the `Create Index` dialog box, select `Visual Editor` first. Then, select the database and collection you wish to create a search index for. Leave the name as "default". Then, create the index and the website should be able to search again.
 
 # Testing Configurations
 
