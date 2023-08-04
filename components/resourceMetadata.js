@@ -82,21 +82,17 @@ export default function MetaData({ resource, className, metaFields, showMetadata
                             }) : 'Unknown'}
                         </h4>
                     </Row>
-                    <Row className="border-bottom">
-                        <p className="text-muted main-text-regular">Description</p>
-                        <p className="main-text-regular">
-                            {resource.description ?? 'This is a description of the resource.'}
-                        </p>
-                        {
-                            resource.source_url ?
+                    { resource.source_url ?
+                        <Row className="border-bottom">
+                            <p className="text-muted main-text-regular">Source</p>
                                 <Link
                                     href={resource.source_url}
                                     className="main-text-regular"
                                 >
                                     Repository (GitHub)
-                                </Link> : null
-                        }
-                    </Row>
+                                </Link>
+                        </Row> : null
+                    }
                     <Row className="border-bottom">
                         <p className="text-muted main-text-regular">License</p>
                         <p className="main-text-regular">
