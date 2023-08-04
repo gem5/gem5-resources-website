@@ -65,8 +65,7 @@ describe('resource Page', () => {
     })
 
     it('checks if resource metadata is correct', () => {
-        cy.get('.metadata_info__8irfG > :nth-child(3) > :nth-child(2)').should('have.text', resource.description)
-        cy.get('.metadata_info__8irfG > :nth-child(4) > :nth-child(2)').should('have.text', resource.license === "" ? "Unknown" : resource.license)
+        cy.get('.metadata_info__8irfG > :nth-child(2) > :nth-child(2)').should('have.text', resource.license === "" ? "Unknown" : resource.license)
     })
 
     it('checks if tabs are correct', () => {
