@@ -20,7 +20,8 @@
                 "simpoint-directory",
                 "resource",
                 "looppoint-pinpoint-csv",
-                "looppoint-json"
+                "looppoint-json",
+                "suite"
             ],
             "description": "The category of the resource",
             "default": "resource"
@@ -189,7 +190,11 @@
         },
         {
             "$ref": "#/definitions/workload"
+        },
+        {
+            "$ref": "#/definitions/suite"
         }
+
     ],
     "definitions": {
         "architecture": {
@@ -236,7 +241,18 @@
                 },
                 "resources": {
                     "type": "object",
-                    "description": "A dictionary of resources that are required to run the workload",
+                    "description": "An dictionary of resources that are required to run the workload",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "resoruce-version": {
+                                "type": "string"
+                            }
+                        }
+                    },
                     "default": {}
                 }
             },
@@ -525,6 +541,38 @@
                 {
                     "$ref": "#/definitions/abstract-file"
                 }
+            ]
+        },
+        "suite" : {
+            "description": "A collection of workloads.",
+            "properties" : {
+                "category": {
+                    "type": "string",
+                    "const": "suite"
+                },
+                "workloads": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "resource-version": {
+                                "type": "string"
+                            },
+                            "input-group" : {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "required": [
+                "workloads"
             ]
         }
     }
