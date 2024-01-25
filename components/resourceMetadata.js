@@ -119,9 +119,15 @@ export default function MetaData({ resource, className, metaFields, showMetadata
                                                 <div>
                                                     {key.charAt(0).toUpperCase() + key.slice(1)}
                                                 </div>
-                                                <a href={process.env.BASE_PATH + '/resources/' + resource.resources[key] + `?database=${resource.database}`} style={{ display: 'block', paddingTop: '0.0625rem' }}>
-                                                    {resource.resources[key]}
-                                                </a>
+                                                {typeof(resource.resources[key]) == 'string' ?
+                                                    <a href={process.env.BASE_PATH + '/resources/' + resource.resources[key] + `?database=${resource.database}`} style={{ display: 'block', paddingTop: '0.0625rem' }}>
+                                                        {resource.resources[key]}
+                                                    </a>
+                                                :
+                                                    <a href={process.env.BASE_PATH + '/resources/' + resource.resources[key]["id"] + `?database=${resource.database}&version=${resource.resources[key]["resource_version"]}`} style={{ display: 'block', paddingTop: '0.0625rem' }}>
+                                                        {resource.resources[key]["id"]}
+                                                    </a>
+                                                }
                                             </div>
                                         );
                                     })
