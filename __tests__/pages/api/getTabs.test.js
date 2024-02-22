@@ -82,7 +82,7 @@ describe("getTabs", () => {
             ],
             "workload_name": "x86-print-this-15000-with-simpoints",
             "example_usage": "get_resource(resource_name=\"x86-print-this-1500-simpoints\")",
-            "workloads": [
+            "workloads_mapping": [
                 "x86-print-this-15000-with-simpoints",
                 "x86-print-this-15000-with-simpoints-and-checkpoint"
             ]

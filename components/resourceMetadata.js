@@ -137,12 +137,12 @@ export default function MetaData({ resource, className, metaFields, showMetadata
                             : null
                     }
                     {
-                        (resource.workloads && resource.workloads.length > 0) ?
+                        (resource.workloads_mapping && resource.workloads_mapping.length > 0) ?
                             <Row className="border-bottom">
                                 <p className="text-muted main-text-regular">Depend on this resource</p>
                                 <div className="main-text-regular">
                                     {
-                                        resource.workloads.map((workload, index) => {
+                                        resource.workloads_mapping.map((workload, index) => {
                                             return (
                                                 <span key={workload}>
                                                     <a
@@ -150,7 +150,7 @@ export default function MetaData({ resource, className, metaFields, showMetadata
                                                     >
                                                         {workload}
                                                     </a>
-                                                    {index != resource.workloads.length - 1 ? ', ' : ''}
+                                                    {index != resource.workloads_mapping.length - 1 ? ', ' : ''}
                                                 </span>
                                             )
                                         })

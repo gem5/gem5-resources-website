@@ -86,7 +86,7 @@ async function getResourceByID(token, url, dataSource, database, collection, id,
         })
     }).catch(err => console.log(err));
     let workloads = await dependendWorkloads.json();
-    resource.workloads = Object.values(workloads['documents']).map(workload => workload['_id']);
+    resource.workloads_mapping = Object.values(workloads['documents']).map(workload => workload['_id']);
 
     return resource;
 }

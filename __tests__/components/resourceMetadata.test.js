@@ -50,7 +50,7 @@ describe('MetaData component', () => {
             "resource_version": "1.0.0",
             "database": "db1",
             "license": "MIT",
-            "workloads": [
+            "workloads_mapping": [
                 "workload1",
                 "workload2"
             ],

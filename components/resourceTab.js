@@ -16,6 +16,7 @@ import rehypeHighlight from "rehype-highlight";
 import rehypeSlug from "rehype-slug";
 import rehypeRaw from "rehype-raw";
 import remarkFrontmatter from "remark-frontmatter";
+import CopyIcon from "./copyIcon";
 
 export function createTab(tab) {
   if (!"content" in tab) return null;
@@ -30,13 +31,15 @@ export function createTab(tab) {
       content = String(tab.content);
       break;
     case "array":
-      content = tab.content.map((item, index) => {
-        return (
-          <div key={index}>
-            {item}
-          </div>
-        );
-      });
+      content = (
+        <CopyIcon>
+          <pre>
+            <code class="hljs language-python">
+              {JSON.stringify(tab.content, null, 4)}
+            </code>
+          </pre>
+        </CopyIcon>
+      );
       break;
     case "object":
       content = Object.keys(tab.content).map((key, index) => {
@@ -131,15 +134,15 @@ export default function ResourceTab({ resource, requiredTabs, additionalInfoTabs
       >
         <Tab eventKey="readme" title="Readme">
           <ReactMarkdown
-                    className="markdown-body mt-3"
-                    rehypePlugins={[
-                        [rehypeHighlight, { ignoreMissing: true }],
-                        rehypeRaw,
-                        rehypeSlug,
-                    ]}
-                    remarkPlugins={[remarkGfm, remarkToc, remarkFrontmatter]}
-              >
-                {resource.description ?? 'This is a description of the resource.'}
+            className="markdown-body mt-3"
+            rehypePlugins={[
+              [rehypeHighlight, { ignoreMissing: true }],
+              rehypeRaw,
+              rehypeSlug,
+            ]}
+            remarkPlugins={[remarkGfm, remarkToc, remarkFrontmatter]}
+          >
+            {resource.description ?? 'This is a description of the resource.'}
           </ReactMarkdown>
         </Tab>
         <Tab eventKey="changelog" title="Changelog">
