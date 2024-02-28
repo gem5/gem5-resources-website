@@ -110,6 +110,15 @@
                     }
                 },
                 "metadata": {}
+            },
+            "suite": {
+                "tab": {
+                    "workloads": {
+                        "displayName": "Workloads"
+                    }
+                },
+                "additionalInfo": {},
+                "metadata": {}
             }
         }
     }

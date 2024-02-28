@@ -49,7 +49,7 @@ export default async function getResourceByIDJSON(id, database, version) {
     if (!resource) {
         return { error: 'Resource not found' }
     }
-    resource.workloads = workloads;
+    resource.workloads_mapping = workloads;
     resource.database = database;
     return resource;
 }

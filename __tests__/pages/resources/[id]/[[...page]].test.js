@@ -155,7 +155,7 @@ describe("Resource-specific component", () => {
                 gem5_versions: ['23.0'],
                 workload_name: 'x86-print-this-15000-with-simpoints',
                 example_usage: 'get_resource(resource_name="x86-print-this-1500-simpoints")',
-                workloads: [],
+                workloads_mapping: [],
                 database: 'db1'
             }))
         }))
