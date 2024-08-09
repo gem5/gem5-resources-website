@@ -127,6 +127,17 @@ function getSearchPipeline(queryObject) {
                 },
               },
             },
+            {
+              text: {
+                path: "gem5_versions",
+                query: "24.0",
+                score: {
+                  boost: {
+                    value: 10,
+                  },
+                },
+              },
+            }
           ],
           must: [
             {
