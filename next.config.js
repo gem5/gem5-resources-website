@@ -26,6 +26,7 @@ module.exports = {
     BASE_PATH: basePath,
     SOURCES: config.config.sources,
     TABS: config.ui.tabs,
+    GEM5_VERSION: config.gem5_version
   },
   webpack: (config) => {
     config.module.rules.push({
