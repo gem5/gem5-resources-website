@@ -111,6 +111,9 @@ function getLatestVersionPipeline() {
  * @returns {Array} - An array representing the MongoDB aggregation pipeline to perform text search.
  */
 function getSearchPipeline(queryObject) {
+  // getting current gem5_version to boost search for resources compatible with latest gem5 release
+  const gem5_version = process.env.GEM5_VERSION;
+
   let pipeline = [
     {
       $search: {
@@ -127,6 +130,17 @@ function getSearchPipeline(queryObject) {
                 },
               },
             },
+            {
+              text: {
+                path: "gem5_versions",
+                query: gem5_version,
+                score: {
+                  boost: {
+                    value: 10,
+                  },
+                },
+              },
+            }
           ],
           must: [
             {
