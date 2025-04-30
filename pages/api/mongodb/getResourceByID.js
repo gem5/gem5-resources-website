@@ -16,77 +16,71 @@ import getToken from "./getToken";
  * If not provided, the latest version will be retrieved.
  * @returns {Object} - The retrieved resource object, including its metadata and associated workloads.
  */
-async function getResourceByID(token, url, dataSource, database, collection, id, version = null) {
-    const res = await fetch(`${url}/action/find`, {
-        method: 'POST',
+async function getResourceByID(token, url, id, version = null) {
+
+    let params = new URLSearchParams();
+    params.append("id", id)
+    if (version == null) {
+        params.append("resource_version", version)
+    }
+    const res = await fetch(`${url}/find-resource-by-id?${params.toString()}`, {
+        method: 'GET',
         headers: {
             'Content-Type': 'application/json',
             // 'api-key': 'pKkhRJGJaQ3NdJyDt69u4GPGQTDUIhHlx4a3lrKUNx2hxuc8uba8NrP3IVRvlzlo',
-            'Access-Control-Request-Headers': '*',
             // 'origin': 'https://gem5vision.github.io',
-            "Authorization": "Bearer " + token,
         },
-        body: JSON.stringify({
-            "dataSource": dataSource,
-            "database": database,
-            "collection": collection,
-            "filter": version ? {
-                "id": id,
-                "resource_version": version
-            } : {
-                "id": id
-            }
-        })
     }).catch(err => console.log(err));
     let resource = await res.json();
-    if (res.status != 200 || resource['documents'] === null || resource['documents'].length === 0) {
+    if (res.status != 200 || resource === null || resource.length === 0) {
         return { error: 'Resource not found' }
     }
 
-    resource = resource['documents'].sort((a, b) => -compareVersions(a.resource_version, b.resource_version))[0];
+    resource = resource.sort((a, b) => -compareVersions(a.resource_version, b.resource_version))[0];
 
-    const dependendWorkloads = await fetch(`${url}/action/aggregate`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Request-Headers': '*',
-            'Authorization': 'Bearer ' + token,
-        },
-        body: JSON.stringify({
-            "dataSource": dataSource,
-            "database": database,
-            "collection": collection,
-            "pipeline": [
-                {
-                    "$match": {
-                        "category": "workload"
-                    }
-                },
-                {
-                    "$addFields": {
-                        "resources": {
-                            "$objectToArray": "$resources"
-                        }
-                    }
-                },
-                {
-                    "$unwind": "$resources"
-                },
-                {
-                    "$match": {
-                        "resources.v": id
-                    }
-                },
-                {
-                    "$group": {
-                        "_id": "$id",
-                    }
-                }
-            ]
-        })
-    }).catch(err => console.log(err));
-    let workloads = await dependendWorkloads.json();
-    resource.workloads_mapping = Object.values(workloads['documents']).map(workload => workload['_id']);
+    // const dependendWorkloads = await fetch(`${url}/action/aggregate`, {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //         'Access-Control-Request-Headers': '*',
+    //         'Authorization': 'Bearer ' + token,
+    //     },
+    //     body: JSON.stringify({
+    //         "dataSource": dataSource,
+    //         "database": database,
+    //         "collection": collection,
+    //         "pipeline": [
+    //             {
+    //                 "$match": {
+    //                     "category": "workload"
+    //                 }
+    //             },
+    //             {
+    //                 "$addFields": {
+    //                     "resources": {
+    //                         "$objectToArray": "$resources"
+    //                     }
+    //                 }
+    //             },
+    //             {
+    //                 "$unwind": "$resources"
+    //             },
+    //             {
+    //                 "$match": {
+    //                     "resources.v": id
+    //                 }
+    //             },
+    //             {
+    //                 "$group": {
+    //                     "_id": "$id",
+    //                 }
+    //             }
+    //         ]
+    //     })
+    // }).catch(err => console.log(err));
+    // let workloads = await dependendWorkloads.json();
+    let workloads= []
+    resource.workloads_mapping = Object.values(workloads).map(workload => workload['_id']);
 
     return resource;
 }
@@ -101,7 +95,7 @@ async function getResourceByID(token, url, dataSource, database, collection, id,
 export default async function getResourceByIDMongoDB(id, database = null, version = null) {
     const token = await getToken(database);
     let privateResources = process.env.SOURCES[database];
-    const resource = await getResourceByID(token, privateResources.url, privateResources.dataSource, privateResources.database, privateResources.collection, id, version);
+    const resource = await getResourceByID(token, privateResources.url,id, version);
     resource['database'] = database;
     return resource;
 }
