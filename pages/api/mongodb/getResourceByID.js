@@ -38,48 +38,14 @@ async function getResourceByID(token, url, id, version = null) {
 
     resource = resource.sort((a, b) => -compareVersions(a.resource_version, b.resource_version))[0];
 
-    // const dependendWorkloads = await fetch(`${url}/action/aggregate`, {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //         'Access-Control-Request-Headers': '*',
-    //         'Authorization': 'Bearer ' + token,
-    //     },
-    //     body: JSON.stringify({
-    //         "dataSource": dataSource,
-    //         "database": database,
-    //         "collection": collection,
-    //         "pipeline": [
-    //             {
-    //                 "$match": {
-    //                     "category": "workload"
-    //                 }
-    //             },
-    //             {
-    //                 "$addFields": {
-    //                     "resources": {
-    //                         "$objectToArray": "$resources"
-    //                     }
-    //                 }
-    //             },
-    //             {
-    //                 "$unwind": "$resources"
-    //             },
-    //             {
-    //                 "$match": {
-    //                     "resources.v": id
-    //                 }
-    //             },
-    //             {
-    //                 "$group": {
-    //                     "_id": "$id",
-    //                 }
-    //             }
-    //         ]
-    //     })
-    // }).catch(err => console.log(err));
-    // let workloads = await dependendWorkloads.json();
-    let workloads= []
+    const dependendWorkloads = await fetch(`${url}/get-dependent-workloads?${params.toString()}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    }).catch(err => console.log(err));
+    let workloads = await dependendWorkloads.json();
+    console.log(workloads)
     resource.workloads_mapping = Object.values(workloads).map(workload => workload['_id']);
 
     return resource;
