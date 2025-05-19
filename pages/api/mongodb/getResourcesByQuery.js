@@ -1,13 +1,9 @@
-import getToken from "./getToken";
-
 /**
  * @function getPipeline
  * @description This function returns a MongoDB aggregation pipeline based on the provided query object,
  * current page number, and page size. The pipeline includes stages for handling search query, filtering, sorting, and pagination.
  * It can be used to construct a MongoDB aggregation pipeline for retrieving filtered and paginated results from a collection based on the given query object.
  * @param {Object} queryObject - The query object containing search query, sort, and filter parameters.
- * @param {string} queryObject.query - The search query.
- * @param {string} queryObject.sort - The sorting parameter.
  * @param {number} currentPage - The current page number.
  * @param {number} pageSize - The number of documents to display per page.
  * @returns {Array} - An array representing the MongoDB aggregation pipeline for retrieving filtered and paginated results.
@@ -89,7 +85,6 @@ function buildMustIncludeParams(queryObject) {
  * @returns {Array} - An array containing the search results and total count of documents matching the search criteria.
  */
 async function getSearchResults(
-  accessToken,
   url,
   queryObject,
   currentPage,
@@ -147,8 +142,7 @@ async function getSearchResults(
 export default async function getResourcesByQueryMongoDB(queryObject, currentPage, pageSize, database) {
   let privateResources = process.env.SOURCES;
   let privateResource = privateResources[database];
-  let privateAccessToken = await getToken(database);
-  let privateResourceResults = await getSearchResults(privateAccessToken,
+  let privateResourceResults = await getSearchResults(
     privateResource.url,
     queryObject,
     currentPage,
