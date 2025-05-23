@@ -4,11 +4,11 @@ import resources from "./resources.json"
 const originalEnv = process.env;
 
 global.fetch = jest.fn((url) => {
-    if (url.includes("data.mongodb-api")) {
+    if (url.includes("api.gem5")) {
         return Promise.resolve({
             status: 200,
-            json: () => Promise.resolve({
-                'documents': [{
+            json: () => Promise.resolve(
+                [{
                     category: 'simpoint',
                     id: 'batman',
                     description: 'Simpoints for running the \'x86-print-this\' resource with the parameters `"print this" 15000`. This is encapsulated in the \'x86-print-this-15000-with-simpoints\' workload.',
@@ -32,7 +32,7 @@ global.fetch = jest.fn((url) => {
                     workloads_mapping: [],
                     database: 'db1'
                 }],
-            }),
+            ),
         })
     }
 
@@ -40,15 +40,6 @@ global.fetch = jest.fn((url) => {
         return Promise.resolve({
             status: 200,
             json: () => Promise.resolve(resources),
-        })
-    }
-
-    if (url.includes("realm.mongodb.com")) {
-        return Promise.resolve({
-            status: 200,
-            json: () => Promise.resolve({
-                "access_token": ""
-            }),
         })
     }
 
@@ -187,9 +178,7 @@ describe('getResource', () => {
                     dataSource: "gem5-vision",
                     database: "gem5-vision",
                     collection: "resources",
-                    url: "https://data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1",
-                    authUrl: "https://realm.mongodb.com/api/client/v2.0/app/data-ejhjf/auth/providers/api-key/login",
-                    apiKey: "pKkhRJGJaQ3NdJyDt69u4GPGQTDUIhHlx4a3lrKUNx2hxuc8uba8NrP3IVRvlzlo",
+                    url: "https://api.gem5.org/api/resources",
                     isMongo: true,
                 }
             }
