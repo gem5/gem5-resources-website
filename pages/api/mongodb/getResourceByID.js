@@ -15,8 +15,10 @@ async function getResourceByID(url, id, version = null) {
 
     let params = new URLSearchParams();
     params.append("id", id)
-    if (version == null) {
+    if (version != null) {
         params.append("resource_version", version)
+    } else {
+        params.append("resource_version", "None")
     }
 
     const res = await fetch(`${url}/find-resources-in-batch?${params.toString()}`, {

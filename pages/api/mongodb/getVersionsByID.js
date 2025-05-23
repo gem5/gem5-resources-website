@@ -10,7 +10,7 @@ import compareVersions from "../compareVersions";
  * @throws {Error} - Throws an error if the fetch request fails.
  */
 async function getVersionsByID(url, id) {
-    const res = await fetch(`${url}/find-resources-in-batch?id=${id}`, {
+    const res = await fetch(`${url}/find-resources-in-batch?id=${id}&resource_version=None`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
