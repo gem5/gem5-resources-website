@@ -35,21 +35,27 @@ Cypress.Commands.add('assertValueCopiedToClipboard', value => {
 Cypress.Commands.add('interceptAll', () => {
     cy.intercept('GET', /https.*json$/).as('jsonLink')
     cy.intercept('GET', /^\/\w*\.json$/).as('jsonLocal')
-    cy.intercept('POST', "https://data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/find", (req) => {
-        if (req.body.filter.id === 'arm64-ubuntu-20.04-boot') {
-            if (req.body.filter.resource_version) {
-                if (req.body.filter.resource_version === '0.1.0') {
-                    req.reply({
-                        fixture: 'getResource2.json'
-                    })
-                } else {
-                    req.reply({
-                        documents: [],
-                    })
-                }
-            } else {
+    cy.intercept('GET', '**/api/resources/find-resources-in-batch*', (req) => {
+        const url = new URL(req.url);
+        const ids = url.searchParams.getAll('id');
+        const versions = url.searchParams.getAll('resource_version');
+        
+        // Check for specific resource requests
+        if (ids.includes('arm64-ubuntu-20.04-boot')) {
+            const versionIndex = ids.indexOf('arm64-ubuntu-20.04-boot');
+            const requestedVersion = versions[versionIndex];
+            
+            if (requestedVersion === '0.1.0') {
+                req.reply({
+                    fixture: 'getResource2.json'
+                })
+            } else if (requestedVersion === 'None') {
                 req.reply({
                     fixture: 'getResource.json'
+                })
+            } else {
+                req.reply({
+                    documents: [],
                 })
             }
         } else {
@@ -58,69 +64,72 @@ Cypress.Commands.add('interceptAll', () => {
             })
         }
     }).as('find')
-    cy.intercept('POST', 'https://data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1/action/aggregate', (req) => {
-        console.log(req.body.pipeline)
-        if (req.body.pipeline.length === 5) {
+     cy.intercept('GET', '**/api/resources/search*', (req) => {
+        const url = new URL(req.url);
+        const containsStr = url.searchParams.get('contains-str');
+        const mustInclude = url.searchParams.get('must-include');
+        const pageSize = parseInt(url.searchParams.get('page-size')) || 10;
+        const page = parseInt(url.searchParams.get('page')) || 1;
+        
+        console.log('Search params:', { containsStr, mustInclude, pageSize, page });
+        
+        // Handle different search scenarios based on your old pipeline logic
+        if (!containsStr && !mustInclude) {
+            // Empty search - equivalent to pipeline length 5
             req.reply({
                 documents: [],
+                totalCount: 0
             })
-        }
-        else if (req.body.pipeline.length === 2) {
-            req.reply({
-                fixture: 'filters.json'
-            })
-        }
-        else if (req.body.pipeline.length === 9) {
-            console.log(req.body.pipeline[8].$limit)
-            if (req.body.pipeline[8].$limit === 25) {
+        } else if (mustInclude) {
+            // Parse must-include filters
+            const filters = mustInclude.split(';').reduce((acc, filter) => {
+                const [field, ...values] = filter.split(',');
+                acc[field] = values;
+                return acc;
+            }, {});
+            
+            if (filters.category) {
                 req.reply({
-                    fixture: 'search25.json'
+                    fixture: 'searchDiskimage.json'
                 })
-            }
-            else {
+            } else if (filters.architecture) {
+                req.reply({
+                    fixture: 'searchArchitecture.json'
+                })
+            } else {
                 req.reply({
                     fixture: 'searchExact.json'
                 })
             }
-        }
-        else if (req.body.pipeline.length === 10) {
-            console.log(req.body.pipeline[0].$match.$and[0])
-            // check if key is "category" 
-            if (req.body.pipeline[0].$match.$and[0].category) {
+        } else if (containsStr) {
+            // Basic search with different page sizes
+            if (pageSize === 25) {
                 req.reply({
-                    fixture: 'searchDiskimage.json'
+                    fixture: 'search25.json'
                 })
-            } else if (req.body.pipeline[0].$match.$and[0].architecture) {
+            } else {
                 req.reply({
-                    fixture: 'searchArchitecture.json'
+                    fixture: 'searchExact.json'
                 })
             }
-        }
-        else if (req.body.pipeline.length === 11) {
-            req.reply({
-                fixture: 'searchExact.json'
-            })
-        }
-        else if (req.body.pipeline.length === 14) {
-            req.reply({
-                fixture: 'searchTags.json'
-            })
-        }
-        else {
+        } else {
             req.reply({
                 documents: [],
+                totalCount: 0
             })
         }
-    }).as('mongo')
-    cy.intercept('POST', "https://realm.mongodb.com/api/client/v2.0/app/data-ejhjf/auth/providers/api-key/login", {
-        fixture: 'login.json'
-    }).as('login')
+    }).as('search')
+    
+    // Intercept filters request (replaces old MongoDB aggregate for filters)
+    cy.intercept('GET', '**/api/resources/filters*', {
+        fixture: 'filters.json'
+    }).as('filters')
 })
 
 Cypress.Commands.add('waitFirst', () => {
     const resource = Object.keys(Cypress.env('SOURCES'))[0]
     if (Cypress.env('SOURCES')[resource].isMongo) {
-        cy.wait(['@mongo'])
+        cy.wait(['@search'])
     } else {
         cy.waitJSON(Cypress.env('SOURCES')[resource].url.includes('http'))
     }
@@ -128,11 +137,11 @@ Cypress.Commands.add('waitFirst', () => {
 })
 
 Cypress.Commands.add('waitAll', value => {
-    cy.wait(['@kiwi', '@resources', '@mongo'])
+    cy.wait(['@kiwi', '@resources', '@search', '@filters'])
 })
 
 Cypress.Commands.add('waitMongo', () => {
-    cy.wait(['@mongo'])
+    cy.wait(['@search', '@filters'])
 })
 
 Cypress.Commands.add('waitJSON', (isUrl) => {
@@ -147,7 +156,7 @@ Cypress.Commands.add('waitAuto', () => {
     const resources = Cypress.env('SOURCES')
     Object.keys(resources).forEach((i) => {
         if (resources[i].isMongo) {
-            cy.wait(['@mongo'])
+            cy.wait(['@search'])
         } else {
             cy.waitJSON(resources[i].url.includes('http'))
         }
