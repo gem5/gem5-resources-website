@@ -4,25 +4,17 @@ import resources from "./resources.json"
 const originalEnv = process.env;
 
 global.fetch = jest.fn((url) => {
-    if (url.includes("data.mongodb-api")) {
+    if (url.includes("api.gem5")) {
         return Promise.resolve({
-            json: () => Promise.resolve({
-                'documents': [],
-            }),
+            json: () => Promise.resolve(
+                [],
+            ),
         })
     }
 
     if (url.includes("resources.json")) {
         return Promise.resolve({
             json: () => Promise.resolve(resources),
-        })
-    }
-
-    if (url.includes("realm.mongodb.com")) {
-        return Promise.resolve({
-            json: () => Promise.resolve({
-                "access_token": ""
-            }),
         })
     }
 
@@ -146,9 +138,7 @@ describe('findResources', () => {
                     dataSource: "gem5-vision",
                     database: "gem5-vision",
                     collection: "resources",
-                    url: "https://data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1",
-                    authUrl: "https://realm.mongodb.com/api/client/v2.0/app/data-ejhjf/auth/providers/api-key/login",
-                    apiKey: "pKkhRJGJaQ3NdJyDt69u4GPGQTDUIhHlx4a3lrKUNx2hxuc8uba8NrP3IVRvlzlo",
+                    url: "https://api.gem5.org/api/resources",
                     isMongo: true,
                 }
             }
@@ -169,9 +159,7 @@ describe('findResources', () => {
                     dataSource: "gem5-vision",
                     database: "gem5-vision",
                     collection: "resources",
-                    url: "https://data.mongodb-api.com/app/data-ejhjf/endpoint/data/v1",
-                    authUrl: "https://realm.mongodb.com/api/client/v2.0/app/data-ejhjf/auth/providers/api-key/login",
-                    apiKey: "pKkhRJGJaQ3NdJyDt69u4GPGQTDUIhHlx4a3lrKUNx2hxuc8uba8NrP3IVRvlzlo",
+                    url: "https://api.gem5.org/api/resources",
                     isMongo: true,
                 }
             }

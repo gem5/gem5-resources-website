@@ -1,28 +1,24 @@
 {
-    "documents": [
-        {
-            "_id": null,
-            "category": [
-                "workload",
-                "simpoint",
-                "disk_image",
-                "binary",
-                "checkpoint",
-                "bootloader",
-                "resource",
-                "kernel"
-            ],
-            "architecture": [
-                "X86",
-                "ARM",
-                "MIPS",
-                "RISCV",
-                "POWER",
-                "SPARC"
-            ],
-            "gem5_versions": [
-                "23.0"
-            ]
-        }
+    "_id": null,
+    "category": [
+        "workload",
+        "simpoint",
+        "disk_image",
+        "binary",
+        "checkpoint",
+        "bootloader",
+        "resource",
+        "kernel"
+    ],
+    "architecture": [
+        "X86",
+        "ARM",
+        "MIPS",
+        "RISCV",
+        "POWER",
+        "SPARC"
+    ],
+    "gem5_versions": [
+        "23.0"
     ]
 }

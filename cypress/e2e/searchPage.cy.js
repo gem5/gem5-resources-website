@@ -5,7 +5,6 @@ describe('Search page', () => {
         cy.interceptAll()
         cy.visit('/resources')
         cy.waitAuto()
-        cy.waitAuto()
         window.localStorage.setItem('CookieConsent', "{\"userPreference\":\"all\"}")
     })
 
@@ -112,6 +111,7 @@ describe('Search page', () => {
     })
 
     it('checks if changing page size works', () => {
+        // cy.waitAuto()
         cy.get('.results-sortBy-row').find('select').first().select('25')
         cy.waitAuto()
         // cy.wait(['@kiwi', '@resources', '@mongo'])
